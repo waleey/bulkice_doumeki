@@ -96,12 +96,12 @@ void ParseCommandLine(int argc, char** argv, G4String& macroname, G4int& PMT_mod
             macroname = argv[3];
             interaction_channel = argv[2];
             worldsize = 20;
-            ghitsfilename += model + "_" + interaction_channel + ".dat";
+            ghitsfilename += model + "_" + interaction_channel;
         }
         else
         {
             worldsize = 0.25;
-            ghitsfilename += model + ".dat";
+            ghitsfilename += model;
         }
 
     }
