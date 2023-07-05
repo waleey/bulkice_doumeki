@@ -7,7 +7,8 @@
 #include "G4NistManager.hh"
 #include "G4OpBoundaryProcess.hh"
 #include "G4SystemOfUnits.hh"
-
+#include <fstream>
+#include <sstream>
 namespace pt = boost::property_tree;
 
 class ParameterTable;
@@ -43,6 +44,9 @@ protected:
     void AddScintillationProperty();
     G4State GetState(G4String pState);
     virtual void ExtractInformation() = 0; // abstract method
+
+private:
+    void AddScintillationSpectrum(std::vector<G4double>&, std::vector<G4double>&);
 };
 
 // Derived Classes
