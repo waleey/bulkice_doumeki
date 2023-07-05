@@ -235,7 +235,7 @@ void OMSimParticleSetup::SetupRadioactiveParticles()
 
             radioactiveParticleEnergy = 0*keV;
             radioactiveParticleCharge = 0.*eplus;
-            radioactiveParticlePosition = G4ThreeVector(xIn, yIn, zIn);
+            radioactiveParticlePosition = G4ThreeVector(xIn * mm, yIn * mm, zIn * mm);
             radioactiveParticleOrientation = G4ThreeVector(orientDirection[0], orientDirection[1], orientDirection[2]);
         }
         else

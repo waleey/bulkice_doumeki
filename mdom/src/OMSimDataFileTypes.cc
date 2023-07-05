@@ -185,6 +185,12 @@ void abcMaterialData::AddScintillationSpectrum(std::vector<G4double>& vasEnergy,
 *Adding Scintillation property to materials. It will only be applied to the Pressure Vessel Glass Material.
 *For now, dummy scintillation yield, and scintillation decay time constants are used.
 *Particle independent scintillation is assumed for starting. Will change it later.
+*Scintillation time constant is the average scintillation time constant
+*for Vetrovex glass after correction at -25C temperature.
+*Data taken from M. Unland's thesis.
+*Alpha Scintillation Yield is used as the general use for now
+*Electron yield would be 9.5 times higher than the Alpha yield
+*Will implement particle specific yield later.
 **/
 void abcMaterialData::AddScintillationProperty()
 {
@@ -193,9 +199,9 @@ void abcMaterialData::AddScintillationProperty()
     AddScintillationSpectrum(vasEnergy, vasScint);
 
     mMPT->AddProperty("SCINTILLATIONCOMPONENT1", vasEnergy, vasScint);
-    mMPT->AddConstProperty("SCINTILLATIONYIELD", 120./MeV);
+    mMPT->AddConstProperty("SCINTILLATIONYIELD", 47.5/MeV);
     mMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);
-    mMPT->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 20.*ns);
+    mMPT->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 8.83 * microsecond);
 
     mMaterial->GetIonisation()->SetBirksConstant(0.126*mm/MeV);
 }
