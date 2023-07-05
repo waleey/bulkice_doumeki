@@ -39,34 +39,6 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
         if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
-           /* if(aTrack -> GetCreatorProcess() -> GetProcessName() == "Scintillation")
-            {
-                {
-                    std::cout << "The Volume the Photons are is: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
-                    gcounter++;
-                }
-                std::cout << "S C I N T I L L A T I O N !!!" << std::endl;
-
-            }*/
-           /* if(aTrack -> GetCreatorProcess() -> GetProcessName() == "Cerenkov")
-            {
-                G4ThreeVector position = aTrack -> GetPosition();
-                if((position.x() <= 0.5*m && position.x() >= -0.5*m) && (position.y() <= 0.5*m && position.y() >= -0.5*m) && (position.z() <= 0.5*m && position.z() >= -0.5*m))
-                {
-                    std::cout << "The Volume the Photons are is: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
-                    gcounter++;
-                }
-                std::cout << "C E R E N K O V !!!" << std::endl;
-
-            }*/
-
-           // if ( aStep->GetPostStepPoint()->GetMaterial()->GetName() == "RiAbs_Photocathode") {
-           /*if(aTrack -> GetGlobalTime() > 10 * ns)
-           {
-                //std::cout << aTrack -> GetCreatorProcess() -> GetProcessName() << std::endl;
-           }*/
-
-
             if( aStep -> GetPostStepPoint() -> GetPhysicalVolume() -> GetName() == "Photocathode_pv_OMSIM") {
 
                 G4double Ekin;
@@ -80,10 +52,10 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 Ekin = aTrack->GetKineticEnergy() ;
                 lambda = (hc/Ekin) * nm;
                 pmt_qe -> ReadQeTable();
-                //std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
+                std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
                 double qe = (pmt_qe -> GetQe(lambda)) / 100;
                 double random = CLHEP::RandFlat::shoot(0.0, 1.0);
-                //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
+                std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
                 G4int survived = (random < (qe)) ? 1 : 0;
                 std::vector<G4String> n;
                 extern std::vector<G4String> explode (G4String s, char d);
@@ -117,21 +89,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
         }
 
     }
-    /**
-    *Following block set the global time of all daughter particles
-    *generated from radioactive decay to 0 sec
-    *which is equivalent to decaying the parent particles
-    *with a mean life of 0 sec.
-    **/
 
     {
-        /*if(aTrack -> GetCreatorProcess())
-        {
-            if(!(aTrack -> GetParticleDefinition() -> GetPDGStable()))
-            {
-                aTrack -> GetParticleDefinition() -> SetPDGLifeTime(0.0);
-            }
-        }*/
 
     }
 }

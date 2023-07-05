@@ -7,18 +7,17 @@
 #include "G4GammaConversion.hh"
 #include "G4PhotoElectricEffect.hh"
 
-#include "G4RadioactiveDecay.hh"
-#include "G4DecayPhysics.hh"
 #include "G4Cerenkov.hh"
 #include "G4OpRayleigh.hh"
 #include "G4OpMieHG.hh"
 #include "G4eplusAnnihilation.hh"
-
+#include "G4Scintillation.hh"
 
 #include "G4LivermoreIonisationModel.hh"
 #include "G4LivermorePhotoElectricModel.hh"
 #include "G4LivermoreIonisationModel.hh"
 #include "G4LivermoreGammaConversionModel.hh"
+#include "G4NeutronCaptureProcess.hh"
 
 #include "G4eMultipleScattering.hh"
 #include "G4eIonisation.hh"
@@ -32,6 +31,7 @@ OMSimPhysicsList::OMSimPhysicsList():  G4VUserPhysicsList()
 {
 	defaultCutValue = 0.1*mm;
 	SetVerboseLevel(0);
+	radioactiveList = new G4RadioactiveDecayPhysics();
 }
 
 OMSimPhysicsList::~OMSimPhysicsList()
@@ -45,19 +45,22 @@ void OMSimPhysicsList::ConstructParticle()
     G4GenericIon::GenericIonDefinition();
     G4Electron::ElectronDefinition();
     G4Positron::PositronDefinition();
+    G4Proton::ProtonDefinition();
+    G4Neutron::NeutronDefinition();
     G4MuonMinus::MuonMinusDefinition();
     G4MuonPlus::MuonPlusDefinition();
 	G4NeutrinoE::NeutrinoEDefinition();
 	G4AntiNeutrinoE::AntiNeutrinoEDefinition();
 	G4NeutrinoMu::NeutrinoMuDefinition();
 	G4AntiNeutrinoMu::AntiNeutrinoMuDefinition();
-	/*G4DecayPhysics* theDecayProcess = new G4DecayPhysics();
-	theDecayProcess -> ConstructParticle();*/
 }
 
 void OMSimPhysicsList::ConstructProcess()
 {
 	AddTransportation();
+
+//  The Radioactive Decay Process
+	radioactiveList -> ConstructProcess();
 
 //	The Cherenkov process
 	G4Cerenkov* theCerenkovProcess = new G4Cerenkov("Cerenkov");
@@ -65,18 +68,24 @@ void OMSimPhysicsList::ConstructProcess()
     theCerenkovProcess->SetMaxBetaChangePerStep(10.0);
     theCerenkovProcess->SetMaxNumPhotonsPerStep(300);
 
+//The Scintillation Process
+    G4Scintillation* theScintillationProcess = new G4Scintillation("Scintillation");
+    theScintillationProcess -> SetTrackSecondariesFirst(true);
+
 //	The Livermore models
 	G4eIonisation* theIonizationModel = new G4eIonisation();
 	theIonizationModel->SetEmModel(new G4LivermoreIonisationModel());
 
+//  PhotoElectric Process
 	G4PhotoElectricEffect* thePhotoElectricEffectModel = new G4PhotoElectricEffect();
     thePhotoElectricEffectModel->SetEmModel(new G4LivermorePhotoElectricModel());
 
+//  The Neutron Capture Process
+    G4NeutronCaptureProcess* theNeutronCaptureProcess = new G4NeutronCaptureProcess();
+
+//  Gamma Conversion Process
 	G4GammaConversion* theGammaConversionModel = new G4GammaConversion();
     theGammaConversionModel->SetEmModel(new G4LivermoreGammaConversionModel());
-
-//	The Decay process
-	G4Decay* theDecayProcess = new G4Decay();
 
 //	Now assign processes to generated particles
     auto theParticleIterator=GetParticleIterator();
@@ -101,12 +110,6 @@ void OMSimPhysicsList::ConstructProcess()
     		pmanager->AddDiscreteProcess(new G4ComptonScattering());
     		pmanager->AddDiscreteProcess(thePhotoElectricEffectModel);
 		}
-		else if (particleName == "GenericIon") {
-			G4RadioactiveDecay* theRadioactiveDecay = new G4RadioactiveDecay();
-        	pmanager->AddProcess(theRadioactiveDecay);
-        	pmanager->SetProcessOrdering(theRadioactiveDecay, idxPostStep);
-        	pmanager->SetProcessOrdering(theRadioactiveDecay, idxAtRest);
-        }
       	else if (particleName == "e-") {
 	      	pmanager->AddProcess(new G4eMultipleScattering(),-1,1,1);
 	      	pmanager->AddProcess(theIonizationModel,-1,2,2);
@@ -114,15 +117,24 @@ void OMSimPhysicsList::ConstructProcess()
       	}
 		else if (particleName == "e+") {
 			pmanager->AddProcess(new G4eMultipleScattering(),-1,1,1);
-			pmanager->AddProcess(new G4eIonisation,-1,2,2); // The livermore ionization model is only aplicable to electrons
+			pmanager->AddProcess(new G4eIonisation,-1,2,2);
 			pmanager->AddProcess(new G4eBremsstrahlung(),-1,-1,3);
 			pmanager->AddProcess(new G4eplusAnnihilation, 0,-1, 4);
 		}
-
+		if(theNeutronCaptureProcess -> IsApplicable(*(particle)))
+		{
+            pmanager -> AddProcess(theNeutronCaptureProcess);
+		}
 		if (theCerenkovProcess->IsApplicable(*particle)) {
-// 			G4cout << "jdfkljsdklfjklsdfjlk" << G4endl;
   			pmanager->AddProcess(theCerenkovProcess);
 			pmanager->SetProcessOrdering(theCerenkovProcess, idxPostStep);
+        }
+
+        if(theScintillationProcess -> IsApplicable(*particle))
+        {
+            pmanager -> AddDiscreteProcess(theScintillationProcess);
+            pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxAtRest);
+            pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxPostStep);
         }
 
 	}

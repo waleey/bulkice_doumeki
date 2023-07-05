@@ -8,6 +8,7 @@
 #include "G4NistManager.hh"
 #include "G4OpBoundaryProcess.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4Types.hh"
 #include <G4UnitsTable.hh>
 #include <dirent.h>
 #include <cmath>
@@ -147,16 +148,51 @@ void abcMaterialData::ExtractRefractionIndex()
     //std::cerr <<"abcMaterialData::ExtractRefractionIndex end" << std::endl;
 }
 /**
+*Setting up Scintillation Property for Vetrovex glass sample
+*Vetrovex sample is referred as vas
+*Spectrum taken from M.Unland's thesis
+*input file containing the scintillation spectrum data is saved in the InputFile dir.
+**/
+void abcMaterialData::AddScintillationSpectrum(std::vector<G4double>& vasEnergy, std::vector<G4double>& vasScint)
+{
+    G4String filename = "/home/waly/bulkice_doumeki/mdom/InputFile/VAS_Scintillation_Spectrum.data"; //Change it according to your file path
+
+    std::ifstream file(filename);
+    if(!(file.is_open()))
+    {
+        std::cerr << "Error while opening " << filename << ". Aborting..." << std::endl;
+        abort();
+    }
+    else
+    {
+        G4double en = 0;
+        G4double intensity = 0;
+
+        vasEnergy.clear();
+        vasScint.clear();
+
+        while(file >> en >> intensity)
+        {
+            vasEnergy.push_back(en * eV);
+            vasScint.push_back(intensity);
+        }
+        file.close();
+        file.clear();
+    }
+
+}
+/**
 *Adding Scintillation property to materials. It will only be applied to the Pressure Vessel Glass Material.
-*For now, dummy Scintillation spectrum, scintillation yield, and scintillation decay time constants are used.
+*For now, dummy scintillation yield, and scintillation decay time constants are used.
 *Particle independent scintillation is assumed for starting. Will change it later.
 **/
 void abcMaterialData::AddScintillationProperty()
 {
-    std::vector<G4double> lxe_Energy = {7.0*eV, 7.07*eV, 7.14*eV};
-    std::vector<G4double> lxe_SCINT = {0.1, 1.0, 0.1};
+    std::vector<G4double> vasEnergy;
+    std::vector<G4double> vasScint;
+    AddScintillationSpectrum(vasEnergy, vasScint);
 
-    mMPT->AddProperty("SCINTILLATIONCOMPONENT1", lxe_Energy, lxe_SCINT);
+    mMPT->AddProperty("SCINTILLATIONCOMPONENT1", vasEnergy, vasScint);
     mMPT->AddConstProperty("SCINTILLATIONYIELD", 120./MeV);
     mMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);
     mMPT->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 20.*ns);

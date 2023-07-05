@@ -4,13 +4,12 @@
 #include "G4RunManager.hh"
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
-#include "FTFP_BERT.hh"
-#include "G4EmStandardPhysics_option4.hh"
-#include "G4OpticalPhysics.hh"
+//#include "FTFP_BERT.hh"
+//#include "G4EmStandardPhysics_option4.hh"
+//#include "G4OpticalPhysics.hh"
 #include "G4SystemOfUnits.hh"
-#include "G4Cerenkov.hh"
-#include "G4RadioactiveDecayPhysics.hh"
-#include "G4DecayPhysics.hh"
+//#include "G4RadioactiveDecayPhysics.hh"
+//#include "G4DecayPhysics.hh"
 
 #define G4VIS_USE 1
 #ifdef G4VIS_USE
@@ -28,7 +27,7 @@
 #include "OMSimSteppingAction.hh"
 #include "OMSimSteppingVerbose.hh"
 #include "OMSimAnalysisManager.hh"
-//#include "OMSimPMTQE.hh"
+
 
 //setting up the external variables
 G4int           gGlass = 1;
@@ -157,18 +156,15 @@ int main(int argc, char** argv)
     G4RunManager* runmanager = new G4RunManager();
 
     //Generating Physics List
-    G4VModularPhysicsList* physicsList = new FTFP_BERT;
+    /*G4VModularPhysicsList* physicsList = new FTFP_BERT;
     G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
-    /***
-    Will add multithreading and update the optical physics code later!!!
-    **/
     physicsList->RegisterPhysics(opticalPhysics);
     physicsList -> RegisterPhysics(new G4RadioactiveDecayPhysics);
     physicsList -> RegisterPhysics(new G4DecayPhysics);
+    runmanager -> SetUserInitialization(physicsList);*/
 
     runmanager -> SetUserInitialization(new OMSimDetectorConstruction(PMT_model, world_size));
-    runmanager -> SetUserInitialization(physicsList);
-    //runmanager -> SetUserInitialization(new OMSimPhysicsList);
+    runmanager -> SetUserInitialization(new OMSimPhysicsList);
     runmanager -> SetUserAction(new OMSimPrimaryGeneratorAction(interaction_channel, PMT_model));
     runmanager -> SetUserAction(new OMSimEventAction);
     runmanager -> SetUserAction(new OMSimRunAction);
