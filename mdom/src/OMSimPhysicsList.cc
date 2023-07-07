@@ -71,6 +71,7 @@ void OMSimPhysicsList::ConstructProcess()
 //The Scintillation Process
     G4Scintillation* theScintillationProcess = new G4Scintillation("Scintillation");
     theScintillationProcess -> SetTrackSecondariesFirst(true);
+    theScintillationProcess -> SetScintillationByParticleType(true);
 
 //	The Livermore models
 	G4eIonisation* theIonizationModel = new G4eIonisation();
@@ -129,12 +130,19 @@ void OMSimPhysicsList::ConstructProcess()
   			pmanager->AddProcess(theCerenkovProcess);
 			pmanager->SetProcessOrdering(theCerenkovProcess, idxPostStep);
         }
-
+    /**
+    *Scintillation is only set for electron and alpha
+    *Because scintillation yield for other particles are not known.
+    **/
         if(theScintillationProcess -> IsApplicable(*particle))
         {
-            pmanager -> AddDiscreteProcess(theScintillationProcess);
-            pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxAtRest);
-            pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxPostStep);
+            if(particle -> GetParticleName() == "e-" || particle -> GetParticleName() == "alpha")
+            {
+                pmanager -> AddDiscreteProcess(theScintillationProcess);
+                pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxAtRest);
+                pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxPostStep);
+            }
+
         }
 
 	}

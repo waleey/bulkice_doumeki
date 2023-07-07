@@ -35,16 +35,19 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     {
         if(finteraction_channel == "ibd")
         {
-            fParticleSetup -> GeneratePositron();
+	    std::cout << "************Only particles from IBD is considered************* " << std::endl;
+	    fParticleSetup -> GeneratePositron();
             fParticleSetup -> GenerateNeutron();
         }
         else if(finteraction_channel == "enees")
         {
+            std::cout << "************Only particles from ENEES is considered***********" << std::endl;
             fParticleSetup -> GenerateElectron();
             fParticleSetup -> GenerateNeutron();
         }
         else if(finteraction_channel == "all")
         {
+            std::cout << "**********Particles from all interactions are considered********" << std::endl;
             fParticleSetup -> GeneratePositron();
             fParticleSetup -> GenerateElectron();
             fParticleSetup -> GenerateNeutron();
@@ -55,6 +58,7 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
         else if(finteraction_channel == "radioactivity")
         {
+            std::cout << "********Only particles from RadioactiveDecay is being simulated**********" << std::endl;
             fParticleSetup -> GenerateK40();
             fParticleSetup -> GenerateTh238();
             fParticleSetup -> GenerateU238();

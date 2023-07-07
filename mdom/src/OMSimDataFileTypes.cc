@@ -188,9 +188,10 @@ void abcMaterialData::AddScintillationSpectrum(std::vector<G4double>& vasEnergy,
 *Scintillation time constant is the average scintillation time constant
 *for Vetrovex glass after correction at -25C temperature.
 *Data taken from M. Unland's thesis.
-*Alpha Scintillation Yield is used as the general use for now
+*Electorn Scintillation Yield is used as the general scintillation yield.
 *Electron yield would be 9.5 times higher than the Alpha yield
-*Will implement particle specific yield later.
+*Scintillation is only defined for alpha and electron.
+*Yield for other particles are unknown.
 **/
 void abcMaterialData::AddScintillationProperty()
 {
@@ -198,8 +199,18 @@ void abcMaterialData::AddScintillationProperty()
     std::vector<G4double> vasScint;
     AddScintillationSpectrum(vasEnergy, vasScint);
 
+    std::vector<G4double> alphaEnergy = {0, 100 * MeV};
+    std::vector<G4double> alphaYield = {0, 47.5 * 100};
+    std::vector<G4double> electronEnergy = {0, 100 * MeV};
+    std::vector<G4double> electronYield = {0, 47.5 * 9.5 * 100 * MeV};
+    G4double generalYield = 47.5 * 9.5; //set the yield for electron
+
     mMPT->AddProperty("SCINTILLATIONCOMPONENT1", vasEnergy, vasScint);
-    mMPT->AddConstProperty("SCINTILLATIONYIELD", 47.5/MeV);
+    mMPT->AddConstProperty("SCINTILLATIONYIELD", generalYield/MeV);
+    mMPT->AddProperty("ALPHASCINTILLATIONYIELD", alphaEnergy, alphaYield);
+    mMPT->AddConstProperty("ALPHASCINTILLATIONYIELD1", 1.0);
+    mMPT->AddProperty("ELECTRONSCINTILLATIONYIELD" , electronEnergy, electronYield);
+    mMPT->AddConstProperty("ELECTRONSCINTILLATIONYIELD1", 1.0);
     mMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);
     mMPT->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 8.83 * microsecond);
 

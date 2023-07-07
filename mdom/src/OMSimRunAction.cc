@@ -25,8 +25,9 @@ void OMSimRunAction::BeginOfRunAction(const G4Run* Run)
     gcounter = 0;
     gPosCount = 0;
     startingtime = clock() / CLOCKS_PER_SEC;
-	gAnalysisManager.datafile.open(ghitsfilename.c_str(), std::ios::out | std::ios::app);
-	G4int RunId = Run -> GetRunID();
+    G4int RunId = Run -> GetRunID();
+    G4String filename = ghitsfilename.c_str() + std::to_string(RunId) + ".dat";
+	gAnalysisManager.datafile.open(filename, std::ios::out /*| std::ios::app*/);
 	gAnalysisManager.SetRunId(RunId);
 
 }
