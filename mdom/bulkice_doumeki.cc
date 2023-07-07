@@ -65,22 +65,27 @@ void ParseCommandLine(int argc, char** argv, G4String& macroname, G4int& PMT_mod
 
         if(model == "dom")
         {
+            std::cout << "*****DOM simulation selected*****" << std::endl;
             PMT_model = 2;
         }
         else if(model == "mdom")
         {
+            std::cout << "*****MDOM simulation selected*****" << std::endl;
             PMT_model = 1;
         }
         else if(model == "lom16")
         {
+            std::cout << "*****LOM16 simulation selected*****" << std::endl;
             PMT_model = 3;
         }
         else if(model == "lom18")
         {
+            std::cout << "*****LOM18 simulation selected*****" << std::endl;
             PMT_model = 4;
         }
         else if(model == "pmt")
         {
+            std::cout << "*****Single PMT simulation selected*****" << std::endl;
             PMT_model = 0;
         }
         else

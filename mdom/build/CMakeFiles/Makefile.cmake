@@ -13,6 +13,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.16.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeSystem.cmake"
+  "../env.sh"
   "../ray_trace.mac"
   "../run_pos.mac"
   "../vis.mac"
@@ -121,6 +122,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "run_pos.mac"
   "ray_trace.mac"
   "10run_pos.mac"
+  "env.sh"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
