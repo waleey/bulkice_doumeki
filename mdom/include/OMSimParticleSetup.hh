@@ -9,8 +9,7 @@
 #include "G4Event.hh"
 #include "G4IonTable.hh"
 
-#include "Poisson.hh"
-
+#include "OMSimRadioactivityData.hh"
 
 #include <vector>
 #include <string>
@@ -37,12 +36,6 @@ class OMSimParticleSetup
     void GenerateTh238();
     void GenerateU238();
     void GenerateU235();
-    void SetGlassWeight(G4double glassWeight) { fglassweight = glassWeight; }
-
-    static G4double glassInRad;
-    static G4double glassOutRad;
-    static void SetGlassRad(G4double, G4double);
-
     /**
     **/
 
@@ -51,12 +44,8 @@ class OMSimParticleSetup
     void SetupNeutron();
     void SetupElectron();
 
-    void SetupRadioactiveParticles();
-
-
     G4int fomModel;
-    /*OMSimInputData* mData;
-    G4String mDataKey;*/
+    OMSimRadioactivityData* radData;
     G4int pos_count;
     G4int neu_count;
     G4int e_count;
@@ -64,19 +53,8 @@ class OMSimParticleSetup
     G4Event* fEvent;
     G4ParticleTable* fParticleTable = G4ParticleTable::GetParticleTable();
     void DataReader(std::string filepath, std::vector<std::vector<G4double>>& data);
-    double RandomGen(double minLim, double maxLim);
 
-    /**
-    *Setting up dummy parameters for radioactive particles
-    *for now, U235, U238, Th238, and K40 decays are simulated
-    *it is assumed that they are emitted from a spherical surface
-    *no information about their decay time, activity, and quantity are accruately known to me
-
-    the activity is set to a dummy value for now.
-    Will be updates later following M.Unland's thesis.
-    Also, the timewindo is dummy for now.
-    **/
-    int radioactiveParticleNum = 500; //just a dummy number. More realistic approach will be used later.
+    int radioactiveParticleNum;
     double radioactiveParticleEnergy;
     double radioactiveParticleCharge;
     G4ThreeVector radioactiveParticlePosition;
@@ -87,8 +65,6 @@ class OMSimParticleSetup
     G4double u235activity;
     G4double th238activity;
     G4double timeWindow;
-    G4double fglassweight;
-    Poisson* poisson;
     /**
     **/
     std::vector<G4double> energy;

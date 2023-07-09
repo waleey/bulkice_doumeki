@@ -5,7 +5,7 @@
  *
  *  @author Martin Unland - modified by Markus Dittmer
  *  @date October 2021 - modified at February 2022
- *
+ *  @Modified by Waly M Z Karim
  *  @version Geant4 10.7
  *
  *  @todo
@@ -19,7 +19,7 @@
 
 #include "OMSimInputData.hh"
 #include "OMSimPMTConstruction.hh"
-
+#include "OMSimRadioactivityData.hh"
 #include "OMSimMDOM.hh"
 #include "OMSimPDOM.hh"
 #include "OMSimLOM16.hh"
@@ -34,8 +34,8 @@ extern G4int gDOM;
 extern G4bool gCADImport;
 extern G4bool gPlaceHarness;
 
-G4double OMSimParticleSetup::glassInRad = 0.0;
-G4double OMSimParticleSetup::glassOutRad = 0.0;
+G4double OMSimRadioactivityData::fglassInRad = 0.0;
+G4double OMSimRadioactivityData::fglassOutRad = 0.0;
 
 OMSimDetectorConstruction::OMSimDetectorConstruction(G4int DOM, G4double worldSize)
     : mWorldSolid(0), mWorldLogical(0), mWorldPhysical(0), fDOM(DOM), fworldSize(worldSize)
@@ -178,7 +178,7 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
         mDOM *lOpticalModule = new mDOM(mData,gPlaceHarness);
         G4double glassOutRad = lOpticalModule -> getGlassOutRad();
         G4double glassInRad = lOpticalModule -> getGlassInRad();
-        OMSimParticleSetup::SetGlassRad(glassOutRad, glassInRad);
+        OMSimRadioactivityData::SetGlassRad(glassOutRad, glassInRad);
         lOpticalModule->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
     }
     else if (fDOM == 2){ //PDOM

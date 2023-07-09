@@ -48,14 +48,17 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 vertex_pos = aTrack -> GetVertexPosition();
                 G4double hc = 1240 * nm;
                 G4double lambda;
-
+                /**
+                *Will be removed soon
+                **/
+                //std::string creator = aTrack -> GetCreatorProcess() -> GetProcessName();
                 Ekin = aTrack->GetKineticEnergy() ;
                 lambda = (hc/Ekin) * nm;
                 pmt_qe -> ReadQeTable();
-                std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
+                //std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
                 double qe = (pmt_qe -> GetQe(lambda)) / 100;
                 double random = CLHEP::RandFlat::shoot(0.0, 1.0);
-                std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
+                //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
                 G4int survived = (random < (qe)) ? 1 : 0;
                 std::vector<G4String> n;
                 extern std::vector<G4String> explode (G4String s, char d);
@@ -81,6 +84,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     gAnalysisManager.stats_vertex_position.push_back(vertex_pos);
                     gAnalysisManager.stats_positron_id.push_back(aTrack -> GetParentID());
                     gAnalysisManager.stats_survived_qe.push_back(survived);
+                    //Will be removed soon
+                    //gAnalysisManager.stats_creator.push_back(creator);
                 }
 
                 aTrack->SetTrackStatus(fStopAndKill);

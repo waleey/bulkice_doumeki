@@ -99,6 +99,7 @@ void OMSimPhysicsList::ConstructProcess()
 		G4double particleMass = particle->GetPDGMass();
 		G4String particleType = particle->GetParticleType();
 		G4double particleCharge = particle->GetPDGCharge();
+		//std::cout << "PARTICLE NAMES ARE: " << particleName << std::endl;
 
 		if (particleName == "opticalphoton") {
 			pmanager->AddDiscreteProcess(new G4OpAbsorption());

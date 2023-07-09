@@ -10,11 +10,11 @@ CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/OMSimPMTQE.hh
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/OMSimParticleSetup.hh
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/OMSimPhysicsList.hh
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/OMSimPrimaryGeneratorAction.hh
+CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/OMSimRadioactivityData.hh
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/OMSimRunAction.hh
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/OMSimSteppingAction.hh
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/OMSimSteppingVerbose.hh
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/OMSimTrackingAction.hh
-CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../include/Poisson.hh
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: ../bulkice_doumeki.cc
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Geometry/BasicVector3D.h
 CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Geometry/Normal3D.h
@@ -1333,7 +1333,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o: ../include/OM
 CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o: ../include/OMSimPDOM.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o: ../include/OMSimPMTConstruction.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o: ../include/OMSimParticleSetup.hh
-CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o: ../include/Poisson.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o: ../include/OMSimRadioactivityData.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o: ../include/abcDetectorComponent.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o: ../src/OMSimDetectorConstruction.cc
 CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Geometry/BasicVector3D.h
@@ -3738,7 +3738,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o: ../include/OMSimPMTRes
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o: ../src/OMSimPMTResponse.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o: ../include/OMSimParticleSetup.hh
-CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o: ../include/Poisson.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o: ../include/OMSimRadioactivityData.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o: ../src/OMSimParticleSetup.cc
 CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Units/PhysicalConstants.h
 CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Units/SystemOfUnits.h
@@ -4306,7 +4306,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o: /home/waly/software/ge
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: ../include/OMSimParticleSetup.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: ../include/OMSimPrimaryGeneratorAction.hh
-CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: ../include/Poisson.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: ../include/OMSimRadioactivityData.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: ../src/OMSimPrimaryGeneratorAction.cc
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Units/PhysicalConstants.h
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Units/SystemOfUnits.h
@@ -4458,6 +4458,26 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: /home/waly/
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/pwdefs.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/templates.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/tls.hh
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: ../include/OMSimRadioactivityData.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: ../src/OMSimRadioactivityData.cc
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Units/SystemOfUnits.h
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Utility/defs.h
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Vector/ThreeVector.h
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/CLHEP/Vector/ThreeVector.icc
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4EnvironmentUtils.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4Exception.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4ExceptionSeverity.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4GlobalConfig.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4String.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4String.icc
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4SystemOfUnits.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4ThreeVector.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4Types.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4ios.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/globals.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/templates.hh
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/tls.hh
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o: ../include/OMSimAnalysisManager.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o: ../include/OMSimRunAction.hh
@@ -5419,12 +5439,6 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o: /home/waly/software
 CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/tls.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/trkdefs.hh
 CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/trkgdefs.hh
-
-CMakeFiles/bulkice_doumeki.dir/src/Poisson.cc.o: ../include/Poisson.hh
-CMakeFiles/bulkice_doumeki.dir/src/Poisson.cc.o: ../src/Poisson.cc
-CMakeFiles/bulkice_doumeki.dir/src/Poisson.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4GlobalConfig.hh
-CMakeFiles/bulkice_doumeki.dir/src/Poisson.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/G4Types.hh
-CMakeFiles/bulkice_doumeki.dir/src/Poisson.cc.o: /home/waly/software/geant4-v11.1.2-install/include/Geant4/tls.hh
 
 CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o: ../include/OMSimInputData.hh
 CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o: ../include/OMSimLogger.hh

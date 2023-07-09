@@ -19,7 +19,27 @@ OMSimTrackingAction::~OMSimTrackingAction()
 
 void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 {
-
+    /**
+    *temporal correlation between parent and daughter nucleus is preserved
+    *if the mean life time of daughter nucleus is within the time window
+    *if not, the initial time of the daughter is set to a random time t_rnd
+    * drawn from a flat distribution between [o, t_window]
+    *and the daughter is forced to decay immediately with initial time t_rnd.
+    *This is necessary to maintain the secular equilibrium
+    *among the nucleus in the decay chain of each isotope.
+    **/
+    if(aTrack -> GetCreatorProcess())
+    {
+        if(aTrack -> GetParticleDefinition() -> GetParticleName() != "opticalphoton" && aTrack -> GetParticleDefinition() -> GetParticleName() != "e-")
+        {
+           if(!(aTrack -> GetParticleDefinition() -> GetPDGStable()))
+            {
+                aTrack -> GetDefinition() -> SetPDGLifeTime(0.);
+                std::cout << aTrack -> GetParticleDefinition() -> GetPDGLifeTime() << std::endl;
+                std::cout << aTrack -> GetParticleDefinition() -> GetParticleName() << std::endl;
+            }
+        }
+    }
 }
 
 void OMSimTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
