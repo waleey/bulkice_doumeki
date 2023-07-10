@@ -57,6 +57,7 @@ class OMSimParticleSetup
     int radioactiveParticleNum;
     double radioactiveParticleEnergy;
     double radioactiveParticleCharge;
+    double radioactiveParticleTime;
     G4ThreeVector radioactiveParticlePosition;
     G4ThreeVector radioactiveParticleOrientation;
     G4ParticleDefinition* radioactiveParticle;

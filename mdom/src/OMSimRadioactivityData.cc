@@ -7,7 +7,7 @@
 //G4double OMSimRadioactivityData::ftimeWindow = 10;
 //G4double OMSimRadioactivityData::fglassInRad = 10;
 //G4double OMSimRadioactivityData::fglassOutRad = 10;
-OMSimRadioactivityData::OMSimRadioactivityData(G4int omModel) : fomModel(omModel), factivity(0), fnumDecay(0), finitialTime(0)
+OMSimRadioactivityData::OMSimRadioactivityData() : factivity(0), fnumDecay(0), finitialTime(0)
 {
 }
 OMSimRadioactivityData::~OMSimRadioactivityData()
@@ -76,10 +76,10 @@ void OMSimRadioactivityData::GeneratePosition()
     *For now, radioactivity is only available to MDOM
     *Other OMs will be added soon once the geometry is well known.
     **/
-
+    G4int omModel = OMSimRadioactivityData::fomModel;
     try
     {
-        if(fomModel == 1)
+        if( omModel== 1)
         {
             fglassWeight = 13.0; //kilograms
             G4double glassOutRad = OMSimRadioactivityData::fglassOutRad;
@@ -97,7 +97,7 @@ void OMSimRadioactivityData::GeneratePosition()
         }
         else
         {
-            throw fomModel;
+            throw omModel;
         }
     }
     catch(G4int omModel)

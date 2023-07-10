@@ -14,7 +14,7 @@ class OMSimRadioactivityData
 {
 public:
 
-    OMSimRadioactivityData(G4int omModel);
+    OMSimRadioactivityData();
     ~OMSimRadioactivityData();
 
     G4ThreeVector SetupPosition();
@@ -27,7 +27,7 @@ public:
     static G4double fglassOutRad;
     static G4double fglassInRad;
     static G4double ftimeWindow;
-
+    static G4int fomModel;
     G4int GetNumDecay();
     G4double GetTimeWindow();
     G4double GetInitialTime();
@@ -43,7 +43,6 @@ private:
     G4ThreeVector fdecayOrientation;
 
     //Optical Module Specific
-    G4int fomModel;
     G4double fglassWeight;
     G4double fglassRadius;
     G4double fglassTheta;

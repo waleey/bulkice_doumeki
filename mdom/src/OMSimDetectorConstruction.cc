@@ -36,6 +36,7 @@ extern G4bool gPlaceHarness;
 
 G4double OMSimRadioactivityData::fglassInRad = 0.0;
 G4double OMSimRadioactivityData::fglassOutRad = 0.0;
+G4int OMSimRadioactivityData::fomModel = 0;
 
 OMSimDetectorConstruction::OMSimDetectorConstruction(G4int DOM, G4double worldSize)
     : mWorldSolid(0), mWorldLogical(0), mWorldPhysical(0), fDOM(DOM), fworldSize(worldSize)
@@ -149,6 +150,7 @@ void OMSimDetectorConstruction::ConstructWorld()
 G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
 {
 
+    OMSimRadioactivityData::fomModel = fDOM;
     mData = new OMSimInputData();
     mData->SearchFolders("/home/waly/bulkice_doumeki/mdom/build");
 

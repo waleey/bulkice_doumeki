@@ -137,8 +137,9 @@ void OMSimPhysicsList::ConstructProcess()
     **/
         if(theScintillationProcess -> IsApplicable(*particle))
         {
-            if(particle -> GetParticleName() == "e-" || particle -> GetParticleName() == "alpha")
+            if(particle -> GetParticleName() == "e-" || particle -> GetParticleName() == "alpha" /*|| particle -> GetParticleName() == "e+"*/)
             {
+                std::cout << "SCINTILLLLLLLLLLLLATION" << std::endl;
                 pmanager -> AddDiscreteProcess(theScintillationProcess);
                 pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxAtRest);
                 pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxPostStep);

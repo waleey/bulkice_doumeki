@@ -2,6 +2,7 @@
 /**
 *Set the time window here
 *Do not assign any unit
+*It's in seconds
 **/
 G4double OMSimRadioactivityData::ftimeWindow = 60;
 
@@ -12,7 +13,7 @@ OMSimParticleSetup::OMSimParticleSetup(G4ParticleGun* ParticleGun, G4Event* anEv
     *Should be changed later to 10 min as M.Unland's thesis.
     **/
     //poisson = new Poisson(1, 1);
-    radData = new OMSimRadioactivityData(fomModel);
+    radData = new OMSimRadioactivityData();
 }
 void OMSimParticleSetup::GeneratePositron()
 {
@@ -116,21 +117,22 @@ void OMSimParticleSetup::GenerateK40()
     for(int i = 0; i < radioactiveParticleNum; i++)
     {
         radioactiveParticlePosition = radData -> SetupPosition();
-        std::cout << radioactiveParticlePosition.x() / mm << std::endl;
         radioactiveParticleOrientation = radData -> SetupOrientation();
+        radioactiveParticleTime = radData -> GetInitialTime() * s;
 
         fParticleGun -> SetParticlePosition(radioactiveParticlePosition);
         fParticleGun -> SetParticleMomentumDirection(radioactiveParticleOrientation);
         fParticleGun -> SetParticleEnergy(radioactiveParticleEnergy);
         fParticleGun -> SetParticleDefinition(radioactiveParticle);
         fParticleGun -> SetParticleCharge(radioactiveParticleCharge);
+        fParticleGun -> SetParticleTime(radioactiveParticleTime);
         fParticleGun -> GeneratePrimaryVertex(fEvent);
     }
 }
 void OMSimParticleSetup::GenerateTh238()
 {
     G4int Z = 90;
-    G4int A = 238;
+    G4int A = 232;
     th238activity = 1.28; /** value from C. Lozano's 2016 paper**/
     radData -> SetTimeWindow(OMSimRadioactivityData::ftimeWindow);
     radData -> SetActivity(th238activity);
@@ -143,12 +145,14 @@ void OMSimParticleSetup::GenerateTh238()
     {
         radioactiveParticlePosition = radData -> SetupPosition();
         radioactiveParticleOrientation = radData -> SetupOrientation();
+        radioactiveParticleTime = radData -> GetInitialTime() * s;
 
         fParticleGun -> SetParticlePosition(radioactiveParticlePosition);
         fParticleGun -> SetParticleMomentumDirection(radioactiveParticleOrientation);
         fParticleGun -> SetParticleEnergy(radioactiveParticleEnergy);
         fParticleGun -> SetParticleDefinition(radioactiveParticle);
         fParticleGun -> SetParticleCharge(radioactiveParticleCharge);
+        fParticleGun -> SetParticleTime(radioactiveParticleTime);
         fParticleGun -> GeneratePrimaryVertex(fEvent);
     }
 }
@@ -168,12 +172,14 @@ void OMSimParticleSetup::GenerateU238()
     {
         radioactiveParticlePosition = radData -> SetupPosition();
         radioactiveParticleOrientation = radData -> SetupOrientation();
+        radioactiveParticleTime = radData -> GetInitialTime() * s;
 
         fParticleGun -> SetParticlePosition(radioactiveParticlePosition);
         fParticleGun -> SetParticleMomentumDirection(radioactiveParticleOrientation);
         fParticleGun -> SetParticleEnergy(radioactiveParticleEnergy);
         fParticleGun -> SetParticleDefinition(radioactiveParticle);
         fParticleGun -> SetParticleCharge(radioactiveParticleCharge);
+        fParticleGun -> SetParticleTime(radioactiveParticleTime);
         fParticleGun -> GeneratePrimaryVertex(fEvent);
     }
 }
@@ -193,11 +199,14 @@ void OMSimParticleSetup::GenerateU235()
     {
         radioactiveParticlePosition = radData -> SetupPosition();
         radioactiveParticleOrientation = radData -> SetupOrientation();
+        radioactiveParticleTime = radData -> GetInitialTime() * s;
+
         fParticleGun -> SetParticlePosition(radioactiveParticlePosition);
         fParticleGun -> SetParticleMomentumDirection(radioactiveParticleOrientation);
         fParticleGun -> SetParticleEnergy(radioactiveParticleEnergy);
         fParticleGun -> SetParticleDefinition(radioactiveParticle);
         fParticleGun -> SetParticleCharge(radioactiveParticleCharge);
+        fParticleGun -> SetParticleTime(radioactiveParticleTime);
         fParticleGun -> GeneratePrimaryVertex(fEvent);
     }
 }

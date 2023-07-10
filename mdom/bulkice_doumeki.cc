@@ -30,15 +30,15 @@
 
 
 //setting up the external variables
-G4int           gGlass = 1;
-G4int           gGel = 1;
+G4int           gGlass = 0;
+G4int           gGel = 0;
 G4double        gRefCone_angle = 51;
 G4int           gConeMat = 1;
 G4int           gHolderColor = 1;
 //G4int           gDOM = 0; // 0 : single PMT
 G4int           gDOM = 1; // 1 : mdom
 //G4int           gDOM = 2; // 2 : pdom
-G4int           gPMT = 3; // i don't know what is it
+G4int           gPMT = 0; // i don't know what is it
 G4bool          gPlaceHarness = true;
 G4int           gHarness = 1;
 G4int           gRopeNumber = 1;

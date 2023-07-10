@@ -51,7 +51,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 /**
                 *Will be removed soon
                 **/
-                //std::string creator = aTrack -> GetCreatorProcess() -> GetProcessName();
+                std::string creator = aTrack -> GetCreatorProcess() -> GetProcessName();
                 Ekin = aTrack->GetKineticEnergy() ;
                 lambda = (hc/Ekin) * nm;
                 pmt_qe -> ReadQeTable();
@@ -85,7 +85,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     gAnalysisManager.stats_positron_id.push_back(aTrack -> GetParentID());
                     gAnalysisManager.stats_survived_qe.push_back(survived);
                     //Will be removed soon
-                    //gAnalysisManager.stats_creator.push_back(creator);
+                    gAnalysisManager.stats_creator.push_back(creator);
                 }
 
                 aTrack->SetTrackStatus(fStopAndKill);

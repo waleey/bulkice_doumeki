@@ -156,7 +156,8 @@ void abcMaterialData::ExtractRefractionIndex()
 void abcMaterialData::AddScintillationSpectrum(std::vector<G4double>& vasEnergy, std::vector<G4double>& vasScint)
 {
     G4String filename = "/home/waly/bulkice_doumeki/mdom/InputFile/VAS_Scintillation_Spectrum.data"; //Change it according to your file path
-
+    //G4String filename = "/home/waly/bulkice_doumeki/mdom/InputFile/Vitrovex_scint.txt";
+    //G4String filename = "/home/waly/bulkice_doumeki/mdom/InputFile/vis_corrected.txt";
     std::ifstream file(filename);
     if(!(file.is_open()))
     {
@@ -186,10 +187,10 @@ void abcMaterialData::AddScintillationSpectrum(std::vector<G4double>& vasEnergy,
 *For now, dummy scintillation yield, and scintillation decay time constants are used.
 *Particle independent scintillation is assumed for starting. Will change it later.
 *Scintillation time constant is the average scintillation time constant
-*for Vetrovex glass after correction at -25C temperature.
-*Data taken from M. Unland's thesis.
-*Electorn Scintillation Yield is used as the general scintillation yield.
-*Electron yield would be 9.5 times higher than the Alpha yield
+*for Vetrovex glass after correction at -20C temperature.
+*Data taken from M. Dittmer's MA thesis.
+*Alpha Scintillation Yield is 75.0
+*Electron yield is 129 (2018 batch sample)
 *Scintillation is only defined for alpha and electron.
 *Yield for other particles are unknown.
 **/
@@ -200,21 +201,22 @@ void abcMaterialData::AddScintillationProperty()
     AddScintillationSpectrum(vasEnergy, vasScint);
 
     std::vector<G4double> alphaEnergy = {0, 100 * MeV};
-    std::vector<G4double> alphaYield = {0, 47.5 * 100};
+    std::vector<G4double> alphaYield = {5, 75 * 100};
     std::vector<G4double> electronEnergy = {0, 100 * MeV};
-    std::vector<G4double> electronYield = {0, 47.5 * 9.5 * 100 * MeV};
-    G4double generalYield = 47.5 * 9.5; //set the yield for electron
+    std::vector<G4double> electronYield = {5, 129 * 100};
+    G4double generalYield = 129; //set the yield for electron
 
     mMPT->AddProperty("SCINTILLATIONCOMPONENT1", vasEnergy, vasScint);
     mMPT->AddConstProperty("SCINTILLATIONYIELD", generalYield/MeV);
     mMPT->AddProperty("ALPHASCINTILLATIONYIELD", alphaEnergy, alphaYield);
     mMPT->AddConstProperty("ALPHASCINTILLATIONYIELD1", 1.0);
     mMPT->AddProperty("ELECTRONSCINTILLATIONYIELD" , electronEnergy, electronYield);
+    //mMPT->AddProperty("POSITRONSCINTILLATIONYIELD", electronEnergy, electronYield);
     mMPT->AddConstProperty("ELECTRONSCINTILLATIONYIELD1", 1.0);
     mMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);
     mMPT->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 8.83 * microsecond);
 
-    mMaterial->GetIonisation()->SetBirksConstant(0.126*mm/MeV);
+    //mMaterial->GetIonisation()->SetBirksConstant(0.0151*cm/MeV); commenting out Birks constant cuz it's not defined in any previous lit.
 }
 /**
  * State in string to G4State

@@ -27,12 +27,9 @@ void OMSimAnalysisManager::Write()
             datafile << stats_photon_energy.at(i) << "\t";
             datafile << stats_PMT_hit.at(i) << "\t";
             //datafile << stats_event_distance.at(i) << "\t";
-            /**
-            *remember to un-comment output stuff
-            **/
-            //datafile << stats_photon_position.at(i).x()/m << "\t";
-            //datafile << stats_photon_position.at(i).y()/m << "\t";
-            //datafile << stats_photon_position.at(i).z()/m << "\t";
+            datafile << stats_photon_position.at(i).x()/m << "\t";
+            datafile << stats_photon_position.at(i).y()/m << "\t";
+            datafile << stats_photon_position.at(i).z()/m << "\t";
             datafile << stats_vertex_position.at(i).x()/m << "\t";
             datafile << stats_vertex_position.at(i).y()/m << "\t";
             datafile << stats_vertex_position.at(i).z()/m << "\t";
@@ -42,7 +39,7 @@ void OMSimAnalysisManager::Write()
             //datafile << stats_photon_direction.at(i).y() << "\t";
             //datafile << stats_photon_direction.at(i).z() << "\t";
             //datafile << stats_photon_position.at(i).mag() / m ;
-            //datafile << stats_creator.at(i) << "\t";
+            datafile << stats_creator.at(i) << "\t";
             datafile << G4endl;
         }
 	}

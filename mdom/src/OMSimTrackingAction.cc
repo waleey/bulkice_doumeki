@@ -5,7 +5,7 @@
 #include "G4Track.hh"
 #include "G4ThreeVector.hh"
 #include "G4SystemOfUnits.hh"
-
+#include "OMSimRadioactivityData.hh"
 
 OMSimTrackingAction::OMSimTrackingAction()
 :G4UserTrackingAction(), counter(0)
@@ -22,23 +22,26 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
     /**
     *temporal correlation between parent and daughter nucleus is preserved
     *if the mean life time of daughter nucleus is within the time window
-    *if not, the initial time of the daughter is set to a random time t_rnd
+    *if not, the decay time of the daughter is set to a random time t_rnd
     * drawn from a flat distribution between [o, t_window]
-    *and the daughter is forced to decay immediately with initial time t_rnd.
+    *and the daughter is forced to decay immediately with initial time t_rnd
     *This is necessary to maintain the secular equilibrium
     *among the nucleus in the decay chain of each isotope.
     **/
+    G4double timeWindow = OMSimRadioactivityData::ftimeWindow * s;
+    OMSimRadioactivityData* radData = new OMSimRadioactivityData();
     if(aTrack -> GetCreatorProcess())
     {
-        if(aTrack -> GetParticleDefinition() -> GetParticleName() != "opticalphoton" && aTrack -> GetParticleDefinition() -> GetParticleName() != "e-")
-        {
            if(!(aTrack -> GetParticleDefinition() -> GetPDGStable()))
             {
-                aTrack -> GetDefinition() -> SetPDGLifeTime(0.);
-                std::cout << aTrack -> GetParticleDefinition() -> GetPDGLifeTime() << std::endl;
-                std::cout << aTrack -> GetParticleDefinition() -> GetParticleName() << std::endl;
+                if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() >= timeWindow)
+                {
+                    aTrack -> GetDefinition() -> SetPDGLifeTime((radData -> GetInitialTime()) * s);
+                    /*std::cout << aTrack -> GetParticleDefinition() -> GetPDGLifeTime() << std::endl;
+                    std::cout << aTrack -> GetGlobalTime() << std::endl;
+                    std::cout << aTrack -> GetParticleDefinition() -> GetParticleName() << std::endl;*/
+                }
             }
-        }
     }
 }
 
