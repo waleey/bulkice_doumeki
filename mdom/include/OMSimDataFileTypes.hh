@@ -43,6 +43,7 @@ protected:
     void ExtractRefractionIndex();
     void AddScintillationProperty();
     G4State GetState(G4String pState);
+    void ReverseCopy(std::vector<G4double>&, G4double*);
     virtual void ExtractInformation() = 0; // abstract method
 
 private:
@@ -53,7 +54,7 @@ private:
 class RefractionAndAbsorption : public abcMaterialData
 {
 public:
-    RefractionAndAbsorption(G4String pFilename, bool isGlass) : abcMaterialData(pFilename), fisGlass(isGlass) {};
+    RefractionAndAbsorption(G4String pFilename/*, bool isGlass*/) : abcMaterialData(pFilename)/*, fisGlass(isGlass)*/ {};
     void ExtractInformation();
 
 private:

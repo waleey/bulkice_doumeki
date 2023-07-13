@@ -763,6 +763,33 @@ src/OMSimRunAction.cc.s:
 	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.s
 .PHONY : src/OMSimRunAction.cc.s
 
+src/OMSimScintillation.o: src/OMSimScintillation.cc.o
+
+.PHONY : src/OMSimScintillation.o
+
+# target to build an object file
+src/OMSimScintillation.cc.o:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o
+.PHONY : src/OMSimScintillation.cc.o
+
+src/OMSimScintillation.i: src/OMSimScintillation.cc.i
+
+.PHONY : src/OMSimScintillation.i
+
+# target to preprocess a source file
+src/OMSimScintillation.cc.i:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.i
+.PHONY : src/OMSimScintillation.cc.i
+
+src/OMSimScintillation.s: src/OMSimScintillation.cc.s
+
+.PHONY : src/OMSimScintillation.s
+
+# target to generate assembly for a file
+src/OMSimScintillation.cc.s:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.s
+.PHONY : src/OMSimScintillation.cc.s
+
 src/OMSimSteppingAction.o: src/OMSimSteppingAction.cc.o
 
 .PHONY : src/OMSimSteppingAction.o
@@ -950,6 +977,9 @@ help:
 	@echo "... src/OMSimRunAction.o"
 	@echo "... src/OMSimRunAction.i"
 	@echo "... src/OMSimRunAction.s"
+	@echo "... src/OMSimScintillation.o"
+	@echo "... src/OMSimScintillation.i"
+	@echo "... src/OMSimScintillation.s"
 	@echo "... src/OMSimSteppingAction.o"
 	@echo "... src/OMSimSteppingAction.i"
 	@echo "... src/OMSimSteppingAction.s"

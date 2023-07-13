@@ -12,10 +12,11 @@
 #include <G4UnitsTable.hh>
 #include <dirent.h>
 #include <cmath>
+#include <algorithm>
 #include <vector>
 
 namespace pt = boost::property_tree;
-
+extern std::vector<double> readColumnDouble (G4String fn, int col);
 void change_in_ascending_order(const std::vector<double> &ene, const std::vector<double> &val, std::vector<double> &ene2, std::vector<double> &val2)
 {
     unsigned int n = ene.size();
@@ -135,6 +136,15 @@ void abcMaterialData::ExtractAbsorptionLength()
 /**
  * Extracts refraction index and adds it to the material property table
  */
+ void abcMaterialData::ReverseCopy(std::vector<G4double>& arr1, G4double* arr2)
+ {
+    G4int len = arr1.size();
+    for(int i = 0; i < len; i++)
+    {
+        arr2[len -1 - i] = arr1.at(i);
+    }
+
+ }
 void abcMaterialData::ExtractRefractionIndex()
 {
     //std::cerr <<"abcMaterialData::ExtractRefractionIndex is called" << std::endl;
@@ -194,7 +204,7 @@ void abcMaterialData::AddScintillationSpectrum(std::vector<G4double>& vasEnergy,
 *Scintillation is only defined for alpha and electron.
 *Yield for other particles are unknown.
 **/
-void abcMaterialData::AddScintillationProperty()
+/*void abcMaterialData::AddScintillationProperty()
 {
     std::vector<G4double> vasEnergy;
     std::vector<G4double> vasScint;
@@ -217,7 +227,7 @@ void abcMaterialData::AddScintillationProperty()
     mMPT->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 8.83 * microsecond);
 
     //mMaterial->GetIonisation()->SetBirksConstant(0.0151*cm/MeV); commenting out Birks constant cuz it's not defined in any previous lit.
-}
+}*/
 /**
  * State in string to G4State
  * @param  G4String
@@ -249,11 +259,171 @@ void RefractionAndAbsorption::ExtractInformation()
     CreateMaterial();
     ExtractAbsorptionLength();
     ExtractRefractionIndex();
-    if(fisGlass)
+    /*if(fisGlass)
     {
         std::cout << "********Scintillation Property Activated*******" << std::endl;
         AddScintillationProperty();
+    }*/
+    if (mMaterial -> GetName() == "RiAbs_Glass_Tube"){
+        //critical("Found");
+        std::cout << "Adding Sctintillation for Vitro Glass Tube..." << std::endl;
+        G4double factor = 0.2;
+        G4double times20[7] = {
+        1.500932040523042781e-03*s*factor*1.5,
+        4e-02*s,
+        2.304116799105801212e-04*s*factor*1.5,
+        2.967754892640673745e-07*s*factor,
+        2.193657986806030323e-06*s*factor,
+        4.666464222616022482e-05*s*factor*1.5,
+        1.012137273486919956e-05*s*factor
+        /**
+            4e-02*s,
+        1.500932040523042781e-03*s*factor*1.5,
+        2.304116799105801212e-04*s*factor*1.5,
+        4.666464222616022482e-05*s*factor*1.5,
+        1.012137273486919956e-05*s*factor,
+        2.193657986806030323e-06*s*factor,
+        2.967754892640673745e-07*s*factor*/
+    };
+    G4double amplitudes20[7] = {
+
+    6.290979060619150687e-02*0.6,
+    4e-02,
+    6.846028776435156282e-02,
+    1.630113195117202096e-01*0.5,
+    3.496767714671291660e-01*0.35,
+    1.326011725433764721e-01,
+    2.233406581072310548e-01
+    /**
+        4e-02,
+        6.290979060619150687e-02*0.6,
+        6.846028776435156282e-02,
+        1.326011725433764721e-01,
+        2.233406581072310548e-01,
+        3.496767714671291660e-01*0.35,
+        1.630113195117202096e-01*0.5*/
+    };
+    //std::sort(amplitudes20, amplitudes20 + sizeof(amplitudes20) / sizeof(amplitudes20[0]));
+    //G4String DataFile = "../InputFile/VAS_Scintillation_Spectrum.data";
+    G4String DataFile = "../InputFile/Vitrovex_scint.txt";
+    std::vector<double> fileFirstColumn = readColumnDouble(DataFile, 1);
+    for(auto value : fileFirstColumn)
+    {
+        std::cout << value / eV << std::endl;
     }
+    std::vector<double> fileSecondColumn = readColumnDouble(DataFile, 2);
+
+    G4double VV_WL[int(fileFirstColumn.size())];
+    G4double VV_I[int(fileSecondColumn.size())];
+    //std::copy_backward(fileFirstColumn.begin(), fileFirstColumn.end(),  VV_WL.end());
+    //std::copy_backward(fileSecondColumn.begin(), fileSecondColumn.end(), VV_I.end());
+    ReverseCopy(fileFirstColumn, VV_WL);
+    ReverseCopy(fileSecondColumn, VV_I);
+    for(auto value : VV_WL)
+    {
+        std::cout << value << std::endl;
+    }
+    for (unsigned int u = 0; u <fileFirstColumn.size(); u++) {
+
+        VV_WL[u] = 1239.84193 / VV_WL[u]*eV;
+
+    }
+
+
+    mMPT->AddProperty("FIRSTCOMPONENT", VV_WL,VV_I,138, true, true);
+    mMPT->AddConstProperty("SCINTILLATIONYIELD",59.6/MeV);
+    mMPT->AddProperty("FRACTIONLIFETIMES",amplitudes20,times20,7, true, true);
+    mMPT->AddProperty("SCINTILLATIONSPECTRUM", VV_WL,VV_I,138, true, true);
+    mMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);
+    }
+
+
+    if (mMaterial->GetName() == "RiAbs_Glass_Vitrovex"){
+        //critical("Found");
+        std::cout << "Adding Sctintillation for Vitro nGlass Vessel..." << std::endl;
+        G4double factor = 0.3;
+        G4double times20[6] = {
+        1.500932040523042781e-03*s,
+        2.304116799105801212e-04*s,
+        4.666464222616022482e-05*s,
+        2.967754892640673745e-07*s,
+        1.012137273486919956e-05*s,
+        2.193657986806030323e-06*s
+    };
+    G4double amplitudes20[6] = {
+        6.290979060619150687e-02,
+        6.846028776435156282e-02,
+        1.326011725433764721e-01,
+        1.630113195117202096e-01,
+        2.233406581072310548e-01,
+        3.496767714671291660e-01
+    };
+    //G4String DataFile = "../InputFile/VAS_Scintillation_Spectrum.data";
+    G4String DataFile = "../InputFile/Vitrovex_scint.txt";
+    std::vector<double> fileFirstColumn = readColumnDouble(DataFile, 1);
+    std::vector<double> fileSecondColumn = readColumnDouble(DataFile, 2);
+
+    G4double VV_WL[int(fileFirstColumn.size())];
+    G4double VV_I[int(fileSecondColumn.size())];
+    ReverseCopy(fileFirstColumn, VV_WL);
+    ReverseCopy(fileSecondColumn, VV_I);
+    //std::copy_backward(fileFirstColumn.begin(), fileFirstColumn.end(), std::end(VV_WL));
+    //std::copy_backward(fileSecondColumn.begin(), fileSecondColumn.end(), std::end(VV_I));
+
+    for (unsigned int u = 0; u <fileFirstColumn.size(); u++) {
+
+        VV_WL[u] = 1239.84193 / VV_WL[u]*eV;
+
+    }
+
+    mMPT->AddProperty("FIRSTCOMPONENT",VV_WL,VV_I,138, true, true);
+    mMPT->AddConstProperty("SCINTILLATIONYIELD",46/MeV);
+    mMPT->AddProperty("FRACTIONLIFETIMES",amplitudes20,times20,6, true, true);
+    mMPT->AddProperty("SCINTILLATIONSPECTRUM",VV_WL,VV_I,138, true, true);
+    mMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);
+    }
+
+
+   /* if (mMaterial->GetName() == "RiAbs_Glass_Chiba"){
+        //critical("Found");
+        std::cout << "Adding Sctintillation for Chiba Glass..." << std::endl;
+        G4double DEGGtimes20[5] = {
+3.7596973315004064e-05*s,
+8.480364129990657e-06*s,
+2.0193372706901436e-06*s,
+1.7722047480973938e-07*s,
+0.00024852344312136036*s
+    };
+        G4double DEGGamplitudes20[5] = {
+0.2644264442708002,
+0.15726554891967992,
+0.209532534040833,
+0.1780995886502345,
+0.19067588411845232
+    };
+    G4String DataFile = "../InputFile/Vitrovex_scint.txt";
+    std::vector<double> fileFirstColumn = readColumnDouble(DataFile, 1);
+    std::vector<double> fileSecondColumn = readColumnDouble(DataFile, 2);
+
+    G4double VV_WL[138];
+    G4double VV_I[138];
+    ReverseCopy(fileFirstColumn, VV_WL);
+    ReverseCopy(fileSecondColumn, VV_I);
+    //std::copy_backward(fileFirstColumn.begin(), fileFirstColumn.end(), std::end(VV_WL));
+    //std::copy_backward(fileSecondColumn.begin(), fileSecondColumn.end(), std::end(VV_I));
+
+    for (unsigned int u = 0; u <fileFirstColumn.size(); u++) {
+
+        VV_WL[u] = 1239.84193 / VV_WL[u]*eV;
+
+    }
+
+    mMPT->AddProperty("FIRSTCOMPONENT",VV_WL,VV_I,138);
+    mMPT->AddConstProperty("SCINTILLATIONYIELD",55/MeV);
+    mMPT->AddProperty("FRACTIONLIFETIMES",DEGGamplitudes20,DEGGtimes20,5);
+    mMPT->AddProperty("SCINTILLATIONSPECTRUM",VV_WL,VV_I,138);
+    mMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);
+    }*/
     mMaterial->SetMaterialPropertiesTable(mMPT);
 }
 /**

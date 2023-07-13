@@ -271,12 +271,12 @@ void OMSimInputData::ScannDataDirectory()
         {
             if (fileName.substr(0, 5) == "RiAbs")
             {
-                bool isGlass = false;
+                /*bool isGlass = false;
                 if(fileName.substr(6 , 5) == "Glass")
                 {
                     isGlass = true;
-                }
-                RefractionAndAbsorption* lDataFile = new RefractionAndAbsorption(mDataDirectory + "/" + fileName, isGlass);
+                }*/
+                RefractionAndAbsorption* lDataFile = new RefractionAndAbsorption(mDataDirectory + "/" + fileName/*, isGlass*/);
                 lDataFile->ExtractInformation();
             }
             else if (fileName.substr(0, 2) == "Ri")

@@ -27,6 +27,7 @@
 #include "OMSimSteppingAction.hh"
 #include "OMSimSteppingVerbose.hh"
 #include "OMSimAnalysisManager.hh"
+#include "OMSimScintillation.hh"
 
 
 //setting up the external variables
@@ -43,16 +44,16 @@ G4bool          gPlaceHarness = true;
 G4int           gHarness = 1;
 G4int           gRopeNumber = 1;
 G4double        gworldsize = 0.5*m;
-
+G4double        gElectronFactor = 9.5;
 G4bool          gCADImport = true;
 G4String        gHittype = "individual"; // seems like individual records each hit per pmt
 G4bool          gVisual = true; // may be visualization on?
 G4int           gEnvironment = 2; // 1 is ICeCUbe ice without any ice property, 2 is with property, 0 is air.
-G4String        ghitsfilename = "/mnt/c/Users/Waly/bulkice_doumeki/hit_";
+G4String        ghitsfilename = "/mnt/c/Users/Waly/bulkice_doumeki/hit_"; //change location of your output file
 //G4String        ghitsfilename = "hit.dat";
 G4int           gcounter = 0;
 G4int           gPosCount = 0;
-G4String        gQEFile = "/home/waly/bulkice_doumeki/mdom/InputFile/TA0001_HamamatsuQE.data";
+G4String        gQEFile = "../InputFile/TA0001_HamamatsuQE.data";
 enum {PMT, MDOM, DOM, LOM16, LOM18};
 
 OMSimAnalysisManager gAnalysisManager;
@@ -144,6 +145,30 @@ std::vector<G4String> explode(char* cs, char d) {
         std::vector<G4String> o;
         G4String s = cs;
         return explode(s,d);
+}
+
+std::vector<double> readColumnDouble (G4String fn, int col) {
+    std::vector<double>	values;
+    unsigned int c;
+    double	a;
+    c = col;
+    std::ifstream	infile;
+    std::vector<G4String> n;
+    char l[256];
+    G4String l2;
+    infile.open(fn);
+    while (infile.good() && !infile.eof()) {
+        infile.getline(l,255);
+        l2 = l;
+        n = explode(l2,'\t');
+        if (n.size()>=c) {
+            a = atof(n.at(c-1));
+            values.push_back(a);
+        }
+    }
+    infile.close();
+
+    return values;//values enthält den c. Wert aus fn (aus jeder Spalte,welche  nach 255 zeichen oder durch \n beendet wird?)
 }
 
 int main(int argc, char** argv)

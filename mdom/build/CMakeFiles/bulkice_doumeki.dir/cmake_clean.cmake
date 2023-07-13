@@ -21,6 +21,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o"
   "CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o"
   "CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o"
+  "CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o"
   "CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o"
   "CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o"
   "CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o"

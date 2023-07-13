@@ -34,7 +34,7 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
     {
            if(!(aTrack -> GetParticleDefinition() -> GetPDGStable()))
             {
-                if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() >= timeWindow)
+                if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > 0.1 * s)
                 {
                     aTrack -> GetDefinition() -> SetPDGLifeTime((radData -> GetInitialTime()) * s);
                     /*std::cout << aTrack -> GetParticleDefinition() -> GetPDGLifeTime() << std::endl;

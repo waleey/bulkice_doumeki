@@ -1,4 +1,5 @@
 #include "OMSimPhysicsList.hh"
+#include "OMSimScintillation.hh"
 #include "G4ProcessManager.hh"
 #include "G4ParticleTypes.hh"
 #include "G4StepLimiter.hh"
@@ -64,14 +65,17 @@ void OMSimPhysicsList::ConstructProcess()
 
 //	The Cherenkov process
 	G4Cerenkov* theCerenkovProcess = new G4Cerenkov("Cerenkov");
-    theCerenkovProcess->SetTrackSecondariesFirst(true);
+    theCerenkovProcess->SetTrackSecondariesFirst(false);
     theCerenkovProcess->SetMaxBetaChangePerStep(10.0);
-    theCerenkovProcess->SetMaxNumPhotonsPerStep(300);
+    theCerenkovProcess->SetMaxNumPhotonsPerStep(10000);
 
 //The Scintillation Process
-    G4Scintillation* theScintillationProcess = new G4Scintillation("Scintillation");
-    theScintillationProcess -> SetTrackSecondariesFirst(true);
-    theScintillationProcess -> SetScintillationByParticleType(true);
+    /*G4Scintillation* theScintillationProcess = new G4Scintillation("Scintillation");
+    theScintillationProcess -> SetTrackSecondariesFirst(false);
+    theScintillationProcess -> SetScintillationByParticleType(true);*/
+
+    OMSimScintillation* theScintillationProcess = new OMSimScintillation("Scintillation");
+    theScintillationProcess -> SetTrackSecondariesFirst(false);
 
 //	The Livermore models
 	G4eIonisation* theIonizationModel = new G4eIonisation();
@@ -137,14 +141,15 @@ void OMSimPhysicsList::ConstructProcess()
     **/
         if(theScintillationProcess -> IsApplicable(*particle))
         {
-            if(particle -> GetParticleName() == "e-" || particle -> GetParticleName() == "alpha" /*|| particle -> GetParticleName() == "e+"*/)
+            /*if(particle -> GetParticleName() == "e-" || particle -> GetParticleName() == "alpha" || particle -> GetParticleName() == "e+")
             {
                 std::cout << "SCINTILLLLLLLLLLLLATION" << std::endl;
                 pmanager -> AddDiscreteProcess(theScintillationProcess);
                 pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxAtRest);
                 pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxPostStep);
-            }
-
+            }*/
+            pmanager -> AddProcess(theScintillationProcess);
+            pmanager -> SetProcessOrdering(theScintillationProcess, idxPostStep);
         }
 
 	}
