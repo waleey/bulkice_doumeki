@@ -14,7 +14,8 @@ extern G4String	gHittype;
 extern G4int gcounter;
 extern G4String gQEFile;
 extern G4int gPosCount;
-
+extern G4int gNumCherenkov;
+extern G4int gNumScint;
 
 OMSimSteppingAction::OMSimSteppingAction()
 {
@@ -33,6 +34,31 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
             aTrack->SetTrackStatus(fStopAndKill);
         }
     }
+    /**
+    *Checking if ions are escaping the volume without ionisation.
+    **/
+
+   /* if(aTrack -> GetCreatorProcess() && !(aTrack -> GetParticleDefinition() -> GetPDGStable()))
+    {
+
+        std::cout << "Beginning of Tracking..." << std::endl;
+        if(true)
+        {
+            G4String particle_name = aTrack -> GetParticleDefinition() -> GetParticleName();
+            G4String pre_place = aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName();
+            G4String post_place = aStep -> GetPostStepPoint() -> GetPhysicalVolume() -> GetName();
+            G4String process = aStep -> GetPostStepPoint() -> GetProcessDefinedStep() -> GetProcessName();
+            G4double step_length = aStep -> GetStepLength();
+
+            std::cout << "Particle: " << particle_name << std::endl
+            << "Pre position: " << pre_place << std::endl
+            << "Post place: " << post_place << std::endl
+            << "Process going through: " << process << std::endl
+            << "Step Length: " << step_length / mm << std::endl;
+        }
+
+    }*/
+
 
     //	Check if optical photon is about to hit a photocathode, if so, destroy it and save the hit
     if ( aTrack->GetDefinition()->GetParticleName() == "opticalphoton" ) {
@@ -41,6 +67,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
             if( aStep -> GetPostStepPoint() -> GetPhysicalVolume() -> GetName() == "Photocathode_pv_OMSIM") {
 
+
+                //Commented out temporarily.
                 G4double Ekin;
                 G4double t1, t2;
                 G4Track* aTrack = aStep -> GetTrack();
@@ -48,10 +76,16 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 vertex_pos = aTrack -> GetVertexPosition();
                 G4double hc = 1240 * nm;
                 G4double lambda;
-                /**
-                *Will be removed soon
-                **/
+
                 std::string creator = aTrack -> GetCreatorProcess() -> GetProcessName();
+                if(creator == "Cerenkov")
+                {
+                    gNumCherenkov++;
+                }
+                else if(creator == "Scintillation")
+                {
+                    gNumScint++;
+                }
                 Ekin = aTrack->GetKineticEnergy() ;
                 lambda = (hc/Ekin) * nm;
                 pmt_qe -> ReadQeTable();
@@ -95,7 +129,4 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
     }
 
-    {
-
-    }
 }

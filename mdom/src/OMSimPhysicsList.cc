@@ -7,6 +7,7 @@
 #include "G4ComptonScattering.hh"
 #include "G4GammaConversion.hh"
 #include "G4PhotoElectricEffect.hh"
+#include "G4PhysicsListHelper.hh"
 
 #include "G4Cerenkov.hh"
 #include "G4OpRayleigh.hh"
@@ -19,10 +20,17 @@
 #include "G4LivermoreIonisationModel.hh"
 #include "G4LivermoreGammaConversionModel.hh"
 #include "G4NeutronCaptureProcess.hh"
+#include "G4BraggIonModel.hh"
+#include "G4BraggModel.hh"
+#include "G4hIonisation.hh"
+#include "G4UAtomicDeexcitation.hh"
+#include "G4LossTableManager.hh"
 
 #include "G4eMultipleScattering.hh"
 #include "G4eIonisation.hh"
 #include "G4eBremsstrahlung.hh"
+#include "G4ionIonisation.hh"
+#include "G4hMultipleScattering.hh"
 
 #include "G4OpAbsorption.hh"
 #include "G4OpBoundaryProcess.hh"
@@ -54,10 +62,13 @@ void OMSimPhysicsList::ConstructParticle()
 	G4AntiNeutrinoE::AntiNeutrinoEDefinition();
 	G4NeutrinoMu::NeutrinoMuDefinition();
 	G4AntiNeutrinoMu::AntiNeutrinoMuDefinition();
+	G4Alpha::AlphaDefinition();
 }
 
 void OMSimPhysicsList::ConstructProcess()
 {
+
+	G4PhysicsListHelper* plh = G4PhysicsListHelper::GetPhysicsListHelper();
 	AddTransportation();
 
 //  The Radioactive Decay Process
@@ -81,12 +92,40 @@ void OMSimPhysicsList::ConstructProcess()
 	G4eIonisation* theIonizationModel = new G4eIonisation();
 	theIonizationModel->SetEmModel(new G4LivermoreIonisationModel());
 
+//  The Ion Ionization model
+    G4ionIonisation* theionionisation = new G4ionIonisation();
+    theionionisation -> SetEmModel(new G4BraggIonModel());
+
+    plh -> RegisterProcess(theionionisation, G4Alpha::AlphaDefinition());
+    plh -> RegisterProcess(theionionisation, G4GenericIon::GenericIon());
+
+//  The Hadron Ionisation Process
+    G4hIonisation* theHadronIon = new G4hIonisation();
+    theHadronIon -> SetEmModel(new G4BraggModel());
+
+    plh -> RegisterProcess(theHadronIon, G4Proton::ProtonDefinition());
+    plh -> RegisterProcess(theHadronIon, G4Neutron::NeutronDefinition());
+
+//  The Multiple Scattering Process
+    G4hMultipleScattering* theMultScat = new G4hMultipleScattering();
+
+    plh -> RegisterProcess(theMultScat, G4Alpha::AlphaDefinition());
+    plh -> RegisterProcess(theMultScat, G4GenericIon::GenericIon());
+
 //  PhotoElectric Process
 	G4PhotoElectricEffect* thePhotoElectricEffectModel = new G4PhotoElectricEffect();
     thePhotoElectricEffectModel->SetEmModel(new G4LivermorePhotoElectricModel());
 
 //  The Neutron Capture Process
     G4NeutronCaptureProcess* theNeutronCaptureProcess = new G4NeutronCaptureProcess();
+
+//  Atomic Deexcitation Process
+    G4UAtomicDeexcitation* deexc = new G4UAtomicDeexcitation();
+
+    deexc -> SetFluo(true);
+    deexc -> SetAuger(true);
+    deexc -> SetPIXE(true);
+    G4LossTableManager::Instance() -> SetAtomDeexcitation(deexc);
 
 //  Gamma Conversion Process
 	G4GammaConversion* theGammaConversionModel = new G4GammaConversion();
@@ -127,7 +166,7 @@ void OMSimPhysicsList::ConstructProcess()
 			pmanager->AddProcess(new G4eBremsstrahlung(),-1,-1,3);
 			pmanager->AddProcess(new G4eplusAnnihilation, 0,-1, 4);
 		}
-		if(theNeutronCaptureProcess -> IsApplicable(*(particle)))
+		if(particleName == "neutron")
 		{
             pmanager -> AddProcess(theNeutronCaptureProcess);
 		}
@@ -150,6 +189,7 @@ void OMSimPhysicsList::ConstructProcess()
             }*/
             pmanager -> AddProcess(theScintillationProcess);
             pmanager -> SetProcessOrdering(theScintillationProcess, idxPostStep);
+            pmanager -> SetProcessOrdering(theScintillationProcess, idxAtRest);
         }
 
 	}

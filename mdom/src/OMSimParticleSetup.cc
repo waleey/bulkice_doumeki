@@ -4,14 +4,10 @@
 *Do not assign any unit
 *It's in seconds
 **/
-G4double OMSimRadioactivityData::ftimeWindow = 60;
+G4double OMSimRadioactivityData::ftimeWindow = 60; //for now just running for 1 sec.
 
 OMSimParticleSetup::OMSimParticleSetup(G4ParticleGun* ParticleGun, G4Event* anEvent, G4int omModel) : fParticleGun(ParticleGun), fEvent(anEvent), fomModel(omModel)
 {
-    /**
-    *For now, time winodw is set to 1 min.
-    *Should be changed later to 10 min as M.Unland's thesis.
-    **/
     //poisson = new Poisson(1, 1);
     radData = new OMSimRadioactivityData();
 }

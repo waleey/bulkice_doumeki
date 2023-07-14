@@ -14,6 +14,8 @@ extern G4String	gHittype;
 extern OMSimAnalysisManager gAnalysisManager;
 extern G4int gcounter;
 extern G4int gPosCount;
+extern G4int gNumCherenkov;
+extern G4int gNumScint;
 
 
 OMSimRunAction::OMSimRunAction(){}
@@ -42,6 +44,8 @@ void OMSimRunAction::EndOfRunAction(const G4Run*)
 	if (gHittype == "collective") {
 		gAnalysisManager.WriteAccept(); // mainly for acceptance
 	}
+	std::cout << "Cherenkov Produced: " << gNumCherenkov << std::endl
+	<< "Scintillation Photons Produced: " << gNumScint << std::endl;
 
 // 	Close output data file
 gAnalysisManager.datafile.close();

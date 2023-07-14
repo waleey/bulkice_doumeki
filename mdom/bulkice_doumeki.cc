@@ -50,10 +50,13 @@ G4String        gHittype = "individual"; // seems like individual records each h
 G4bool          gVisual = true; // may be visualization on?
 G4int           gEnvironment = 2; // 1 is ICeCUbe ice without any ice property, 2 is with property, 0 is air.
 G4String        ghitsfilename = "/mnt/c/Users/Waly/bulkice_doumeki/hit_"; //change location of your output file
-//G4String        ghitsfilename = "hit.dat";
+G4double        gSimulatedTime = 60.0;
 G4int           gcounter = 0;
 G4int           gPosCount = 0;
 G4String        gQEFile = "../InputFile/TA0001_HamamatsuQE.data";
+
+G4int           gNumCherenkov = 0;
+G4int           gNumScint = 0;
 enum {PMT, MDOM, DOM, LOM16, LOM18};
 
 OMSimAnalysisManager gAnalysisManager;
