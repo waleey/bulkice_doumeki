@@ -21,6 +21,7 @@ class OMSimPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
 public:
 	OMSimPrimaryGeneratorAction(G4String&, G4int);
+	OMSimPrimaryGeneratorAction(G4String&, G4int, OMSimParticleSetup*);
 	~OMSimPrimaryGeneratorAction();
 
 
@@ -37,21 +38,7 @@ private:
 	G4ParticleGun *fParticleGun;
 	std::string finteraction_channel;
 	G4int fomModel;
-    /*G4int numParticles;
-
-    std::vector<G4double> energy;
-    std::vector<G4double> fX;
-    std::vector<G4double> fY;
-    std::vector<G4double> fZ;
-    std::vector<G4double> alpha_X;
-    std::vector<G4double> alpha_Y;
-    std::vector<G4double> alpha_Z;
-    std::vector<G4double> inTime;
-    std::vector<std::vector<G4double>> data {energy, fX, fY, fZ, alpha_X, alpha_Y, alpha_Z, inTime};
-    std::string filePath = "/home/waly/bulkice_doumeki/mdom/InputFile/20002nkibd_"; //CHANGE THE FILE PATH
-    std::vector<std::string>  dtypes {"energy", "x", "y", "z", "ax", "ay", "az", "time"};
-    enum {ENERGY, X, Y, Z, AX, AY, AZ, TIME};
-    */
+	OMSimParticleSetup* fParticleSetup;
 };
 
 

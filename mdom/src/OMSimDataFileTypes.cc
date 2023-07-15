@@ -377,7 +377,7 @@ void RefractionAndAbsorption::ExtractInformation()
     }
 
     mMPT->AddProperty("FIRSTCOMPONENT",VV_WL,VV_I,138, true, true);
-    mMPT->AddConstProperty("SCINTILLATIONYIELD",46/MeV);
+    mMPT->AddConstProperty("SCINTILLATIONYIELD",50/MeV);
     mMPT->AddProperty("FRACTIONLIFETIMES",amplitudes20,times20,6, true, true);
     mMPT->AddProperty("SCINTILLATIONSPECTRUM",VV_WL,VV_I,138, true, true);
     mMPT->AddConstProperty("RESOLUTIONSCALE", 1.0);

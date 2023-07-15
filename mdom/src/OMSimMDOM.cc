@@ -87,7 +87,7 @@ void mDOM::GenerateLogicals()
     SetLEDPositions();
     std::cerr << "OMSimMDOM::set position succeed " << std::endl;
 
-    G4UnionSolid* lGlassSolid = PressureVessel(mGlassOutRad, "Glass");
+    lGlassSolid = PressureVessel(mGlassOutRad, "Glass");
     G4UnionSolid* lGelSolid = PressureVessel(mGlassInRad, "Gel");
     std::cerr << "OMSimMDOM::glass solid and gel solid generated" << std::endl;
 

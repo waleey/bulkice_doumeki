@@ -82,7 +82,7 @@ void LOM16::GetSharedData() {
     mPolEqPMTPhiPhase = mData->GetValue(mDataKey,"jPolEqPMTPhiPhase"); //rotation of equatorial PMTs in respect to polar PMTs
     mPolPadOpeningAngle = mData->GetValue(mDataKey,"jPolPadOpeningAngle"); //
     mEqPadOpeningAngle = mData->GetValue(mDataKey,"jEqPadOpeningAngle"); //
-    
+
     mGlassInRad = mGlassOutRad - mGlassThick;
     mTotalNrPMTs = (mNrPolarPMTs + mNrEqPMTs) * 2;
 
@@ -101,26 +101,26 @@ void LOM16::GetSharedData() {
 void LOM16::Construction()
 {
     //Create pressure vessel and inner volume
-    G4UnionSolid* lGlassSolid = PressureVessel(mGlassOutRad, "Glass");
+    lGlassSolid = PressureVessel(mGlassOutRad, "Glass");
     G4UnionSolid* lGelSolid = PressureVessel(mGlassInRad, "Gel"); // Fill entire vessel with gel as logical volume (not placed) for intersectionsolids with gelpads
-    
+
     //Set positions and rotations of PMTs and gelpads
     SetPMTAndGelpadPositions();
-   
+
     //Logicals
     G4LogicalVolume* lGlassLogical = new G4LogicalVolume(lGlassSolid, mData->GetMaterial("argVesselGlass")," Glass_log"); //Vessel
-    G4LogicalVolume* lInnerVolumeLogical = new G4LogicalVolume(lGelSolid, mData->GetMaterial("Ri_Air"), "Inner volume logical"); //Inner volume of vessel (mothervolume of all internal components)  
+    G4LogicalVolume* lInnerVolumeLogical = new G4LogicalVolume(lGelSolid, mData->GetMaterial("Ri_Air"), "Inner volume logical"); //Inner volume of vessel (mothervolume of all internal components)
     CreateGelpadLogicalVolumes(lGelSolid); //logicalvolumes of all gelpads saved globally to be placed below
     G4LogicalVolume* lEquatorbandLogical = CreateEquatorBand(mGlassOutRad);
 
-    //Placements 
+    //Placements
     new G4PVPlacement(0, G4ThreeVector(0, 0, 0), lInnerVolumeLogical, "Gel_physical", lGlassLogical, false, 0); //Innervolume (mother volume for all components)
     PlacePMTs(lInnerVolumeLogical);
     PlaceGelpads(lInnerVolumeLogical);
-    if (gCADImport) PlaceCADSupportStructure(lInnerVolumeLogical); 
-    new G4PVPlacement( 0 , G4ThreeVector(0, 0, 0) , lEquatorbandLogical, "Equatorband" , lInnerVolumeLogical, false, 0); 
-    
-    
+    if (gCADImport) PlaceCADSupportStructure(lInnerVolumeLogical);
+    new G4PVPlacement( 0 , G4ThreeVector(0, 0, 0) , lEquatorbandLogical, "Equatorband" , lInnerVolumeLogical, false, 0);
+
+
 
     // ------------------ Add outer shape solid to MultiUnion in case you need substraction -------------------------------------------
     //Each Component needs to be appended to be places in abcDetectorComponent. Everything is placed in the gel which is placed in the glass which is the mother volume. This is the reason why not everything is appended on its own
@@ -166,8 +166,8 @@ G4LogicalVolume* LOM16::CreateEquatorBand(const G4double pOutRad)
 
     G4IntersectionSolid* lIntersectionSolid = new G4IntersectionSolid("BandThicknessBody" , lCuttingBox, lOuter, 0, G4ThreeVector(0, 0, 0));
     G4SubtractionSolid* lEquatorbandSolid = new G4SubtractionSolid("Equatorband_solid" , lIntersectionSolid, lInner, 0, G4ThreeVector(0, 0, 0));
-    
-    G4LogicalVolume* lEquatorbandLogical = new G4LogicalVolume(lEquatorbandSolid, mData->GetMaterial("NoOptic_Absorber"),"Equatorband_log"); 
+
+    G4LogicalVolume* lEquatorbandLogical = new G4LogicalVolume(lEquatorbandSolid, mData->GetMaterial("NoOptic_Absorber"),"Equatorband_log");
     return lEquatorbandLogical;
 }
 
@@ -185,14 +185,14 @@ void LOM16::PlaceDummySupportStructure(G4LogicalVolume* lInnerVolumeLogical)
 }
 
 //Places internal components based on a CAD file. OBJ filetype, modified by python script, tesselated via mesh.cc / Documentation here: https://github.com/christopherpoole/CADMesh
-//To do: 
+//To do:
 //Recreate CAD obj files (no SetScale & more variety to choose from)
 //Each component has its own label in visualizer -> just one ... another function for penetrator, dummy main boards, ...
 void LOM16::PlaceCADSupportStructure(G4LogicalVolume* lInnerVolumeLogical)
 {
     //select file
     std::stringstream CADfile;
-    CADfile.str(""); 
+    CADfile.str("");
     //CADfile << "LOM_Internal.obj";
     CADfile << "LOM_Internal_WithPen_WithCali.obj";
     G4cout <<  "using the following CAD file for support structure: "  << CADfile.str()  << G4endl;
@@ -205,7 +205,7 @@ void LOM16::PlaceCADSupportStructure(G4LogicalVolume* lInnerVolumeLogical)
 
     // Place all of the meshes it can find in the file as solids individually.
     for (auto solid : mesh->GetSolids())
-    { 
+    {
         mSupportStructureLogical  = new G4LogicalVolume( solid , mData->GetMaterial("NoOptic_Absorber") , "logical" , 0, 0, 0);
         mSupportStructureLogical->SetVisAttributes(mAluVis);
         new G4PVPlacement( 0 , G4ThreeVector(0, 0, 0) , mSupportStructureLogical, "Support structure" , lInnerVolumeLogical, false, 0);
@@ -224,26 +224,26 @@ void LOM16::SetPMTAndGelpadPositions()
     //calculate distances
     const G4double lFrontToEllipse_y = mOutRad + mSpherePos_y - mEllipsePos_y; //Center of PMT (PMT solid in Geant4) to tip
     const G4double lZ_centertobottomPMT= mTotalLenght-lFrontToEllipse_y; //Distance from bottom base of PMT to center of the Geant4 solid
-    
-    //calculate PMT and pads positions in the usual 4 for loop way 
+
+    //calculate PMT and pads positions in the usual 4 for loop way
     for (int i = 0; i <= mTotalNrPMTs-1; i++) {
 
         //upper polar
-        if (i>=0 && i<=mNrPolarPMTs-1){ 
-            lPMT_theta=mThetaPolar; 
+        if (i>=0 && i<=mNrPolarPMTs-1){
+            lPMT_theta=mThetaPolar;
             lPMT_phi=mPolEqPMTPhiPhase+i*90.0*deg;
 
             PMT_rho = (147.7406-4.9)*mm;  // For Position of PMT to Vessel wall (147.7406). 4.9mm is distance from PMT photocathode to vessel inner surface
             GelPad_rho = PMT_rho + 2*jGelPadDZ;
-            
+
             PMT_z = Z_center_module_tobottomPMT_polar+lZ_centertobottomPMT*sin(90*deg-lPMT_theta);
             GelPad_z = PMT_z+2*jGelPadDZ*sin(90*deg-lPMT_theta);
         }
 
         //upper equatorial
-        if (i>=mNrPolarPMTs && i<=mNrPolarPMTs + mNrEqPMTs -1){ 
-            lPMT_theta= mThetaEquatorial; 
-            lPMT_phi=i*90.0*deg; 
+        if (i>=mNrPolarPMTs && i<=mNrPolarPMTs + mNrEqPMTs -1){
+            lPMT_theta= mThetaEquatorial;
+            lPMT_phi=i*90.0*deg;
 
             PMT_rho = (120.1640-5)*mm; // For Position of PMT to Vessel wall (147.7406). 4.9mm is distance from PMT photocathode to vessel inner surface
             GelPad_rho = PMT_rho + 2*jGelPadDZ;
@@ -252,7 +252,7 @@ void LOM16::SetPMTAndGelpadPositions()
         }
 
         //lower equatorial
-        if (i>=mNrPolarPMTs + mNrEqPMTs && i<= mNrPolarPMTs + mNrEqPMTs + mNrEqPMTs -1){ 
+        if (i>=mNrPolarPMTs + mNrEqPMTs && i<= mNrPolarPMTs + mNrEqPMTs + mNrEqPMTs -1){
             lPMT_theta= 180*deg - mThetaEquatorial; //118*deg; // 118.5*deg;
             lPMT_phi=i*90.0*deg;
 
@@ -263,7 +263,7 @@ void LOM16::SetPMTAndGelpadPositions()
         }
 
         //lower polar
-        if (i>=mTotalNrPMTs-mNrPolarPMTs && i<=mTotalNrPMTs-1){ 
+        if (i>=mTotalNrPMTs-mNrPolarPMTs && i<=mTotalNrPMTs-1){
             lPMT_theta=180*deg - mThetaPolar; //144*deg; //152*deg;
             lPMT_phi=mPolEqPMTPhiPhase +((i)*90.0)*deg;
 
@@ -280,7 +280,7 @@ void LOM16::SetPMTAndGelpadPositions()
 
     //Gelpads
     GelPad_x = GelPad_rho * sin(lPMT_theta) * cos(lPMT_phi);
-    GelPad_y = GelPad_rho * sin(lPMT_theta) * sin(lPMT_phi);    
+    GelPad_y = GelPad_rho * sin(lPMT_theta) * sin(lPMT_phi);
 
     //save positions in arrays
     mPMTPositions.push_back( G4ThreeVector(lPMT_x,lPMT_y,PMT_z) );
@@ -290,13 +290,13 @@ void LOM16::SetPMTAndGelpadPositions()
     mPMT_theta.push_back(lPMT_theta);
     mPMT_phi.push_back(lPMT_phi);
     }
-}    
+}
 
 //Todo
 //4*jGelPadDZ -> 2 2*jGelPadDZ -> 1 ...  not needed if jGelPadDZ is long enough
 //tra and transformers declaration uniformely.
 //rename some stuff for clarity
-void LOM16::CreateGelpadLogicalVolumes(G4UnionSolid* lGelSolid) 
+void LOM16::CreateGelpadLogicalVolumes(G4UnionSolid* lGelSolid)
 {
     //getting the PMT solid
     G4UnionSolid* lPMTsolid = mPMTManager->GetPMTSolid();
@@ -322,20 +322,20 @@ void LOM16::CreateGelpadLogicalVolumes(G4UnionSolid* lGelSolid)
     G4double dz=-dx*std::sin(mEqTiltAngle);
     G4double dY3=mMaxPMTRadius-(ztop*std::sin(mEqTiltAngle)+dx*std::cos(mEqTiltAngle));
 
-    //create logical volume for each gelpad    
+    //create logical volume for each gelpad
     for(int k=0 ; k<=mTotalNrPMTs-1 ; k++){
             G4Transform3D* tra;
             G4Transform3D* tra2;
-            
+
             converter.str("");
             converter2.str("");
             converter << "GelPad_" << k << "_solid";
             converter2 << "Gelpad_final" << k << "_logical";
-            
+
             // polar gel pads
-            if(k<=mNrPolarPMTs-1 or k>=mTotalNrPMTs-mNrPolarPMTs){ 
+            if(k<=mNrPolarPMTs-1 or k>=mTotalNrPMTs-mNrPolarPMTs){
                 lGelPadBasicSolid = new G4Cons("GelPadBasic", 0,mMaxPMTRadius , 0, mMaxPMTRadius  + 4*jGelPadDZ*tan(mPolPadOpeningAngle), 2*jGelPadDZ, 0, 2*CLHEP::pi);
-                
+
                 //rotation and position of gelpad
                 G4RotationMatrix* rotation = new G4RotationMatrix();
                 rotation->rotateY(mPMT_theta[k]);
@@ -352,7 +352,7 @@ void LOM16::CreateGelpadLogicalVolumes(G4UnionSolid* lGelSolid)
 
             //upper equatorial
             if(k>=mNrPolarPMTs && k<=mNrPolarPMTs+mNrEqPMTs-1){
-                //the tilted pad is a cone with elliptical section. Moreover, there is an union with a disc called "Tube". This union does not affect the geometry, but it is used to shift the center of the geant solid so it can be placed in the same way as the PMT. In addition to that, Cut_tube is used to do a better substraction of the residual part that lies below the photocatode. 
+                //the tilted pad is a cone with elliptical section. Moreover, there is an union with a disc called "Tube". This union does not affect the geometry, but it is used to shift the center of the geant solid so it can be placed in the same way as the PMT. In addition to that, Cut_tube is used to do a better substraction of the residual part that lies below the photocatode.
                 lGelPadBasicSolid_eq =  new G4EllipticalCone("cone",xsemiaxis,ysemiaxis,zmax,ztop);
 
                 //rotation and position of tilted gelpad
@@ -373,14 +373,14 @@ void LOM16::CreateGelpadLogicalVolumes(G4UnionSolid* lGelSolid)
                 rot->rotateY(mPMT_theta[k]);
                 rot->rotateZ(mPMT_phi[k]);
                 G4Transform3D transformers = G4Transform3D(*rot, G4ThreeVector(mPMTPositions[k]));
-                
+
                 //creating volumes ... basic cone, tilted cone, subtract PMT, logical volume of gelpad
                 G4Tubs* Cut_tube = new G4Tubs("tub",0,2*mMaxPMTRadius,30*mm,0,2*CLHEP::pi);
                 G4SubtractionSolid* Tilted_final = new G4SubtractionSolid("cut",Tilted_cone,Cut_tube,*tra);
                 Cut_cone = new G4IntersectionSolid(converter.str(), lGelSolid, Tilted_final,  transformers);
                 Cut_cone_final = new G4SubtractionSolid(converter.str(), Cut_cone, lPMTsolid, transformers);
                 GelPad_logical = new G4LogicalVolume(Cut_cone_final, mData->GetMaterial("argGel"), converter2.str());
-            };  
+            };
 
             //lower equatorial
             if(k >=mNrPolarPMTs+mNrEqPMTs && k<=mTotalNrPMTs-mNrPolarPMTs-1){
@@ -394,7 +394,7 @@ void LOM16::CreateGelpadLogicalVolumes(G4UnionSolid* lGelSolid)
                 //place tilted cone
                 G4Tubs *Tube= new G4Tubs("tube",0,mMaxPMTRadius,0.1*mm,0.,2*CLHEP::pi);
                 G4UnionSolid *Tilted_cone=new G4UnionSolid("union",Tube,  lGelPadBasicSolid_eq,*tra2);
-                
+
                 //For subtraction of gelpad reaching below the photocathode
                 rotation = new G4RotationMatrix();
                 tra = new G4Transform3D(*rotation, G4ThreeVector(0,0,-30*mm));
@@ -404,14 +404,14 @@ void LOM16::CreateGelpadLogicalVolumes(G4UnionSolid* lGelSolid)
                 rot->rotateY(mPMT_theta[k]);
                 rot->rotateZ(mPMT_phi[k]);
                 G4Transform3D transformers = G4Transform3D(*rot, G4ThreeVector(mPMTPositions[k]));
-                
+
                 //creating volumes ... basic cone, tilted cone, subtract PMT, logical volume of gelpad
                 G4Tubs* Cut_tube=new G4Tubs("tub",0,2*mMaxPMTRadius,30*mm,0,2*CLHEP::pi);
                 G4SubtractionSolid* Tilted_final = new G4SubtractionSolid("cut",Tilted_cone,Cut_tube,*tra);
                 Cut_cone = new G4IntersectionSolid(converter.str(), lGelSolid, Tilted_final,  transformers);
                 Cut_cone_final = new G4SubtractionSolid(converter.str(), Cut_cone, lPMTsolid, transformers);
                 GelPad_logical = new G4LogicalVolume(Cut_cone_final, mData->GetMaterial("argGel"), converter2.str());
-            };   
+            };
 
     //save logicalvolume of gelpads in array
     mGelPad_logical.push_back( GelPad_logical ); //

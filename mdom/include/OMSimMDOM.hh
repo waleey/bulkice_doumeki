@@ -30,6 +30,7 @@ public:
     std::vector<std::vector<G4double>> mLED_AngFromSphere; //stores rho (mm),theta (deg),phi (deg) of each LED from the center of its corresponding spherical part. Useful to run the particles.
     G4double getGlassOutRad() {return mGlassOutRad; }
     G4double getGlassInRad() {return mGlassInRad; }
+    inline G4UnionSolid* GetGlassSolid() { return lGlassSolid; }
 
 protected:
     OMSimPMTConstruction* mPMTManager;
@@ -81,6 +82,9 @@ protected:
     G4double mPMToffset;
     G4double mRefConeIdealInRad;
     G4double mSupStructureRad;
+
+private:
+    G4UnionSolid* lGlassSolid;
 
 };
 

@@ -22,7 +22,9 @@ public:
     G4double mCylHigh;
     G4String mDataKey = "om_LOM16";
 
-  
+    inline G4UnionSolid* GetGlassSolid() { return lGlassSolid; }
+
+
 
 private:
     OMSimPMTConstruction* mPMTManager;
@@ -36,7 +38,9 @@ private:
     void PlaceCADSupportStructure(G4LogicalVolume* lInnerVolumeLogical);
     G4LogicalVolume* mSupportStructureLogical;
     G4LogicalVolume* CreateEquatorBand(const G4double pOutRad);
-    
+
+    G4UnionSolid* lGlassSolid;
+
     //for gelpad and PMT creation
     void PlacePMTsAndGelpads(G4UnionSolid* lGelSolid,G4LogicalVolume* lGelLogical);
     void SetPMTAndGelpadPositions();
@@ -55,7 +59,7 @@ private:
     std::vector<G4double> mPMT_phi;
 
 
-    
+
 
     //Shared data from jSON file
     G4double mGlassThick;
@@ -77,14 +81,14 @@ private:
     //from PMTConstruction class (not readable directly...needs to be changed)
     G4double mTotalLenght;
     G4double mOutRad;
-    G4double mSpherePos_y; 
-    G4double mEllipsePos_y; 
+    G4double mSpherePos_y;
+    G4double mEllipsePos_y;
 
     //from PMT manager
     G4double mPMToffset;
-    G4double mMaxPMTRadius;   
+    G4double mMaxPMTRadius;
 
-    
+
     //helper variables
     std::stringstream converter;
     std::stringstream converter2;

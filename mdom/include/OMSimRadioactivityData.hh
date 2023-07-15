@@ -32,6 +32,8 @@ public:
     G4double GetTimeWindow();
     G4double GetInitialTime();
 
+    G4double RandomGen(G4double, G4double);
+
 
 
 private:
@@ -52,7 +54,6 @@ private:
     void GenerateOrientation();
     void GenerateFlatInitialTime();
     void GenerateExpInitialTime();
-    G4double RandomGen(G4double, G4double);
     void InversePoisson();
 };
 

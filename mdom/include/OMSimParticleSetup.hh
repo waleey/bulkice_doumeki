@@ -21,7 +21,13 @@ class OMSimParticleSetup
 {
     public:
     OMSimParticleSetup(G4ParticleGun* ParticleGun, G4Event* anEvent, G4int omModel);
+    OMSimParticleSetup(G4int omModel);
     ~OMSimParticleSetup() {}
+
+    inline void SetParticleGun(G4ParticleGun* particleGun) { fParticleGun = particleGun; }
+    inline void SetEvent(G4Event* anEvent) { fEvent = anEvent; }
+    inline void SetIsotopePosition(std::vector<std::vector<G4ThreeVector>>& isotopePos) { fIsotopePos = isotopePos; }
+
     void GeneratePositron();
     void GenerateNeutron();
     void GenerateElectron();
@@ -40,6 +46,7 @@ class OMSimParticleSetup
     **/
 
     private:
+    enum {K40, U238, U235, Th232};
     void SetupPositron();
     void SetupNeutron();
     void SetupElectron();
@@ -66,6 +73,7 @@ class OMSimParticleSetup
     G4double u235activity;
     G4double th238activity;
     G4double timeWindow;
+    std::vector<std::vector<G4ThreeVector>> fIsotopePos;
     /**
     **/
     std::vector<G4double> energy;

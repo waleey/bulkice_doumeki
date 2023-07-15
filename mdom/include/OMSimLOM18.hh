@@ -22,7 +22,9 @@ public:
     G4double mGlassOutRad;
     G4String mDataKey = "om_LOM18";
 
-  
+    inline G4Polycone* GetGlassSolid() { return lGlassSolid; }
+
+
 
 private:
     OMSimPMTConstruction* mPMTManager;
@@ -38,8 +40,8 @@ private:
     void PlaceCADSupportStructure(G4LogicalVolume* lInnerVolumeLogical);
     G4LogicalVolume* mSupportStructureLogical;
     void PlaceCADPenetrator(G4LogicalVolume* lInnerVolumeLogical);
-    
-    
+
+
     void SetPMTPositions();
     void CreateGelpadLogicalVolumes(G4Polycone* lGelSolid);
 
@@ -56,6 +58,7 @@ private:
     std::vector<G4double> mPMT_theta;
     std::vector<G4double> mPMT_phi;
 
+    G4Polycone* lGlassSolid;
 
     //Shared data from jSON file
     //Vessel specific
@@ -87,15 +90,15 @@ private:
     //from PMTConstruction class (not readable directly...needs to be changed)
     G4double mTotalLenght;
     G4double mOutRad;
-    G4double mSpherePos_y; 
-    G4double mEllipsePos_y; 
+    G4double mSpherePos_y;
+    G4double mEllipsePos_y;
     G4double mEllipseZaxis;
 
     //from PMT manager
     G4double mPMToffset;
-    G4double mMaxPMTRadius;   
+    G4double mMaxPMTRadius;
 
-    
+
     //helper variables
     std::stringstream converter;
     std::stringstream converter2;

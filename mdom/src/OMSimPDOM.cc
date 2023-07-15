@@ -31,7 +31,7 @@ void pDOM::Construction()
 
     G4double lPMTz = 0.5 * 12 * 25.4 * mm - mPMTManager->GetDistancePMTCenterToPMTtip() - mGelThickness;
 
-    G4Orb* lGlassSphereSolid = new G4Orb("PDOM_GlassSphere solid", 0.5 * 13 * 25.4 * mm);
+    lGlassSphereSolid = new G4Orb("PDOM_GlassSphere solid", 0.5 * 13 * 25.4 * mm);
     G4Orb* lGelSphereSolid = new G4Orb("PDOM_GelSphere solid", 0.5 * 12 * 25.4 * mm);
 
     G4Ellipsoid* lAirAuxSolid = new G4Ellipsoid("PDOM_AirAux solid", 0.5 * 12 * 25.4 * mm, 0.5 * 12 * 25.4 * mm, 0.5 * 12 * 25.4 * mm, -0.5 * 13 * 25.4 * mm, 50 * mm);
@@ -81,7 +81,7 @@ void pDOM::Construction()
     G4PVPlacement* lGelPhysical = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), lGelLogical, "pDOMGelPhys", lGlassSphereLogical, false, 0);
 
     if (mPlaceHarness) AppendComponent(lHarnessSolid, lHarnessLogical, G4ThreeVector(0, 0, 0), G4RotationMatrix(), "pDOM_Harness");
-    
+
     AppendComponent(lGlassSphereSolid, lGlassSphereLogical, G4ThreeVector(0, 0, 0), G4RotationMatrix(), "pDOM");
 
     // ------------------- optical border surfaces --------------------------------------------------------------------------------

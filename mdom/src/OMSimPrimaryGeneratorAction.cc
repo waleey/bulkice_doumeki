@@ -1,5 +1,5 @@
 #include "OMSimPrimaryGeneratorAction.hh"
-
+#include "OMSimDetectorConstruction.hh"
 
 #include "G4Event.hh"
 #include "G4ParticleTypes.hh"
@@ -12,12 +12,21 @@
 #include <stdlib.h>
 
 extern G4double gworldsize;
+extern OMSimDetectorConstruction* gDetectorConstruction;
 
 
 OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction_channel, G4int omModel) : finteraction_channel(interaction_channel), fomModel(omModel)
 {
 
 	fParticleGun = new G4ParticleGun(1);
+	fParticleSetup = new OMSimParticleSetup(fomModel);
+	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
+}
+
+OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction_channel, G4int omModel, OMSimParticleSetup* particleSetup) :
+finteraction_channel(interaction_channel), fomModel(omModel), fParticleSetup(particleSetup)
+{
+    fParticleGun = new G4ParticleGun(1);
 	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
 }
 
@@ -28,8 +37,10 @@ OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 
 void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-
-	OMSimParticleSetup* fParticleSetup = new OMSimParticleSetup(fParticleGun, anEvent, fomModel);
+	gDetectorConstruction -> DrawFromVolume();
+	fParticleSetup -> SetIsotopePosition(gDetectorConstruction -> GetPositions());
+	fParticleSetup -> SetParticleGun(fParticleGun);
+	fParticleSetup -> SetEvent(anEvent);
 
    try
     {
@@ -69,17 +80,9 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             throw finteraction_channel;
         }
     }
-	catch(...)
+	catch(G4String finteraction_channel)
 	{
         std::cout << "Invalid Interaction Channel! Aborting..." << std::endl;
 	}
-
-	/*fParticleSetup -> GenerateK40();
-    fParticleSetup -> GenerateTh238();
-    fParticleSetup -> GenerateU238();
-    fParticleSetup -> GenerateU235();*/
-
-
-
 
 }

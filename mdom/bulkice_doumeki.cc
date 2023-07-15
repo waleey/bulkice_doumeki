@@ -21,6 +21,7 @@
 #include "OMSimDetectorConstruction.hh"
 #include "OMSimPhysicsList.hh"
 #include "OMSimPrimaryGeneratorAction.hh"
+#include "OMSimParticleSetup.hh"
 #include "OMSimRunAction.hh"
 #include "OMSimEventAction.hh"
 #include "OMSimTrackingAction.hh"
@@ -50,7 +51,7 @@ G4String        gHittype = "individual"; // seems like individual records each h
 G4bool          gVisual = true; // may be visualization on?
 G4int           gEnvironment = 2; // 1 is ICeCUbe ice without any ice property, 2 is with property, 0 is air.
 G4String        ghitsfilename = "/mnt/c/Users/Waly/bulkice_doumeki/hit_"; //change location of your output file
-G4double        gSimulatedTime = 60.0;
+//G4double        gSimulatedTime = 1.0;
 G4int           gcounter = 0;
 G4int           gPosCount = 0;
 G4String        gQEFile = "../InputFile/TA0001_HamamatsuQE.data";
@@ -60,6 +61,7 @@ G4int           gNumScint = 0;
 enum {PMT, MDOM, DOM, LOM16, LOM18};
 
 OMSimAnalysisManager gAnalysisManager;
+OMSimDetectorConstruction* gDetectorConstruction = new OMSimDetectorConstruction();
 
 void ParseCommandLine(int argc, char** argv, G4String& macroname, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
 {
@@ -196,8 +198,12 @@ int main(int argc, char** argv)
     physicsList -> RegisterPhysics(new G4DecayPhysics);
     runmanager -> SetUserInitialization(physicsList);*/
 
-    runmanager -> SetUserInitialization(new OMSimDetectorConstruction(PMT_model, world_size));
+    gDetectorConstruction -> SetOMModel(PMT_model);
+    gDetectorConstruction -> SetWorldSize(world_size);
+
+    runmanager -> SetUserInitialization(gDetectorConstruction);
     runmanager -> SetUserInitialization(new OMSimPhysicsList);
+
     runmanager -> SetUserAction(new OMSimPrimaryGeneratorAction(interaction_channel, PMT_model));
     runmanager -> SetUserAction(new OMSimEventAction);
     runmanager -> SetUserAction(new OMSimRunAction);

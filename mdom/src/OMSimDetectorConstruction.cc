@@ -16,16 +16,8 @@
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4Transform3D.hh"
-
-#include "OMSimInputData.hh"
-#include "OMSimPMTConstruction.hh"
 #include "OMSimRadioactivityData.hh"
-#include "OMSimMDOM.hh"
-#include "OMSimPDOM.hh"
-#include "OMSimLOM16.hh"
-#include "OMSimLOM18.hh"
-#include "OMSimDEGG.hh"
-#include "OMSimParticleSetup.hh"
+
 
 
 
@@ -40,6 +32,10 @@ G4int OMSimRadioactivityData::fomModel = 0;
 
 OMSimDetectorConstruction::OMSimDetectorConstruction(G4int DOM, G4double worldSize)
     : mWorldSolid(0), mWorldLogical(0), mWorldPhysical(0), fDOM(DOM), fworldSize(worldSize)
+{
+
+}
+OMSimDetectorConstruction::OMSimDetectorConstruction() : mWorldSolid(0), mWorldLogical(0), mWorldPhysical(0), fDOM(0), fworldSize(0)
 {
 
 }
@@ -124,7 +120,7 @@ void OMSimDetectorConstruction::ConstructWorldMat()
 }
 void OMSimDetectorConstruction::ConstructWorld()
 {
-    ConstructWorldMat();
+    //ConstructWorldMat();
 
     mWorldSolid = new G4Box("World", fworldSize * m, fworldSize * m, fworldSize* m);
     //mWorldSolid = new G4Box("World", .5 * m, .5 * m, .5 * m);
@@ -177,32 +173,32 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
     }
     else if (fDOM == 1){ //mDOM
         G4cout << "Constructing mDOM" << G4endl;
-        mDOM *lOpticalModule = new mDOM(mData,gPlaceHarness);
-        G4double glassOutRad = lOpticalModule -> getGlassOutRad();
-        G4double glassInRad = lOpticalModule -> getGlassInRad();
+        fMDOM = new mDOM(mData,gPlaceHarness);
+        glassOutRad = fMDOM -> getGlassOutRad();
+        glassInRad = fMDOM -> getGlassInRad();
         OMSimRadioactivityData::SetGlassRad(glassOutRad, glassInRad);
-        lOpticalModule->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
+        fMDOM->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
     }
     else if (fDOM == 2){ //PDOM
         G4cout << "Constructing PDOM" << G4endl;
-        pDOM *lOpticalModule = new pDOM(mData,gPlaceHarness);
-        lOpticalModule->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
+        fPDOM = new pDOM(mData,gPlaceHarness);
+        fPDOM->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
     }
     else if (fDOM == 3){ //LOM16
         G4cout << "Constructing LOM16" << G4endl;
-        LOM16 *lOpticalModule = new LOM16(mData,gPlaceHarness);
-        lOpticalModule->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
+        fLOM16 = new LOM16(mData,gPlaceHarness);
+        fLOM16->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
     }
     else if (fDOM == 4){ //LOM18
         G4cout << "Constructing LOM18" << G4endl;
-        LOM18 *lOpticalModule = new LOM18(mData,gPlaceHarness);
-        lOpticalModule->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
+        fLOM18 = new LOM18(mData,gPlaceHarness);
+        fLOM18->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
         G4cout << "::::::::::::::LOM18 successfully constructed::::::::::::" << G4endl;
     }
      else if (fDOM == 5){ //DEGG
         G4cout << "Constructing DEGG" << G4endl;
-        dEGG *lOpticalModule = new dEGG(mData,gPlaceHarness);
-        lOpticalModule->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
+        fDEGG = new dEGG(mData,gPlaceHarness);
+        fDEGG->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
      }
     else{ //Add your costume detector contruction here and call it with -m 6 (or greater)
         G4cout << "Constructing custome detector construction" << G4endl;
@@ -214,4 +210,85 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
 
 
     return mWorldPhysical;
+}
+void OMSimDetectorConstruction::DrawFromVolume()
+{
+    switch(fDOM)
+    {
+
+        case 0:
+            std::cerr << "Glass Solid Not Available for PMTs only! Aborting..." << std::endl;
+            exit(0);
+            break;
+        case 1:
+            fSolid = fMDOM -> GetGlassSolid();
+            fGlassWeight = 13.0;
+            break;
+        case 2:
+            fSolid = fPDOM -> GetGlassSolid();
+            fGlassWeight = 9.0;
+            break;
+        case 3:
+            fSolid = fLOM16 -> GetGlassSolid();
+            break;
+        case 4:
+            fSolid = fLOM18 -> GetGlassSolid();
+            break;
+        case 5:
+            std::cerr << "Glass Solid for DEGG Not Available yet! Aborting... " << std::endl;
+            exit(0);
+            break;
+        default:
+            std::cerr << "Invalid OM Model. Aborting..." << std::endl;
+            exit(0);
+    }
+
+    GenerateInVolume(K40);
+    GenerateInVolume(U238);
+    GenerateInVolume(U235);
+    GenerateInVolume(Th232);
+}
+
+void OMSimDetectorConstruction::GenerateInVolume(G4int isotope)
+{
+    std::vector<G4double> activities = {61, 4.61, 0.59, 1.28}; //Bq/Kg
+
+    OMSimRadioactivityData* radData = new OMSimRadioactivityData();
+    radData -> SetTimeWindow(OMSimRadioactivityData::ftimeWindow);
+    radData -> SetActivity(activities.at(isotope));
+
+    G4int numParticles = radData -> GetNumDecay();
+
+    for(int i = 0; i < numParticles; i++)
+    {
+        G4double theta = radData -> RandomGen(0, M_PI);
+        G4double phi = radData -> RandomGen(0, M_PI * 2);
+
+        G4int maxTries = 10000;
+        G4int iTry = 1;
+
+        G4ThreeVector point;
+
+        do
+        {
+            point.set(
+                (radData -> RandomGen(glassInRad - 2.5, glassOutRad + 2.5) * sin(theta) * cos(phi)) * mm,
+                (radData -> RandomGen(glassInRad - 2.5, glassOutRad + 2.5) * sin(theta) * sin(phi)) * mm,
+                (radData -> RandomGen(glassInRad - 2.5, glassOutRad + 2.5) * cos(theta)) * mm
+            );
+        }while(!fSolid -> Inside(point) && ++iTry < maxTries);
+
+        if(iTry == maxTries)
+        {
+            std::cout << "Unable to find a point inside the Volume! Check the volume params correctly! Aborting..." << std::endl;
+            exit(0);
+        }
+        else
+        {
+           /* std::cout << "x: " << point.x() / mm << std::endl
+            << "y: " << point.y() / mm << std::endl
+            << "z: " << point.z() / mm << std::endl;*/
+            isotopePos.at(isotope).push_back(point);
+        }
+    }
 }
