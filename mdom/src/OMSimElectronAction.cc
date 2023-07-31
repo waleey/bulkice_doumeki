@@ -26,6 +26,7 @@ void OMSimElectronAction::GeneratePrimaries(G4Event* anEvent)
     {
         std::cerr << "Vector out of range. " << std::endl
         << "OMSimElectronAction::GeneratePrimaries()" << std::endl;
+        exit(0);
     }
 
     fParticleGun -> SetParticlePosition(G4ThreeVector(fElectronData.at(X).at(fIdx) * m, fElectronData.at(Y).at(fIdx) * m, fElectronData.at(Z).at(fIdx) * m));
@@ -49,7 +50,7 @@ void OMSimElectronAction::GeneratePrimaries(G4Event* anEvent)
 void OMSimElectronAction::LoadData()
 {
     using namespace std;
-    G4String filePath = "../InputFile/Electron/e20002nkibd_";
+    G4String filePath = "/home/waly/bulkice_doumeki/mdom/InputFile/Electron/e20002nkibd_"; //will change soon
     G4double temp;
     G4String fileName;
 

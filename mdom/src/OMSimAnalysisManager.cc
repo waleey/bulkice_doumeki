@@ -20,7 +20,8 @@ void OMSimAnalysisManager::Write()
         //datafile << "Event Size: " << stats_event_id.size() << G4endl;
         for (int i = 0; i < (int) stats_event_id.size(); i++)
         {
-            datafile << stats_event_id.at(i) << "\t";
+            //datafile << stats_event_id.at(i) << "\t";
+            datafile << fRunId << "\t";
             datafile << std::fixed << stats_hit_time.at(i) /ns << "\t";
             //datafile << stats_photon_flight_time.at(i) /ns << "\t";
             //datafile << stats_photon_track_length.at(i) << "\t";
@@ -94,7 +95,11 @@ void OMSimAnalysisManager::Reset()
 	stats_PMT_hit.clear();
 	stats_photon_direction.clear();
 	stats_photon_position.clear();
-
+	stats_vertex_position.clear();
+	stats_positron_id.clear();
+	stats_survived_qe.clear();
+	stats_creator.clear();
+	stats_event_distance.clear();
 }
 
 void OMSimAnalysisManager::SetRunId(G4int RunId)

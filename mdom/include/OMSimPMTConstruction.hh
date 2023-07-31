@@ -19,6 +19,7 @@ class OMSimPMTConstruction
 {
 public:
     OMSimPMTConstruction(OMSimInputData *pData);
+    virtual ~OMSimPMTConstruction() {}
 
 protected:
     // Abstract base class
@@ -26,6 +27,7 @@ protected:
     {
     public:
         PMT(OMSimInputData *pDataSource, G4String pSelectedPMT);
+        virtual ~PMT() {}
         void ConstructIt();
         void PlaceIt(G4ThreeVector pPosition, G4RotationMatrix *pRotation, G4LogicalVolume *&pMother, G4String pNameExtension = "");
         void PlaceIt(G4Transform3D pTransform, G4LogicalVolume *&pMother, G4String pNameExtension = "");

@@ -1,88 +1,136 @@
 #include "OMSimPrimaryGeneratorAction.hh"
 #include "OMSimDetectorConstruction.hh"
 
-#include "G4Event.hh"
-#include "G4ParticleTypes.hh"
+//#include "G4ParticleTypes.hh"
 
-#include <iostream>
-#include <random>
-#include <cmath>
-#include <fstream>
-#include <vector>
-#include <stdlib.h>
-
-extern G4double gworldsize;
-extern OMSimDetectorConstruction* gDetectorConstruction;
-
-
-OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction_channel, G4int omModel) : finteraction_channel(interaction_channel), fomModel(omModel)
+OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
+    :   fPositronAction(0),
+        fNeutronAction(0),
+        fElectronAction(0),
+        fK40Action(0),
+        fU238Action(0),
+        fU235Action(0),
+        fTh232Action(0),
+        fParticleGun(0),
+        fActionType(0)
 {
 
 	fParticleGun = new G4ParticleGun(1);
-	fParticleSetup = new OMSimParticleSetup(fomModel);
 	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
-}
 
-OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction_channel, G4int omModel, OMSimParticleSetup* particleSetup) :
-finteraction_channel(interaction_channel), fomModel(omModel), fParticleSetup(particleSetup)
-{
-    fParticleGun = new G4ParticleGun(1);
-	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
+	fPositronAction = new OMSimPositronAction(fParticleGun);
+	fNeutronAction = new OMSimNeutronAction(fParticleGun);
+	fElectronAction = new OMSimElectronAction(fParticleGun);
+	fK40Action = new OMSimK40Action(fParticleGun);
+	fU238Action = new OMSimU238Action(fParticleGun);
+	fU235Action = new OMSimU235Action(fParticleGun);
+	fTh232Action = new OMSimTh232Action(fParticleGun);
 }
 
 OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 {
+	delete fPositronAction;
+	delete fNeutronAction;
+	delete fElectronAction;
+	delete fK40Action;
+	delete fU238Action;
+	delete fU235Action;
+	delete fTh232Action;
 	delete fParticleGun;
 }
 
 void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-	gDetectorConstruction -> DrawFromVolume();
-	fParticleSetup -> SetIsotopePosition(gDetectorConstruction -> GetPositions());
-	fParticleSetup -> SetParticleGun(fParticleGun);
-	fParticleSetup -> SetEvent(anEvent);
-
-   try
-    {
-        if(finteraction_channel == "ibd")
-        {
-	    std::cout << "************Only particles from IBD is considered************* " << std::endl;
-	    fParticleSetup -> GeneratePositron();
-            fParticleSetup -> GenerateNeutron();
-        }
-        else if(finteraction_channel == "enees")
-        {
-            std::cout << "************Only particles from ENEES is considered***********" << std::endl;
-            fParticleSetup -> GenerateElectron();
-            fParticleSetup -> GenerateNeutron();
-        }
-        else if(finteraction_channel == "all")
-        {
-            std::cout << "**********Particles from all interactions are considered********" << std::endl;
-            fParticleSetup -> GeneratePositron();
-            fParticleSetup -> GenerateElectron();
-            fParticleSetup -> GenerateNeutron();
-        }
-        /**
-        *This is the block that shoots the radioactive element from inside the glass materials
-        **/
-
-        else if(finteraction_channel == "radioactivity")
-        {
-            std::cout << "********Only particles from RadioactiveDecay is being simulated**********" << std::endl;
-            fParticleSetup -> GenerateK40();
-            fParticleSetup -> GenerateTh238();
-            fParticleSetup -> GenerateU238();
-            fParticleSetup -> GenerateU235();
-        }
-        else
-        {
-            throw finteraction_channel;
-        }
-    }
-	catch(G4String finteraction_channel)
+	switch(fActionType)
 	{
-        std::cout << "Invalid Interaction Channel! Aborting..." << std::endl;
+        case Positron:
+            std::cout << "Generating Positrons!" << std::endl;
+            fPositronAction -> GeneratePrimaries(anEvent);
+            break;
+        case Neutron:
+            std::cout << "Generating Neutrons!" << std::endl;
+            fNeutronAction -> GeneratePrimaries(anEvent);
+            break;
+        case Electron:
+            std::cout << "Generating Electrons!" << std::endl;
+            fElectronAction -> GeneratePrimaries(anEvent);
+            break;
+        case K40:
+            std::cout << "Generating K40!" << std::endl;
+            fK40Action -> GeneratePrimaries(anEvent);
+            break;
+        case U238:
+            std::cout << "Generating U238!" << std::endl;
+            fU238Action -> GeneratePrimaries(anEvent);
+            break;
+        case U235:
+            std::cout << "Generating U235!" << std::endl;
+            fU235Action -> GeneratePrimaries(anEvent);
+            break;
+        case Th232:
+            std::cout << "Generating Th232!" << std::endl;
+            fTh232Action -> GeneratePrimaries(anEvent);
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::GeneratePrimaries() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
 	}
-
+}
+bool OMSimPrimaryGeneratorAction::ParticleExist()
+{
+    switch(fActionType)
+    {
+        case Positron:
+            return fPositronAction -> PositronExist();
+        case Neutron:
+            return fNeutronAction -> NeutronExist();
+        case Electron:
+            return fElectronAction -> ElectronExist();
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::ParticleExist() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+void OMSimPrimaryGeneratorAction::LoadData()
+{
+    switch(fActionType)
+    {
+        case Positron:
+            fPositronAction -> LoadData();
+            break;
+        case Neutron:
+            fNeutronAction -> LoadData();
+            break;
+        case Electron:
+            fElectronAction -> LoadData();
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::ParticleExist() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+void OMSimPrimaryGeneratorAction::SetPosition(G4ThreeVector& position)
+{
+    switch(fActionType)
+    {
+        case K40:
+            fK40Action -> SetPosition(position);
+            break;
+        case U238:
+            fU238Action -> SetPosition(position);
+            break;
+        case U235:
+            fU235Action -> SetPosition(position);
+            break;
+        case Th232:
+            fTh232Action -> SetPosition(position);
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetPosition() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
 }

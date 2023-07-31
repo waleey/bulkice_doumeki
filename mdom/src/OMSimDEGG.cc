@@ -10,7 +10,7 @@
 
 
 #include "OMSimDEGG.hh"
-#include "OMSimDEGGHarness.hh" 
+#include "OMSimDEGGHarness.hh"
 #include "abcDetectorComponent.hh"
 #include <dirent.h>
 #include <stdexcept>
@@ -35,7 +35,7 @@
 #include <G4UnitsTable.hh>
 #include "G4VisAttributes.hh"
 #include "G4Torus.hh"
-#include "CADMesh.hh" 
+#include "CADMesh.hh"
 
 
 extern G4bool gCADImport;
@@ -57,7 +57,7 @@ dEGG::dEGG(OMSimInputData* pData, G4bool pPlaceHarness){
 
 /**
  * @brief Get the Values from the json file om_DEGG.dat. If you want to change any values, change them there.
- * 
+ *
  */
 void dEGG::GetSharedData(){
    // Outer shape of the vessel
@@ -97,12 +97,12 @@ void dEGG::GetSharedData(){
    mGelHeight = mData->GetValue(mDataKey,"jGelHeight");
    mGelOffset = mData->GetValue(mDataKey,"jGelOffset");
 
-   // Mainboard and HV Board Sizes and Position 
+   // Mainboard and HV Board Sizes and Position
    mMainBoardRmin = mData->GetValue(mDataKey,"jMainBoardRmin");
    mMainBoardRmax =mData->GetValue(mDataKey,"jMainBoardRmax");
    mMainBoardDz = mData->GetValue(mDataKey,"jMainBoardDz");
    mMainBoardPosition = mData->GetValue(mDataKey,"jMainBoardPosition");
-    
+
    mHVBoardRmin = mData->GetValue(mDataKey,"jHVBoardRmin");
    mHVBoardRmax =mData->GetValue(mDataKey,"jHVBoardRmax");
    mHVBoardDz = mData->GetValue(mDataKey,"jHVBoardDz");
@@ -110,17 +110,17 @@ void dEGG::GetSharedData(){
 }
 /**
  * @brief Construction of the whole DEGG. If you want to change any component, you have to change it at the specific function.
- * 
+ *
  */
 void dEGG::Construction(){
    //Create pressure vessel and inner volume
-   G4VSolid *lOuterGlass = CreateEggSolid(mOutSegments1,mOutSphereRadiusMax,mOutSphereDtheta,mOutTransformZ,mOutTorusRadius1,mOutCenterOfTorusRadius1,mOutSegments2,mOutTorusRadius2,mOutCenterOfTorusRadius2,mOutCenterOfTorusZ2,mOutTorusZmin2,mOutTorusZmax2,mOutTorusZ0,mOutTorusTransformZ);
-   G4VSolid *lInnerGlass = CreateEggSolid(mInnSegments1,mInnSphereRmax,mInnSphereDtheta,mInnTransformZ,mInnTorusRadius1,mInnCenterOfTorusRadius1,mInnSegments2,mInnTorusRadius2,mInnCenterOfTorusRadius2,mInnCenterOfTorusZ2,mInnTorusZmin2,mInnTorusZmax2,mInnTorusZ0,mInnTorusTransformZ);
-   
+   lOuterGlass = CreateEggSolid(mOutSegments1,mOutSphereRadiusMax,mOutSphereDtheta,mOutTransformZ,mOutTorusRadius1,mOutCenterOfTorusRadius1,mOutSegments2,mOutTorusRadius2,mOutCenterOfTorusRadius2,mOutCenterOfTorusZ2,mOutTorusZmin2,mOutTorusZmax2,mOutTorusZ0,mOutTorusTransformZ);
+   lInnerGlass = CreateEggSolid(mInnSegments1,mInnSphereRmax,mInnSphereDtheta,mInnTransformZ,mInnTorusRadius1,mInnCenterOfTorusRadius1,mInnSegments2,mInnTorusRadius2,mInnCenterOfTorusRadius2,mInnCenterOfTorusZ2,mInnTorusZmin2,mInnTorusZmax2,mInnTorusZ0,mInnTorusTransformZ);
+
    //Logicals
    G4LogicalVolume* PDOM_Glass_logical = new G4LogicalVolume (lOuterGlass, mData->GetMaterial("argVesselGlass"), "Glass_phys");
    lInnerVolumeLogical = new G4LogicalVolume (lInnerGlass, mData->GetMaterial("Ri_Air"), "Glass inside");
-   
+
    //Placements
    G4RotationMatrix *rot = new G4RotationMatrix();
    new G4PVPlacement (rot, G4ThreeVector(0,0,0), lInnerVolumeLogical, "VacuumGlass", PDOM_Glass_logical, false, 0, true);
@@ -132,16 +132,16 @@ void dEGG::Construction(){
    // ------------------ Add outer shape solid to MultiUnion in case you need substraction -------------------------------------------
    //Each Component needs to be appended to be places in abcDetectorComponent. Everything is placed in the InnerVolume which is placed in the glass which is the mother volume. This is the reason why not everything is appended on its own
    AppendComponent(lOuterGlass, PDOM_Glass_logical, G4ThreeVector(0, 0, 0), G4RotationMatrix(), "dEGG");
-   
+
    // ---------------- visualisation attributes --------------------------------------------------------------------------------
    PDOM_Glass_logical->SetVisAttributes(mGlassVis);
    lInnerVolumeLogical->SetVisAttributes(G4VisAttributes::GetInvisible());
-   
+
 }
 
 /**
  * @brief Construction the Gel of the DEGG.
- * 
+ *
  */
 void dEGG::PlaceGel(){
    // get Gel
@@ -154,11 +154,11 @@ void dEGG::PlaceGel(){
    G4ThreeVector box_trans(0,0,mGelHeight*2+mGelOffset);
    G4IntersectionSolid *intersection = new G4IntersectionSolid("EggInner * Box",degg_inner,box ,rot,box_trans);
    G4IntersectionSolid *intersection1 = new G4IntersectionSolid("EggInner * Box",degg_inner,box ,rot1,box_trans);
-   
+
    //logicals
    lgelsolid = new G4LogicalVolume (intersection, mData->GetMaterial("argGel"), "intersection logical");
    lgelsolid1 = new G4LogicalVolume (intersection1, mData->GetMaterial("argGel"), "intersection logical");
-   
+
    //placements
    new G4PVPlacement (rot, G4ThreeVector(0,0,0), lgelsolid, "Gel", lInnerVolumeLogical, false, 0, true);
    new G4PVPlacement (rot1, G4ThreeVector(0,0,0), lgelsolid1, "Gel1", lInnerVolumeLogical, false, 0, true);
@@ -167,7 +167,7 @@ void dEGG::PlaceGel(){
 }
 /**
  * @brief Construction the PMT of the DEGG. PMTs are placed in the logical of the Gel (see PlaceGel()).
- * 
+ *
  */
 void dEGG::PlacePMT(){
    G4RotationMatrix *rot = new G4RotationMatrix();
@@ -178,13 +178,13 @@ void dEGG::PlacePMT(){
 }
 /**
  * @brief Placement of the SupportStructure (from CAD)
- * 
+ *
  */
 void dEGG::PlaceCADSupportStructure(G4LogicalVolume* lInnerVolumeLogical)
 {
    //select file
    std::stringstream CADfile;
-   CADfile.str(""); 
+   CADfile.str("");
    //CADfile << "Internal_Everything.obj";
    CADfile << "Internal_Everything_NoMainboard.obj";
    G4cout <<  "using the following CAD file for support structure: "  << CADfile.str()  << G4endl;
@@ -196,7 +196,7 @@ void dEGG::PlaceCADSupportStructure(G4LogicalVolume* lInnerVolumeLogical)
 
    // Place all of the meshes it can find in the file as solids individually.
    for (auto solid : mesh->GetSolids())
-   { 
+   {
       G4LogicalVolume* mSupportStructureLogical  = new G4LogicalVolume( solid , mData->GetMaterial("NoOptic_Absorber") , "logical" , 0, 0, 0);
       mSupportStructureLogical->SetVisAttributes(mAluVis);
       new G4PVPlacement( 0 , G4ThreeVector(0, 0, 0) , mSupportStructureLogical, "Support structure" , lInnerVolumeLogical, false, 0);
@@ -204,14 +204,14 @@ void dEGG::PlaceCADSupportStructure(G4LogicalVolume* lInnerVolumeLogical)
 }
 
 /**
- * Placement of the CreateEggSolid. 
- * @param segments_1 G4int 
+ * Placement of the CreateEggSolid.
+ * @param segments_1 G4int
  * @param sphere_rmax G4double outer radius sphere
- * @param sphere_dtheta G4double delta theta angle of the segment 
+ * @param sphere_dtheta G4double delta theta angle of the segment
  * @param sphere_transform_z G4double shift of sphere in z direction
- * @param torus1_r G4double radius of small spindle torus sphere 
- * @param centeroftorus1_r G4double distance from center of torus 1 to z-axis 
- * @param segments_2 G4int 
+ * @param torus1_r G4double radius of small spindle torus sphere
+ * @param centeroftorus1_r G4double distance from center of torus 1 to z-axis
+ * @param segments_2 G4int
  * @param torus2_r G4double radius of large spindle torus sphere
  * @param centeroftorus2_r G4double distance from center of torus2_r to z-axis (signed)
  * @param centeroftorus2_z G4double distance from center of torus2_r to z-axis (signed)
@@ -220,7 +220,7 @@ void dEGG::PlaceCADSupportStructure(G4LogicalVolume* lInnerVolumeLogical)
  * @param torus2_z0 G4double
  * @param torus1_transform_z G4double
  * @return return the outer or inner shape of the glass vessel
- * 
+ *
  */
 G4VSolid* dEGG::CreateEggSolid(G4int segments_1,
                            G4double sphere_rmax,
@@ -243,8 +243,8 @@ G4VSolid* dEGG::CreateEggSolid(G4int segments_1,
    G4double dphi = 2*M_PI;
    G4double dtheta = sphere_dtheta;
    G4double stheta = 0. *degree;
-    
-   // Create Egg sphere 
+
+   // Create Egg sphere
    G4Sphere* sphere1 = new G4Sphere("sphere", rmin, rmax, sphi, dphi, stheta, dtheta);
    G4VSolid* sphere = sphere1;
    G4ThreeVector centerOfSphereUp(0, 0, sphere_transform_z);
@@ -303,12 +303,12 @@ G4VSolid* dEGG::CreateEggSolid(G4int segments_1,
 
    //Create Vessel
 
-   G4ThreeVector centerOfPolycone1(0, 0, torus1_transform_z); 
+   G4ThreeVector centerOfPolycone1(0, 0, torus1_transform_z);
 
    G4UnionSolid *solid1= new G4UnionSolid("solid1", torus2, torus1, 0, centerOfPolycone1);
-    
+
    G4UnionSolid *solid= new G4UnionSolid("solid", solid1, sphere, 0, centerOfSphereUp);
-    
+
    G4VSolid * deggup = solid;
    G4VSolid * deggdown = solid;
 
@@ -340,11 +340,11 @@ G4VSolid* dEGG::Egg_Inner(G4int segments_1,
     G4double dphi = 2*M_PI;
     G4double dtheta = sphere_dtheta;
     G4double stheta = 0. *degree;
-    
+
     // Create Egg sphere for top part
     G4Sphere* sphere1 = new G4Sphere("sphere", rmin, rmax, sphi, dphi, stheta, dtheta);
     G4VSolid* sphere = sphere1;
-    
+
     G4ThreeVector centerOfSphereUp(0, 0, sphere_transform_z);
 
     //Torus Part 1
@@ -403,12 +403,12 @@ G4VSolid* dEGG::Egg_Inner(G4int segments_1,
     G4Polycone * torus21 = new G4Polycone("polycone2", 0, 2*M_PI, segments_2+1, zPlane2, rInner2, rOuter2);
     G4VSolid * torus2 = torus21;
 
-    G4ThreeVector centerOfPolycone1(0, 0, torus1_transform_z); 
+    G4ThreeVector centerOfPolycone1(0, 0, torus1_transform_z);
 
     G4UnionSolid *solid1= new G4UnionSolid("solid1", torus2, torus1, 0, centerOfPolycone1);
-    
+
     G4UnionSolid *solid= new G4UnionSolid("solid", solid1, sphere, 0, centerOfSphereUp);
-    
+
     return solid;
 
  }

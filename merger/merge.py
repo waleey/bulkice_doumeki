@@ -19,20 +19,22 @@ def parseCommandLine():
     parser.add_argument('distance', help='distance to the progenitor from earth in kpc')
     parser.add_argument('omModel', help='Optical Module model to be used: [dom, mdom, lom18, lom16, pmt]')
     parser.add_argument('simType', help='Simulation type: [ibd, enees, all, radioactivity]')
-    parser.add_argument('runMacro', help='Geant4 run macro: [run_pos.mac, 10run_pos.mac, 100run_pos.mac]')
+    parser.add_argument('depthIndex', help='Simulation depth index: [0, 1, ....., 108]')
+    parser.add_argument('outputFolderG', help = 'Output folder for bulkice_doumeki')
+    parser.add_argument('runID', help = 'Run ID for each simulation run in bulkice_doumeki')
     args = parser.parse_args()
 
-    return args.progenitorModel, args.outfileS, args.distance, args.omModel, args.simType, args.runMacro
+    return args.progenitorModel, args.outfileS, args.distance, args.omModel, args.simType, args.depthIndex, args.outputFolderG, args.runID
     
 
 def merge():
-    progenitorModelS, outfileS, distanceS, omModelG, simTypeG, runMacroG = parseCommandLine()
+    progenitorModelS, outfileS, distanceS, omModelG, simTypeG, depthIndex, outputFolderG, runIDG = parseCommandLine()
     basefolderS = '/home/waly/snewpy/SNEWPY_models/Nakazato_2013/' #you need to change this path
     basefolderG = '/home/waly/bulkice_doumeki/mdom/build/' #you need to change this path
    
     #initializing modules to call sntools and bulkice_doumeki
     stool = stools(progenitorModelS, distanceS, outfileS, basefolderS)
-    bulkice = G4tools(omModelG, simTypeG, runMacroG, basefolderG)
+    bulkice = G4tools(omModelG, simTypeG, depthIndex, outputFolderG, runIDG, basefolderG)
     useStool = True
      
     if(simTypeG == 'ibd'):

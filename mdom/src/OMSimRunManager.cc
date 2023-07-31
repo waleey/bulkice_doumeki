@@ -11,7 +11,7 @@ extern G4int gNumScint;
 extern G4int gEvent;
 
 //G4int gIdx = 0;
-G4double OMSimRadioactivityData::ftimeWindow = 60; //for now just running for 1 sec.
+G4double OMSimRadioactivityData::ftimeWindow = 60.0; //for now just running for 1 sec.
 OMSimRunManager::OMSimRunManager()
 {
 
@@ -108,10 +108,23 @@ void OMSimRunManager::BeamOn()
     }
     else if(fInteraction == "radioactivity")
     {
-        GenerateK40();
-        GenerateU238();
-        GenerateU235();
-        GenerateTh232();
+        switch(fpmtModel)
+        {
+            case mdom:
+                GenerateK40();
+                GenerateU238();
+                GenerateU235();
+                GenerateTh232();
+                break;
+            case degg:
+                GenerateK40();
+                GenerateU238();
+                GenerateTh232();
+                break;
+            default:
+                std::cerr << "Radioactivity is not defined for this OM model yet. Aborting...." << std::endl;
+                exit(0);
+        }
     }
     else
     {
@@ -156,9 +169,9 @@ void OMSimRunManager::GenerateElectron()
 void OMSimRunManager::GenerateK40()
 {
     fPrimaryGenerator -> SetActionType(K40); //This member function needs to be implemented
-    G4double activity = 61;
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow;
-    G4double meanRate = activity * timeWindow * 13; //multiplied by mdom vessel weight of 13. Will be made flexible later.
+    G4double activity = K40Activity.at(fpmtModel);
+    G4double timeWindow = OMSimRadioactivityData::ftimeWindow / 60;
+    G4double meanRate = activity * timeWindow * glassWeight.at(fpmtModel); //multiplied by mdom vessel weight of 13. Will be made flexible later.
     G4int numParticle = fRadData -> GetNumDecay(meanRate);
     G4ThreeVector point;
     for(int i = 0; i < numParticle; i++)
@@ -174,9 +187,9 @@ void OMSimRunManager::GenerateK40()
 void OMSimRunManager::GenerateU238()
 {
     fPrimaryGenerator -> SetActionType(U238); //This member function needs to be implemented
-    G4double activity = 4.61;
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow;
-    G4double meanRate = activity * timeWindow * 13; //multiplied by mdom vessel weight of 13. Will be made flexible later.
+    G4double activity = U238Activity.at(fpmtModel);
+    G4double timeWindow = OMSimRadioactivityData::ftimeWindow / 60;
+    G4double meanRate = activity * timeWindow * glassWeight.at(fpmtModel); //multiplied by mdom vessel weight of 13. Will be made flexible later.
     G4int numParticle = fRadData -> GetNumDecay(meanRate);
     G4ThreeVector point;
     for(int i = 0; i < numParticle; i++)
@@ -192,9 +205,9 @@ void OMSimRunManager::GenerateU238()
 void OMSimRunManager::GenerateU235()
 {
     fPrimaryGenerator -> SetActionType(U235); //This member function needs to be implemented
-    G4double activity = 0.60;
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow;
-    G4double meanRate = activity * timeWindow * 13; //multiplied by mdom vessel weight of 13. Will be made flexible later.
+    G4double activity = U235Activity.at(fpmtModel);
+    G4double timeWindow = OMSimRadioactivityData::ftimeWindow / 60;
+    G4double meanRate = activity * timeWindow * glassWeight.at(fpmtModel); //multiplied by mdom vessel weight of 13. Will be made flexible later.
     G4int numParticle = fRadData -> GetNumDecay(meanRate);
     G4ThreeVector point;
     for(int i = 0; i < numParticle; i++)
@@ -209,9 +222,9 @@ void OMSimRunManager::GenerateU235()
 void OMSimRunManager::GenerateTh232()
 {
     fPrimaryGenerator -> SetActionType(Th232); //This member function needs to be implemented
-    G4double activity = 1.28;
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow;
-    G4double meanRate = activity * timeWindow * 13; //multiplied by mdom vessel weight of 13. Will be made flexible later.
+    G4double activity = Th232Activity.at(fpmtModel);
+    G4double timeWindow = OMSimRadioactivityData::ftimeWindow / 60;
+    G4double meanRate = activity * timeWindow * glassWeight.at(fpmtModel); //multiplied by mdom vessel weight of 13. Will be made flexible later.
     G4int numParticle = fRadData -> GetNumDecay(meanRate);
     G4ThreeVector point;
     for(int i = 0; i < numParticle; i++)

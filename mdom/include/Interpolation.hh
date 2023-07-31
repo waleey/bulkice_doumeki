@@ -152,57 +152,9 @@ class Interpolation {
                << " open failed! abort." << std::endl;
           abort();
        }
-
-       const int nchar = 2048;
-       char      buf[nchar];
        std::string     dum1;
        double    dumx, dumy;
 
-       int  ndata = -1;  // initialize
-
-       /*while (!in.eof()) {
-
-         if (ndata != -1) {  // ndata is set already
-            for (int i=0; i<ndata; i++) {
-                //in >> dumx >> dumy;*/
-               /* xaxis.push_back(dumx);
-                yaxis.push_back(dumy);
-
-                xaxis[i] = dumx;
-                yaxis[i] = dumy;
-             }
-             // now exit while loop
-             //break;
-          }
-
-          // ndata is not set yet.
-          // read ndata and skip headers
-
-          in.getline(buf,nchar);
-
-          dum1 = buf;
-          std::string dum2;
-
-          if (dum1.find("ndata") != std::string::npos) {
-             std::stringstream ss(buf);
-             ss >> dum2 >> ndata;
-
-             if (ndata < 0) {
-                std::cerr << "Interpolation:DataReader: "
-                     << "invalid ndata! ndata = " << ndata << std::endl;
-                abort();
-             }
-
-             // set size of array and allocate memory
-             xaxis.resize(ndata);
-             yaxis.resize(ndata);
-             continue;
-
-          } else {
-             // Header or LF. do nothing.
-          }
-
-       } */
 
        while(in >> dumx >> dumy)
        {

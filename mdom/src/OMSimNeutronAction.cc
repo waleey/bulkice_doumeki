@@ -27,6 +27,7 @@ void OMSimNeutronAction::GeneratePrimaries(G4Event* anEvent)
     {
         std::cerr << "Vector out of range. " << std::endl
         << "OMSimNeutronAction::GeneratePrimaries()" << std::endl;
+        exit(0);
     }
 
     fParticleGun -> SetParticlePosition(G4ThreeVector(fNeutronData.at(X).at(fIdx) * m, fNeutronData.at(Y).at(fIdx) * m, fNeutronData.at(Z).at(fIdx) * m));

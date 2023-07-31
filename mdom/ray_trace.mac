@@ -20,4 +20,4 @@
 /vis/rayTracer/eyePosition 1 1 1 m
 #/vis/rayTracer/trace output.jpg
 
-/run/beamOn 1
+#/run/beamOn 1

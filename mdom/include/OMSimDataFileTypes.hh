@@ -10,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 namespace pt = boost::property_tree;
+extern G4int gDepthIndex;
 
 class ParameterTable;
 
@@ -17,6 +18,7 @@ class abcDataFile // Base abstract class for data file template
 {
 public:
     abcDataFile(G4String pFileName);
+    virtual ~ abcDataFile() {}
     G4String mFileName;
     G4String mObjectName;
 
@@ -33,6 +35,7 @@ class abcMaterialData : public abcDataFile // Base abstract class for material d
 {
 public:
     abcMaterialData(G4String pFileName) : abcDataFile(pFileName) {};
+    virtual ~abcMaterialData() {}
 
 protected:
     G4Material* mMaterial;
@@ -76,10 +79,10 @@ public:
 class IceCubeIce : public abcMaterialData
 {
 public:
-    IceCubeIce(G4String pFilename) : abcMaterialData(pFilename) {};
+    IceCubeIce(G4String pFilename) : abcMaterialData(pFilename), mSpiceDepth_pos(gDepthIndex) {};
     void ExtractInformation();
 private:
-    G4int mSpiceDepth_pos = 88; //depth = 2278.2 m, very clean ice
+    G4int mSpiceDepth_pos; //depth = 2278.2 m, very clean ice
     G4double Spice_Temperature(G4double depth);
     G4double Spice_Absorption(G4double pLambd);
     G4double Spice_Refraction(G4double pLambd);

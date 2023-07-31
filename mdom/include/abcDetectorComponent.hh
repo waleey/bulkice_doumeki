@@ -9,6 +9,7 @@
 #include "OMSimInputData.hh"
 #include "OMSimPMTConstruction.hh"
 #include "G4MultiUnion.hh"
+#include "G4VSolid.hh"
 #include <sstream>
 
 class Component {     // Struct of variables of component of a DetectorComponent
@@ -30,11 +31,12 @@ class abcDetectorComponent
 {
 public:
     abcDetectorComponent(){};
+    virtual ~abcDetectorComponent() {}
     virtual void Construction() = 0; // Abstract method you have to define in order to make a derived class from abcDetectorComponent
 
     OMSimInputData* mData; // Instance of OMSimInputdata, which should be started only once.
     bool mCheckOverlaps = true;
-    
+
     std::vector<G4ThreeVector> mPlacedPositions; //store the positions each time the components are placed
     std::vector<G4RotationMatrix> mPlacedOrientations; //store the orientations each time the components are placed
     std::vector<Component *> Components;
@@ -46,9 +48,9 @@ public:
     virtual void IntegrateDetectorComponent(abcDetectorComponent* pToIntegrate, G4ThreeVector pPosition, G4RotationMatrix pRotation, G4String pNameExtension);
     virtual void PlaceIt(G4ThreeVector pPosition, G4RotationMatrix pRotation, G4LogicalVolume*& pMother, G4String pNameExtension = "");
     G4SubtractionSolid* SubstractToVolume(G4VSolid* pInputVolume, G4ThreeVector pSubstractionPos, G4RotationMatrix pSubstractionRot, G4String pNewVolumeName);
-    
+
 protected:
-    
+
     const G4VisAttributes* mGlassVis = new G4VisAttributes(G4Colour(0.7, 0.7, 0.8, 0.2));
     const G4VisAttributes* mGelVis = new G4VisAttributes(G4Colour(0.45, 0.5, 0.35, 0.2));
     const G4VisAttributes* mAluVis = new G4VisAttributes(G4Colour(0.8, 0.8, 0.9, 1.0));
@@ -59,7 +61,7 @@ protected:
     const G4VisAttributes mInvisibleVis = G4VisAttributes::GetInvisible();
     const G4VisAttributes* mRedVis = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0, 1.0));
     const G4VisAttributes* mBlackVis = new G4VisAttributes(G4Colour(0.0, 0.0, 0.0, 1.0));
-    const G4VisAttributes* mLEDvis= new G4VisAttributes(G4Colour(0.2,0.6,0.8,0.5));	    
+    const G4VisAttributes* mLEDvis= new G4VisAttributes(G4Colour(0.2,0.6,0.8,0.5));
 
 };
 

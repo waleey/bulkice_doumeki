@@ -68,11 +68,13 @@ void ParameterTable::SetValue(G4String pKey, G4String pParameter, G4double pValu
 {
     try {
         const G4double lValue = mTable.at(pKey).get<G4double>(pParameter + ".jValue");
+        if(false) std::cout << lValue << std::endl;
         mTable.at(pKey).put(pParameter + ".jValue", pValue);
     }
     catch (...)
     {
         const G4double lValue = mTable.at(pKey).get<G4double>(pParameter);
+        if(false) std::cout << lValue << std::endl;
         mTable.at(pKey).put(pParameter, pValue);
     }
 }
@@ -122,7 +124,7 @@ G4String ParameterTable::GetString(G4String pKey, G4String pParameter)
 */
 G4bool ParameterTable::CheckIfKeyInTable(G4String pKey)
 {
-    auto begin = mTable.begin(), end = mTable.end();
+    //auto begin = mTable.begin(), end = mTable.end();
     const G4int lFound = mTable.count(pKey);
     if (lFound > 0) return true;
     else return false;
@@ -228,6 +230,7 @@ G4OpticalSurface* OMSimInputData::GetOpticalSurface(G4String pName)
         else
         {   G4String mssg = "Requested Optical Surface " + pName + " not found. This will cause a segmentation fault. Please check the name!!";
             critical(mssg);
+            return nullptr;
         }
     }
 }
@@ -238,11 +241,11 @@ G4OpticalSurface* OMSimInputData::GetOpticalSurface(G4String pName)
 */
 void OMSimInputData::SearchFolders(G4String basefolder)
 {
-    mDataDirectory = basefolder + "/data/Materials";
+    mDataDirectory = basefolder + "data/Materials";
     ScannDataDirectory();
-    mDataDirectory = basefolder + "/data/PMTs";
+    mDataDirectory = basefolder + "data/PMTs";
     ScannDataDirectory();
-    mDataDirectory = basefolder + "/data/SegmentedModules";
+    mDataDirectory = basefolder + "data/SegmentedModules";
     ScannDataDirectory();
 }
 
@@ -278,27 +281,32 @@ void OMSimInputData::ScannDataDirectory()
                 }*/
                 RefractionAndAbsorption* lDataFile = new RefractionAndAbsorption(mDataDirectory + "/" + fileName/*, isGlass*/);
                 lDataFile->ExtractInformation();
+                delete lDataFile;
             }
             else if (fileName.substr(0, 2) == "Ri")
             {
                 RefractionOnly* lDataFile = new RefractionOnly(mDataDirectory + "/" + fileName);
                 lDataFile->ExtractInformation();
+                delete lDataFile;
             }
             else if (fileName.substr(0, 7) == "NoOptic")
             {
                 NoOptics* lDataFile = new NoOptics(mDataDirectory + "/" + fileName);
                 lDataFile->ExtractInformation();
+                delete lDataFile;
             }
             else if (fileName.substr(0, 10) == "IceCubeICE")
             {
                 IceCubeIce* lDataFile = new IceCubeIce(mDataDirectory + "/" + fileName);
                 lDataFile->ExtractInformation();
+                delete lDataFile;
             }
             else if ((fileName.substr(0, 4) == "Refl"))
             {
                 ReflectiveSurface* lDataFile = new ReflectiveSurface(mDataDirectory + "/" + fileName);
                 lDataFile->ExtractInformation();
                 mOpticalSurfaceMap[lDataFile->mObjectName] = lDataFile->mOpticalSurface;
+                delete lDataFile;
             }
             else if ((fileName.substr(0, 4) == "pmt_"))
                 AppendParameterTable(mDataDirectory + "/" + fileName);

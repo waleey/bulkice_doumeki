@@ -32,7 +32,7 @@ void pDOM::Construction()
     G4double lPMTz = 0.5 * 12 * 25.4 * mm - mPMTManager->GetDistancePMTCenterToPMTtip() - mGelThickness;
 
     lGlassSphereSolid = new G4Orb("PDOM_GlassSphere solid", 0.5 * 13 * 25.4 * mm);
-    G4Orb* lGelSphereSolid = new G4Orb("PDOM_GelSphere solid", 0.5 * 12 * 25.4 * mm);
+    lGelSphereSolid = new G4Orb("PDOM_GelSphere solid", 0.5 * 12 * 25.4 * mm);
 
     G4Ellipsoid* lAirAuxSolid = new G4Ellipsoid("PDOM_AirAux solid", 0.5 * 12 * 25.4 * mm, 0.5 * 12 * 25.4 * mm, 0.5 * 12 * 25.4 * mm, -0.5 * 13 * 25.4 * mm, 50 * mm);
 

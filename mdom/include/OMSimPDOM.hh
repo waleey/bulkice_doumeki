@@ -10,11 +10,14 @@ class pDOM : public abcDetectorComponent
         void Construction();
         G4bool mPlaceHarness;
 
-        inline G4Orb* GetGlassSolid() { return lGlassSphereSolid; }
+        inline G4Orb* GetOuterSolid() { return lGlassSphereSolid; }
+        inline G4Orb* GetInnerSolid() { return lGelSphereSolid; }
+
 
     private:
         OMSimPMTConstruction *mPMTManager;
         G4Orb* lGlassSphereSolid;
+        G4Orb* lGelSphereSolid;
 
     };
 

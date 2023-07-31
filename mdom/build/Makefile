@@ -358,6 +358,33 @@ src/OMSimDetectorConstruction.cc.s:
 	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.s
 .PHONY : src/OMSimDetectorConstruction.cc.s
 
+src/OMSimElectronAction.o: src/OMSimElectronAction.cc.o
+
+.PHONY : src/OMSimElectronAction.o
+
+# target to build an object file
+src/OMSimElectronAction.cc.o:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.o
+.PHONY : src/OMSimElectronAction.cc.o
+
+src/OMSimElectronAction.i: src/OMSimElectronAction.cc.i
+
+.PHONY : src/OMSimElectronAction.i
+
+# target to preprocess a source file
+src/OMSimElectronAction.cc.i:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.i
+.PHONY : src/OMSimElectronAction.cc.i
+
+src/OMSimElectronAction.s: src/OMSimElectronAction.cc.s
+
+.PHONY : src/OMSimElectronAction.s
+
+# target to generate assembly for a file
+src/OMSimElectronAction.cc.s:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.s
+.PHONY : src/OMSimElectronAction.cc.s
+
 src/OMSimEventAction.o: src/OMSimEventAction.cc.o
 
 .PHONY : src/OMSimEventAction.o
@@ -411,6 +438,33 @@ src/OMSimInputData.s: src/OMSimInputData.cc.s
 src/OMSimInputData.cc.s:
 	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.s
 .PHONY : src/OMSimInputData.cc.s
+
+src/OMSimK40Action.o: src/OMSimK40Action.cc.o
+
+.PHONY : src/OMSimK40Action.o
+
+# target to build an object file
+src/OMSimK40Action.cc.o:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.o
+.PHONY : src/OMSimK40Action.cc.o
+
+src/OMSimK40Action.i: src/OMSimK40Action.cc.i
+
+.PHONY : src/OMSimK40Action.i
+
+# target to preprocess a source file
+src/OMSimK40Action.cc.i:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.i
+.PHONY : src/OMSimK40Action.cc.i
+
+src/OMSimK40Action.s: src/OMSimK40Action.cc.s
+
+.PHONY : src/OMSimK40Action.s
+
+# target to generate assembly for a file
+src/OMSimK40Action.cc.s:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.s
+.PHONY : src/OMSimK40Action.cc.s
 
 src/OMSimLOM16.o: src/OMSimLOM16.cc.o
 
@@ -520,6 +574,33 @@ src/OMSimMDOMHarness.cc.s:
 	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.s
 .PHONY : src/OMSimMDOMHarness.cc.s
 
+src/OMSimNeutronAction.o: src/OMSimNeutronAction.cc.o
+
+.PHONY : src/OMSimNeutronAction.o
+
+# target to build an object file
+src/OMSimNeutronAction.cc.o:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.o
+.PHONY : src/OMSimNeutronAction.cc.o
+
+src/OMSimNeutronAction.i: src/OMSimNeutronAction.cc.i
+
+.PHONY : src/OMSimNeutronAction.i
+
+# target to preprocess a source file
+src/OMSimNeutronAction.cc.i:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.i
+.PHONY : src/OMSimNeutronAction.cc.i
+
+src/OMSimNeutronAction.s: src/OMSimNeutronAction.cc.s
+
+.PHONY : src/OMSimNeutronAction.s
+
+# target to generate assembly for a file
+src/OMSimNeutronAction.cc.s:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.s
+.PHONY : src/OMSimNeutronAction.cc.s
+
 src/OMSimPDOM.o: src/OMSimPDOM.cc.o
 
 .PHONY : src/OMSimPDOM.o
@@ -628,33 +709,6 @@ src/OMSimPMTResponse.cc.s:
 	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.s
 .PHONY : src/OMSimPMTResponse.cc.s
 
-src/OMSimParticleSetup.o: src/OMSimParticleSetup.cc.o
-
-.PHONY : src/OMSimParticleSetup.o
-
-# target to build an object file
-src/OMSimParticleSetup.cc.o:
-	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o
-.PHONY : src/OMSimParticleSetup.cc.o
-
-src/OMSimParticleSetup.i: src/OMSimParticleSetup.cc.i
-
-.PHONY : src/OMSimParticleSetup.i
-
-# target to preprocess a source file
-src/OMSimParticleSetup.cc.i:
-	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.i
-.PHONY : src/OMSimParticleSetup.cc.i
-
-src/OMSimParticleSetup.s: src/OMSimParticleSetup.cc.s
-
-.PHONY : src/OMSimParticleSetup.s
-
-# target to generate assembly for a file
-src/OMSimParticleSetup.cc.s:
-	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.s
-.PHONY : src/OMSimParticleSetup.cc.s
-
 src/OMSimPhysicsList.o: src/OMSimPhysicsList.cc.o
 
 .PHONY : src/OMSimPhysicsList.o
@@ -681,6 +735,33 @@ src/OMSimPhysicsList.s: src/OMSimPhysicsList.cc.s
 src/OMSimPhysicsList.cc.s:
 	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.s
 .PHONY : src/OMSimPhysicsList.cc.s
+
+src/OMSimPositronAction.o: src/OMSimPositronAction.cc.o
+
+.PHONY : src/OMSimPositronAction.o
+
+# target to build an object file
+src/OMSimPositronAction.cc.o:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.o
+.PHONY : src/OMSimPositronAction.cc.o
+
+src/OMSimPositronAction.i: src/OMSimPositronAction.cc.i
+
+.PHONY : src/OMSimPositronAction.i
+
+# target to preprocess a source file
+src/OMSimPositronAction.cc.i:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.i
+.PHONY : src/OMSimPositronAction.cc.i
+
+src/OMSimPositronAction.s: src/OMSimPositronAction.cc.s
+
+.PHONY : src/OMSimPositronAction.s
+
+# target to generate assembly for a file
+src/OMSimPositronAction.cc.s:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.s
+.PHONY : src/OMSimPositronAction.cc.s
 
 src/OMSimPrimaryGeneratorAction.o: src/OMSimPrimaryGeneratorAction.cc.o
 
@@ -763,6 +844,33 @@ src/OMSimRunAction.cc.s:
 	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.s
 .PHONY : src/OMSimRunAction.cc.s
 
+src/OMSimRunManager.o: src/OMSimRunManager.cc.o
+
+.PHONY : src/OMSimRunManager.o
+
+# target to build an object file
+src/OMSimRunManager.cc.o:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.o
+.PHONY : src/OMSimRunManager.cc.o
+
+src/OMSimRunManager.i: src/OMSimRunManager.cc.i
+
+.PHONY : src/OMSimRunManager.i
+
+# target to preprocess a source file
+src/OMSimRunManager.cc.i:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.i
+.PHONY : src/OMSimRunManager.cc.i
+
+src/OMSimRunManager.s: src/OMSimRunManager.cc.s
+
+.PHONY : src/OMSimRunManager.s
+
+# target to generate assembly for a file
+src/OMSimRunManager.cc.s:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.s
+.PHONY : src/OMSimRunManager.cc.s
+
 src/OMSimScintillation.o: src/OMSimScintillation.cc.o
 
 .PHONY : src/OMSimScintillation.o
@@ -844,6 +952,33 @@ src/OMSimSteppingVerbose.cc.s:
 	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.s
 .PHONY : src/OMSimSteppingVerbose.cc.s
 
+src/OMSimTh232Action.o: src/OMSimTh232Action.cc.o
+
+.PHONY : src/OMSimTh232Action.o
+
+# target to build an object file
+src/OMSimTh232Action.cc.o:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.o
+.PHONY : src/OMSimTh232Action.cc.o
+
+src/OMSimTh232Action.i: src/OMSimTh232Action.cc.i
+
+.PHONY : src/OMSimTh232Action.i
+
+# target to preprocess a source file
+src/OMSimTh232Action.cc.i:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.i
+.PHONY : src/OMSimTh232Action.cc.i
+
+src/OMSimTh232Action.s: src/OMSimTh232Action.cc.s
+
+.PHONY : src/OMSimTh232Action.s
+
+# target to generate assembly for a file
+src/OMSimTh232Action.cc.s:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.s
+.PHONY : src/OMSimTh232Action.cc.s
+
 src/OMSimTrackingAction.o: src/OMSimTrackingAction.cc.o
 
 .PHONY : src/OMSimTrackingAction.o
@@ -870,6 +1005,60 @@ src/OMSimTrackingAction.s: src/OMSimTrackingAction.cc.s
 src/OMSimTrackingAction.cc.s:
 	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.s
 .PHONY : src/OMSimTrackingAction.cc.s
+
+src/OMSimU235Action.o: src/OMSimU235Action.cc.o
+
+.PHONY : src/OMSimU235Action.o
+
+# target to build an object file
+src/OMSimU235Action.cc.o:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.o
+.PHONY : src/OMSimU235Action.cc.o
+
+src/OMSimU235Action.i: src/OMSimU235Action.cc.i
+
+.PHONY : src/OMSimU235Action.i
+
+# target to preprocess a source file
+src/OMSimU235Action.cc.i:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.i
+.PHONY : src/OMSimU235Action.cc.i
+
+src/OMSimU235Action.s: src/OMSimU235Action.cc.s
+
+.PHONY : src/OMSimU235Action.s
+
+# target to generate assembly for a file
+src/OMSimU235Action.cc.s:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.s
+.PHONY : src/OMSimU235Action.cc.s
+
+src/OMSimU238Action.o: src/OMSimU238Action.cc.o
+
+.PHONY : src/OMSimU238Action.o
+
+# target to build an object file
+src/OMSimU238Action.cc.o:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.o
+.PHONY : src/OMSimU238Action.cc.o
+
+src/OMSimU238Action.i: src/OMSimU238Action.cc.i
+
+.PHONY : src/OMSimU238Action.i
+
+# target to preprocess a source file
+src/OMSimU238Action.cc.i:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.i
+.PHONY : src/OMSimU238Action.cc.i
+
+src/OMSimU238Action.s: src/OMSimU238Action.cc.s
+
+.PHONY : src/OMSimU238Action.s
+
+# target to generate assembly for a file
+src/OMSimU238Action.cc.s:
+	$(MAKE) -f CMakeFiles/bulkice_doumeki.dir/build.make CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.s
+.PHONY : src/OMSimU238Action.cc.s
 
 src/abcDetectorComponent.o: src/abcDetectorComponent.cc.o
 
@@ -932,12 +1121,18 @@ help:
 	@echo "... src/OMSimDetectorConstruction.o"
 	@echo "... src/OMSimDetectorConstruction.i"
 	@echo "... src/OMSimDetectorConstruction.s"
+	@echo "... src/OMSimElectronAction.o"
+	@echo "... src/OMSimElectronAction.i"
+	@echo "... src/OMSimElectronAction.s"
 	@echo "... src/OMSimEventAction.o"
 	@echo "... src/OMSimEventAction.i"
 	@echo "... src/OMSimEventAction.s"
 	@echo "... src/OMSimInputData.o"
 	@echo "... src/OMSimInputData.i"
 	@echo "... src/OMSimInputData.s"
+	@echo "... src/OMSimK40Action.o"
+	@echo "... src/OMSimK40Action.i"
+	@echo "... src/OMSimK40Action.s"
 	@echo "... src/OMSimLOM16.o"
 	@echo "... src/OMSimLOM16.i"
 	@echo "... src/OMSimLOM16.s"
@@ -950,6 +1145,9 @@ help:
 	@echo "... src/OMSimMDOMHarness.o"
 	@echo "... src/OMSimMDOMHarness.i"
 	@echo "... src/OMSimMDOMHarness.s"
+	@echo "... src/OMSimNeutronAction.o"
+	@echo "... src/OMSimNeutronAction.i"
+	@echo "... src/OMSimNeutronAction.s"
 	@echo "... src/OMSimPDOM.o"
 	@echo "... src/OMSimPDOM.i"
 	@echo "... src/OMSimPDOM.s"
@@ -962,12 +1160,12 @@ help:
 	@echo "... src/OMSimPMTResponse.o"
 	@echo "... src/OMSimPMTResponse.i"
 	@echo "... src/OMSimPMTResponse.s"
-	@echo "... src/OMSimParticleSetup.o"
-	@echo "... src/OMSimParticleSetup.i"
-	@echo "... src/OMSimParticleSetup.s"
 	@echo "... src/OMSimPhysicsList.o"
 	@echo "... src/OMSimPhysicsList.i"
 	@echo "... src/OMSimPhysicsList.s"
+	@echo "... src/OMSimPositronAction.o"
+	@echo "... src/OMSimPositronAction.i"
+	@echo "... src/OMSimPositronAction.s"
 	@echo "... src/OMSimPrimaryGeneratorAction.o"
 	@echo "... src/OMSimPrimaryGeneratorAction.i"
 	@echo "... src/OMSimPrimaryGeneratorAction.s"
@@ -977,6 +1175,9 @@ help:
 	@echo "... src/OMSimRunAction.o"
 	@echo "... src/OMSimRunAction.i"
 	@echo "... src/OMSimRunAction.s"
+	@echo "... src/OMSimRunManager.o"
+	@echo "... src/OMSimRunManager.i"
+	@echo "... src/OMSimRunManager.s"
 	@echo "... src/OMSimScintillation.o"
 	@echo "... src/OMSimScintillation.i"
 	@echo "... src/OMSimScintillation.s"
@@ -986,9 +1187,18 @@ help:
 	@echo "... src/OMSimSteppingVerbose.o"
 	@echo "... src/OMSimSteppingVerbose.i"
 	@echo "... src/OMSimSteppingVerbose.s"
+	@echo "... src/OMSimTh232Action.o"
+	@echo "... src/OMSimTh232Action.i"
+	@echo "... src/OMSimTh232Action.s"
 	@echo "... src/OMSimTrackingAction.o"
 	@echo "... src/OMSimTrackingAction.i"
 	@echo "... src/OMSimTrackingAction.s"
+	@echo "... src/OMSimU235Action.o"
+	@echo "... src/OMSimU235Action.i"
+	@echo "... src/OMSimU235Action.s"
+	@echo "... src/OMSimU238Action.o"
+	@echo "... src/OMSimU238Action.i"
+	@echo "... src/OMSimU238Action.s"
 	@echo "... src/abcDetectorComponent.o"
 	@echo "... src/abcDetectorComponent.i"
 	@echo "... src/abcDetectorComponent.s"

@@ -5,7 +5,7 @@
 
 #include "G4VisExecutive.hh"
 #include "G4RayTracer.hh"
-
+#include <vector>
 
 #include "OMSimDetectorConstruction.hh"
 #include "OMSimPhysicsList.hh"
@@ -57,7 +57,17 @@ private:
     void GenerateU235();
     void GenerateTh232();
 
+    /**
+    *Activity is given in Bq/Kg unit
+    **/
+    std::vector<G4double> K40Activity {0, 61, 0, 0, 0, 2.548};
+    std::vector<G4double> U238Activity {0, 4.61, 0, 0, 0, 0.2146};
+    std::vector<G4double> U235Activity {0, 0.60, 0, 0, 0, 0};
+    std::vector<G4double> Th232Activity {0, 1.28, 0, 0, 0, 0.1373};
+    std::vector<G4double> glassWeight {0., 13.0, 10.0, 0, 0, 13.0}; //for now, weight of Degg is assumed to be equal to MDOM. Will be changed later.
+
     enum {Positron, Neutron, Electron, K40, U238, U235, Th232}; //make sure this order is the same in primary generator class enum
+    enum {pmt, mdom, dom, lom16, lom18, degg};
 
     G4double startingtime;
     G4double finishtime;

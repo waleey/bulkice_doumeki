@@ -37,9 +37,9 @@ void OMSimRadioactivityData::SetGlassRad(G4double inRad, G4double outRad)
     OMSimRadioactivityData::fglassInRad = inRad;
 }
 
-G4int OMSimRadioactivityData::GetNumDecay()
+G4int OMSimRadioactivityData::GetNumDecay(G4double meanRate)
 {
-    InversePoisson();
+    InversePoisson(meanRate);
     return int(fnumDecay);
 }
 
@@ -59,6 +59,7 @@ G4double OMSimRadioactivityData::GetInitialTime()
 void OMSimRadioactivityData::GenerateFlatInitialTime()
 {
     finitialTime = RandomGen(0.0, ftimeWindow);
+    //finitialTime = RandomGen(0.0, 60);
 }
 
 void OMSimRadioactivityData::GenerateExpInitialTime()
@@ -115,13 +116,13 @@ void OMSimRadioactivityData::GenerateOrientation()
     fdecayOrientation = G4ThreeVector(orientDirection[0], orientDirection[1], orientDirection[2]);
 }
 
-void OMSimRadioactivityData::InversePoisson()
+void OMSimRadioactivityData::InversePoisson(G4double meanRate)
 {
     G4double minLim = 0.0;
     G4double maxLim = 1.0;
 
     G4double uniform_random = RandomGen(minLim, maxLim);
-    G4double mu = ftimeWindow * factivity;
+    G4double mu = meanRate;
     fnumDecay = 0;
 
     boost::math::poisson_distribution<> dist(mu);

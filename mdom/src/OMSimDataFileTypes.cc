@@ -305,12 +305,12 @@ void RefractionAndAbsorption::ExtractInformation()
     };
     //std::sort(amplitudes20, amplitudes20 + sizeof(amplitudes20) / sizeof(amplitudes20[0]));
     //G4String DataFile = "../InputFile/VAS_Scintillation_Spectrum.data";
-    G4String DataFile = "../InputFile/Vitrovex_scint.txt";
+    G4String DataFile = "/home/waly/bulkice_doumeki/mdom/InputFile/Vitrovex_scint.txt"; //will change soon
     std::vector<double> fileFirstColumn = readColumnDouble(DataFile, 1);
-    for(auto value : fileFirstColumn)
+   /* for(auto value : fileFirstColumn)
     {
-        std::cout << value / eV << std::endl;
-    }
+        std::cout << value << std::endl;
+    }*/
     std::vector<double> fileSecondColumn = readColumnDouble(DataFile, 2);
 
     G4double VV_WL[int(fileFirstColumn.size())];
@@ -319,10 +319,6 @@ void RefractionAndAbsorption::ExtractInformation()
     //std::copy_backward(fileSecondColumn.begin(), fileSecondColumn.end(), VV_I.end());
     ReverseCopy(fileFirstColumn, VV_WL);
     ReverseCopy(fileSecondColumn, VV_I);
-    for(auto value : VV_WL)
-    {
-        std::cout << value << std::endl;
-    }
     for (unsigned int u = 0; u <fileFirstColumn.size(); u++) {
 
         VV_WL[u] = 1239.84193 / VV_WL[u]*eV;
@@ -341,7 +337,7 @@ void RefractionAndAbsorption::ExtractInformation()
     if (mMaterial->GetName() == "RiAbs_Glass_Vitrovex"){
         //critical("Found");
         std::cout << "Adding Sctintillation for Vitro nGlass Vessel..." << std::endl;
-        G4double factor = 0.3;
+       // G4double factor = 0.3;
         G4double times20[6] = {
         1.500932040523042781e-03*s,
         2.304116799105801212e-04*s,
@@ -359,7 +355,7 @@ void RefractionAndAbsorption::ExtractInformation()
         3.496767714671291660e-01
     };
     //G4String DataFile = "../InputFile/VAS_Scintillation_Spectrum.data";
-    G4String DataFile = "../InputFile/Vitrovex_scint.txt";
+    G4String DataFile = "/home/waly/bulkice_doumeki/mdom/InputFile/Vitrovex_scint.txt";
     std::vector<double> fileFirstColumn = readColumnDouble(DataFile, 1);
     std::vector<double> fileSecondColumn = readColumnDouble(DataFile, 2);
 
@@ -369,14 +365,17 @@ void RefractionAndAbsorption::ExtractInformation()
     ReverseCopy(fileSecondColumn, VV_I);
     //std::copy_backward(fileFirstColumn.begin(), fileFirstColumn.end(), std::end(VV_WL));
     //std::copy_backward(fileSecondColumn.begin(), fileSecondColumn.end(), std::end(VV_I));
-
+    /*for(auto value : VV_WL)
+    {
+        std::cout << value << std::endl;
+    }*/
     for (unsigned int u = 0; u <fileFirstColumn.size(); u++) {
 
         VV_WL[u] = 1239.84193 / VV_WL[u]*eV;
 
     }
 
-    mMPT->AddProperty("FIRSTCOMPONENT",VV_WL,VV_I,138, true, true);
+   mMPT->AddProperty("FIRSTCOMPONENT",VV_WL,VV_I,138, true, true);
     mMPT->AddConstProperty("SCINTILLATIONYIELD",50/MeV);
     mMPT->AddProperty("FRACTIONLIFETIMES",amplitudes20,times20,6, true, true);
     mMPT->AddProperty("SCINTILLATIONSPECTRUM",VV_WL,VV_I,138, true, true);

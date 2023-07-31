@@ -4,12 +4,7 @@
 #include "G4RunManager.hh"
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
-//#include "FTFP_BERT.hh"
-//#include "G4EmStandardPhysics_option4.hh"
-//#include "G4OpticalPhysics.hh"
 #include "G4SystemOfUnits.hh"
-//#include "G4RadioactiveDecayPhysics.hh"
-//#include "G4DecayPhysics.hh"
 
 #define G4VIS_USE 1
 #ifdef G4VIS_USE
@@ -18,17 +13,11 @@
 #include "G4RayTracer.hh"
 #endif
 
-#include "OMSimDetectorConstruction.hh"
-#include "OMSimPhysicsList.hh"
-#include "OMSimPrimaryGeneratorAction.hh"
-#include "OMSimParticleSetup.hh"
-#include "OMSimRunAction.hh"
-#include "OMSimEventAction.hh"
-#include "OMSimTrackingAction.hh"
-#include "OMSimSteppingAction.hh"
-#include "OMSimSteppingVerbose.hh"
 #include "OMSimAnalysisManager.hh"
-#include "OMSimScintillation.hh"
+#include "OMSimRunManager.hh"
+
+#include <ctime>
+#include <string>
 
 
 //setting up the external variables
@@ -44,28 +33,40 @@ G4int           gPMT = 0; // i don't know what is it
 G4bool          gPlaceHarness = true;
 G4int           gHarness = 1;
 G4int           gRopeNumber = 1;
-G4double        gworldsize = 0.5*m;
+G4double        gworldsize = 0.5 * m;
 G4double        gElectronFactor = 9.5;
 G4bool          gCADImport = true;
 G4String        gHittype = "individual"; // seems like individual records each hit per pmt
 G4bool          gVisual = true; // may be visualization on?
 G4int           gEnvironment = 2; // 1 is ICeCUbe ice without any ice property, 2 is with property, 0 is air.
-G4String        ghitsfilename = "/mnt/c/Users/Waly/bulkice_doumeki/hit_"; //change location of your output file
+G4String        ghitsfilename = "/mnt/c/Users/Waly/bulkice_doumeki/"; //change location of your output file
 //G4double        gSimulatedTime = 1.0;
 G4int           gcounter = 0;
 G4int           gPosCount = 0;
-G4String        gQEFile = "../InputFile/TA0001_HamamatsuQE.data";
+G4String        gQEFile = "/home/waly/bulkice_doumeki/mdom/InputFile/TA0001_HamamatsuQE.data";
 
 G4int           gNumCherenkov = 0;
 G4int           gNumScint = 0;
-enum {PMT, MDOM, DOM, LOM16, LOM18};
+G4int           gEvent = 0;
+G4int           gDepthIndex = 88; //default value
+G4int           gRunID = 0; //Run ID for each run
+enum {PMT, MDOM, DOM, LOM16, LOM18, DEGG};
 
 OMSimAnalysisManager gAnalysisManager;
-OMSimDetectorConstruction* gDetectorConstruction = new OMSimDetectorConstruction();
 
-void ParseCommandLine(int argc, char** argv, G4String& macroname, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
+void help()
 {
-    if(argc == 4 || argc == 2)
+    std::cout << "Usage: " << std::endl;
+    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "[interaction channel]" << " " <<  "[depth index]" << " " << "[output folder] " << "[run id]" << " (for batch mode)" << std::endl;
+    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " (for visualization)" << std::endl;
+    std::cout << "Available OM Models: [dom, mdom, lom16, lom18, pmt, degg]" << std::endl;
+    std::cout << "Available interaction channels: [ibd, enees, all, radioactivity]" << std::endl;
+    std::cout << "Available depth index: [0, 1, ......, 108]" << std::endl;
+    std::cout << "To see associated depth with each depth index, go to build -> data -> Materials -> IceCubeIce.dat -> jDepth_spice" << std::endl;
+}
+void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
+{
+    if(argc == 6 || argc == 2)
     {
         std::string model = argv[1];
 
@@ -73,41 +74,64 @@ void ParseCommandLine(int argc, char** argv, G4String& macroname, G4int& PMT_mod
         {
             std::cout << "*****DOM simulation selected*****" << std::endl;
             PMT_model = 2;
+            gPMT = 5;
         }
         else if(model == "mdom")
         {
             std::cout << "*****MDOM simulation selected*****" << std::endl;
             PMT_model = 1;
+            gPMT = 0;
         }
         else if(model == "lom16")
         {
             std::cout << "*****LOM16 simulation selected*****" << std::endl;
             PMT_model = 3;
+            gPMT = 3;
         }
         else if(model == "lom18")
         {
             std::cout << "*****LOM18 simulation selected*****" << std::endl;
             PMT_model = 4;
+            gPMT = 3;
         }
         else if(model == "pmt")
         {
             std::cout << "*****Single PMT simulation selected*****" << std::endl;
             PMT_model = 0;
         }
+        else if(model == "degg")
+        {
+            std::cout << "*****DEGG simulation selected*****" << std::endl;
+            PMT_model = 5;
+            gPMT = 4;
+        }
+        else if(model == "help")
+        {
+            help();
+            exit(0);
+        }
         else
         {
-            std::cerr << "ERROR! Invalid OM Model. Aborting..." << std::endl;
-            std::cout << "Usage: " << std::endl;
-            std::cout << "Available OM Models: [dom, mdom, lom16, lom18, pmt]" << std::endl;
+            std::cout << "Invalid OM Model selected!" << std::endl;
+            help();
             exit(0);
         }
 
-        if(argc == 4)
+        if(argc == 6)
         {
-            macroname = argv[3];
+            //macroname = argv[3];
+            G4String outputFolder = argv[4];
+            gDepthIndex = atoi(argv[3]);
+            if(gDepthIndex < 0 || gDepthIndex > 108)
+            {
+                std::cerr << "Invalid depth index." << std::endl;
+                help();
+                exit(0);
+            }
             interaction_channel = argv[2];
+            gRunID = atoi(argv[5]);
             worldsize = 20;
-            ghitsfilename += model + "_" + interaction_channel;
+            ghitsfilename += outputFolder+ "/" + model + "_" + interaction_channel + "_" + std::to_string(gRunID);
         }
         else
         {
@@ -119,11 +143,7 @@ void ParseCommandLine(int argc, char** argv, G4String& macroname, G4int& PMT_mod
     else
     {
         std::cerr << "Invalid number of argument given. Aborting...." << std::endl;
-        std::cout << "Usage: " << std::endl;
-        std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "[interaction channel]" << " " <<  "[macro name] (for batch mode operation)" << std::endl;
-        std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " (for visualization)" << std::endl;
-        std::cout << "Available OM Models: [dom, mdom, lom16, lom18, pmt]" << std::endl;
-        std::cout << "Available interaction channels: [ibd, enees, all, radioactivity]" << std::endl;
+        help();
         exit(0);
     }
 }
@@ -178,6 +198,11 @@ std::vector<double> readColumnDouble (G4String fn, int col) {
 
 int main(int argc, char** argv)
 {
+    /*std::time_t currentTime = std::time(nullptr);
+    char buffer[80];
+    std::strftime(buffer, sizeof(buffer), "%H%M%S", std::localtime(&currentTime));
+    std::string time(buffer);*/
+
 
 
 
@@ -185,57 +210,26 @@ int main(int argc, char** argv)
     G4String macroname;
     G4int PMT_model(0);
     G4String interaction_channel;
-    ParseCommandLine(argc, argv, macroname, PMT_model, world_size, interaction_channel);
+    ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel);
+    //ghitsfilename +=  "_" + time;
 
-
-    G4RunManager* runmanager = new G4RunManager();
-
-    //Generating Physics List
-    /*G4VModularPhysicsList* physicsList = new FTFP_BERT;
-    G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
-    physicsList->RegisterPhysics(opticalPhysics);
-    physicsList -> RegisterPhysics(new G4RadioactiveDecayPhysics);
-    physicsList -> RegisterPhysics(new G4DecayPhysics);
-    runmanager -> SetUserInitialization(physicsList);*/
-
-    gDetectorConstruction -> SetOMModel(PMT_model);
-    gDetectorConstruction -> SetWorldSize(world_size);
-
-    runmanager -> SetUserInitialization(gDetectorConstruction);
-    runmanager -> SetUserInitialization(new OMSimPhysicsList);
-
-    runmanager -> SetUserAction(new OMSimPrimaryGeneratorAction(interaction_channel, PMT_model));
-    runmanager -> SetUserAction(new OMSimEventAction);
-    runmanager -> SetUserAction(new OMSimRunAction);
-    runmanager -> SetUserAction(new OMSimSteppingAction);
-    runmanager -> SetUserAction(new OMSimTrackingAction);
-
-    #ifdef G4VIS_USE
-  // initialize visualization package
-    G4VisManager* vismanager = new G4VisExecutive();
-    vismanager -> RegisterGraphicsSystem(new G4RayTracer);
-  //G4VisManager* visManager= new J4VisManager;
-    vismanager -> Initialize();
-    std::cerr << " ------------------------------- " << std::endl
-         << " ---- VisManager created! ---- " << std::endl
-         << " ------------------------------- " << std::endl;
-    std::cerr << std::endl;
-    #endif
-
-    std::cerr << "about to initialize runManager" << std::endl;
-    runmanager-> Initialize();
-    std::cerr << "initialize runManager succeed" << std::endl;
+    OMSimRunManager* runManager = new OMSimRunManager(PMT_model, world_size, interaction_channel);
+    runManager -> Initialize();
 
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
     G4UIExecutive* ui = 0;
 
-    if ( argc == 4 ) {
+    if ( argc == 6 )
+    {
     // batch mode
-        std::cerr << ":::::::::::::::::::Batch Mode Called:::::::::::::::::" << std::endl;
+       /* std::cerr << ":::::::::::::::::::Batch Mode Called:::::::::::::::::" << std::endl;
         G4String command = "/control/execute " + macroname;
         std::cout << "command " << command << std::endl;
-        UImanager->ApplyCommand(command);
+        UImanager->ApplyCommand(command);*/
+        runManager -> OpenFile();
+        runManager -> BeamOn();
+        runManager -> CloseFile();
         }
     else {
     // interactive mode
@@ -250,11 +244,12 @@ int main(int argc, char** argv)
   // terminating...
   //-----------------------
 
-    #ifdef G4VIS_USE
+   /* #ifdef G4VIS_USE
     delete vismanager;
     #endif
 
-    delete runmanager;
+    delete runmanager;*/
+    delete runManager;
     std::cout << "::::::::::::::this is the end:::::::::::::"<< std::endl;
     return 0;
 

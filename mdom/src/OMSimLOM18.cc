@@ -121,7 +121,7 @@ void LOM18::Construction()
 {
     //Create pressure vessel and inner volume
     lGlassSolid = CreateLOM18OuterSolid();
-    G4Polycone* lInnerVolumeSolid = CreateLOM18InnerSolid();
+    lInnerVolumeSolid = CreateLOM18InnerSolid();
 
     //Set positions and rotations of PMTs and gelpads
     SetPMTPositions();

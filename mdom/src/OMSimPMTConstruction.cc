@@ -507,7 +507,7 @@ void OMSimPMTConstruction::SelectPMT(G4String pPMTtoSelect)
 
     if (pPMTtoSelect.substr(0, 6) == "argPMT")
     {
-        const G4String lPMTTypes[] = {"pmt_Hamamatsu_R15458", "pmt_ETEL_9320KFL-KFB", "pmt_HZC_XP82B2F", "pmt_Hamamatsu_4inch", "pmt_dEGG"};
+        const G4String lPMTTypes[] = {"pmt_Hamamatsu_R15458", "pmt_ETEL_9320KFL-KFB", "pmt_HZC_XP82B2F", "pmt_Hamamatsu_4inch", "pmt_dEGG", "pmt_Hamamatsu_R7081"};
         pPMTtoSelect = lPMTTypes[gPMT];
     }
     mSelectedPMT = pPMTtoSelect;

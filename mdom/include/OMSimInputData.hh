@@ -15,6 +15,7 @@ class ParameterTable
 {
 public:
     ParameterTable() {}; // This class provides handling of table with json Trees
+    virtual ~ParameterTable() {}
     G4bool CheckIfKeyInTable(G4String pKey);
     G4double GetValue(G4String pKey, G4String pParameter);
     G4String GetString(G4String pKey, G4String pParameter);
@@ -29,6 +30,7 @@ class OMSimInputData : public ParameterTable
 {
 public:
     OMSimInputData();
+    virtual ~OMSimInputData() {}
     G4Material* GetMaterial(G4String name);
     G4OpticalSurface* GetOpticalSurface(G4String pName);
     // G4double GetValue(G4String pKey, G4String pParameter);

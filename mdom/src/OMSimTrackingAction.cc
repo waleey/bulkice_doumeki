@@ -34,7 +34,8 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
     {
            if(!(aTrack -> GetParticleDefinition() -> GetPDGStable()))
             {
-                if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > 0.1 * s)
+                if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > OMSimRadioactivityData::ftimeWindow * s)
+                //if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > 60 * s)
                 {
                     aTrack -> GetDefinition() -> SetPDGLifeTime((radData -> GetInitialTime()) * s);
                     /*std::cout << aTrack -> GetParticleDefinition() -> GetPDGLifeTime() << std::endl;
@@ -43,6 +44,7 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
                 }
             }
     }
+    delete radData;
 }
 
 void OMSimTrackingAction::PostUserTrackingAction(const G4Track* aTrack)

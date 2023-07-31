@@ -77,7 +77,7 @@ I Took this from a github... but I can't find it right now for giving the credit
     printf("%s%s", DISPLAY_BORDER ? BORDER : "", DISPLAY_BORDER ? " " : "");        \
                                                                                     \
     /* display the callee's message */                                              \
-    if (DISPLAY_MESSAGE) printf(__VA_ARGS__);                                       \
+   /* if (DISPLAY_MESSAGE) printf(__VA_ARGS__);  */                                     \
                                                                                     \
     /* add the message ending (usually '\n') */                                     \
     printf("%s", DISPLAY_ENDING ? MSG_ENDING : "");                                 \
@@ -150,5 +150,5 @@ I Took this from a github... but I can't find it right now for giving the credit
     }                                                                               \
 } while (0)
 
-#endif 
+#endif
 //

@@ -148,9 +148,22 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.s"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimDetectorConstruction.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.s
 
+CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
+CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.o: ../src/OMSimElectronAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.o"
+	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimElectronAction.cc
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.i"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waly/bulkice_doumeki/mdom/src/OMSimElectronAction.cc > CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.i
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.s"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimElectronAction.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.s
+
 CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.o: ../src/OMSimEventAction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimEventAction.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.i: cmake_force
@@ -163,7 +176,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.o: ../src/OMSimInputData.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.i: cmake_force
@@ -174,9 +187,22 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.s"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.s
 
+CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
+CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.o: ../src/OMSimK40Action.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.o"
+	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimK40Action.cc
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.i"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waly/bulkice_doumeki/mdom/src/OMSimK40Action.cc > CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.i
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.s"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimK40Action.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.s
+
 CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.o: ../src/OMSimLOM16.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimLOM16.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.i: cmake_force
@@ -189,7 +215,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.o: ../src/OMSimLOM18.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimLOM18.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.i: cmake_force
@@ -202,7 +228,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.o: ../src/OMSimMDOM.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimMDOM.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.i: cmake_force
@@ -215,7 +241,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.o: ../src/OMSimMDOMHarness.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimMDOMHarness.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.i: cmake_force
@@ -226,9 +252,22 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.s"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimMDOMHarness.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.s
 
+CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
+CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.o: ../src/OMSimNeutronAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.o"
+	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimNeutronAction.cc
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.i"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waly/bulkice_doumeki/mdom/src/OMSimNeutronAction.cc > CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.i
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.s"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimNeutronAction.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.s
+
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.o: ../src/OMSimPDOM.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimPDOM.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.i: cmake_force
@@ -241,7 +280,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.o: ../src/OMSimPMTConstruction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimPMTConstruction.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.i: cmake_force
@@ -254,7 +293,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.o: ../src/OMSimPMTQE.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimPMTQE.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.i: cmake_force
@@ -267,7 +306,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o: ../src/OMSimPMTResponse.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimPMTResponse.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.i: cmake_force
@@ -278,22 +317,9 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.s"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimPMTResponse.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.s
 
-CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
-CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o: ../src/OMSimParticleSetup.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o"
-	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimParticleSetup.cc
-
-CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.i"
-	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waly/bulkice_doumeki/mdom/src/OMSimParticleSetup.cc > CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.i
-
-CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.s"
-	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimParticleSetup.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.s
-
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o: ../src/OMSimPhysicsList.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimPhysicsList.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.i: cmake_force
@@ -304,9 +330,22 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.s"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimPhysicsList.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.s
 
+CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
+CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.o: ../src/OMSimPositronAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.o"
+	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimPositronAction.cc
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.i"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waly/bulkice_doumeki/mdom/src/OMSimPositronAction.cc > CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.i
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.s"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimPositronAction.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.s
+
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o: ../src/OMSimPrimaryGeneratorAction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimPrimaryGeneratorAction.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.i: cmake_force
@@ -319,7 +358,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o: ../src/OMSimRadioactivityData.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimRadioactivityData.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.i: cmake_force
@@ -332,7 +371,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o: ../src/OMSimRunAction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimRunAction.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.i: cmake_force
@@ -343,9 +382,22 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.s"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimRunAction.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.s
 
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.o: ../src/OMSimRunManager.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.o"
+	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimRunManager.cc
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.i"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waly/bulkice_doumeki/mdom/src/OMSimRunManager.cc > CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.i
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.s"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimRunManager.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.s
+
 CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o: ../src/OMSimScintillation.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimScintillation.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.i: cmake_force
@@ -358,7 +410,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o: ../src/OMSimSteppingAction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimSteppingAction.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.i: cmake_force
@@ -371,7 +423,7 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.s: cmake_force
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o: ../src/OMSimSteppingVerbose.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimSteppingVerbose.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.i: cmake_force
@@ -382,9 +434,22 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.s"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimSteppingVerbose.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.s
 
+CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
+CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.o: ../src/OMSimTh232Action.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.o"
+	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimTh232Action.cc
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.i"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waly/bulkice_doumeki/mdom/src/OMSimTh232Action.cc > CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.i
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.s"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimTh232Action.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.s
+
 CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o: ../src/OMSimTrackingAction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimTrackingAction.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.i: cmake_force
@@ -395,9 +460,35 @@ CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.s"
 	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimTrackingAction.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.s
 
+CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
+CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.o: ../src/OMSimU235Action.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.o"
+	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimU235Action.cc
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.i"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waly/bulkice_doumeki/mdom/src/OMSimU235Action.cc > CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.i
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.s"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimU235Action.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.s
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
+CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.o: ../src/OMSimU238Action.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.o"
+	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.o -c /home/waly/bulkice_doumeki/mdom/src/OMSimU238Action.cc
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.i"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waly/bulkice_doumeki/mdom/src/OMSimU238Action.cc > CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.i
+
+CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.s"
+	/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waly/bulkice_doumeki/mdom/src/OMSimU238Action.cc -o CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.s
+
 CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o: CMakeFiles/bulkice_doumeki.dir/flags.make
 CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o: ../src/abcDetectorComponent.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o"
 	/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o -c /home/waly/bulkice_doumeki/mdom/src/abcDetectorComponent.cc
 
 CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.i: cmake_force
@@ -417,25 +508,32 @@ bulkice_doumeki_OBJECTS = \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimDEGGHarness.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimDataFileTypes.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o" \
+"CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.o" \
+"CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.o" \
+"CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o" \
-"CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o" \
+"CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o" \
+"CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o" \
+"CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o" \
+"CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.o" \
+"CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.o" \
 "CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o"
 
 # External object files for target bulkice_doumeki
@@ -448,25 +546,32 @@ bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimDEGG.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimDEGGHarness.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimDataFileTypes.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o
+bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.o
+bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.o
+bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o
-bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimParticleSetup.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o
+bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o
+bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o
+bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o
+bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.o
+bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/build.make
 bulkice_doumeki: /home/waly/software/geant4-v11.1.2-install/lib/libG4Tree.so
@@ -515,7 +620,7 @@ bulkice_doumeki: /home/waly/software/geant4-v11.1.2-install/lib/libG4global.so
 bulkice_doumeki: /home/waly/software/geant4-v11.1.2-install/lib/libG4clhep.so
 bulkice_doumeki: /home/waly/software/geant4-v11.1.2-install/lib/libG4ptl.so.2.3.3
 bulkice_doumeki: CMakeFiles/bulkice_doumeki.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Linking CXX executable bulkice_doumeki"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/waly/bulkice_doumeki/mdom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Linking CXX executable bulkice_doumeki"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/bulkice_doumeki.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

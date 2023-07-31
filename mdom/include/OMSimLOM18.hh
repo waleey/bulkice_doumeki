@@ -22,7 +22,8 @@ public:
     G4double mGlassOutRad;
     G4String mDataKey = "om_LOM18";
 
-    inline G4Polycone* GetGlassSolid() { return lGlassSolid; }
+    inline G4Polycone* GetOuterSolid() { return lGlassSolid; }
+    inline G4Polycone* GetInnerSolid() { return lInnerVolumeSolid; }
 
 
 
@@ -59,6 +60,7 @@ private:
     std::vector<G4double> mPMT_phi;
 
     G4Polycone* lGlassSolid;
+    G4Polycone* lInnerVolumeSolid;
 
     //Shared data from jSON file
     //Vessel specific

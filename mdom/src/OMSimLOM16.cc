@@ -102,7 +102,7 @@ void LOM16::Construction()
 {
     //Create pressure vessel and inner volume
     lGlassSolid = PressureVessel(mGlassOutRad, "Glass");
-    G4UnionSolid* lGelSolid = PressureVessel(mGlassInRad, "Gel"); // Fill entire vessel with gel as logical volume (not placed) for intersectionsolids with gelpads
+    lGelSolid = PressureVessel(mGlassInRad, "Gel"); // Fill entire vessel with gel as logical volume (not placed) for intersectionsolids with gelpads
 
     //Set positions and rotations of PMTs and gelpads
     SetPMTAndGelpadPositions();

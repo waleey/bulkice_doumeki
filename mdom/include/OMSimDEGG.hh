@@ -5,6 +5,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4UnionSolid.hh"
 #include "G4IntersectionSolid.hh"
+#include "G4VSolid.hh"
 #include "OMSimInputData.hh"
 #include "G4Cons.hh"
 #include "G4Tubs.hh"
@@ -12,15 +13,19 @@ class dEGGHarness;
 class dEGG : public abcDetectorComponent
 {
 public:
-    
+
     dEGG(OMSimInputData* pData,G4bool pPlaceHarness=true);
     G4double mOut_sphere_r_max;
     void Construction();
+
+    inline G4VSolid* GetOuterSolid() { return lOuterGlass; }
+    inline G4VSolid* GetInnerSolid() { return lInnerGlass; }
 private:
     OMSimPMTConstruction *mPMTManager;
     dEGGHarness* mHarness;
-    
-    
+
+    G4VSolid* lOuterGlass;
+    G4VSolid* lInnerGlass;
 
     G4int mOutSegments1;
     G4double mOutSphereRadiusMax;
@@ -51,7 +56,7 @@ private:
     G4double mInnTorusZmax2;
     G4double mInnTorusZ0;
     G4double mInnTorusTransformZ;
-    
+
     G4double mPmtDistance;
     G4double mGelHeight;
     G4double mMainBoardRmin;
@@ -64,16 +69,16 @@ private:
     G4double mHVBoardPosition;
     G4double mGelOffset;
     G4String mDataKey = "om_DEGG";
-    
+
     void GetSharedData();
     void PlaceGel();
     void PlacePMT();
     void PlaceCADSupportStructure(G4LogicalVolume* lInnerVolumeLogical);
-    
+
     G4LogicalVolume* lgelsolid;
     G4LogicalVolume* lgelsolid1;
     G4LogicalVolume* lInnerVolumeLogical;
-    
+
     G4VSolid* CreateEggSolid(G4int segments_1,
                             G4double r_max,
                             G4double d_theta,

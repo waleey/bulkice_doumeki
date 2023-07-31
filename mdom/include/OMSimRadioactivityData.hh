@@ -28,7 +28,7 @@ public:
     static G4double fglassInRad;
     static G4double ftimeWindow;
     static G4int fomModel;
-    G4int GetNumDecay();
+    G4int GetNumDecay(G4double);
     G4double GetTimeWindow();
     G4double GetInitialTime();
 
@@ -54,7 +54,7 @@ private:
     void GenerateOrientation();
     void GenerateFlatInitialTime();
     void GenerateExpInitialTime();
-    void InversePoisson();
+    void InversePoisson(G4double);
 };
 
 

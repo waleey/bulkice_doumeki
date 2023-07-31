@@ -19,6 +19,7 @@ public:
     // K.H. added default constructor for delivered class
     mDOM() {}
     mDOM(OMSimInputData* pData, G4bool pPlaceHarness = true);
+    ~mDOM() {}
     // K.H. virtual added
     virtual void Construction();
     G4double mCylinderAngle;
@@ -30,7 +31,8 @@ public:
     std::vector<std::vector<G4double>> mLED_AngFromSphere; //stores rho (mm),theta (deg),phi (deg) of each LED from the center of its corresponding spherical part. Useful to run the particles.
     G4double getGlassOutRad() {return mGlassOutRad; }
     G4double getGlassInRad() {return mGlassInRad; }
-    inline G4UnionSolid* GetGlassSolid() { return lGlassSolid; }
+    inline G4UnionSolid* GetOuterSolid() { return lGlassSolid; }
+    inline G4UnionSolid* GetInnerSolid() { return lGelSolid; }
 
 protected:
     OMSimPMTConstruction* mPMTManager;
@@ -85,6 +87,7 @@ protected:
 
 private:
     G4UnionSolid* lGlassSolid;
+    G4UnionSolid* lGelSolid;
 
 };
 

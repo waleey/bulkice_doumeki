@@ -27,6 +27,7 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
     {
         std::cerr << "Vector out of range. " << std::endl
         << "OMSimPositronAction::GeneratePrimaries()" << std::endl;
+        exit(0);
     }
 
     fParticleGun -> SetParticlePosition(G4ThreeVector(fPositronData.at(X).at(fIdx) * m, fPositronData.at(Y).at(fIdx) * m, fPositronData.at(Z).at(fIdx) * m));
@@ -46,7 +47,7 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
 void OMSimPositronAction::LoadData()
 {
     using namespace std;
-    G4String filePath = "../InputFile/Positron/pos20002nkibd_";
+    G4String filePath = "/home/waly/bulkice_doumeki/mdom/InputFile/Positron/pos20002nkibd_"; //will change soon.
     G4double temp;
     G4String fileName;
 

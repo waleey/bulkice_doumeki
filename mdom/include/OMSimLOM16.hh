@@ -22,7 +22,8 @@ public:
     G4double mCylHigh;
     G4String mDataKey = "om_LOM16";
 
-    inline G4UnionSolid* GetGlassSolid() { return lGlassSolid; }
+    inline G4UnionSolid* GetOuterSolid() { return lGlassSolid; }
+    inline G4UnionSolid* GetInnerSolid() { return lGelSolid; }
 
 
 
@@ -40,6 +41,7 @@ private:
     G4LogicalVolume* CreateEquatorBand(const G4double pOutRad);
 
     G4UnionSolid* lGlassSolid;
+    G4UnionSolid* lGelSolid;
 
     //for gelpad and PMT creation
     void PlacePMTsAndGelpads(G4UnionSolid* lGelSolid,G4LogicalVolume* lGelLogical);

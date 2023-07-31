@@ -88,7 +88,7 @@ void mDOM::GenerateLogicals()
     std::cerr << "OMSimMDOM::set position succeed " << std::endl;
 
     lGlassSolid = PressureVessel(mGlassOutRad, "Glass");
-    G4UnionSolid* lGelSolid = PressureVessel(mGlassInRad, "Gel");
+    lGelSolid = PressureVessel(mGlassInRad, "Gel");
     std::cerr << "OMSimMDOM::glass solid and gel solid generated" << std::endl;
 
     G4SubtractionSolid* lSupStructureSolid;
