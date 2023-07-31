@@ -1,7 +1,0 @@
-/home/waly/bulkice_doumeki/mdom/build/CMakeFiles/install/strip.dir
-/home/waly/bulkice_doumeki/mdom/build/CMakeFiles/install/local.dir
-/home/waly/bulkice_doumeki/mdom/build/CMakeFiles/install.dir
-/home/waly/bulkice_doumeki/mdom/build/CMakeFiles/list_install_components.dir
-/home/waly/bulkice_doumeki/mdom/build/CMakeFiles/rebuild_cache.dir
-/home/waly/bulkice_doumeki/mdom/build/CMakeFiles/edit_cache.dir
-/home/waly/bulkice_doumeki/mdom/build/CMakeFiles/bulkice_doumeki.dir
