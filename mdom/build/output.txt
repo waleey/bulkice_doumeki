@@ -1,0 +1,2576 @@
+*****MDOM simulation selected*****
+
+**************************************************************
+ Geant4 version Name: geant4-11-01-patch-02 [MT]   (15-June-2023)
+                       Copyright : Geant4 Collaboration
+                      References : NIM A 506 (2003), 250-303
+                                 : IEEE-TNS 53 (2006), 270-278
+                                 : NIM A 835 (2016), 186-225
+                             WWW : http://geant4.org/
+**************************************************************
+
+:::::::::::::::Particle Gun Created:::::::::::
+Visualization Manager instantiating with verbosity "warnings (3)"...
+Visualization Manager initialising...
+Registering graphics systems...
+
+You have successfully registered the following graphics systems.
+Registered graphics systems are:
+  RayTracer (RayTracer)
+  ASCIITree (ATree)
+  DAWNFILE (DAWNFILE)
+  G4HepRepFile (HepRepFile)
+  RayTracer (RayTracer)
+  VRML2FILE (VRML2FILE)
+  gMocrenFile (gMocrenFile)
+  TOOLSSG_OFFSCREEN (TSG_OFFSCREEN)
+  TOOLSSG_OFFSCREEN (TSG_OFFSCREEN, TSG_FILE)
+  OpenGLImmediateQt (OGLIQt, OGLI)
+  OpenGLStoredQt (OGLSQt, OGL, OGLS)
+  OpenGLImmediateX (OGLIX, OGLIQt_FALLBACK)
+  OpenGLStoredX (OGLSX, OGLSQt_FALLBACK)
+  RayTracerX (RayTracerX)
+  TOOLSSG_X11_GLES (TSG_X11_GLES, TSGX11, TSG_QT_GLES_FALLBACK)
+  TOOLSSG_QT_GLES (TSG_QT_GLES, TSGQt, TSG)
+
+Registering model factories...
+
+You have successfully registered the following model factories.
+Registered model factories:
+  generic
+  drawByAttribute
+  drawByCharge
+  drawByOriginVolume
+  drawByParticleID
+  drawByEncounteredVolume
+
+Registered models:
+  None
+
+Registered filter factories:
+  attributeFilter
+  chargeFilter
+  originVolumeFilter
+  particleFilter
+  encounteredVolumeFilter
+
+Registered filters:
+  None
+
+You have successfully registered the following user vis actions.
+Run Duration User Vis Actions: none
+End of Event User Vis Actions: none
+End of Run User Vis Actions: none
+
+Some /vis commands (optionally) take a string to specify colour.
+"/vis/list" to see available colours.
+[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - Ri_Vacuum added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: Ri_Vacuum
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Glass_Tube added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Glass_Tube
+[0mAdding Sctintillation for Vitro Glass Tube...
+3.02e+08
+3.04e+08
+3.06e+08
+3.08e+08
+3.1e+08
+3.12e+08
+3.14e+08
+3.16e+08
+3.18e+08
+3.2e+08
+3.22e+08
+3.24e+08
+3.26e+08
+3.28e+08
+3.3e+08
+3.32e+08
+3.34e+08
+3.36e+08
+3.38e+08
+3.4e+08
+3.42e+08
+3.44e+08
+3.46e+08
+3.48e+08
+3.5e+08
+3.52e+08
+3.54e+08
+3.56e+08
+3.58e+08
+3.6e+08
+3.62e+08
+3.64e+08
+3.66e+08
+3.68e+08
+3.7e+08
+3.72e+08
+3.74e+08
+3.76e+08
+3.78e+08
+3.8e+08
+3.82e+08
+3.84e+08
+3.86e+08
+3.88e+08
+3.9e+08
+3.92e+08
+3.94e+08
+3.96e+08
+3.98e+08
+4e+08
+4.02e+08
+4.04e+08
+4.06e+08
+4.08e+08
+4.1e+08
+4.12e+08
+4.14e+08
+4.16e+08
+4.18e+08
+4.2e+08
+4.22e+08
+4.24e+08
+4.26e+08
+4.28e+08
+4.3e+08
+4.32e+08
+4.34e+08
+4.36e+08
+4.38e+08
+4.4e+08
+4.42e+08
+4.44e+08
+4.46e+08
+4.48e+08
+4.5e+08
+4.52e+08
+4.54e+08
+4.56e+08
+4.58e+08
+4.6e+08
+4.62e+08
+4.64e+08
+4.66e+08
+4.68e+08
+4.7e+08
+4.72e+08
+4.74e+08
+4.76e+08
+4.78e+08
+4.8e+08
+4.82e+08
+4.84e+08
+4.86e+08
+4.88e+08
+4.9e+08
+4.92e+08
+4.94e+08
+4.96e+08
+4.98e+08
+5e+08
+5.02e+08
+5.04e+08
+5.06e+08
+5.08e+08
+5.1e+08
+5.12e+08
+5.14e+08
+5.16e+08
+5.18e+08
+5.2e+08
+5.22e+08
+5.24e+08
+5.26e+08
+5.28e+08
+5.3e+08
+5.32e+08
+5.34e+08
+5.36e+08
+5.38e+08
+5.4e+08
+5.42e+08
+5.44e+08
+5.46e+08
+5.48e+08
+5.5e+08
+5.52e+08
+5.54e+08
+5.56e+08
+5.58e+08
+5.6e+08
+5.62e+08
+5.64e+08
+5.66e+08
+5.68e+08
+5.7e+08
+5.72e+08
+5.74e+08
+5.76e+08
+576
+574
+572
+570
+568
+566
+564
+562
+560
+558
+556
+554
+552
+550
+548
+546
+544
+542
+540
+538
+536
+534
+532
+530
+528
+526
+524
+522
+520
+518
+516
+514
+512
+510
+508
+506
+504
+502
+500
+498
+496
+494
+492
+490
+488
+486
+484
+482
+480
+478
+476
+474
+472
+470
+468
+466
+464
+462
+460
+458
+456
+454
+452
+450
+448
+446
+444
+442
+440
+438
+436
+434
+432
+430
+428
+426
+424
+422
+420
+418
+416
+414
+412
+410
+408
+406
+404
+402
+400
+398
+396
+394
+392
+390
+388
+386
+384
+382
+380
+378
+376
+374
+372
+370
+368
+366
+364
+362
+360
+358
+356
+354
+352
+350
+348
+346
+344
+342
+340
+338
+336
+334
+332
+330
+328
+326
+324
+322
+320
+318
+316
+314
+312
+310
+308
+306
+304
+302
+[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - NoOptic_Stahl added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: NoOptic_Stahl
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Glass_myVitrovex added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Glass_myVitrovex
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_AluminiumGround
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Glass_Benthos added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Glass_Benthos
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_Dynode
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - Ri_Air added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: Ri_Air
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Photocathode added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Photocathode
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_StainlessSteelGround
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_PMTFrontPlate
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Photocathode added to dictionary...
+[0mG4Material WARNING: duplicate name of material RiAbs_Photocathode
+[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Photocathode
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - IceCubeICE added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: IceCubeICE
+[0m[32;1m00:20:46   [NOTICE] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:494) - Ice properties at depth 2278.200000 m.
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_PadSurface
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_100ground
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_V98Air
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Glass_WOMQuartz added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Glass_WOMQuartz
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Glass_myChiba added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Glass_myChiba
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - NoOptic_Absorber added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: NoOptic_Absorber
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_V95Air
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Gel_Shin-Etsu added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Gel_Shin-Etsu
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_100polished
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Gel_QGel900 added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Gel_QGel900
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Gel_Wacker612Company added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Gel_Wacker612Company
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_V95Gel
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_PMTSideMirror
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - Ri_Glass_LED added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: Ri_Glass_LED
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_V98Gel
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Glass_Vitrovex added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Glass_Vitrovex
+[0mAdding Sctintillation for Vitro nGlass Vessel...
+[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Glass_Chiba added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Glass_Chiba
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - NoOptic_Reflector added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: NoOptic_Reflector
+[0m[36m00:20:46     [INFO] ExtractInformation (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:609) - New Optical Surface: Refl_BlackDuctTapePolished
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - RiAbs_Gel_Wacker612Measured added to dictionary...
+[0m[36m00:20:46     [INFO] CreateMaterial (/home/waly/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc:117) - New Material defined: RiAbs_Gel_Wacker612Measured
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - pmt_Hamamatsu_R7081 added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - pmt_Hamamatsu_4inch added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - pmt_dEGG added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - pmt_HZC_XP82B2F added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - pmt_Hamamatsu_R15458 added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - pmt_ETEL_9320KFL-KFB added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - om_LOM16 added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - mDOM_harness added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - om_DEGG added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - om_DEGG_Harness added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - om_mDOM added to dictionary...
+[0m[36m00:20:46     [INFO] AppendParameterTable (/home/waly/bulkice_doumeki/mdom/src/OMSimInputData.cc:58) - om_LOM18 added to dictionary...
+[0m::::::::::::::::::World Material Constructed Sucessfully:::::::::::::::::::
+::::::::::::::::::World Volume Constructed Sucessfully:::::::::::::::::::
+Constructing mDOM
+[32;1m00:20:46   [NOTICE] SelectPMT (/home/waly/bulkice_doumeki/mdom/src/OMSimPMTConstruction.cc:519) - pmt_Hamamatsu_R15458 selected.
+[0mChecking overlaps for volume Photocathode_pv_OMSIM:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume BackTube:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume BackBulb:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume Shield physical:0 (G4Tubs) ... 
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : GeomVol1002
+      issued by : G4PVPlacement::CheckOverlaps()
+Overlap with mother volume !
+          Overlap is detected for volume Shield physical:0 (G4Tubs) with its mother volume Reflective mirror (G4SubtractionSolid)
+          protrusion at mother local point (-19.8488,0.732771,-0.2) by 200 um  (max of 408 cases)
+NOTE: Reached maximum fixed number -1- of overlaps reports for this volume !
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+INFO: Converting polycone tera_solid_temp1
+to optimized polycone with (Rmin,Rmaz,Z) parameters !
+INFO: Converting polycone tera_solid_temp2
+to optimized polycone with (Rmin,Rmaz,Z) parameters !
+INFO: Converting polycone Cylinder solidGlass
+to optimized polycone with (Rmin,Rmaz,Z) parameters !
+INFO: Converting polycone Cylinder solidGel
+to optimized polycone with (Rmin,Rmaz,Z) parameters !
+Checking overlaps for volume PMT_0_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_0_physical:0 (G4IntersectionSolid) ... OK! 
+Checking overlaps for volume PMT_1_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_1_physical:0 (G4IntersectionSolid) ... OK! 
+Checking overlaps for volume PMT_2_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_2_physical:0 (G4IntersectionSolid) ... OK! 
+Checking overlaps for volume PMT_3_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_3_physical:0 (G4IntersectionSolid) ... OK! 
+Checking overlaps for volume PMT_4_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_4_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_5_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_5_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_6_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_6_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_7_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_7_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_8_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_8_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_9_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_9_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_10_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_10_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_11_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_11_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_12_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_12_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_13_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_13_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_14_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_14_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_15_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_15_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_16_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_16_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_17_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_17_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_18_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_18_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_19_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_19_physical:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume PMT_20_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_20_physical:0 (G4IntersectionSolid) ... OK! 
+Checking overlaps for volume PMT_21_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_21_physical:0 (G4IntersectionSolid) ... OK! 
+Checking overlaps for volume PMT_22_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_22_physical:0 (G4IntersectionSolid) ... OK! 
+Checking overlaps for volume PMT_23_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume RefCone_23_physical:0 (G4IntersectionSolid) ... OK! 
+Checking overlaps for volume LED_physical:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LED_Glass top_physical:0 (G4Tubs) ... OK! 
+Checking overlaps for volume LEDhole_physical_0:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LEDhole_physical_1:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LEDhole_physical_2:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LEDhole_physical_3:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LEDhole_physical_4:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LEDhole_physical_5:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LEDhole_physical_6:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LEDhole_physical_7:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LEDhole_physical_8:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume LEDhole_physical_9:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume Band_Top:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume Band_Bottom:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume Ropes:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume MainDataCable:0 (G4Tubs) ... OK! 
+Checking overlaps for volume Pads:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume Mush:0 (G4Tubs) ... OK! 
+Checking overlaps for volume PCA:0 (G4UnionSolid) ... OK! 
+Checking overlaps for volume Plug:0 (G4Tubs) ... OK! 
+Checking overlaps for volume TeraTapeBelt:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume mDOM:0 (G4SubtractionSolid) ... OK! 
+=======================================================================
+======                 Electromagnetic Physics Parameters      ========
+=======================================================================
+LPM effect enabled                                 1
+Enable creation and use of sampling tables         0
+Apply cuts on all EM processes                     0
+Use combined TransportationWithMsc                 Disabled
+Use general process                                0
+Enable linear polarisation for gamma               0
+Enable photoeffect sampling below K-shell          1
+Enable sampling of quantum entanglement            0
+X-section factor for integral approach             0.8
+Min kinetic energy for tables                      100 eV 
+Max kinetic energy for tables                      100 TeV
+Number of bins per decade of a table               7
+Verbose level                                      1
+Verbose level for worker thread                    0
+Bremsstrahlung energy threshold above which 
+  primary e+- is added to the list of secondary    100 TeV
+Bremsstrahlung energy threshold above which primary
+  muon/hadron is added to the list of secondary    100 TeV
+Lowest triplet kinetic energy                      1 MeV
+Enable sampling of gamma linear polarisation       0
+5D gamma conversion model type                     0
+5D gamma conversion model on isolated ion          0
+Livermore data directory                           epics_2017
+=======================================================================
+======                 Ionisation Parameters                   ========
+=======================================================================
+Step function for e+-                              (0.2, 1 mm)
+Step function for muons/hadrons                    (0.2, 0.1 mm)
+Step function for light ions                       (0.2, 0.1 mm)
+Step function for general ions                     (0.2, 0.1 mm)
+Lowest e+e- kinetic energy                         1 keV
+Lowest muon/hadron kinetic energy                  1 keV
+Use ICRU90 data                                    0
+Fluctuations of dE/dx are enabled                  1
+Type of fluctuation model for leptons and hadrons  Universal
+Use built-in Birks satuaration                     0
+Build CSDA range enabled                           0
+Use cut as a final range enabled                   0
+Enable angular generator interface                 0
+Max kinetic energy for CSDA tables                 1 GeV
+Max kinetic energy for NIEL computation            0 eV 
+Linear loss limit                                  0.01
+Read data from file for e+e- pair production by mu 0
+=======================================================================
+======                 Multiple Scattering Parameters          ========
+=======================================================================
+Type of msc step limit algorithm for e+-           1
+Type of msc step limit algorithm for muons/hadrons 0
+Msc lateral displacement for e+- enabled           1
+Msc lateral displacement for muons and hadrons     0
+Urban msc model lateral displacement alg96         1
+Range factor for msc step limit for e+-            0.04
+Range factor for msc step limit for muons/hadrons  0.2
+Geometry factor for msc step limitation of e+-     2.5
+Safety factor for msc step limit for e+-           0.6
+Skin parameter for msc step limitation of e+-      1
+Lambda limit for msc step limit for e+-            1 mm
+Use Mott correction for e- scattering              0
+Factor used for dynamic computation of angular 
+  limit between single and multiple scattering     1
+Fixed angular limit between single 
+  and multiple scattering                          3.1416 rad
+Upper energy limit for e+- multiple scattering     100 MeV
+Type of electron single scattering model           0
+Type of nuclear form-factor                        1
+Screening factor                                   1
+=======================================================================
+======                 Atomic Deexcitation Parameters          ========
+=======================================================================
+Fluorescence enabled                               1
+Directory in G4LEDATA for fluorescence data files  fluor
+Auger electron cascade enabled                     1
+PIXE atomic de-excitation enabled                  0
+De-excitation module ignores cuts                  1
+Type of PIXE cross section for hadrons             Empirical
+Type of PIXE cross section for e+-                 Livermore
+=======================================================================
+
+### ===  Deexcitation model UAtomDeexcitation is activated for 1 region:
+### ===  Auger flag: 1
+### ===  Ignore cuts flag:   1
+9.5
+command /control/execute run_pos.mac
+=======================================================================
+======                 Electromagnetic Physics Parameters      ========
+=======================================================================
+LPM effect enabled                                 1
+Enable creation and use of sampling tables         0
+Apply cuts on all EM processes                     0
+Use combined TransportationWithMsc                 Disabled
+Use general process                                0
+Enable linear polarisation for gamma               0
+Enable photoeffect sampling below K-shell          1
+Enable sampling of quantum entanglement            0
+X-section factor for integral approach             0.8
+Min kinetic energy for tables                      100 eV 
+Max kinetic energy for tables                      100 TeV
+Number of bins per decade of a table               7
+Verbose level                                      1
+Verbose level for worker thread                    0
+Bremsstrahlung energy threshold above which 
+  primary e+- is added to the list of secondary    100 TeV
+Bremsstrahlung energy threshold above which primary
+  muon/hadron is added to the list of secondary    100 TeV
+Lowest triplet kinetic energy                      1 MeV
+Enable sampling of gamma linear polarisation       0
+5D gamma conversion model type                     0
+5D gamma conversion model on isolated ion          0
+Livermore data directory                           epics_2017
+=======================================================================
+======                 Ionisation Parameters                   ========
+=======================================================================
+Step function for e+-                              (0.2, 1 mm)
+Step function for muons/hadrons                    (0.2, 0.1 mm)
+Step function for light ions                       (0.2, 0.1 mm)
+Step function for general ions                     (0.2, 0.1 mm)
+Lowest e+e- kinetic energy                         1 keV
+Lowest muon/hadron kinetic energy                  1 keV
+Use ICRU90 data                                    0
+Fluctuations of dE/dx are enabled                  1
+Type of fluctuation model for leptons and hadrons  Universal
+Use built-in Birks satuaration                     0
+Build CSDA range enabled                           0
+Use cut as a final range enabled                   0
+Enable angular generator interface                 0
+Max kinetic energy for CSDA tables                 1 GeV
+Max kinetic energy for NIEL computation            0 eV 
+Linear loss limit                                  0.01
+Read data from file for e+e- pair production by mu 0
+=======================================================================
+======                 Multiple Scattering Parameters          ========
+=======================================================================
+Type of msc step limit algorithm for e+-           1
+Type of msc step limit algorithm for muons/hadrons 0
+Msc lateral displacement for e+- enabled           1
+Msc lateral displacement for muons and hadrons     0
+Urban msc model lateral displacement alg96         1
+Range factor for msc step limit for e+-            0.04
+Range factor for msc step limit for muons/hadrons  0.2
+Geometry factor for msc step limitation of e+-     2.5
+Safety factor for msc step limit for e+-           0.6
+Skin parameter for msc step limitation of e+-      1
+Lambda limit for msc step limit for e+-            1 mm
+Use Mott correction for e- scattering              0
+Factor used for dynamic computation of angular 
+  limit between single and multiple scattering     1
+Fixed angular limit between single 
+  and multiple scattering                          3.1416 rad
+Upper energy limit for e+- multiple scattering     100 MeV
+Type of electron single scattering model           0
+Type of nuclear form-factor                        1
+Screening factor                                   1
+=======================================================================
+======                 Atomic Deexcitation Parameters          ========
+=======================================================================
+Fluorescence enabled                               1
+Directory in G4LEDATA for fluorescence data files  fluor
+Auger electron cascade enabled                     1
+PIXE atomic de-excitation enabled                  0
+De-excitation module ignores cuts                  1
+Type of PIXE cross section for hadrons             Empirical
+Type of PIXE cross section for e+-                 Livermore
+=======================================================================
+
+### ===  Deexcitation model UAtomDeexcitation is activated for 1 region:
+          DefaultRegionForTheWorld  1  1  1
+
+### === G4UAtomicDeexcitation::InitialiseForNewRun()
+### ===  Auger flag: 1
+### ===  Ignore cuts flag:   1
+### ===  PIXE model for hadrons: Empirical
+### ===  PIXE model for e+-:     Livermore
+G4ParticleDefinition (other than ions and shortlived) should be created in Pre_Init state - anti_proton
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : PART101
+      issued by : G4ParticleDefintion::G4ParticleDefinition()
+G4ParticleDefinition should be created in PreInit state
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+conv:  for gamma SubType=14 BuildTable=1
+      Lambda table from 1.022 MeV to 100 TeV, 18 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+ LivermoreConversion : Emin=    0 eV  Emax=  100 TeV  ModifiedTsai
+
+compt:  for gamma SubType=13 BuildTable=1
+      Lambda table from 100 eV  to 1 MeV, 7 bins/decade, spline: 1
+      LambdaPrime table from 1 MeV to 100 TeV in 56 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+       Klein-Nishina : Emin=    0 eV  Emax=  100 TeV
+
+phot:  for gamma SubType=12 BuildTable=0
+      LambdaPrime table from 200 keV to 100 TeV in 61 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+ LivermorePhElectric : Emin=    0 eV  Emax=  100 TeV  SauterGavrila Fluo
+
+msc:  for e-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+eIoni:  for e-  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+       LowEnergyIoni : Emin=    0 eV  Emax=  100 TeV  deltaVI
+
+eBrem:  for e-  XStype:4  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      LPM flag: 1 for E > 1 GeV,  VertexHighEnergyTh(GeV)= 100000
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB : Emin=    0 eV  Emax=    1 GeV  ModifiedTsai
+            eBremLPM : Emin=    1 GeV Emax=  100 TeV  ModifiedTsai
+
+msc:  for e+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+eIoni:  for e+  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha : Emin=    0 eV  Emax=  100 TeV
+
+eBrem:  for e+  XStype:4  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      LPM flag: 1 for E > 1 GeV,  VertexHighEnergyTh(GeV)= 100000
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB : Emin=    0 eV  Emax=    1 GeV  ModifiedTsai
+            eBremLPM : Emin=    1 GeV Emax=  100 TeV  ModifiedTsai
+
+annihil:  for e+ XStype:2 SubType=5 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            eplus2gg : Emin=    0 eV  Emax=  100 TeV
+
+hIoni:  for proton  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=2.00276 MeV
+          BetheBloch : Emin=2.00276 MeV Emax=  100 TeV
+======================================================================
+======          Radioactive Decay Physics Parameters           =======
+======================================================================
+min MeanLife (from G4NuclideTable)                1 ns 
+Max life time (from G4DeexPrecoParameters)        1000 ps 
+Internal e- conversion flag                       1
+Stored internal conversion coefficients           1
+Enabled atomic relaxation mode                    1
+Enable correlated gamma emission                  0
+Max 2J for sampling of angular correlations       10
+Atomic de-excitation enabled                      1
+Auger electron emission enabled                   1
+Check EM cuts disabled for atomic de-excitation   1
+Use Bearden atomic level energies                 0
+Use ANSTO fluorescence model                      0
+Threshold for very long decay time at rest        3.171e+10 y  
+======================================================================
+
+ionIoni:  for GenericIon  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      Stopping Power data for 17 ion/material pairs
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            BraggIon : Emin=    0 eV  Emax=    2 MeV
+          BetheBloch : Emin=    2 MeV Emax=  100 TeV
+
+msc:  for GenericIon  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+ionIoni:  for alpha  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      Stopping Power data for 17 ion/material pairs
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            BraggIon : Emin=    0 eV  Emax=    2 MeV
+          BetheBloch : Emin=    2 MeV Emax=  100 TeV
+
+msc:  for alpha  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+======================================================================
+======          Radioactive Decay Physics Parameters           =======
+======================================================================
+min MeanLife (from G4NuclideTable)                1 ns 
+Max life time (from G4DeexPrecoParameters)        1000 ps 
+Internal e- conversion flag                       1
+Stored internal conversion coefficients           1
+Enabled atomic relaxation mode                    1
+Enable correlated gamma emission                  0
+Max 2J for sampling of angular correlations       10
+Atomic de-excitation enabled                      1
+Auger electron emission enabled                   1
+Check EM cuts disabled for atomic de-excitation   1
+Use Bearden atomic level energies                 0
+Use ANSTO fluorescence model                      0
+Threshold for very long decay time at rest        3.171e+10 y  
+======================================================================
+G4VisManager: Using G4TrajectoryDrawByCharge as fallback trajectory model.
+See commands in /vis/modeling/trajectories/ for other options.
+:::::::::This is the beginning of Run Action::::::::
+********Only particles from RadioactiveDecay is being simulated**********
+Beginning of Tracking...
+Particle: Th234
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 0.000151356
+Beginning of Tracking...
+Particle: Th234
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pa234[166.300X]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 4.02242e-308
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 2.367e-07
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: U234
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 1.83113e-06
+Beginning of Tracking...
+Particle: U234
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th230
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 0.000161652
+Beginning of Tracking...
+Particle: Th230
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra226[67.670]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 8.47311e-309
+Beginning of Tracking...
+Particle: Ra226
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 0.000161363
+Beginning of Tracking...
+Particle: Ra226
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Rn222
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 0.000167098
+Beginning of Tracking...
+Particle: Rn222
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po218
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 0.000182447
+Beginning of Tracking...
+Particle: Po218
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb214
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 0.000194486
+Beginning of Tracking...
+Particle: Pb214
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi214[295.223]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 1.71351e-308
+Beginning of Tracking...
+Particle: Bi214
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 2.6667e-07
+Beginning of Tracking...
+Particle: Bi214
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po214[2017.309]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 4.02271e-308
+Beginning of Tracking...
+Particle: Po214[609.316]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 8.57563e-309
+Beginning of Tracking...
+Particle: Po214
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 5.45865e-07
+Beginning of Tracking...
+Particle: Po214
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb210
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 0.000221716
+Beginning of Tracking...
+Particle: Pb210
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 9.89875e-08
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 1.60888e-07
+Beginning of Tracking...
+Particle: Bi210
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po210
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: ionIoni
+Step Length: 1.1857e-06
+Beginning of Tracking...
+Particle: Po210
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th234
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000252361
+Beginning of Tracking...
+Particle: Th234
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 2.17957e-07
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: U234
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 2.69896e-06
+Beginning of Tracking...
+Particle: U234
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th230[53.227]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 1.02209e-309
+Beginning of Tracking...
+Particle: Th230
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000267745
+Beginning of Tracking...
+Particle: Th230
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000270797
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000277922
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po218
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000302592
+Beginning of Tracking...
+Particle: Po218
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000321707
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi214[351.932]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 1.75174e-308
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 5.30018e-07
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po214[1729.609]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 3.21569e-308
+Beginning of Tracking...
+Particle: Po214[609.316]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 3.80059e-310
+Beginning of Tracking...
+Particle: Po214
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 9.10191e-07
+Beginning of Tracking...
+Particle: Po214
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000364319
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 1.39243e-07
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 2.68238e-07
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po210
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 7.68808e-07
+Beginning of Tracking...
+Particle: Po210
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000384283
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 6.16597e-07
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 5.50271e-06
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000409655
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000412092
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000422834
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000459798
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000488297
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi214[351.932]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 5.99773e-309
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 1.32922e-06
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po214[1377.678]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 1.64365e-308
+Beginning of Tracking...
+Particle: Po214[609.316]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 1.05076e-308
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 1.3869e-06
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000551153
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 3.98273e-07
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 2.80726e-06
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th234
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 0.000142176
+Beginning of Tracking...
+Particle: Th234
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pa234[166.720X]
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 3.76972e-308
+Beginning of Tracking...
+Particle: Pa234[103.420X]
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 6.85379e-308
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 7.76061e-08
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: U234
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 1.9013e-06
+Beginning of Tracking...
+Particle: U234
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th230
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 0.000151663
+Beginning of Tracking...
+Particle: Th230
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra226[67.670]
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 1.37162e-309
+Beginning of Tracking...
+Particle: Ra226
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 0.000151562
+Beginning of Tracking...
+Particle: Ra226
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Rn222
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 0.000156603
+Beginning of Tracking...
+Particle: Rn222
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po218
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 0.00017052
+Beginning of Tracking...
+Particle: Po218
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb214
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 0.000181308
+Beginning of Tracking...
+Particle: Pb214
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi214[351.932]
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 2.09421e-308
+Beginning of Tracking...
+Particle: Bi214
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 2.98679e-07
+Beginning of Tracking...
+Particle: Bi214
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po214[1847.443]
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 5.82297e-309
+Beginning of Tracking...
+Particle: Po214[609.316]
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 4.78633e-309
+Beginning of Tracking...
+Particle: Po214
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 5.12897e-07
+Beginning of Tracking...
+Particle: Po214
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb210
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 0.000205323
+Beginning of Tracking...
+Particle: Pb210
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 1.74168e-08
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 1.51159e-07
+Beginning of Tracking...
+Particle: Bi210
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po210
+Pre position: mDOM
+Post place: mDOM
+Process going through: ionIoni
+Step Length: 1.29131e-06
+Beginning of Tracking...
+Particle: Po210
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000384283
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 7.17346e-07
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.09655e-06
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000409655
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra226[67.670]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 3.04626e-308
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000408724
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000422834
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000459798
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000488297
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi214[295.223]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 3.75463e-308
+Beginning of Tracking...
+Particle: Bi214[53.228]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 9.48439e-310
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.53275e-07
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po214[1543.372]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 7.63432e-309
+Beginning of Tracking...
+Particle: Po214[609.316]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 3.54143e-308
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 1.3869e-06
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000551153
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 2.6966e-07
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.08746e-07
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 2.32053e-06
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000384283
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pa234[166.300X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 5.27249e-308
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 6.01646e-07
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.61747e-06
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th230[53.227]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 4.622e-308
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000407543
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000412092
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000422834
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000459798
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000488297
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi214[295.223]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 2.87329e-308
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 1.14995e-06
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 7.8903e-06
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000551153
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 3.5481e-08
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.08746e-07
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 2.05042e-06
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000384283
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 9.61625e-07
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.83557e-06
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th230[53.227]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 9.25953e-309
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000407494
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000412092
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Rn222[186.211]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 2.8608e-308
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000414749
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000459798
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000488297
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi214[351.932]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 2.10106e-309
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 1.32922e-06
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po214[2118.533]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 6.98044e-309
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.82214e-06
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000551153
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 2.11047e-07
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.88335e-07
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 1.21886e-06
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th234[49.550]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 1.4238e-308
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000381997
+Beginning of Tracking...
+Particle: Th234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.19252e-07
+Beginning of Tracking...
+Particle: Pa234[73.920X]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 2.98559e-06
+Beginning of Tracking...
+Particle: U234
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th230[53.227]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 7.35054e-309
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.00040783
+Beginning of Tracking...
+Particle: Th230
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000412092
+Beginning of Tracking...
+Particle: Ra226
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000422834
+Beginning of Tracking...
+Particle: Rn222
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000459798
+Beginning of Tracking...
+Particle: Po218
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000488297
+Beginning of Tracking...
+Particle: Pb214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi214[295.223]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 2.87434e-308
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 6.77494e-07
+Beginning of Tracking...
+Particle: Bi214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po214[1729.609]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 1.51392e-308
+Beginning of Tracking...
+Particle: Po214[609.316]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 7.51091e-309
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 1.3869e-06
+Beginning of Tracking...
+Particle: Po214
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 0.000551153
+Beginning of Tracking...
+Particle: Pb210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 7.7812e-08
+Beginning of Tracking...
+Particle: Bi210[46.539]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 4.08746e-07
+Beginning of Tracking...
+Particle: Bi210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: ionIoni
+Step Length: 2.91487e-06
+Beginning of Tracking...
+Particle: Po210
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra228
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000250458
+Beginning of Tracking...
+Particle: Ra228
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ac228[33.070]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 1.74059e-308
+Beginning of Tracking...
+Particle: Ac228[6.670]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 3.08761e-308
+Beginning of Tracking...
+Particle: Ac228
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 1.07014e-07
+Beginning of Tracking...
+Particle: Ac228
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Th228[396.094]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 1.08226e-308
+Beginning of Tracking...
+Particle: Th228[57.773]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 5.51789e-309
+Beginning of Tracking...
+Particle: Th228
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 2.86448e-07
+Beginning of Tracking...
+Particle: Th228
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Ra224
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000291395
+Beginning of Tracking...
+Particle: Ra224
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Rn220
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000303081
+Beginning of Tracking...
+Particle: Rn220
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Po216
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000323954
+Beginning of Tracking...
+Particle: Po216
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb212
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.00034199
+Beginning of Tracking...
+Particle: Pb212
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Bi212[238.632]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 1.19974e-308
+Beginning of Tracking...
+Particle: Bi212
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 3.59369e-07
+Beginning of Tracking...
+Particle: Bi212
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Tl208[39.858]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 1.1778e-308
+Beginning of Tracking...
+Particle: Tl208
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: ionIoni
+Step Length: 0.000325785
+Beginning of Tracking...
+Particle: Tl208
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 0
+Beginning of Tracking...
+Particle: Pb208[3197.711]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 3.1252e-308
+Beginning of Tracking...
+Particle: Pb208[2614.522]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 4.87269e-308
+Beginning of Tracking...
+Particle: Ar40[1460.851]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 1.38482e-308
+Beginning of Tracking...
+Particle: Ar40[1460.851]
+Pre position: mDOM
+Post place: mDOM
+Process going through: RadioactiveDecay
+Step Length: 3.51577e-309
+Beginning of Tracking...
+Particle: Ar40[1460.851]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 6.07256e-309
+Beginning of Tracking...
+Particle: Ar40[1460.851]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 1.023e-307
+Beginning of Tracking...
+Particle: Ar40[1460.851]
+Pre position: Gel_physical
+Post place: Gel_physical
+Process going through: RadioactiveDecay
+Step Length: 1.47653e-307
+Beginning of Tracking...
+Particle: Ar40[1460.851]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 3.82943e-308
+Beginning of Tracking...
+Particle: Ar40[1460.851]
+Pre position: Photocathode_pv_OMSIM
+Post place: Photocathode_pv_OMSIM
+Process going through: RadioactiveDecay
+Step Length: 6.21095e-308
+Beginning of Tracking...
+Particle: Ar40[1460.851]
+Pre position: SupportStructure_physical
+Post place: SupportStructure_physical
+Process going through: RadioactiveDecay
+Step Length: 2.01381e-310
+::::::::::::This is the end of Run Action:::::::::::
++++++++++++++The size of this event is 0 ++++++++++++
+Computation time: 3 seconds.
+Graphics systems deleted.
+Visualization Manager deleting...
+::::::::::::::this is the end:::::::::::::
