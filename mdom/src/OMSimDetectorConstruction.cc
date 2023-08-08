@@ -54,6 +54,7 @@ OMSimDetectorConstruction::~OMSimDetectorConstruction()
     delete fLOM18;
     delete fDEGG;
     delete fPDOM;
+    delete fWOM;
     delete radData;
 }
 
@@ -134,6 +135,12 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
         fDEGG->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
         glassOutRad = 350;
         glassInRad = 50;
+     }
+     else if(fDOM == 6)
+     {
+        G4cout << "Constructing WOM" << G4endl;
+        fWOM = new WOM(mWorldLogical);
+        fWOM -> PlaceIt();
      }
     else{ //Add your costume detector contruction here and call it with -m 6 (or greater)
         G4cout << "Constructing custome detector construction" << G4endl;

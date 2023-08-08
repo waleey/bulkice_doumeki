@@ -19,7 +19,7 @@
 #include "OMSimLOM18.hh"
 #include "OMSimDEGG.hh"
 #include "OMSimRadioactivityData.hh"
-
+#include "WOM.hh"
 #include "G4VSolid.hh"
 #include "G4ThreeVector.hh"
 #include <cmath>
@@ -53,6 +53,7 @@ private:
     LOM16* fLOM16;
     LOM18* fLOM18;
     dEGG* fDEGG;
+    WOM* fWOM;
 
     //vars for drawing primaries from within a volume
     G4VSolid* fOuterSolid;
