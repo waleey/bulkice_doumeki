@@ -39,6 +39,7 @@ private:
     G4VSolid* WOMTube(const G4String&, G4double);
     // PMT Construction
     G4VSolid* PMTConstruction();
+    G4VSolid* PMTCathodeConstruction();
 
     void SubtractHarnessPlug();
     void SetPMTPosition();
@@ -81,6 +82,12 @@ private:
     G4LogicalVolume* fPMTBodyLogical2;
     G4LogicalVolume* fPMTCathodeLogical1;
     G4LogicalVolume* fPMTCathodeLogical2;
+
+    //PMT Photo Cathode
+    G4VSolid* fPMTCathode;
+    G4double fPMTCathodeRad;
+    G4double fPMTCathodeHalfLength;
+    G4double fPMTCathodeZ;
 
     //PMT Solids
     G4VSolid* fPMTSolid1;
