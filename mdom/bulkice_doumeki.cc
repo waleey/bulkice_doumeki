@@ -59,7 +59,7 @@ void help()
     std::cout << "Usage: " << std::endl;
     std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "[interaction channel]" << " " <<  "[depth index]" << " " << "[output folder] " << "[run id]" << " (for batch mode)" << std::endl;
     std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " (for visualization)" << std::endl;
-    std::cout << "Available OM Models: [dom, mdom, lom16, lom18, pmt, degg]" << std::endl;
+    std::cout << "Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]" << std::endl;
     std::cout << "Available interaction channels: [ibd, enees, all, radioactivity]" << std::endl;
     std::cout << "Available depth index: [0, 1, ......, 108]" << std::endl;
     std::cout << "To see associated depth with each depth index, go to build -> data -> Materials -> IceCubeIce.dat -> jDepth_spice" << std::endl;
@@ -104,6 +104,11 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             std::cout << "*****DEGG simulation selected*****" << std::endl;
             PMT_model = 5;
             gPMT = 4;
+        }
+        else if(model == "wom")
+        {
+            std::cout << "*****WOM simulation selected*****" << std::endl;
+            PMT_model = 6;
         }
         else if(model == "help")
         {
@@ -235,7 +240,8 @@ int main(int argc, char** argv)
     // interactive mode
         std::cerr << "interactive mode called" << std::endl;
         ui = new G4UIExecutive(argc, argv);
-        UImanager->ApplyCommand("/control/execute ray_trace.mac");
+        //UImanager->ApplyCommand("/control/execute ray_trace.mac");
+        UImanager -> ApplyCommand("/control/execute vis.mac");
         ui-> SessionStart();
         delete ui;
     }
