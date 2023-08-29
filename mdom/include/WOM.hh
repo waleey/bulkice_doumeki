@@ -37,6 +37,7 @@ private:
     void GenerateLogicals();
     G4MultiUnion* PressureVessel(const G4String&, G4double, G4double);
     G4VSolid* WOMTube(const G4String&, G4double);
+    G4VSolid* WOMPaint(const G4String&);
     // PMT Construction
     G4VSolid* PMTConstruction();
     G4VSolid* PMTCathodeConstruction();
@@ -64,6 +65,12 @@ private:
     G4LogicalVolume* fGlassLogical;
     G4LogicalVolume* fGelLogical;
 
+    //WOM paint
+    G4double fWOMPaintOuterRad;
+    G4double fWOMPaintInnerRad;
+    G4VSolid* fWOMPaintSolid;
+
+    G4LogicalVolume* fWOMPaintLogical;
     //WOM tube
     G4double fWomTubeHalfLength;
     G4double fWomTubeOuterRad;
