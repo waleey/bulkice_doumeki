@@ -4,6 +4,8 @@
 *Waly M Z Karim
 *8/8/2023
 **/
+#include "WOMMaterial.hh"
+
 WOM::WOM(G4LogicalVolume* LogicMother) : fLogicMother(LogicMother)
 {
     std::cout << "******Constructing WOMs******" << std::endl;
@@ -85,15 +87,15 @@ void WOM::GenerateLogicals()
 
     ConstructMaterial();
 
-    fGlassLogical = new G4LogicalVolume(fGlassSolid, air, "glassLogical");
-    fGelLogical = new G4LogicalVolume(fGelSolid, air, "gelLogical");
-    fWomTubeLogical = new G4LogicalVolume(fWomTubeSolid, air, "WOOMTubeLogical");
-    fWomTubeInsideLogical = new G4LogicalVolume(fWomInsideSolid, air, "WOMInsideLogical");
+    fGlassLogical = new G4LogicalVolume(fGlassSolid, glassMaterial, "glassLogical");
+    fGelLogical = new G4LogicalVolume(fGelSolid, fillerMaterial, "gelLogical");
+    fWomTubeLogical = new G4LogicalVolume(fWomTubeSolid, tubeMaterial, "WOOMTubeLogical");
+    fWomTubeInsideLogical = new G4LogicalVolume(fWomInsideSolid, tubeInsideMaterial, "WOMInsideLogical");
     fPMTBodyLogical1 = new G4LogicalVolume(fPMTSolid1, air, "PMTBodyLogical1");
     fPMTBodyLogical2 = new G4LogicalVolume(fPMTSolid1, air, "PMTBodyLogical2");
     fPMTCathodeLogical1 = new G4LogicalVolume(fPMTCathode, air, "PMT_Cathode_Logical1");
     fPMTCathodeLogical2 = new G4LogicalVolume(fPMTCathode, air, "PMT_Cathode_Logical2");
-    fWOMPaintLogical = new G4LogicalVolume(fWOMPaintSolid, air, "WOM_Paint_Logical");
+    fWOMPaintLogical = new G4LogicalVolume(fWOMPaintSolid, paintMaterial, "WOM_Paint_Logical");
 
    fGlassLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Blue()));
    fGelLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::White()));
@@ -224,7 +226,16 @@ void WOM::SelLEDPosition()
 }
 void WOM::ConstructMaterial()
 {
-    G4NistManager* nistMan = G4NistManager::Instance();
-    air = nistMan -> FindOrBuildMaterial("G4_WATER");
+    WOMMaterial* womMat = new WOMMaterial();
 
+    glassMaterial = womMat -> GetGlassMaterial();
+    fillerMaterial = womMat -> GetFillerMaterial();
+    paintMaterial = womMat -> GetPaintMaterial();
+    tubeMaterial = womMat -> GetTubeMaterial();
+    tubeInsideMaterial = womMat -> GetTubeInsideMaterial();
+
+    G4NistManager* nist = G4NistManager::Instance();
+    air = nist -> FindOrBuildMaterial("G4_AIR");
+
+    delete womMat;
 }

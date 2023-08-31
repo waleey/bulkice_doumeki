@@ -125,7 +125,13 @@ private:
     G4double fPMTOffset;
 
     //material construction
-    G4Material* air; //general material for now. Will change later.
+    G4Material* glassMaterial;
+    G4Material* fillerMaterial;
+    G4Material* paintMaterial;
+    G4Material* tubeMaterial;
+    G4Material* tubeInsideMaterial;
+
+    G4Material* air; //keeping this as dummy for PMT solids
 
 
 
