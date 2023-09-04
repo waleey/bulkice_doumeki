@@ -139,7 +139,7 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
      else if(fDOM == 6)
      {
         G4cout << "Constructing WOM" << G4endl;
-        fWOM = new WOM(mWorldLogical);
+        fWOM = new WOM(mWorldLogical, mData);
         fWOM -> PlaceIt();
      }
     else{ //Add your costume detector contruction here and call it with -m 6 (or greater)

@@ -14,6 +14,7 @@
 #include "G4OpMieHG.hh"
 #include "G4eplusAnnihilation.hh"
 #include "G4Scintillation.hh"
+#include "G4OpWLS.hh"
 
 #include "G4LivermoreIonisationModel.hh"
 #include "G4LivermorePhotoElectricModel.hh"
@@ -149,6 +150,7 @@ void OMSimPhysicsList::ConstructProcess()
 			pmanager->AddDiscreteProcess(new G4OpBoundaryProcess());
 			pmanager->AddDiscreteProcess(new G4OpRayleigh);
 			pmanager->AddDiscreteProcess(new G4OpMieHG);
+			pmanager->AddDiscreteProcess(new G4OpWLS);
 		}
 		else if (particleName == "gamma") {
 			pmanager->AddDiscreteProcess(theGammaConversionModel);

@@ -11,6 +11,8 @@
 #include "G4MaterialPropertiesTable.hh"
 #include "G4SystemOfUnits.hh"
 
+#include "OMSimInputData.hh"
+
 class WOMMaterial
 {
 public:
@@ -32,6 +34,7 @@ private:
     void GeneratePaintMaterial();
     void GenerateTubeMaterial();
     void GenerateTubeInsideMaterial();
+    void GenerateNonOpticMaterial();
     std::vector<G4double>& WavelengthToEnergy(std::vector<G4double>&);
 
     G4Material* quartz;

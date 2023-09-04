@@ -40,8 +40,14 @@ OMSimRunManager::OMSimRunManager(G4int pmtModel, G4double worldSize, G4String& i
     fRunManager -> SetUserInitialization(fDetectorConstruction);
     fPhysicsList = new OMSimPhysicsList();
     fRunManager -> SetUserInitialization(fPhysicsList);
-
-    fPrimaryGenerator = new OMSimPrimaryGeneratorAction();
+    if(fInteraction == "vis")
+    {
+        fPrimaryGenerator = new OMSimPrimaryGeneratorAction(fInteraction);
+    }
+    else
+    {
+        fPrimaryGenerator = new OMSimPrimaryGeneratorAction();
+    }
     fRunManager -> SetUserAction(fPrimaryGenerator);
     fRunAction = new OMSimRunAction();
     fRunManager -> SetUserAction(fRunAction);
@@ -126,6 +132,10 @@ void OMSimRunManager::BeamOn()
                 exit(0);
         }
     }
+    /*else if(fInteraction == "vis")
+    {
+        GenerateToVisualize();
+    }*/
     else
     {
         std::cerr << "Invalid interaction channel. Aborting..." << std::endl;
@@ -235,6 +245,11 @@ void OMSimRunManager::GenerateTh232()
         fRunManager -> BeamOn(1); //each primary will contain a separate event.
     }
 }
+/*void OMSimRunManager::GenerateToVisualize()
+{
+    fPrimaryGenerator -> SetActionType(Visualization);
+
+}*/
 void OMSimRunManager::OpenFile()
 {
     G4cout << ":::::::::This is the beginning of Run Action::::::::" << G4endl;

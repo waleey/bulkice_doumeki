@@ -4,6 +4,7 @@
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4ParticleGun.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4ParticleTable.hh"
 //#include "G4ParticleTable.hh"
 
 #include "OMSimPositronAction.hh"
@@ -19,6 +20,7 @@ class OMSimPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
 public:
 	OMSimPrimaryGeneratorAction();
+	OMSimPrimaryGeneratorAction(G4String&);
 	~OMSimPrimaryGeneratorAction();
 
 
@@ -30,6 +32,7 @@ public:
 	inline void SetActionType(G4int actionType) { fActionType = actionType; }
 
 private:
+    void GenerateToVisualize();
 
 	OMSimPositronAction* fPositronAction;
 	OMSimNeutronAction* fNeutronAction;
@@ -41,7 +44,9 @@ private:
 	G4ParticleGun *fParticleGun;
 	G4int fActionType;
 
-	enum {Positron, Neutron, Electron, K40, U238, U235, Th232};
+	G4String fInteraction;
+
+	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Visualization};
 };
 
 

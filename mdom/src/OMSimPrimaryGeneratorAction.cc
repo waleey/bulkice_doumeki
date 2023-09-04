@@ -1,5 +1,6 @@
 #include "OMSimPrimaryGeneratorAction.hh"
 #include "OMSimDetectorConstruction.hh"
+#include "OMSimRadioactivityData.hh"
 
 //#include "G4ParticleTypes.hh"
 
@@ -26,6 +27,29 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
 }
+OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
+    :   fPositronAction(0),
+        fNeutronAction(0),
+        fElectronAction(0),
+        fK40Action(0),
+        fU238Action(0),
+        fU235Action(0),
+        fTh232Action(0),
+        fParticleGun(0),
+        fActionType(0),
+        fInteraction(interaction)
+{
+
+	fParticleGun = new G4ParticleGun(1);
+	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
+	fPositronAction = new OMSimPositronAction(fParticleGun);
+	fNeutronAction = new OMSimNeutronAction(fParticleGun);
+	fElectronAction = new OMSimElectronAction(fParticleGun);
+	fK40Action = new OMSimK40Action(fParticleGun);
+	fU238Action = new OMSimU238Action(fParticleGun);
+	fU235Action = new OMSimU235Action(fParticleGun);
+	fTh232Action = new OMSimTh232Action(fParticleGun);
+}
 
 OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 {
@@ -41,6 +65,10 @@ OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 
 void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
+	if(fInteraction == "vis")
+	{
+        fActionType = Visualization;
+	}
 	switch(fActionType)
 	{
         case Positron:
@@ -70,6 +98,11 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
         case Th232:
             std::cout << "Generating Th232!" << std::endl;
             fTh232Action -> GeneratePrimaries(anEvent);
+            break;
+        case Visualization:
+            //std::cout << "Visualization called!" << std::endl;
+            GenerateToVisualize();
+            fParticleGun -> GeneratePrimaryVertex(anEvent);
             break;
         default:
             std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::GeneratePrimaries() " << std::endl
@@ -133,4 +166,24 @@ void OMSimPrimaryGeneratorAction::SetPosition(G4ThreeVector& position)
             << "Aborting...." << std::endl;
             exit(0);
     }
+}
+void OMSimPrimaryGeneratorAction::GenerateToVisualize()
+{
+
+    OMSimRadioactivityData* radData = new OMSimRadioactivityData();
+
+    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+    G4String particleName = "opticalphoton";
+    G4ParticleDefinition* particle = particleTable -> FindParticle(particleName);
+
+    G4ThreeVector position(0., -100 * mm, 350.0 * mm);
+    G4ThreeVector direction(radData -> SetupOrientation());
+
+    fParticleGun -> SetParticleDefinition(particle);
+    fParticleGun -> SetParticleEnergy(5 * eV);
+    fParticleGun -> SetParticlePosition(position);
+    fParticleGun -> SetParticleMomentumDirection(direction);
+
+    delete radData;
+
 }

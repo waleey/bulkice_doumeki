@@ -17,6 +17,7 @@ extern G4int gPosCount;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
 
+
 OMSimSteppingAction::OMSimSteppingAction()
 {
 
@@ -65,7 +66,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
         if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
-            if( aStep -> GetPostStepPoint() -> GetPhysicalVolume() -> GetName() == "Photocathode_pv_OMSIM") {
+            if( aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") {
 
 
                 //Commented out temporarily.

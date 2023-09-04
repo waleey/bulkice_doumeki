@@ -29,7 +29,7 @@ G4int           gHolderColor = 1;
 //G4int           gDOM = 0; // 0 : single PMT
 G4int           gDOM = 1; // 1 : mdom
 //G4int           gDOM = 2; // 2 : pdom
-G4int           gPMT = 0; // i don't know what is it
+G4int           gPMT = 0;
 G4bool          gPlaceHarness = true;
 G4int           gHarness = 1;
 G4int           gRopeNumber = 1;
@@ -58,7 +58,7 @@ void help()
 {
     std::cout << "Usage: " << std::endl;
     std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "[interaction channel]" << " " <<  "[depth index]" << " " << "[output folder] " << "[run id]" << " (for batch mode)" << std::endl;
-    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " (for visualization)" << std::endl;
+    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << "vis" << " (for visualization)" << std::endl;
     std::cout << "Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]" << std::endl;
     std::cout << "Available interaction channels: [ibd, enees, all, radioactivity]" << std::endl;
     std::cout << "Available depth index: [0, 1, ......, 108]" << std::endl;
@@ -66,9 +66,10 @@ void help()
 }
 void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
 {
-    if(argc == 6 || argc == 2)
+    if(argc == 6 || argc == 3)
     {
         std::string model = argv[1];
+        interaction_channel = argv[2];
 
         if(model == "dom")
         {
@@ -109,6 +110,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         {
             std::cout << "*****WOM simulation selected*****" << std::endl;
             PMT_model = 6;
+            gPMT = 5;
         }
         else if(model == "help")
         {
@@ -133,14 +135,14 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
                 help();
                 exit(0);
             }
-            interaction_channel = argv[2];
             gRunID = atoi(argv[5]);
             worldsize = 20;
             ghitsfilename += outputFolder+ "/" + model + "_" + interaction_channel + "_" + std::to_string(gRunID);
         }
         else
         {
-            worldsize = 0.25;
+            //worldsize = 0.25;
+            worldsize = 2.5;
             ghitsfilename += model;
         }
 

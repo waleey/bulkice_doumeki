@@ -20,10 +20,12 @@
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
 
+#include "OMSimInputData.hh"
+
 class WOM
 {
 public:
-    WOM(G4LogicalVolume* );
+    WOM(G4LogicalVolume*, OMSimInputData* );
     ~WOM();
 
     void PlaceIt();
@@ -46,6 +48,8 @@ private:
     void SetPMTPosition();
     void SelLEDPosition();
     void ConstructMaterial();
+
+    OMSimInputData* fData;
 
     G4LogicalVolume* fLogicMother;
     //cylindrical tube
@@ -130,6 +134,8 @@ private:
     G4Material* paintMaterial;
     G4Material* tubeMaterial;
     G4Material* tubeInsideMaterial;
+    G4Material* pmtAbsorber;
+    G4Material* pmtPhotoCathode;
 
     G4Material* air; //keeping this as dummy for PMT solids
 
