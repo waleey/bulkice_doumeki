@@ -9,6 +9,12 @@ extern G4String	gHittype;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
 extern G4int gEvent;
+extern G4double gDistance;
+extern G4double gZenithAngle;
+extern G4double gStartAngle;
+extern G4double gFinalAngle;
+extern G4double gAngleIncrement;
+extern G4bool gMultipleAngle;
 
 //G4int gIdx = 0;
 G4double OMSimRadioactivityData::ftimeWindow = 60.0; //for now just running for 1 sec.
@@ -136,6 +142,13 @@ void OMSimRunManager::BeamOn()
     {
         GenerateToVisualize();
     }*/
+    else if(fInteraction == "opticalphoton")
+    {
+        /**
+        optical photon wave simulation
+        **/
+
+    }
     else
     {
         std::cerr << "Invalid interaction channel. Aborting..." << std::endl;
@@ -250,6 +263,16 @@ void OMSimRunManager::GenerateTh232()
     fPrimaryGenerator -> SetActionType(Visualization);
 
 }*/
+void OMSimRunManager::GeneratePhoton()
+{
+    fPrimaryGenerator -> SetActionType(Photon);
+    fPrimaryGenerator -> SetDistance(gDistance);
+    for(G4double angle = gStartAngle; angle <= gFinalAngle; angle += gAngleIncrement)
+    {
+        fPrimaryGenerator -> SetAngle(angle);
+        fRunManager -> BeamOn(10000);
+    }
+}
 void OMSimRunManager::OpenFile()
 {
     G4cout << ":::::::::This is the beginning of Run Action::::::::" << G4endl;

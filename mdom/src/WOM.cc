@@ -214,7 +214,7 @@ G4VSolid* WOM::PMTConstruction()
 }
 G4VSolid* WOM::PMTCathodeConstruction()
 {
-    G4Tubs* pmtCathode = new G4Tubs("PMT_Cathode_Solid", 0.0, fWOMPaintOuterRad, fPMTCathodeHalfLength, 0., 2 * CLHEP::pi);
+    G4Tubs* pmtCathode = new G4Tubs("PMT_Cathode_Solid", 0.0, fPMTHolderRad, fPMTCathodeHalfLength, 0., 2 * CLHEP::pi);
     return pmtCathode;
 }
 void WOM::SubtractHarnessPlug()

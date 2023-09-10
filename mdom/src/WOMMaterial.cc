@@ -111,8 +111,8 @@ void WOMMaterial::GeneratePaintMaterial()
     quartzPaint -> AddElement(Si, 1);
     quartzPaint -> AddElement(O, 2);
 
-    std::vector<G4double> rIndexEnergy = { 1.775 * eV};
-    std::vector<G4double> rIndex = {1.46};
+    std::vector<G4double> rIndexEnergy = { 1.775 * eV, 6.212 * eV};
+    std::vector<G4double> rIndex = {1.46, 1.46};
 
     std::vector<G4double> absIntensity;
     std::vector<G4double> absLength;
@@ -121,20 +121,20 @@ void WOMMaterial::GeneratePaintMaterial()
 
     absEnergy = WavelengthToEnergy(wLen);
 
-    for(int i = 0; i < absIntensity.size(); i++)
+    for(int i = absIntensity.size() -1; i >= 0; i--)
     {
         absLength.push_back(- paintThickness / (log(1 - absIntensity.at(i) / 100)));
-        rIndexEnergy.push_back(absEnergy.at(i));
-        rIndex.push_back(1.46);
+        //rIndexEnergy.push_back(absEnergy.at(i));
+        //rIndex.push_back(1.46);
     }
 
-    rIndexEnergy.push_back(7.0 * eV);
-    rIndex.push_back(1.46);
+    //rIndexEnergy.push_back(7.0 * eV);
+    //rIndex.push_back(1.46);
 
     for(int i = 0; i < absLength.size(); i++)
     {
-        std::cout << "absLen: " << absLength.at(i) << std::endl;
-        std::cout << "Energy: " << absEnergy.at(i) << std::endl;
+        std::cout << "absLen: " << absLength.at(i) / micrometer << std::endl;
+        std::cout << "Energy: " << absEnergy.at(i) / eV << std::endl;
     }
     //exit(0);
     absIntensity.clear();
@@ -154,7 +154,7 @@ void WOMMaterial::GeneratePaintMaterial()
         std::cout << "EM: " << emIntensity.at(i) << std::endl;
         std::cout << "energy: " << emEnergy.at(i) / eV << std::endl;
     }
-    exit(0);
+    //exit(0);
     mptQuartzPaint = new G4MaterialPropertiesTable();
 
     mptQuartzPaint -> AddProperty("RINDEX", rIndexEnergy, rIndex, rIndex.size());
@@ -188,7 +188,7 @@ std::vector<G4double>& WOMMaterial::WavelengthToEnergy(std::vector<G4double>& wL
     {
         for(int i = wLen.size() - 1; i >= 0; i--)
         {
-            energy.push_back(( (6.626 * pow(10, -34) * 3 * pow(10, 8)) / (wLen.at(i) * pow(10, -9) * 1.6 * pow(10, -19))));
+            energy.push_back(( (6.626 * pow(10, -34) * 3 * pow(10, 8)) / (wLen.at(i) * pow(10, -9) * 1.6 * pow(10, -19))) * eV);
         }
     }
     else
