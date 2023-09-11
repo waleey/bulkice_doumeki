@@ -14,7 +14,7 @@
 #include "OMSimU238Action.hh"
 #include "OMSimU235Action.hh"
 #include "OMSimTh232Action.hh"
-
+#include "OMSimPhotonAction.hh"
 
 class OMSimPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
@@ -30,6 +30,7 @@ public:
 	void LoadData();
 	void SetPosition(G4ThreeVector&);
 	inline void SetActionType(G4int actionType) { fActionType = actionType; }
+	void SetAngle(G4double angle);
 
 private:
     void GenerateToVisualize();
@@ -41,12 +42,13 @@ private:
 	OMSimU238Action* fU238Action;
 	OMSimU235Action* fU235Action;
 	OMSimTh232Action* fTh232Action;
+	OMSimPhotonAction* fPhotonAction;
 	G4ParticleGun *fParticleGun;
 	G4int fActionType;
 
 	G4String fInteraction;
-
-	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Visualization};
+    G4double fPhotonAngle;
+	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon};
 };
 
 

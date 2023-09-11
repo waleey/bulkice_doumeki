@@ -16,6 +16,8 @@ extern G4double gFinalAngle;
 extern G4double gAngleIncrement;
 extern G4bool gMultipleAngle;
 
+G4double gAngle = 0;
+
 //G4int gIdx = 0;
 G4double OMSimRadioactivityData::ftimeWindow = 60.0; //for now just running for 1 sec.
 OMSimRunManager::OMSimRunManager()
@@ -147,7 +149,7 @@ void OMSimRunManager::BeamOn()
         /**
         optical photon wave simulation
         **/
-
+        GeneratePhoton();
     }
     else
     {
@@ -266,11 +268,11 @@ void OMSimRunManager::GenerateTh232()
 void OMSimRunManager::GeneratePhoton()
 {
     fPrimaryGenerator -> SetActionType(Photon);
-    fPrimaryGenerator -> SetDistance(gDistance);
     for(G4double angle = gStartAngle; angle <= gFinalAngle; angle += gAngleIncrement)
     {
+        gAngle = angle;
         fPrimaryGenerator -> SetAngle(angle);
-        fRunManager -> BeamOn(10000);
+        fRunManager -> BeamOn(100000);
     }
 }
 void OMSimRunManager::OpenFile()

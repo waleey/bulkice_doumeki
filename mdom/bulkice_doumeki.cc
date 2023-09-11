@@ -59,6 +59,7 @@ G4double        gFinalAngle = 180;
 G4double        gAngleIncrement = 10;
 G4bool          gMultipleAngle = false;
 G4bool          gWriteZenithAngle = false;
+G4bool          gPhotonSim = false;
 
 enum {PMT, MDOM, DOM, LOM16, LOM18, DEGG, WOM};
 
@@ -97,6 +98,13 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
     if(argc == 6 || argc == 8 || argc == 10 || argc == 2)
     {
         G4String model = argv[1];
+
+        if(model == "help")
+        {
+            help();
+            exit(0);
+        }
+
         gDepthIndex = atoi(argv[3]);
 
         if(gDepthIndex < 0 || gDepthIndex > 108)
@@ -153,11 +161,6 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             PMT_model = 6;
             gPMT = 5;
         }
-        else if(model == "help")
-        {
-            help();
-            exit(0);
-        }
         else
         {
             std::cout << "Invalid OM Model selected!" << std::endl;
@@ -167,14 +170,15 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
 
         if(interaction_channel == "opticalphoton")
         {
-            gDistance = atof(argv[6]) * m;
+            gDistance = atof(argv[6]);
+            gPhotonSim = true;
 
             if(argc == 8)
             {
-                gZenithAngle = atof(argv[7]) * deg;
+                gZenithAngle = atof(argv[7]);
                 gStartAngle = gZenithAngle;
                 gFinalAngle = gZenithAngle;
-                gAngleIncrement = 10 * deg; //some dummy number, doesn't affect the output.
+                gAngleIncrement = 10; //some dummy number, doesn't affect the output.
                 gMultipleAngle = false;
 
                 ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gZenithAngle) + "_"+ std::to_string(gRunID);
@@ -182,9 +186,9 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             else
             {
                 gMultipleAngle = true;
-                gStartAngle = atof(argv[7]) * deg;
-                gFinalAngle = atof(argv[8]) * deg;
-                gAngleIncrement = atof(argv[9]) * deg;
+                gStartAngle = atof(argv[7]);
+                gFinalAngle = atof(argv[8]);
+                gAngleIncrement = atof(argv[9]);
 
                 ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gStartAngle) + "_"
                 + std::to_string(gFinalAngle) + "_"+ std::to_string(gAngleIncrement) + "_"+ std::to_string(gRunID);

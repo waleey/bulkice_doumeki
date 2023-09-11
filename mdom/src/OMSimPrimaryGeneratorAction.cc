@@ -12,8 +12,10 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
         fU238Action(0),
         fU235Action(0),
         fTh232Action(0),
+        fPhotonAction(0),
         fParticleGun(0),
-        fActionType(0)
+        fActionType(0),
+        fPhotonAngle(0)
 {
 
 	fParticleGun = new G4ParticleGun(1);
@@ -26,6 +28,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
 	fU238Action = new OMSimU238Action(fParticleGun);
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
+	fPhotonAction = new OMSimPhotonAction(fParticleGun);
 }
 OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
     :   fPositronAction(0),
@@ -35,6 +38,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
         fU238Action(0),
         fU235Action(0),
         fTh232Action(0),
+        fPhotonAction(0),
         fParticleGun(0),
         fActionType(0),
         fInteraction(interaction)
@@ -49,6 +53,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
 	fU238Action = new OMSimU238Action(fParticleGun);
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
+	fPhotonAction = new OMSimPhotonAction(fParticleGun);
 }
 
 OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
@@ -60,15 +65,16 @@ OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 	delete fU238Action;
 	delete fU235Action;
 	delete fTh232Action;
+	delete fPhotonAction;
 	delete fParticleGun;
 }
 
 void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-	if(fInteraction == "vis")
+	/*if(fInteraction == "vis")
 	{
         fActionType = Visualization;
-	}
+	}*/
 	switch(fActionType)
 	{
         case Positron:
@@ -99,10 +105,14 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             std::cout << "Generating Th232!" << std::endl;
             fTh232Action -> GeneratePrimaries(anEvent);
             break;
-        case Visualization:
+       /* case Visualization:
             //std::cout << "Visualization called!" << std::endl;
             GenerateToVisualize();
             fParticleGun -> GeneratePrimaryVertex(anEvent);
+            break;*/
+        case Photon:
+            //std::cout << "Generating Photon wave!" << std::endl;
+            fPhotonAction -> GeneratePrimaries(anEvent);
             break;
         default:
             std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::GeneratePrimaries() " << std::endl
@@ -186,4 +196,8 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
 
     delete radData;
 
+}
+void OMSimPrimaryGeneratorAction::SetAngle(G4double angle)
+{
+    fPhotonAction -> SetAngle(angle);
 }

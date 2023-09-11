@@ -5,6 +5,8 @@
 
 extern G4int gDOM;
 extern G4String ghitsfilename;
+extern G4double gAngle;
+extern G4double gPhotonSim;
 
 OMSimAnalysisManager::OMSimAnalysisManager(){
     std::cerr << "OMSimAnalysisManager is generated" << std::endl;}
@@ -36,6 +38,10 @@ void OMSimAnalysisManager::Write()
             datafile << stats_vertex_position.at(i).z()/m << "\t";
             datafile << stats_positron_id.at(i) << "\t";
             datafile << stats_survived_qe.at(i) << "\t";
+            if(gPhotonSim)
+            {
+                datafile << gAngle / deg << "\t";
+            }
            // datafile << stats_photon_direction.at(i).x() << "\t";
             //datafile << stats_photon_direction.at(i).y() << "\t";
             //datafile << stats_photon_direction.at(i).z() << "\t";
