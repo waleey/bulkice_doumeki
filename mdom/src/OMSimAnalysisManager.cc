@@ -33,20 +33,20 @@ void OMSimAnalysisManager::Write()
             datafile << stats_photon_position.at(i).x()/m << "\t";
             datafile << stats_photon_position.at(i).y()/m << "\t";
             datafile << stats_photon_position.at(i).z()/m << "\t";
-            datafile << stats_vertex_position.at(i).x()/m << "\t";
+           /* datafile << stats_vertex_position.at(i).x()/m << "\t";
             datafile << stats_vertex_position.at(i).y()/m << "\t";
             datafile << stats_vertex_position.at(i).z()/m << "\t";
-            datafile << stats_positron_id.at(i) << "\t";
+            datafile << stats_positron_id.at(i) << "\t";*/
             datafile << stats_survived_qe.at(i) << "\t";
             if(gPhotonSim)
             {
-                datafile << gAngle / deg << "\t";
+                datafile << gAngle << "\t";
             }
            // datafile << stats_photon_direction.at(i).x() << "\t";
             //datafile << stats_photon_direction.at(i).y() << "\t";
             //datafile << stats_photon_direction.at(i).z() << "\t";
             //datafile << stats_photon_position.at(i).mag() / m ;
-            datafile << stats_creator.at(i) << "\t";
+           // datafile << stats_creator.at(i) << "\t";
             datafile << G4endl;
         }
 	}

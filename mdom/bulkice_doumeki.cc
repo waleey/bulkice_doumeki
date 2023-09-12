@@ -99,12 +99,13 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
     {
         G4String model = argv[1];
 
+
         if(model == "help")
         {
             help();
             exit(0);
         }
-
+        interaction_channel = argv[2];
         gDepthIndex = atoi(argv[3]);
 
         if(gDepthIndex < 0 || gDepthIndex > 108)
@@ -116,7 +117,6 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
 
         G4String outputFolder = argv[4];
         gRunID = atoi(argv[5]);
-        interaction_channel = argv[2];
         worldsize = 20 * m;
         ghitsfilename += outputFolder + "/";
 
@@ -190,6 +190,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
                 gFinalAngle = atof(argv[8]);
                 gAngleIncrement = atof(argv[9]);
 
+
                 ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gStartAngle) + "_"
                 + std::to_string(gFinalAngle) + "_"+ std::to_string(gAngleIncrement) + "_"+ std::to_string(gRunID);
             }
@@ -201,6 +202,14 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             **/
             ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gRunID);
         }
+    }
+    else if(argc == 3)
+    {
+        PMT_model = 6;
+        gPMT = 5;
+        gVis = true;
+        interaction_channel = argv[2];
+        worldsize = 20;
     }
     else
     {

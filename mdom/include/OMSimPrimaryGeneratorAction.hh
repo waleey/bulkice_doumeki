@@ -48,7 +48,7 @@ private:
 
 	G4String fInteraction;
     G4double fPhotonAngle;
-	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon};
+	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization};
 };
 
 

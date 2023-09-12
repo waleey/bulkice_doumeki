@@ -18,10 +18,11 @@ public:
     void GeneratePrimaries(G4Event* );
     inline void SetAngle(G4double angle) { fZenith = angle; }
 
+
 private:
+
     G4ThreeVector GeneratePosition();
     G4ThreeVector GenerateDirection(G4double zenith);
-
     G4ParticleGun* fParticleGun;
     OMSimRadioactivityData* fRadData;
 
