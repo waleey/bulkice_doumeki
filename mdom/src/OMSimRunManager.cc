@@ -9,6 +9,14 @@ extern G4String	gHittype;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
 extern G4int gEvent;
+extern G4double gDistance;
+extern G4double gZenithAngle;
+extern G4double gStartAngle;
+extern G4double gFinalAngle;
+extern G4double gAngleIncrement;
+extern G4bool gMultipleAngle;
+
+G4double gAngle = 0;
 
 //G4int gIdx = 0;
 G4double OMSimRadioactivityData::ftimeWindow = 60.0; //for now just running for 1 sec.
@@ -40,8 +48,14 @@ OMSimRunManager::OMSimRunManager(G4int pmtModel, G4double worldSize, G4String& i
     fRunManager -> SetUserInitialization(fDetectorConstruction);
     fPhysicsList = new OMSimPhysicsList();
     fRunManager -> SetUserInitialization(fPhysicsList);
-
-    fPrimaryGenerator = new OMSimPrimaryGeneratorAction();
+    if(fInteraction == "vis")
+    {
+        fPrimaryGenerator = new OMSimPrimaryGeneratorAction(fInteraction);
+    }
+    else
+    {
+        fPrimaryGenerator = new OMSimPrimaryGeneratorAction();
+    }
     fRunManager -> SetUserAction(fPrimaryGenerator);
     fRunAction = new OMSimRunAction();
     fRunManager -> SetUserAction(fRunAction);
@@ -125,6 +139,17 @@ void OMSimRunManager::BeamOn()
                 std::cerr << "Radioactivity is not defined for this OM model yet. Aborting...." << std::endl;
                 exit(0);
         }
+    }
+    /*else if(fInteraction == "vis")
+    {
+        GenerateToVisualize();
+    }*/
+    else if(fInteraction == "opticalphoton")
+    {
+        /**
+        optical photon wave simulation
+        **/
+        GeneratePhoton();
     }
     else
     {
@@ -233,6 +258,21 @@ void OMSimRunManager::GenerateTh232()
         point = fDetectorConstruction -> DrawFromVolume();
         fPrimaryGenerator -> SetPosition(point); //not implemented yet.
         fRunManager -> BeamOn(1); //each primary will contain a separate event.
+    }
+}
+/*void OMSimRunManager::GenerateToVisualize()
+{
+    fPrimaryGenerator -> SetActionType(Visualization);
+
+}*/
+void OMSimRunManager::GeneratePhoton()
+{
+    fPrimaryGenerator -> SetActionType(Photon);
+    for(G4double angle = gStartAngle; angle <= gFinalAngle; angle += gAngleIncrement)
+    {
+        gAngle = angle;
+        fPrimaryGenerator -> SetAngle(angle);
+        fRunManager -> BeamOn(100000);
     }
 }
 void OMSimRunManager::OpenFile()

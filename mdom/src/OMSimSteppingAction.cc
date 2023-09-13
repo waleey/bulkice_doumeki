@@ -17,6 +17,7 @@ extern G4int gPosCount;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
 
+
 OMSimSteppingAction::OMSimSteppingAction()
 {
 
@@ -63,9 +64,11 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
     //	Check if optical photon is about to hit a photocathode, if so, destroy it and save the hit
     if ( aTrack->GetDefinition()->GetParticleName() == "opticalphoton" ) {
 
+       //std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
+
         if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
-            if( aStep -> GetPostStepPoint() -> GetPhysicalVolume() -> GetName() == "Photocathode_pv_OMSIM") {
+            if( aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") {
 
 
                 //Commented out temporarily.
@@ -74,11 +77,11 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 G4double t1, t2;
                 G4Track* aTrack = aStep -> GetTrack();
                 G4ThreeVector vertex_pos;
-                vertex_pos = aTrack -> GetVertexPosition();
+                //vertex_pos = aTrack -> GetVertexPosition();
                 G4double hc = 1240 * nm;
                 G4double lambda;
 
-                std::string creator = aTrack -> GetCreatorProcess() -> GetProcessName();
+               /* std::string creator = aTrack -> GetCreatorProcess() -> GetProcessName();
                 if(creator == "Cerenkov")
                 {
                     gNumCherenkov++;
@@ -86,7 +89,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 else if(creator == "Scintillation")
                 {
                     gNumScint++;
-                }
+                }*/
                 Ekin = aTrack->GetKineticEnergy() ;
                 lambda = (hc/Ekin) * nm;
                 pmt_qe -> ReadQeTable();
@@ -116,11 +119,11 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     gAnalysisManager.stats_hit_time.push_back(t1);
                     gAnalysisManager.stats_photon_energy.push_back(Ekin/eV);
                     gAnalysisManager.stats_event_distance.push_back(deltapos.mag()/m);
-                    gAnalysisManager.stats_vertex_position.push_back(vertex_pos);
+                    //gAnalysisManager.stats_vertex_position.push_back(vertex_pos);
                     gAnalysisManager.stats_positron_id.push_back(aTrack -> GetParentID());
                     gAnalysisManager.stats_survived_qe.push_back(survived);
                     //Will be removed soon
-                    gAnalysisManager.stats_creator.push_back(creator);
+                   // gAnalysisManager.stats_creator.push_back(creator);
                 }
 
                 aTrack->SetTrackStatus(fStopAndKill);

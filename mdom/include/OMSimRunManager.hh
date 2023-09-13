@@ -29,6 +29,12 @@ public:
     void OpenFile();
     void CloseFile();
 
+    /*inline void SetZenithAngle(G4double angle) { fZenithAngle = angle; }
+    inline void SetStartAngle(G4double angle) { fStartAngle = angle; }
+    inline void SetFinalAngle(G4double angle)   { fFinalAngle = angle; }
+    inline void SetAngleIncrement(G4double angle) { fAngleIncrement = angle; }
+    inline void SetDistance(G4double distance) { fDistance = distance; }*/
+
 private:
     G4int fpmtModel;
     G4double fworldSize;
@@ -56,6 +62,8 @@ private:
     void GenerateU238();
     void GenerateU235();
     void GenerateTh232();
+    void GeneratePhoton();
+    void GenerateToVisualize();
 
     /**
     *Activity is given in Bq/Kg unit
@@ -66,11 +74,18 @@ private:
     std::vector<G4double> Th232Activity {0, 1.28, 0, 0, 0, 0.1373};
     std::vector<G4double> glassWeight {0., 13.0, 10.0, 0, 0, 13.0}; //for now, weight of Degg is assumed to be equal to MDOM. Will be changed later.
 
-    enum {Positron, Neutron, Electron, K40, U238, U235, Th232}; //make sure this order is the same in primary generator class enum
-    enum {pmt, mdom, dom, lom16, lom18, degg};
+    enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization}; //make sure this order is the same in primary generator class enum
+    enum {pmt, mdom, dom, lom16, lom18, degg, wom};
 
     G4double startingtime;
     G4double finishtime;
+
+    //optical photon simulation variables
+  /*  G4double fZenithAngle;
+    G4double fStartAngle;
+    G4double fFinalAngle;
+    G4double fAngleIncrement;
+    G4double fDistance;*/
 };
 
 #endif // OMSIMRUNMANAGER_HH_INCLUDED

@@ -92,7 +92,8 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
 
     OMSimRadioactivityData::fomModel = fDOM;
     mData = new OMSimInputData();
-    mData->SearchFolders("/home/waly/bulkice_doumeki/mdom/build/"); //Will change soon
+    //mData->SearchFolders("/home/waly/bulkice_doumeki/mdom/build/"); //Will change soon
+    mData->SearchFolders("../build/"); // you need to change this path if data is saved somewhere else.
 
     ConstructWorld();
 
@@ -139,7 +140,7 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
      else if(fDOM == 6)
      {
         G4cout << "Constructing WOM" << G4endl;
-        fWOM = new WOM(mWorldLogical);
+        fWOM = new WOM(mWorldLogical, mData);
         fWOM -> PlaceIt();
      }
     else{ //Add your costume detector contruction here and call it with -m 6 (or greater)

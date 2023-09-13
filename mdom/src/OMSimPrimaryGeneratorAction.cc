@@ -1,5 +1,7 @@
 #include "OMSimPrimaryGeneratorAction.hh"
 #include "OMSimDetectorConstruction.hh"
+#include "OMSimRadioactivityData.hh"
+
 
 //#include "G4ParticleTypes.hh"
 
@@ -11,8 +13,10 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
         fU238Action(0),
         fU235Action(0),
         fTh232Action(0),
+        fPhotonAction(0),
         fParticleGun(0),
-        fActionType(0)
+        fActionType(0),
+        fPhotonAngle(0)
 {
 
 	fParticleGun = new G4ParticleGun(1);
@@ -25,6 +29,32 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
 	fU238Action = new OMSimU238Action(fParticleGun);
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
+	fPhotonAction = new OMSimPhotonAction(fParticleGun);
+}
+OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
+    :   fPositronAction(0),
+        fNeutronAction(0),
+        fElectronAction(0),
+        fK40Action(0),
+        fU238Action(0),
+        fU235Action(0),
+        fTh232Action(0),
+        fPhotonAction(0),
+        fParticleGun(0),
+        fActionType(0),
+        fInteraction(interaction)
+{
+
+	fParticleGun = new G4ParticleGun(1);
+	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
+	fPositronAction = new OMSimPositronAction(fParticleGun);
+	fNeutronAction = new OMSimNeutronAction(fParticleGun);
+	fElectronAction = new OMSimElectronAction(fParticleGun);
+	fK40Action = new OMSimK40Action(fParticleGun);
+	fU238Action = new OMSimU238Action(fParticleGun);
+	fU235Action = new OMSimU235Action(fParticleGun);
+	fTh232Action = new OMSimTh232Action(fParticleGun);
+	fPhotonAction = new OMSimPhotonAction(fParticleGun);
 }
 
 OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
@@ -36,11 +66,16 @@ OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 	delete fU238Action;
 	delete fU235Action;
 	delete fTh232Action;
+	delete fPhotonAction;
 	delete fParticleGun;
 }
 
 void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
+	if(fInteraction == "vis")
+	{
+        fActionType = Visualization;
+	}
 	switch(fActionType)
 	{
         case Positron:
@@ -71,10 +106,20 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             std::cout << "Generating Th232!" << std::endl;
             fTh232Action -> GeneratePrimaries(anEvent);
             break;
+        case Visualization:
+            //std::cout << "Visualization called!" << std::endl;
+            GenerateToVisualize();
+            fParticleGun -> GeneratePrimaryVertex(anEvent);
+            break;
+        case Photon:
+            //std::cout << "Generating Photon wave!" << std::endl;
+            fPhotonAction -> GeneratePrimaries(anEvent);
+            //GenerateToVisualize();
+            break;
         default:
             std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::GeneratePrimaries() " << std::endl
             << "Aborting...." << std::endl;
-            exit(0);
+
 	}
 }
 bool OMSimPrimaryGeneratorAction::ParticleExist()
@@ -133,4 +178,52 @@ void OMSimPrimaryGeneratorAction::SetPosition(G4ThreeVector& position)
             << "Aborting...." << std::endl;
             exit(0);
     }
+}
+void OMSimPrimaryGeneratorAction::GenerateToVisualize()
+{
+
+    OMSimRadioactivityData* radData = new OMSimRadioactivityData();
+
+    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+    G4String particleName = "opticalphoton";
+    G4ParticleDefinition* particle = particleTable -> FindParticle(particleName);
+
+    G4double theta = radData -> RandomGen(0, 2 * CLHEP::pi);
+    G4double x = 0.5 * sin(theta);
+    G4double y = 0.5 * cos(theta);
+    G4double z = (radData -> RandomGen(-500, 500));
+    x = x * m;
+    y = y * m;
+    z = z * mm;
+/*std::cout <<
+    "x: " << x / m<< std::endl
+    << "y: " << y / m << std::endl
+    << "z: " << z / m << std::endl;*/
+
+
+    G4ThreeVector position(x, y, z);
+    G4double angle = 90;
+    G4double uz = cos(angle * deg);
+    G4double alpha = (radData -> RandomGen(0, 2 * CLHEP::pi));
+    G4double ux = (- sin(angle * deg) * cos(alpha * rad));
+    G4double uy = (- sin(angle * deg) * sin(alpha * rad)) ;
+    G4ThreeVector direction(ux, uy, uz);
+
+    /*std::cout << "angle: " << angle << std::endl
+    << "alpha: " << alpha / deg << std::endl
+    << "ux: " << ux << std::endl
+    << "uy: " << uy  << std::endl
+    << "uz: " << uz  << std::endl;*/
+
+    fParticleGun -> SetParticleDefinition(particle);
+    fParticleGun -> SetParticleEnergy((radData -> RandomGen(1.7, 6.2) * eV));
+    fParticleGun -> SetParticlePosition(position);
+    fParticleGun -> SetParticleMomentumDirection(direction);
+
+    delete radData;
+
+}
+void OMSimPrimaryGeneratorAction::SetAngle(G4double angle)
+{
+    fPhotonAction -> SetAngle(angle);
 }

@@ -26,10 +26,8 @@ G4int           gGel = 0;
 G4double        gRefCone_angle = 51;
 G4int           gConeMat = 1;
 G4int           gHolderColor = 1;
-//G4int           gDOM = 0; // 0 : single PMT
-G4int           gDOM = 1; // 1 : mdom
-//G4int           gDOM = 2; // 2 : pdom
-G4int           gPMT = 0; // i don't know what is it
+G4int           gDOM = 1;
+G4int           gPMT = 0;
 G4bool          gPlaceHarness = true;
 G4int           gHarness = 1;
 G4int           gRopeNumber = 1;
@@ -43,32 +41,84 @@ G4String        ghitsfilename = "/mnt/c/Users/Waly/bulkice_doumeki/"; //change l
 //G4double        gSimulatedTime = 1.0;
 G4int           gcounter = 0;
 G4int           gPosCount = 0;
-G4String        gQEFile = "/home/waly/bulkice_doumeki/mdom/InputFile/TA0001_HamamatsuQE.data";
-
+G4String        gQEFile = "../InputFile/TA0001_HamamatsuQE.data";
 G4int           gNumCherenkov = 0;
 G4int           gNumScint = 0;
 G4int           gEvent = 0;
 G4int           gDepthIndex = 88; //default value
 G4int           gRunID = 0; //Run ID for each run
-enum {PMT, MDOM, DOM, LOM16, LOM18, DEGG};
+
+/**
+variables for optical photon waves
+**/
+G4bool          gVis = false;
+G4double        gDistance = 1 * m; //default distance for photon from symmetry axis
+G4double        gZenithAngle = 0; //default zenith angle for photon wave
+G4double        gStartAngle = 0;
+G4double        gFinalAngle = 180;
+G4double        gAngleIncrement = 10;
+G4bool          gMultipleAngle = false;
+G4bool          gWriteZenithAngle = false;
+G4bool          gPhotonSim = false;
+
+enum {PMT, MDOM, DOM, LOM16, LOM18, DEGG, WOM};
 
 OMSimAnalysisManager gAnalysisManager;
 
-void help()
+void help() //needs change
 {
     std::cout << "Usage: " << std::endl;
-    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "[interaction channel]" << " " <<  "[depth index]" << " " << "[output folder] " << "[run id]" << " (for batch mode)" << std::endl;
-    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " (for visualization)" << std::endl;
+
+    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "[interaction channel]" << " " <<  "[depth index]" << " " << "[output folder] " << "[run id]"
+    << " (for simulating supernovae neutrino flux)" << std::endl;
+
+    std::cout << " " << std::endl;
+    //std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << "vis" << " (for visualization)" << std::endl;
+    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "opticalphoton" << " " << "[depth index]" << " " << "[output folder] " << "[run id] "<< "[distance (m)] "
+    << "[zenith angle (degree)]" << " " << " (for photon wave with a single zenith angle)" << std::endl;
+
+    std::cout << " " << std::endl;
+
+    std::cout << "./bulkice_doumeki " << "[OM Model] " << "opticalphoton " << "[depth index] " << "[output folder] " << "[run id] " << "[distance (m] "
+    << "[start angle (degree)] " << "[final angle (degree)] " << "[increment (degree)] "
+    << "(for photon wave with multiple zenith angle)" << std::endl;
+
+    std::cout << " " << std::endl;
+
     std::cout << "Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]" << std::endl;
+
     std::cout << "Available interaction channels: [ibd, enees, all, radioactivity]" << std::endl;
+
     std::cout << "Available depth index: [0, 1, ......, 108]" << std::endl;
+
     std::cout << "To see associated depth with each depth index, go to build -> data -> Materials -> IceCubeIce.dat -> jDepth_spice" << std::endl;
 }
 void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
 {
-    if(argc == 6 || argc == 2)
+    if(argc == 6 || argc == 8 || argc == 10 || argc == 2)
     {
-        std::string model = argv[1];
+        G4String model = argv[1];
+
+
+        if(model == "help")
+        {
+            help();
+            exit(0);
+        }
+        interaction_channel = argv[2];
+        gDepthIndex = atoi(argv[3]);
+
+        if(gDepthIndex < 0 || gDepthIndex > 108)
+        {
+            std::cerr << "Invalid depth index." << std::endl;
+            help();
+            exit(0);
+        }
+
+        G4String outputFolder = argv[4];
+        gRunID = atoi(argv[5]);
+        worldsize = 20 * m;
+        ghitsfilename += outputFolder + "/";
 
         if(model == "dom")
         {
@@ -109,6 +159,110 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         {
             std::cout << "*****WOM simulation selected*****" << std::endl;
             PMT_model = 6;
+            gPMT = 5;
+        }
+        else
+        {
+            std::cout << "Invalid OM Model selected!" << std::endl;
+            help();
+            exit(0);
+        }
+
+        if(interaction_channel == "opticalphoton")
+        {
+            gDistance = atof(argv[6]);
+            gPhotonSim = true;
+
+            if(argc == 8)
+            {
+                gZenithAngle = atof(argv[7]);
+                gStartAngle = gZenithAngle;
+                gFinalAngle = gZenithAngle;
+                gAngleIncrement = 10; //some dummy number, doesn't affect the output.
+                gMultipleAngle = false;
+
+                ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gZenithAngle) + "_"+ std::to_string(gRunID);
+            }
+            else
+            {
+                gMultipleAngle = true;
+                gStartAngle = atof(argv[7]);
+                gFinalAngle = atof(argv[8]);
+                gAngleIncrement = atof(argv[9]);
+
+
+                ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gStartAngle) + "_"
+                + std::to_string(gFinalAngle) + "_"+ std::to_string(gAngleIncrement) + "_"+ std::to_string(gRunID);
+            }
+        }
+        else
+        {
+            /**
+            neutrino flux simulations here
+            **/
+            ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gRunID);
+        }
+    }
+    else if(argc == 3)
+    {
+        PMT_model = 6;
+        gPMT = 5;
+        gVis = true;
+        interaction_channel = argv[2];
+        worldsize = 20;
+    }
+    else
+    {
+        std::cerr << "Invalid number of argument given. Aborting...." << std::endl;
+        help();
+        exit(0);
+    }
+}
+  /*  if(argc == 6 || argc == 3)
+    {
+        std::string model = argv[1];
+        interaction_channel = argv[2];
+
+        if(model == "dom")
+        {
+            std::cout << "*****DOM simulation selected*****" << std::endl;
+            PMT_model = 2;
+            gPMT = 5;
+        }
+        else if(model == "mdom")
+        {
+            std::cout << "*****MDOM simulation selected*****" << std::endl;
+            PMT_model = 1;
+            gPMT = 0;
+        }
+        else if(model == "lom16")
+        {
+            std::cout << "*****LOM16 simulation selected*****" << std::endl;
+            PMT_model = 3;
+            gPMT = 3;
+        }
+        else if(model == "lom18")
+        {
+            std::cout << "*****LOM18 simulation selected*****" << std::endl;
+            PMT_model = 4;
+            gPMT = 3;
+        }
+        else if(model == "pmt")
+        {
+            std::cout << "*****Single PMT simulation selected*****" << std::endl;
+            PMT_model = 0;
+        }
+        else if(model == "degg")
+        {
+            std::cout << "*****DEGG simulation selected*****" << std::endl;
+            PMT_model = 5;
+            gPMT = 4;
+        }
+        else if(model == "wom")
+        {
+            std::cout << "*****WOM simulation selected*****" << std::endl;
+            PMT_model = 6;
+            gPMT = 5;
         }
         else if(model == "help")
         {
@@ -133,14 +287,14 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
                 help();
                 exit(0);
             }
-            interaction_channel = argv[2];
             gRunID = atoi(argv[5]);
             worldsize = 20;
             ghitsfilename += outputFolder+ "/" + model + "_" + interaction_channel + "_" + std::to_string(gRunID);
         }
         else
         {
-            worldsize = 0.25;
+            //worldsize = 0.25;
+            worldsize = 2.5;
             ghitsfilename += model;
         }
 
@@ -151,7 +305,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         help();
         exit(0);
     }
-}
+}*/
 
 std::vector<G4String> explode(G4String s, char d) {
         std::vector<G4String> o;
@@ -225,7 +379,7 @@ int main(int argc, char** argv)
 
     G4UIExecutive* ui = 0;
 
-    if ( argc == 6 )
+    if (!gVis) // needs change
     {
     // batch mode
        /* std::cerr << ":::::::::::::::::::Batch Mode Called:::::::::::::::::" << std::endl;

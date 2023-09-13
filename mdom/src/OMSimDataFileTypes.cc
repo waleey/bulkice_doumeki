@@ -305,7 +305,7 @@ void RefractionAndAbsorption::ExtractInformation()
     };
     //std::sort(amplitudes20, amplitudes20 + sizeof(amplitudes20) / sizeof(amplitudes20[0]));
     //G4String DataFile = "../InputFile/VAS_Scintillation_Spectrum.data";
-    G4String DataFile = "/home/waly/bulkice_doumeki/mdom/InputFile/Vitrovex_scint.txt"; //will change soon
+    G4String DataFile = "../InputFile/Vitrovex_scint.txt"; //will change soon
     std::vector<double> fileFirstColumn = readColumnDouble(DataFile, 1);
    /* for(auto value : fileFirstColumn)
     {
@@ -355,7 +355,7 @@ void RefractionAndAbsorption::ExtractInformation()
         3.496767714671291660e-01
     };
     //G4String DataFile = "../InputFile/VAS_Scintillation_Spectrum.data";
-    G4String DataFile = "/home/waly/bulkice_doumeki/mdom/InputFile/Vitrovex_scint.txt";
+    G4String DataFile = "../InputFile/Vitrovex_scint.txt";
     std::vector<double> fileFirstColumn = readColumnDouble(DataFile, 1);
     std::vector<double> fileSecondColumn = readColumnDouble(DataFile, 2);
 

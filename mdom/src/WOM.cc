@@ -4,7 +4,9 @@
 *Waly M Z Karim
 *8/8/2023
 **/
-WOM::WOM(G4LogicalVolume* LogicMother) : fLogicMother(LogicMother)
+#include "WOMMaterial.hh"
+
+WOM::WOM(G4LogicalVolume* LogicMother, OMSimInputData* data) : fLogicMother(LogicMother), fData(data)
 {
     std::cout << "******Constructing WOMs******" << std::endl;
     GetSharedData();
@@ -41,7 +43,10 @@ void WOM::GetSharedData()
     fGlassCapInnerRad = (145 / 2) *mm;
     fGlassTubeHalfLength = 550 * mm;
 
-    fWomTubeOuterRad = (117 / 2) *mm;
+    fWOMPaintOuterRad = (117000 / 2) * micrometer;
+    fWOMPaintInnerRad = (117000 / 2 - 25) *micrometer; //the paint is assumed to be 25 micrometer thick.
+
+    fWomTubeOuterRad = (117000 / 2 - 25) *micrometer;
     fWomTubeInnerRad = (115 / 2) *mm;
     fWomTubeHalfLength = (760 / 2) *mm;
 
@@ -78,26 +83,30 @@ void WOM::GenerateLogicals()
     fWomInsideSolid = WOMTube("WOMInside", fWomTubeInnerRad);
     fPMTSolid1 = PMTConstruction();
     fPMTCathode = PMTCathodeConstruction();
+    fWOMPaintSolid = WOMPaint("WOM");
 
     ConstructMaterial();
 
-    fGlassLogical = new G4LogicalVolume(fGlassSolid, air, "glassLogical");
-    fGelLogical = new G4LogicalVolume(fGelSolid, air, "gelLogical");
-    fWomTubeLogical = new G4LogicalVolume(fWomTubeSolid, air, "WOOMTubeLogical");
-    fWomTubeInsideLogical = new G4LogicalVolume(fWomInsideSolid, air, "WOMInsideLogical");
-    fPMTBodyLogical1 = new G4LogicalVolume(fPMTSolid1, air, "PMTBodyLogical1");
-    fPMTBodyLogical2 = new G4LogicalVolume(fPMTSolid1, air, "PMTBodyLogical2");
-    fPMTCathodeLogical1 = new G4LogicalVolume(fPMTCathode, air, "PMT_Cathode_Logical1");
-    fPMTCathodeLogical2 = new G4LogicalVolume(fPMTCathode, air, "PMT_Cathode_Logical2");
+    fGlassLogical = new G4LogicalVolume(fGlassSolid, glassMaterial, "glassLogical");
+    fGelLogical = new G4LogicalVolume(fGelSolid, fillerMaterial, "gelLogical");
+    fWomTubeLogical = new G4LogicalVolume(fWomTubeSolid, tubeMaterial, "WOOMTubeLogical");
+    fWomTubeInsideLogical = new G4LogicalVolume(fWomInsideSolid, tubeInsideMaterial, "WOMInsideLogical");
+    fPMTBodyLogical1 = new G4LogicalVolume(fPMTSolid1, pmtAbsorber, "PMTBodyLogical1");
+    fPMTBodyLogical2 = new G4LogicalVolume(fPMTSolid1, pmtAbsorber, "PMTBodyLogical2");
+    fPMTCathodeLogical1 = new G4LogicalVolume(fPMTCathode, pmtPhotoCathode, "PMT_Cathode_Logical1");
+    fPMTCathodeLogical2 = new G4LogicalVolume(fPMTCathode, pmtPhotoCathode, "PMT_Cathode_Logical2");
+    fWOMPaintLogical = new G4LogicalVolume(fWOMPaintSolid, paintMaterial, "WOM_Paint_Logical");
+    //fWOMPaintLogical = new G4LogicalVolume(fWOMPaintSolid, pmtPhotoCathode, "WOM_Paint_Logical"); //delete this later
 
    fGlassLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Blue()));
    fGelLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::White()));
    fWomTubeLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Cyan()));
    fWomTubeInsideLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Yellow()));
-   fPMTBodyLogical1 -> SetVisAttributes(new G4VisAttributes(G4Colour::Green()));
-   fPMTBodyLogical2 -> SetVisAttributes(new G4VisAttributes(G4Colour::Green()));
+   fPMTBodyLogical1 -> SetVisAttributes(new G4VisAttributes(G4Colour::Magenta()));
+   fPMTBodyLogical2 -> SetVisAttributes(new G4VisAttributes(G4Colour::Magenta()));
    fPMTCathodeLogical1 -> SetVisAttributes(new G4VisAttributes(G4Colour::Red()));
    fPMTCathodeLogical2 -> SetVisAttributes(new G4VisAttributes(G4Colour::Red()));
+   fWOMPaintLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Green()));
 }
 void WOM::Construction()
 {
@@ -110,15 +119,20 @@ void WOM::Construction()
     new G4PVPlacement(0, G4ThreeVector(0, 0, 0), fWomTubeInsideLogical, "WOMTubeInsidePhysical", fWomTubeLogical, false, 0, true);
     //Placing PMT Solid
     new G4PVPlacement(0, G4ThreeVector(0, 0, fPMTGlobalZ), fPMTBodyLogical1, "PMT_Body_Physical1", fGelLogical, false, 0, true);
+    //new G4PVPlacement(0, G4ThreeVector(0, 0, fPMTGlobalZ), fPMTBodyLogical1, "PMT_Body_Physical1", fLogicMother, false, 0, true); //delete this later!
     G4RotationMatrix* pmtGlobalRot = new G4RotationMatrix();
     pmtGlobalRot -> rotateY(CLHEP::pi);
     new G4PVPlacement(pmtGlobalRot, G4ThreeVector(0, 0, -fPMTGlobalZ), fPMTBodyLogical2, "PMT_Body_Physical2", fGelLogical, false, 0, true);
+    //new G4PVPlacement(pmtGlobalRot, G4ThreeVector(0, 0, -fPMTGlobalZ), fPMTBodyLogical2, "PMT_Body_Physical2", fLogicMother, false, 0, true); //delete this later
     //Placing PMT Cathode Solid
     new G4PVPlacement(0, G4ThreeVector(0, 0, fPMTCathodeZ), fPMTCathodeLogical1, "PMT_Cathode_Physical1", fGelLogical, false, 0, true);
+    //new G4PVPlacement(0, G4ThreeVector(0, 0, fPMTCathodeZ), fPMTCathodeLogical1, "PMT_Cathode_Physical1", fLogicMother, false, 0, true); //delete this later
     G4RotationMatrix* pmtCathodeRot = new G4RotationMatrix();
     pmtCathodeRot -> rotateY(CLHEP::pi);
     new G4PVPlacement(pmtCathodeRot, G4ThreeVector(0, 0, -fPMTCathodeZ), fPMTCathodeLogical2, "PMT_Cathode_Physical2", fGelLogical, false, 0, true);
-    //new G4PVPlacement(pmtCathodeRot, G4ThreeVector(0, 0, -fPMTCathodeZ), fPMTCathodeLogical2, "PMT_Cathode_Physical2". fGelLogical, false, 0, true);
+    //new G4PVPlacement(pmtCathodeRot, G4ThreeVector(0, 0, -fPMTCathodeZ), fPMTCathodeLogical2, "PMT_Cathode_Physical2", fLogicMother, false, 0, true); //delete this later
+    new G4PVPlacement(0, G4ThreeVector(0, 0, 0), fWOMPaintLogical, "WOM_Paint_Logical", fGelLogical, false, 0, true);
+    //new G4PVPlacement(0, G4ThreeVector(0, 0, 0), fWOMPaintLogical, "WOM_Paint_Logical", fLogicMother, false, 0, true); //delete this later
 
 }
 G4MultiUnion* WOM::PressureVessel(const G4String& vesselName, G4double vesselTubeRad, G4double vesselCapRad) //for now it;s hardcoded but will change soon.
@@ -159,6 +173,12 @@ G4VSolid* WOM::WOMTube(const G4String& tubeName, G4double tubeRad)
 
     return vesselTubeSolid;
 }
+G4VSolid* WOM::WOMPaint(const G4String& paintName)
+{
+    G4Tubs* paintTubeSolid = new G4Tubs(paintName + "PaintSolid", fWOMPaintInnerRad, fWOMPaintOuterRad, fWomTubeHalfLength, 0., 2 * CLHEP::pi);
+
+    return paintTubeSolid;
+}
 G4VSolid* WOM::PMTConstruction()
 {
     G4MultiUnion* pmtSolid = new G4MultiUnion("PMT_Body_Solid");
@@ -169,7 +189,7 @@ G4VSolid* WOM::PMTConstruction()
     G4RotationMatrix PMTHolderRot = G4RotationMatrix();
     G4Transform3D trPMTHolder = G4Transform3D(PMTHolderRot, PMTHolderCenter);
     //Cone
-    G4EllipticalCone* PMTConeSolid = new G4EllipticalCone("PMT_Cone_Sold", fPMTConeRatio, fPMTConeRatio, fPMTConeHeight, fPMTConeCut);
+    G4EllipticalCone* PMTConeSolid = new G4EllipticalCone("PMT_Cone_Solid", fPMTConeRatio, fPMTConeRatio, fPMTConeHeight, fPMTConeCut);
     G4ThreeVector PMTConeCenter = G4ThreeVector(0, 0, fPMTConeZ + fPMTOffset);
     G4RotationMatrix PMTConeRot = G4RotationMatrix();
     G4Transform3D trPMTCone = G4Transform3D(PMTConeRot, PMTConeCenter);
@@ -194,7 +214,7 @@ G4VSolid* WOM::PMTConstruction()
 }
 G4VSolid* WOM::PMTCathodeConstruction()
 {
-    G4Tubs* pmtCathode = new G4Tubs("PMT_Cathode_Solid", 0.0, fPMTCathodeRad, fPMTCathodeHalfLength, 0., 2 * CLHEP::pi);
+    G4Tubs* pmtCathode = new G4Tubs("PMT_Cathode_Solid", 0.0, fPMTHolderRad, fPMTCathodeHalfLength, 0., 2 * CLHEP::pi);
     return pmtCathode;
 }
 void WOM::SubtractHarnessPlug()
@@ -211,7 +231,18 @@ void WOM::SelLEDPosition()
 }
 void WOM::ConstructMaterial()
 {
-    G4NistManager* nistMan = G4NistManager::Instance();
-    air = nistMan -> FindOrBuildMaterial("G4_WATER");
+    WOMMaterial* womMat = new WOMMaterial();
 
+    glassMaterial = womMat -> GetGlassMaterial();
+    fillerMaterial = womMat -> GetFillerMaterial();
+    paintMaterial = womMat -> GetPaintMaterial();
+    tubeMaterial = womMat -> GetTubeMaterial();
+    tubeInsideMaterial = womMat -> GetTubeInsideMaterial();
+    pmtAbsorber = fData -> GetMaterial("NoOptic_Absorber");
+    pmtPhotoCathode = fData -> GetMaterial("RiAbs_Photocathode");
+
+    G4NistManager* nist = G4NistManager::Instance();
+    air = nist -> FindOrBuildMaterial("G4_AIR");
+
+    delete womMat;
 }

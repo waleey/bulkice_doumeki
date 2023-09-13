@@ -20,10 +20,12 @@
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
 
+#include "OMSimInputData.hh"
+
 class WOM
 {
 public:
-    WOM(G4LogicalVolume* );
+    WOM(G4LogicalVolume*, OMSimInputData* );
     ~WOM();
 
     void PlaceIt();
@@ -37,6 +39,7 @@ private:
     void GenerateLogicals();
     G4MultiUnion* PressureVessel(const G4String&, G4double, G4double);
     G4VSolid* WOMTube(const G4String&, G4double);
+    G4VSolid* WOMPaint(const G4String&);
     // PMT Construction
     G4VSolid* PMTConstruction();
     G4VSolid* PMTCathodeConstruction();
@@ -45,6 +48,8 @@ private:
     void SetPMTPosition();
     void SelLEDPosition();
     void ConstructMaterial();
+
+    OMSimInputData* fData;
 
     G4LogicalVolume* fLogicMother;
     //cylindrical tube
@@ -64,6 +69,12 @@ private:
     G4LogicalVolume* fGlassLogical;
     G4LogicalVolume* fGelLogical;
 
+    //WOM paint
+    G4double fWOMPaintOuterRad;
+    G4double fWOMPaintInnerRad;
+    G4VSolid* fWOMPaintSolid;
+
+    G4LogicalVolume* fWOMPaintLogical;
     //WOM tube
     G4double fWomTubeHalfLength;
     G4double fWomTubeOuterRad;
@@ -118,7 +129,15 @@ private:
     G4double fPMTOffset;
 
     //material construction
-    G4Material* air; //general material for now. Will change later.
+    G4Material* glassMaterial;
+    G4Material* fillerMaterial;
+    G4Material* paintMaterial;
+    G4Material* tubeMaterial;
+    G4Material* tubeInsideMaterial;
+    G4Material* pmtAbsorber;
+    G4Material* pmtPhotoCathode;
+
+    G4Material* air; //keeping this as dummy for PMT solids
 
 
 

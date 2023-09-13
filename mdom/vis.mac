@@ -116,7 +116,7 @@
 /vis/viewer/set/hiddenMarker true
 /vis/viewer/set/viewpointThetaPhi 120 150
 /vis/viewer/set/lineSegmentsPerCircle 24
-
+#/vis/modeling/trajectoris/drawByParticleID-0/set opticalphoton blue
 #
 # Re-establish auto refreshing and verbosity:
 /vis/viewer/set/autoRefresh true
@@ -124,3 +124,4 @@
 #
 # For file-based drivers, use this to create an empty detector view:
 #/vis/viewer/flush
+/run/beamOn 10000
