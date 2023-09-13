@@ -92,7 +92,8 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
 
     OMSimRadioactivityData::fomModel = fDOM;
     mData = new OMSimInputData();
-    mData->SearchFolders("/home/waly/bulkice_doumeki/mdom/build/"); //Will change soon
+    //mData->SearchFolders("/home/waly/bulkice_doumeki/mdom/build/"); //Will change soon
+    mData->SearchFolders("../build/"); // you need to change this path if data is saved somewhere else.
 
     ConstructWorld();
 

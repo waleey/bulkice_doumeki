@@ -64,7 +64,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
     //	Check if optical photon is about to hit a photocathode, if so, destroy it and save the hit
     if ( aTrack->GetDefinition()->GetParticleName() == "opticalphoton" ) {
 
-       std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
+       //std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
 
         if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 

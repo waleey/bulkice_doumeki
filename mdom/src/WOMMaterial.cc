@@ -152,7 +152,7 @@ void WOMMaterial::GeneratePaintMaterial()
     std::vector<G4double> absIntensity;
     std::vector<G4double> absLength;
     std::vector<G4double> absEnergy;
-    ReadData("/home/waly/bulkice_doumeki/mdom/InputFile/Absorption_WLS.txt", absIntensity);
+    ReadData("../InputFile/Absorption_WLS.txt", absIntensity);
 
     absEnergy = WavelengthToEnergy(wLen);
 
@@ -178,7 +178,7 @@ void WOMMaterial::GeneratePaintMaterial()
     std::vector<G4double> emIntensity;
     std::vector<G4double> emEnergy;
 
-    ReadData("/home/waly/bulkice_doumeki/mdom/InputFile/Emission_WLS.txt", emIntensityInverted);
+    ReadData("../InputFile/Emission_WLS.txt", emIntensityInverted);
     for(int i = emIntensityInverted.size() -1; i >= 0; i--)
     {
         emIntensity.push_back(emIntensityInverted.at(i) / 100);

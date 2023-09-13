@@ -50,7 +50,7 @@ void OMSimElectronAction::GeneratePrimaries(G4Event* anEvent)
 void OMSimElectronAction::LoadData()
 {
     using namespace std;
-    G4String filePath = "/home/waly/bulkice_doumeki/mdom/InputFile/Electron/e20002nkibd_"; //will change soon
+    G4String filePath = "../InputFile/Electron/e20002nkibd_"; //will change soon
     G4double temp;
     G4String fileName;
 
