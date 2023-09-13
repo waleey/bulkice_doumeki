@@ -1,7 +1,6 @@
-!!Welcome to bulkice_doumeki simulation!!
+!!Welcome to bulkice_doumeki simulation!! *Read Me is not up to date!!*
 
-The Optical Modules used in this simulation are originally written by M. Unland, C. Lozano, and L. Classen. The optical module design has been ported and modified to use with the bulkice simulation of 40*40*40 cubic meter of ice. So far, Supernova signal event can be simulated and studied with all the five available OM models, namely: MDOM, LOM18, LOM16, DOM, and single PMT. For the study of radioactive decay, only MDOM can be used but other modules will be added soon. 
-
+This is a GEANT4 based simulation of different optical modules currently in use and to be deployed in future in IceCube Neutrino Observatory in South Pole. Currently available optical modules for simulation are MDOM, LOM16, LOM18, PDOM, D-Egg, WOM (currently under development). Except for WOM, the optical module simulation was initially written by M. Unland and C. Lozano, and later they were modified by me. The simulation also contains detailed depth dependent ice properties under antarctic ice sheet and it can simulation 40*40*40 cubic meter of ice at different temperature. Currently, it can simulate positron and electron flux from CCSN neutrinos, background radioactivity inside pressure vessel of MDOM, LOMs, and D-Egg, and photon wave with different Zenith Angle. It also accepts SNEWPY neutrino flux models in a python program called "merger" and use sntools to simulate the positron and electron flux from ibd and enees interactions. 
 *Quick Start Guide*
 
 -Make sure you have Geant4 installed in your local machine.  
