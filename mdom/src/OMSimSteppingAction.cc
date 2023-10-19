@@ -18,6 +18,12 @@ extern G4int gNumCherenkov;
 extern G4int gNumScint;
 
 
+G4int gVesselCount = 0;
+G4int gPMTBodyCount = 0;
+G4int gWLSCount = 0;
+G4int gWLSAndHitCount = 0;
+
+
 OMSimSteppingAction::OMSimSteppingAction()
 {
 
@@ -65,6 +71,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
     if ( aTrack->GetDefinition()->GetParticleName() == "opticalphoton" ) {
 
        //std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
+       //WOMCheck(aStep);
+       std::string creator;
 
         if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
@@ -72,6 +80,20 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
                 //Commented out temporarily.
+                if(aTrack -> GetCreatorProcess())
+                {
+                    if(aTrack -> GetCreatorProcess() -> GetProcessName() == "OpWLS")
+                    {
+                        gWLSAndHitCount++;
+                        creator = "OpWLS";
+
+                    }
+                }
+                else
+                {
+                    creator = "direct";
+                }
+
 
                 G4double Ekin;
                 G4double t1, t2;
@@ -123,14 +145,53 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     gAnalysisManager.stats_positron_id.push_back(aTrack -> GetParentID());
                     gAnalysisManager.stats_survived_qe.push_back(survived);
                     //Will be removed soon
-                   // gAnalysisManager.stats_creator.push_back(creator);
+                   gAnalysisManager.stats_creator.push_back(creator);
                 }
 
                 aTrack->SetTrackStatus(fStopAndKill);
-               //} 	// kills counted photon to prevent scattering and double-counting
+                //} 	// kills counted photon to prevent scattering and double-counting
+
             }
         }
 
+    }
+
+}
+
+void OMSimSteppingAction::WOMCheck(const G4Step* aStep)
+{
+    tempID = aStep -> GetTrack() -> GetTrackID();
+    if(aStep -> GetTrack() -> GetTrackStatus() != fStopAndKill)
+    {
+        if(aStep -> GetPostStepPoint() -> GetPhysicalVolume() -> GetName() == "glassPhysical")
+        {
+            if(tempID != vesselID)
+            {
+                gVesselCount++;
+                vesselID = tempID;
+            }
+        }
+
+        if(aStep -> GetTrack() -> GetCreatorProcess())
+        {
+            if(aStep -> GetTrack() -> GetCreatorProcess() -> GetProcessName() == "OpWLS")
+            {
+                if(tempID != processID)
+                {
+                    gWLSCount++;
+                    processID = tempID;
+                }
+            }
+        }
+
+    }
+    if(aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "NoOptic_Absorber")
+    {
+        if(tempID != pmtBodyID)
+        {
+            gPMTBodyCount++;
+            pmtBodyID = tempID;
+        }
     }
 
 }

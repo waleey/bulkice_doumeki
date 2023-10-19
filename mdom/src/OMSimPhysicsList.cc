@@ -36,6 +36,8 @@
 #include "G4OpAbsorption.hh"
 #include "G4OpBoundaryProcess.hh"
 
+#include "G4StepLimiterPhysics.hh"
+
 
 OMSimPhysicsList::OMSimPhysicsList():  G4VUserPhysicsList()
 {
@@ -71,6 +73,13 @@ void OMSimPhysicsList::ConstructProcess()
 
 	G4PhysicsListHelper* plh = G4PhysicsListHelper::GetPhysicsListHelper();
 	AddTransportation();
+
+	/**
+	* Temporarily adding step limiter phyiscs
+	**/
+
+    G4StepLimiterPhysics* stepLimiterProcess = new G4StepLimiterPhysics();
+    stepLimiterProcess -> ConstructProcess();
 
 //  The Radioactive Decay Process
 	radioactiveList -> ConstructProcess();

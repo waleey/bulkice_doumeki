@@ -21,6 +21,12 @@ class OMSimSteppingAction : public G4UserSteppingAction
   private:
     OMSimPMTQE* pmt_qe = new OMSimPMTQE();
 
+    void WOMCheck(const G4Step*);
+    long vesselID = 0;
+    long pmtBodyID = 0;
+    long processID = 0;
+    long tempID;
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

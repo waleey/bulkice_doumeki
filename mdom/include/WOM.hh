@@ -72,6 +72,7 @@ private:
     //WOM paint
     G4double fWOMPaintOuterRad;
     G4double fWOMPaintInnerRad;
+    G4double fWOMPaintThickness;
     G4VSolid* fWOMPaintSolid;
 
     G4LogicalVolume* fWOMPaintLogical;

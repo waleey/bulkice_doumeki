@@ -7,6 +7,10 @@ extern G4int gDOM;
 extern G4String ghitsfilename;
 extern G4double gAngle;
 extern G4double gPhotonSim;
+extern G4int gVesselCount;
+extern G4int gWLSCount;
+extern G4int gPMTBodyCount;
+extern G4int gWLSAndHitCount;
 
 OMSimAnalysisManager::OMSimAnalysisManager(){
     std::cerr << "OMSimAnalysisManager is generated" << std::endl;}
@@ -46,7 +50,7 @@ void OMSimAnalysisManager::Write()
             //datafile << stats_photon_direction.at(i).y() << "\t";
             //datafile << stats_photon_direction.at(i).z() << "\t";
             //datafile << stats_photon_position.at(i).mag() / m ;
-           // datafile << stats_creator.at(i) << "\t";
+            datafile << stats_creator.at(i) << "\t";
             datafile << G4endl;
         }
 	}
@@ -55,7 +59,15 @@ void OMSimAnalysisManager::Write()
         G4cout << "********Failed to open " << ghitsfilename << " file*******" << G4endl;
 	}
 
+	std::cout << "Photon reaching Pressure Vessel: " << gVesselCount << std::endl
+	<< "Photon getting absorbed by PMT no_optic: " << gPMTBodyCount << std::endl
+	<< "Photon getting absorbed by WLS material: " << gWLSCount << std::endl
+	<< "Photon making hit and produced from WLS: " << gWLSAndHitCount << std::endl;
 
+	gWLSAndHitCount = 0;
+	gVesselCount = 0;
+	gPMTBodyCount = 0;
+	gWLSCount = 0;
 }
 
 void OMSimAnalysisManager::WriteAccept()

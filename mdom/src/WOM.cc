@@ -5,11 +5,13 @@
 *8/8/2023
 **/
 #include "WOMMaterial.hh"
+#include "G4UserLimits.hh"
 
 WOM::WOM(G4LogicalVolume* LogicMother, OMSimInputData* data) : fLogicMother(LogicMother), fData(data)
 {
     std::cout << "******Constructing WOMs******" << std::endl;
     GetSharedData();
+
 }
 WOM::~WOM()
 {
@@ -44,9 +46,10 @@ void WOM::GetSharedData()
     fGlassTubeHalfLength = 550 * mm;
 
     fWOMPaintOuterRad = (117000 / 2) * micrometer;
-    fWOMPaintInnerRad = (117000 / 2 - 25) *micrometer; //the paint is assumed to be 25 micrometer thick.
+    fWOMPaintThickness = 25;
+    fWOMPaintInnerRad = (117000 / 2 - fWOMPaintThickness) *micrometer; //the paint is assumed to be 25 micrometer thick.
 
-    fWomTubeOuterRad = (117000 / 2 - 25) *micrometer;
+    fWomTubeOuterRad = (117000 / 2 - fWOMPaintThickness) *micrometer;
     fWomTubeInnerRad = (115 / 2) *mm;
     fWomTubeHalfLength = (760 / 2) *mm;
 
@@ -98,14 +101,31 @@ void WOM::GenerateLogicals()
     fWOMPaintLogical = new G4LogicalVolume(fWOMPaintSolid, paintMaterial, "WOM_Paint_Logical");
     //fWOMPaintLogical = new G4LogicalVolume(fWOMPaintSolid, pmtPhotoCathode, "WOM_Paint_Logical"); //delete this later
 
+    /*std::cout << "Reading out the volume materials!!" << std::endl
+    << "Glass Logical: " << fGlassLogical -> GetMaterial() -> GetName() << std::endl
+    << "Gel Logical: " << fGelLogical -> GetMaterial() -> GetName() << std::endl
+    << "WOM Tube Logical: " << fWomTubeLogical -> GetMaterial() -> GetName() << std::endl
+    << "WOM Tube Inside Logical: " << fWomTubeInsideLogical -> GetMaterial() -> GetName() << std::endl
+    << "Paint Logical: " << fWOMPaintLogical -> GetMaterial() -> GetName() << std::endl;
+
+    exit(0);*/
+    /**
+    *Adding a user limit for shorter absorption lengths
+    **/
+
+    G4double maxStepSize = 0.1 * micrometer;
+    G4UserLimits* maxLimit = new G4UserLimits(maxStepSize);
+    fWOMPaintLogical -> SetUserLimits(maxLimit);
+
+
    fGlassLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Blue()));
    fGelLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::White()));
    fWomTubeLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Cyan()));
    fWomTubeInsideLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Yellow()));
    fPMTBodyLogical1 -> SetVisAttributes(new G4VisAttributes(G4Colour::Magenta()));
    fPMTBodyLogical2 -> SetVisAttributes(new G4VisAttributes(G4Colour::Magenta()));
-   fPMTCathodeLogical1 -> SetVisAttributes(new G4VisAttributes(G4Colour::Red()));
-   fPMTCathodeLogical2 -> SetVisAttributes(new G4VisAttributes(G4Colour::Red()));
+   fPMTCathodeLogical1 -> SetVisAttributes(new G4VisAttributes(G4Colour::/*Red*/White()));
+   fPMTCathodeLogical2 -> SetVisAttributes(new G4VisAttributes(G4Colour::/*Red*/White()));
    fWOMPaintLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Green()));
 }
 void WOM::Construction()
@@ -214,7 +234,7 @@ G4VSolid* WOM::PMTConstruction()
 }
 G4VSolid* WOM::PMTCathodeConstruction()
 {
-    G4Tubs* pmtCathode = new G4Tubs("PMT_Cathode_Solid", 0.0, fPMTHolderRad, fPMTCathodeHalfLength, 0., 2 * CLHEP::pi);
+    G4Tubs* pmtCathode = new G4Tubs("PMT_Cathode_Solid", 0.0, fPMTHolderRad /*fWOMPaintOuterRad*/, fPMTCathodeHalfLength, 0., 2 * CLHEP::pi);
     return pmtCathode;
 }
 void WOM::SubtractHarnessPlug()
