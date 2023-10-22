@@ -30,6 +30,14 @@
 #
 # Draw geometry:
 /vis/drawVolume
+
+#Drawing only PMTs for better visualization
+/vis/geometry/set/visibility World_log 0 0
+/vis/geometry/set/visibility glassLogical 1 0
+/vis/geometry/set/visibility WOOMTubeLogical 2 0
+#/vis/geometry/set/visibility WOM_Paint_Logical 3 0
+#/vis/geometry/set/visibility PMTBodyLogical1 3 0
+#/vis/geometry/set/visibility PMTBodyLogical2 3 0
 #
 # Specify view angle:
 /vis/viewer/set/viewpointVector -1 0 0
@@ -99,7 +107,7 @@
 /vis/set/lineWidth 2
 /vis/scene/add/frame   # Simple frame around the view
 /vis/set/colour        # Revert to default colour (white)
-/vis/set/lineWidth     # Revert to default line width (1.)
+/vis/set/lineWidth 4.    # Revert to default line width (1.)
 #
 # Attach text to one edge of Shape1, with a small, fixed offset
 #/vis/scene/add/text 0 6 -4 cm 18 4 4 Shape1
@@ -116,7 +124,7 @@
 /vis/viewer/set/hiddenMarker true
 /vis/viewer/set/viewpointThetaPhi 120 150
 /vis/viewer/set/lineSegmentsPerCircle 24
-#/vis/modeling/trajectoris/drawByParticleID-0/set opticalphoton blue
+#/vis/modeling/trajectoris/drawByCharge-0/set opticalphoton green
 #
 # Re-establish auto refreshing and verbosity:
 /vis/viewer/set/autoRefresh true
@@ -124,4 +132,29 @@
 #
 # For file-based drivers, use this to create an empty detector view:
 #/vis/viewer/flush
-/run/beamOn 10000
+
+#Adding custom trajectory colors
+#/vis/modeling/trajectories/create/drawByCharge
+#/vis/modeling/trajectories/drawByCharge-0/set 1 blue
+#/vis/modeling/trajectories/drawByCharge-0/set -1 white
+#/vis/modeling/trajectories/drawByCharge-0/set 0 red
+
+/vis/scene/add/trajectories rich
+#Adding Generic Trajectory for all particles
+/vis/modeling/trajectories/create/generic
+/vis/modeling/trajectories/generic-0/default/setDrawStepPts 1
+/vis/modeling/trajectories/generic-0/default/setStepPtsSize 16
+/vis/modeling/trajectories/generic-0/default/setLineColour cyan
+/vis/modeling/trajectories/generic-0/default/setStepPtsColour yellow
+
+#Adding Trajectory color based on creator process
+/vis/modeling/trajectories/drawByCharge-0/default/setLineWidth 20
+
+/vis/modeling/trajectories/create/drawByAttribute
+/vis/modeling/trajectories/drawByAttribute-0/verbose true
+/vis/modeling/trajectories/drawByAttribute-0/setAttribute CPN
+
+/vis/modeling/trajectories/drawByAttribute-0/addValue wlsKey OpWLS
+/vis/modeling/trajectories/drawByAttribute-0/wlsKey/setLineColour red
+
+/run/beamOn 5
