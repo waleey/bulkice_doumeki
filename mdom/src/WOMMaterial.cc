@@ -144,9 +144,11 @@ void WOMMaterial::GeneratePaintMaterial()
        4.9302* eV, 5.0288* eV, 5.1274* eV, 5.226* eV , 5.3246* eV, 5.4232* eV, 5.5218* eV, 5.6204* eV,
        5.719* eV , 5.8176* eV, 5.9162* eV, 6.0148* eV, 6.1134* eV, 6.212* eV };
     std::vector<G4double> rIndex;
+    std::vector<G4double> normAbs;
     for(int i = 0; i < rIndexEnergy.size(); i++)
     {
         rIndex.push_back(1.46);
+        normAbs.push_back(1.0 * m); //Adding a dummy absoprtion length for now.
     }
 
     std::vector<G4double> absIntensity;
@@ -158,7 +160,7 @@ void WOMMaterial::GeneratePaintMaterial()
 
     for(int i = absIntensity.size() -1; i >= 0; i--)
     {
-        absLength.push_back(- paintThickness / (log(1 - absIntensity.at(i) / 100)));
+        absLength.push_back((- paintThickness / (log(1 - absIntensity.at(i) / 100)))); //will remove the division by 100
         //rIndexEnergy.push_back(absEnergy.at(i));
         //rIndex.push_back(1.46);
     }
@@ -181,7 +183,7 @@ void WOMMaterial::GeneratePaintMaterial()
     ReadData("../InputFile/Emission_WLS.txt", emIntensityInverted);
     for(int i = emIntensityInverted.size() -1; i >= 0; i--)
     {
-        emIntensity.push_back(emIntensityInverted.at(i) / 100);
+        emIntensity.push_back(emIntensityInverted.at(i) );
     }
     emEnergy = WavelengthToEnergy(wLen);
     for(int i = 0; i < emIntensity.size(); i++)
@@ -193,6 +195,7 @@ void WOMMaterial::GeneratePaintMaterial()
     mptQuartzPaint = new G4MaterialPropertiesTable();
 
     mptQuartzPaint -> AddProperty("RINDEX", rIndexEnergy, rIndex, rIndex.size());
+    mptQuartzPaint -> AddProperty("ABSLENGTH", rIndexEnergy, normAbs, rIndex.size());
     mptQuartzPaint -> AddProperty("WLSABSLENGTH", absEnergy, absLength, absEnergy.size());
     mptQuartzPaint -> AddProperty("WLSCOMPONENT", emEnergy, emIntensity, emIntensity.size());
     mptQuartzPaint -> AddConstProperty("WLSTIMECONSTANT", 1.5 * ns);

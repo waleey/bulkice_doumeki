@@ -4,6 +4,7 @@
 
 
 //#include "G4ParticleTypes.hh"
+extern G4double gZenithAngle;
 
 OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
     :   fPositronAction(0),
@@ -114,9 +115,11 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
         case Photon:
             //std::cout << "Generating Photon wave!" << std::endl;
             fPhotonAction -> GeneratePrimaries(anEvent);
-            //GenerateToVisualize();
+            GenerateToVisualize();
             break;
         default:
+            GenerateToVisualize();
+            fParticleGun -> GeneratePrimaryVertex(anEvent);
             std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::GeneratePrimaries() " << std::endl
             << "Aborting...." << std::endl;
 
@@ -185,16 +188,24 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
     OMSimRadioactivityData* radData = new OMSimRadioactivityData();
 
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-    G4String particleName = "opticalphoton";
+    G4String particleName = "e+";
     G4ParticleDefinition* particle = particleTable -> FindParticle(particleName);
 
-    G4double theta = radData -> RandomGen(0, 2 * CLHEP::pi);
-    G4double x = 0.5 * sin(theta);
-    G4double y = 0.5 * cos(theta);
-    G4double z = (radData -> RandomGen(-500, 500));
+    G4double angle = gZenithAngle;
+    G4double distance = 1;
+    /*G4double l = radData -> RandomGen(-3, 3);
+    G4double x = 0;
+    G4double y = - 3 * sin(angle * deg) + l * cos(angle * deg);
+    G4double z = - 3 * cos(angle * deg) - l * sin(angle * deg);*/
+
+    G4double r = radData -> RandomGen(-1, 1);
+    G4double y = - distance * sin(angle * deg) + r * cos(angle * deg);
+    G4double z = - distance * cos(angle * deg) - r * sin(angle * deg);
+    G4double x = 0;
+
     x = x * m;
     y = y * m;
-    z = z * mm;
+    z = z * m;
 /*std::cout <<
     "x: " << x / m<< std::endl
     << "y: " << y / m << std::endl
@@ -202,11 +213,11 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
 
 
     G4ThreeVector position(x, y, z);
-    G4double angle = 90;
-    G4double uz = cos(angle * deg);
-    G4double alpha = (radData -> RandomGen(0, 2 * CLHEP::pi));
-    G4double ux = (- sin(angle * deg) * cos(alpha * rad));
-    G4double uy = (- sin(angle * deg) * sin(alpha * rad)) ;
+
+    G4double ux = 0;
+    G4double uy = sin(angle * deg) ;
+    G4double uz =  cos(angle * deg);
+
     G4ThreeVector direction(ux, uy, uz);
 
     /*std::cout << "angle: " << angle << std::endl
@@ -216,7 +227,7 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
     << "uz: " << uz  << std::endl;*/
 
     fParticleGun -> SetParticleDefinition(particle);
-    fParticleGun -> SetParticleEnergy((radData -> RandomGen(1.7, 6.2) * eV));
+    fParticleGun -> SetParticleEnergy((radData -> RandomGen(10, 12) * MeV));
     fParticleGun -> SetParticlePosition(position);
     fParticleGun -> SetParticleMomentumDirection(direction);
 

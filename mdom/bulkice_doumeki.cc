@@ -203,13 +203,14 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gRunID);
         }
     }
-    else if(argc == 3)
+    else if(argc == 4)
     {
         PMT_model = 6;
         gPMT = 5;
         gVis = true;
         interaction_channel = argv[2];
         worldsize = 20;
+        gZenithAngle = atof(argv[3]);
     }
     else
     {
