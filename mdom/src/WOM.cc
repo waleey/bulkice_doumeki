@@ -7,6 +7,8 @@
 #include "WOMMaterial.hh"
 #include "G4UserLimits.hh"
 
+extern G4double gPaintThickness;
+
 WOM::WOM(G4LogicalVolume* LogicMother, OMSimInputData* data) : fLogicMother(LogicMother), fData(data)
 {
     std::cout << "******Constructing WOMs******" << std::endl;
@@ -39,17 +41,18 @@ void WOM::PlaceIt()
 }
 void WOM::GetSharedData()
 {
-    fGlassTubeOuterRad = (173 / 2) *mm;
-    fGlassTubeInnerRad = (145 / 2) *mm;
-    fGlassCapOuterRad = (173 / 2) *mm;
-    fGlassCapInnerRad = (145 / 2) *mm;
+    G4double paintOffset = gPaintThickness;
+    fGlassTubeOuterRad = (173 / 2 + paintOffset) *mm;
+    fGlassTubeInnerRad = (145 / 2 + paintOffset) *mm;
+    fGlassCapOuterRad = (173 / 2 + paintOffset) *mm;
+    fGlassCapInnerRad = (145 / 2 + paintOffset) *mm;
     fGlassTubeHalfLength = 550 * mm;
 
-    fWOMPaintOuterRad = (117000 / 2) * micrometer;
-    fWOMPaintThickness = 25;
-    fWOMPaintInnerRad = (117000 / 2 - fWOMPaintThickness) *micrometer; //the paint is assumed to be 25 micrometer thick.
+    fWOMPaintOuterRad = (117 / 2 + paintOffset) * mm;
+    fWOMPaintThickness = .025 + paintOffset;
+    fWOMPaintInnerRad = (117 / 2 + paintOffset - fWOMPaintThickness) *mm; //the paint is assumed to be 25 micrometer thick.
 
-    fWomTubeOuterRad = (117000 / 2 - fWOMPaintThickness) *micrometer;
+    fWomTubeOuterRad = (117 / 2 + paintOffset- fWOMPaintThickness) *mm;
     fWomTubeInnerRad = (115 / 2) *mm;
     fWomTubeHalfLength = (760 / 2) *mm;
 

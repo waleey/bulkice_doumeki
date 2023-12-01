@@ -160,7 +160,7 @@ void WOMMaterial::GeneratePaintMaterial()
 
     for(int i = absIntensity.size() -1; i >= 0; i--)
     {
-        absLength.push_back((- paintThickness / (log(1 - absIntensity.at(i) / 100)))); //will remove the division by 100
+        absLength.push_back((- paintThickness / (log(1 - absIntensity.at(i) / 100))) * 100); //will remove the division by 100
         //rIndexEnergy.push_back(absEnergy.at(i));
         //rIndex.push_back(1.46);
     }

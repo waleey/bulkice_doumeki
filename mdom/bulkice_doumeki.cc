@@ -47,7 +47,7 @@ G4int           gNumScint = 0;
 G4int           gEvent = 0;
 G4int           gDepthIndex = 88; //default value
 G4int           gRunID = 0; //Run ID for each run
-
+G4double        gPaintThickness = 0;
 /**
 variables for optical photon waves
 **/
@@ -95,7 +95,7 @@ void help() //needs change
 }
 void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
 {
-    if(argc == 6 || argc == 8 || argc == 10 || argc == 2)
+    if(argc == 6 || argc ==  9/*change this t0 9 when done with paint thickness test */ || argc == 11 /*change this to 10 when done with paint thickness test*/ || argc == 2)
     {
         G4String model = argv[1];
 
@@ -173,13 +173,14 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             gDistance = atof(argv[6]);
             gPhotonSim = true;
 
-            if(argc == 8)
+            if(argc == 9)
             {
                 gZenithAngle = atof(argv[7]);
                 gStartAngle = gZenithAngle;
                 gFinalAngle = gZenithAngle;
                 gAngleIncrement = 10; //some dummy number, doesn't affect the output.
                 gMultipleAngle = false;
+                gPaintThickness = atof(argv[8]); // remove this when done with paint thickness experiment.
 
                 ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gZenithAngle) + "_"+ std::to_string(gRunID);
             }
@@ -189,6 +190,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
                 gStartAngle = atof(argv[7]);
                 gFinalAngle = atof(argv[8]);
                 gAngleIncrement = atof(argv[9]);
+                gPaintThickness = atof(argv[10]); //will remove later
 
 
                 ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gStartAngle) + "_"

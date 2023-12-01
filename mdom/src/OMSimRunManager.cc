@@ -272,7 +272,7 @@ void OMSimRunManager::GeneratePhoton()
     {
         gAngle = angle;
         fPrimaryGenerator -> SetAngle(angle);
-        fRunManager -> BeamOn(100000);
+        fRunManager -> BeamOn(1);
     }
 }
 void OMSimRunManager::OpenFile()
