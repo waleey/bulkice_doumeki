@@ -69,7 +69,7 @@ void WOMMaterial::GenerateGlassMaterial()
     G4Element* Si = new G4Element("Silicon", "Si", z = 14, a = 28 * g / mole);
     G4Element* O = new G4Element("Oxygen", "O", z = 8, a = 16 * g / mole);
 
-    quartz = new G4Material("Quartz", quartzDensity, nElements = 2);
+    quartz = new G4Material("QuartzGl", quartzDensity, nElements = 2);
     quartz -> AddElement(Si, 1);
     quartz -> AddElement(O, 2);
 
@@ -160,7 +160,7 @@ void WOMMaterial::GeneratePaintMaterial()
 
     for(int i = absIntensity.size() -1; i >= 0; i--)
     {
-        absLength.push_back((- paintThickness / (log(1 - absIntensity.at(i) / 100))) * 100); //will remove the division by 100
+        absLength.push_back((- paintThickness / (log(1 - absIntensity.at(i) / 100)))); //will remove the division by 100
         //rIndexEnergy.push_back(absEnergy.at(i));
         //rIndex.push_back(1.46);
     }

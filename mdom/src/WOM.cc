@@ -1,3 +1,4 @@
+#define WLS_BOUNDARY 10
 #include "WOM.hh"
 /**
 *Very rough draft of possible WOM Simulation
@@ -52,7 +53,11 @@ void WOM::GetSharedData()
     fWOMPaintThickness = .025 + paintOffset;
     fWOMPaintInnerRad = (117 / 2 + paintOffset - fWOMPaintThickness) *mm; //the paint is assumed to be 25 micrometer thick.
 
+    #ifdef WLS_BOUNDARY
+    fWomTubeOuterRad = (117 / 2 + paintOffset) *mm;
+    #else
     fWomTubeOuterRad = (117 / 2 + paintOffset- fWOMPaintThickness) *mm;
+    #endif
     fWomTubeInnerRad = (115 / 2) *mm;
     fWomTubeHalfLength = (760 / 2) *mm;
 
@@ -89,19 +94,27 @@ void WOM::GenerateLogicals()
     fWomInsideSolid = WOMTube("WOMInside", fWomTubeInnerRad);
     fPMTSolid1 = PMTConstruction();
     fPMTCathode = PMTCathodeConstruction();
+    #ifdef WLS_BOUNDARY
+
+    #else
     fWOMPaintSolid = WOMPaint("WOM");
+    #endif // WLS_BOUNDARY
 
     ConstructMaterial();
 
     fGlassLogical = new G4LogicalVolume(fGlassSolid, glassMaterial, "glassLogical");
     fGelLogical = new G4LogicalVolume(fGelSolid, fillerMaterial, "gelLogical");
-    fWomTubeLogical = new G4LogicalVolume(fWomTubeSolid, tubeMaterial, "WOOMTubeLogical");
+    fWomTubeLogical = new G4LogicalVolume(fWomTubeSolid, paintMaterial, "WOOMTubeLogical");
     fWomTubeInsideLogical = new G4LogicalVolume(fWomInsideSolid, tubeInsideMaterial, "WOMInsideLogical");
     fPMTBodyLogical1 = new G4LogicalVolume(fPMTSolid1, pmtAbsorber, "PMTBodyLogical1");
     fPMTBodyLogical2 = new G4LogicalVolume(fPMTSolid1, pmtAbsorber, "PMTBodyLogical2");
     fPMTCathodeLogical1 = new G4LogicalVolume(fPMTCathode, pmtPhotoCathode, "PMT_Cathode_Logical1");
     fPMTCathodeLogical2 = new G4LogicalVolume(fPMTCathode, pmtPhotoCathode, "PMT_Cathode_Logical2");
+    #ifdef WLS_BOUNDARY
+
+    #else
     fWOMPaintLogical = new G4LogicalVolume(fWOMPaintSolid, paintMaterial, "WOM_Paint_Logical");
+    #endif
     //fWOMPaintLogical = new G4LogicalVolume(fWOMPaintSolid, pmtPhotoCathode, "WOM_Paint_Logical"); //delete this later
 
     /*std::cout << "Reading out the volume materials!!" << std::endl
@@ -116,9 +129,13 @@ void WOM::GenerateLogicals()
     *Adding a user limit for shorter absorption lengths
     **/
 
+    #ifdef WLS_BOUNDARY
+
+    #else
     G4double maxStepSize = 0.1 * micrometer;
     G4UserLimits* maxLimit = new G4UserLimits(maxStepSize);
     fWOMPaintLogical -> SetUserLimits(maxLimit);
+    #endif
 
 
    fGlassLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Blue()));
@@ -129,7 +146,11 @@ void WOM::GenerateLogicals()
    fPMTBodyLogical2 -> SetVisAttributes(new G4VisAttributes(G4Colour::Magenta()));
    fPMTCathodeLogical1 -> SetVisAttributes(new G4VisAttributes(G4Colour::/*Red*/White()));
    fPMTCathodeLogical2 -> SetVisAttributes(new G4VisAttributes(G4Colour::/*Red*/White()));
+   #ifdef WLS_BOUNDARY
+
+   #else
    fWOMPaintLogical -> SetVisAttributes(new G4VisAttributes(G4Colour::Green()));
+   #endif
 }
 void WOM::Construction()
 {
@@ -154,7 +175,11 @@ void WOM::Construction()
     pmtCathodeRot -> rotateY(CLHEP::pi);
     new G4PVPlacement(pmtCathodeRot, G4ThreeVector(0, 0, -fPMTCathodeZ), fPMTCathodeLogical2, "PMT_Cathode_Physical2", fGelLogical, false, 0, true);
     //new G4PVPlacement(pmtCathodeRot, G4ThreeVector(0, 0, -fPMTCathodeZ), fPMTCathodeLogical2, "PMT_Cathode_Physical2", fLogicMother, false, 0, true); //delete this later
+    #ifdef WLS_BOUNDARY
+
+    #else
     new G4PVPlacement(0, G4ThreeVector(0, 0, 0), fWOMPaintLogical, "WOM_Paint_Logical", fGelLogical, false, 0, true);
+    #endif // WLS_BOUNDARY
     //new G4PVPlacement(0, G4ThreeVector(0, 0, 0), fWOMPaintLogical, "WOM_Paint_Logical", fLogicMother, false, 0, true); //delete this later
 
 }

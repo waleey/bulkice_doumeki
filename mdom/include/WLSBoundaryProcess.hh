@@ -17,55 +17,10 @@
 #include "G4VDiscreteProcess.hh"
 #include "G4OpticalPhoton.hh"
 #include "G4RandomTools.hh"
+#include "G4OpBoundaryProcess.hh"
 
 class G4VWLSTimeGeneratorProfile;
 
-enum WLSBoundaryProcessStatus
-{
-  Undefined,
-  Transmission,
-  FresnelRefraction,
-  FresnelReflection,
-  TotalInternalReflection,
-  LambertianReflection,
-  LobeReflection,
-  SpikeReflection,
-  BackScattering,
-  Absorption,
-  Detection,
-  NotAtBoundary,
-  SameMaterial,
-  StepTooSmall,
-  NoRINDEX,
-  PolishedLumirrorAirReflection,
-  PolishedLumirrorGlueReflection,
-  PolishedAirReflection,
-  PolishedTeflonAirReflection,
-  PolishedTiOAirReflection,
-  PolishedTyvekAirReflection,
-  PolishedVM2000AirReflection,
-  PolishedVM2000GlueReflection,
-  EtchedLumirrorAirReflection,
-  EtchedLumirrorGlueReflection,
-  EtchedAirReflection,
-  EtchedTeflonAirReflection,
-  EtchedTiOAirReflection,
-  EtchedTyvekAirReflection,
-  EtchedVM2000AirReflection,
-  EtchedVM2000GlueReflection,
-  GroundLumirrorAirReflection,
-  GroundLumirrorGlueReflection,
-  GroundAirReflection,
-  GroundTeflonAirReflection,
-  GroundTiOAirReflection,
-  GroundTyvekAirReflection,
-  GroundVM2000AirReflection,
-  GroundVM2000GlueReflection,
-  Dichroic,
-  CoatedDielectricReflection,
-  CoatedDielectricRefraction,
-  CoatedDielectricFrustratedTransmission
-};
 
 class WLSBoundaryProcess : public G4VDiscreteProcess
 {
@@ -123,15 +78,12 @@ class WLSBoundaryProcess : public G4VDiscreteProcess
 
   std::size_t idx_wls = 0;
 
-  const G4Material* fOuterMaterial;
-  const G4Material* fInnerMaterial;
-
   G4String fInnerMaterialName;
   G4String fOuterMaterialName;
 
   G4double fPaintThickness;
 
-  WLSBoundaryProcessStatus fStatus;
+  G4OpBoundaryProcessStatus fStatus;
 
 };
 

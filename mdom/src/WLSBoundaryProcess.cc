@@ -34,10 +34,9 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 WLSBoundaryProcess::WLSBoundaryProcess(const G4String& processName, G4ProcessType type)
   : G4VDiscreteProcess(processName, type),
-    fInnerMaterial(0),
-    fOuterMaterial(0),
     fInnerMaterialName("Quartz"),
-    fOuterMaterialName("Filler")
+    fOuterMaterialName("Filler"),
+    fPaintThickness(25 * micrometer)
 {
   WLSTimeGeneratorProfile = nullptr;
   Initialise();
@@ -57,8 +56,6 @@ WLSBoundaryProcess::~WLSBoundaryProcess()
     delete theIntegralTable;
   }
   delete WLSTimeGeneratorProfile;
-  delete fInnerMaterial;
-  delete fOuterMaterial;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -85,33 +82,46 @@ G4VParticleChange* WLSBoundaryProcess::PostStepDoIt(const G4Track& aTrack,
 * it should be killed.
 **/
 {
+  G4Material* fInnerMaterial(0);
+  G4Material* fOuterMaterial(0);
+
   fStatus = Undefined;
   aParticleChange.Initialize(aTrack);
   const G4Step* pStep = &aStep;
+
   if(pStep -> GetPostStepPoint() -> GetStepStatus() == fGeomBoundary)
   {
     fInnerMaterial = pStep -> GetPreStepPoint() -> GetMaterial();
     fOuterMaterial = pStep -> GetPostStepPoint() -> GetMaterial();
+
   }
   else
   {
     fStatus = NotAtBoundary;
-    if(verboseLevel > 1)
-      //BoundaryProcessVerbose();
     return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
   }
 
-  if((fInnerMaterial -> GetName() == GetInnerMaterialName() || fInnerMaterial -> GetName() == GetInnerMaterialName()) && (fOuterMaterial -> GetName() == GetOuterMaterialName() || fOuterMaterial -> GetName() == GetOuterMaterialName()))
+  if(!fInnerMaterial || !fOuterMaterial)
+  {
+    std::cout << "Material Not Defined. Aborting.." << std::endl;
+    exit(0);
+  }
+
+  G4String innerMaterial = fInnerMaterial -> GetName();
+  G4String outerMaterial = fOuterMaterial -> GetName();
+
+  if((innerMaterial == GetInnerMaterialName() && outerMaterial == GetOuterMaterialName()) || (outerMaterial == GetInnerMaterialName() && innerMaterial == GetOuterMaterialName()))
   {
 
   }
   else
   {
-    G4cout << "Photon not on WLS Boundary.." << G4endl;
+    //G4cout << "Photon not on WLS Boundary.." << G4endl;
     return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
   }
 
   const G4Material* WLSMaterial;
+
   if(fInnerMaterial -> GetName() == "Quartz")
   {
     WLSMaterial = fInnerMaterial;
@@ -136,7 +146,7 @@ G4VParticleChange* WLSBoundaryProcess::PostStepDoIt(const G4Track& aTrack,
 
   G4double thePhotonEnergy = aTrack.GetDynamicParticle()->GetTotalEnergy();
   G4double attLength = attVector -> Value(thePhotonEnergy);
-  G4double probWLS = 1 - exp(paintThickness / attLength);
+  G4double probWLS = 1 - exp(-paintThickness / attLength);
   G4double randomNum = G4UniformRand();
 
   if(randomNum > probWLS)
@@ -353,7 +363,7 @@ G4double WLSBoundaryProcess::GetMeanFreePath(const G4Track& aTrack, G4double,
 **/
 {
   G4double attLength       = DBL_MAX;
-
+/*
   const G4Step* aStep = aTrack.GetStep();
   const G4String outerMat = aStep -> GetPreStepPoint() -> GetMaterial() -> GetName();
   const G4String innerMat = aStep -> GetPostStepPoint() -> GetMaterial() -> GetName();
@@ -362,7 +372,8 @@ G4double WLSBoundaryProcess::GetMeanFreePath(const G4Track& aTrack, G4double,
   {
     *condition = Forced;
   }
-
+  */
+  *condition = Forced;
   return attLength;
 }
 

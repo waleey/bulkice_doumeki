@@ -35,6 +35,7 @@
 
 #include "G4OpAbsorption.hh"
 #include "G4OpBoundaryProcess.hh"
+#include "WLSBoundaryProcess.hh"
 
 #include "G4StepLimiterPhysics.hh"
 
@@ -159,7 +160,8 @@ void OMSimPhysicsList::ConstructProcess()
 			pmanager->AddDiscreteProcess(new G4OpBoundaryProcess());
 			pmanager->AddDiscreteProcess(new G4OpRayleigh);
 			pmanager->AddDiscreteProcess(new G4OpMieHG);
-			pmanager->AddDiscreteProcess(new G4OpWLS);
+			//pmanager->AddDiscreteProcess(new G4OpWLS);
+			pmanager->AddDiscreteProcess(new WLSBoundaryProcess);
 		}
 		else if (particleName == "gamma") {
 			pmanager->AddDiscreteProcess(theGammaConversionModel);
