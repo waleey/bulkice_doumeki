@@ -1,19 +1,46 @@
+//
+// ********************************************************************
+// * License and Disclaimer                                           *
+// *                                                                  *
+// * The  Geant4 software  is  copyright of the Copyright Holders  of *
+// * the Geant4 Collaboration.  It is provided  under  the terms  and *
+// * conditions of the Geant4 Software License,  included in the file *
+// * LICENSE and available at  http://cern.ch/geant4/license .  These *
+// * include a list of copyright holders.                             *
+// *                                                                  *
+// * Neither the authors of this software system, nor their employing *
+// * institutes,nor the agencies providing financial support for this *
+// * work  make  any representation or  warranty, express or implied, *
+// * regarding  this  software system or assume any liability for its *
+// * use.  Please see the license in the file  LICENSE  and URL above *
+// * for the full disclaimer and the limitation of liability.         *
+// *                                                                  *
+// * This  code  implementation is the result of  the  scientific and *
+// * technical work of the GEANT4 collaboration.                      *
+// * By using,  copying,  modifying or  distributing the software (or *
+// * any work based  on the software)  you  agree  to acknowledge its *
+// * use  in  resulting  scientific  publications,  and indicate your *
+// * acceptance of all terms of the Geant4 Software license.          *
+// ********************************************************************
+//
+//
+//
 ////////////////////////////////////////////////////////////////////////
-// Optical Photon Wavelength Shifting as a surface boundary process
+// Optical Photon WaveLength Shifting (WLS) Class Implementation
 ////////////////////////////////////////////////////////////////////////
 //
-// File:        WLSBoundaryProcess.cc
-// Description: Discrete Process -- Wavelength Shifting of Optical Photons on surface
+// File:        G4OpWLS.cc
+// Description: Discrete Process -- Wavelength Shifting of Optical Photons
 // Version:     1.0
-// Created:     11/28/23
-// Author:      Waly M Z Karim
-//              (Adaptation of G4OpWLS and G4OpBoundaryProcess)
+// Created:     2003-05-13
+// Author:      John Paul Archambault
+//              (Adaptation of G4Scintillation and G4OpAbsorption)
+// Updated:     2005-07-28 - add G4ProcessType to constructor
+//              2006-05-07 - add G4VWLSTimeGeneratorProfile
 //
 ////////////////////////////////////////////////////////////////////////
 
-
-#include "WLSBoundaryProcess.hh"
-
+#include "G4OpWLS3.hh"
 #include "G4ios.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
@@ -22,28 +49,15 @@
 #include "G4OpticalParameters.hh"
 #include "G4WLSTimeGeneratorProfileDelta.hh"
 #include "G4WLSTimeGeneratorProfileExponential.hh"
-#include "G4GeometryTolerance.hh"
-#include "G4LogicalBorderSurface.hh"
-#include "G4LogicalSkinSurface.hh"
-#include "G4ParallelWorldProcess.hh"
-#include "G4TransportationManager.hh"
-#include "G4VSensitiveDetector.hh"
-#include "G4SystemOfUnits.hh"
-
-#include <bits/stdc++.h>
 #include <cstdlib>
 
-extern G4int gPhotonNotAbsorbed;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-WLSBoundaryProcess::WLSBoundaryProcess(const G4String& processName, G4ProcessType type)
-  : G4VDiscreteProcess(processName, type),
-    fInnerMaterialName("Quartz"),
-    fOuterMaterialName("Filler"),
-    fPaintThickness(25 * micrometer)
+G4OpWLS3::G4OpWLS3(const G4String& processName, G4ProcessType type)
+  : G4VDiscreteProcess(processName, type)
 {
   WLSTimeGeneratorProfile = nullptr;
   Initialise();
-  SetProcessSubType(fOpBoundary); //might be changed to fOpWLS
+  SetProcessSubType(fOpWLS);
   theIntegralTable = nullptr;
 
   if(verboseLevel > 0)
@@ -51,7 +65,7 @@ WLSBoundaryProcess::WLSBoundaryProcess(const G4String& processName, G4ProcessTyp
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-WLSBoundaryProcess::~WLSBoundaryProcess()
+G4OpWLS3::~G4OpWLS3()
 {
   if(theIntegralTable)
   {
@@ -62,10 +76,10 @@ WLSBoundaryProcess::~WLSBoundaryProcess()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void WLSBoundaryProcess::PreparePhysicsTable(const G4ParticleDefinition&) { Initialise(); }
+void G4OpWLS3::PreparePhysicsTable(const G4ParticleDefinition&) { Initialise(); }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void WLSBoundaryProcess::Initialise()
+void G4OpWLS3::Initialise()
 {
   G4OpticalParameters* params = G4OpticalParameters::Instance();
   SetVerboseLevel(params->GetWLSVerboseLevel());
@@ -73,108 +87,11 @@ void WLSBoundaryProcess::Initialise()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4VParticleChange* WLSBoundaryProcess::PostStepDoIt(const G4Track& aTrack,
+G4VParticleChange* G4OpWLS3::PostStepDoIt(const G4Track& aTrack,
                                          const G4Step& aStep)
-/**
-* PostStepDoIT of WLSBoundaryProcess
-* No change of the track should be made unless
-* The photon is on the Geometric Boundary
-* inner and outer materials are appropriate
-* The Photon Was Absorbed
-* If the photon got absorbed but not re-emitted
-* it should be killed.
-**/
 {
-  G4Material* fInnerMaterial(0);
-  G4Material* fOuterMaterial(0);
-
-  fStatus = Undefined;
-  aParticleChange.Initialize(aTrack);
-  const G4Step* pStep = &aStep;
-
-  if(pStep -> GetPostStepPoint() -> GetStepStatus() == fGeomBoundary)
-  {
-    fInnerMaterial = pStep -> GetPreStepPoint() -> GetMaterial();
-    fOuterMaterial = pStep -> GetPostStepPoint() -> GetMaterial();
-
-  }
-  else
-  {
-    fStatus = NotAtBoundary;
-    return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
-  }
-
-  if(!fInnerMaterial || !fOuterMaterial)
-  {
-    std::cout << "Material Not Defined. Aborting.." << std::endl;
-    exit(0);
-  }
-
-  G4String innerMaterial = fInnerMaterial -> GetName();
-  G4String outerMaterial = fOuterMaterial -> GetName();
-
-  if((innerMaterial == GetInnerMaterialName() && outerMaterial == GetOuterMaterialName()) || (outerMaterial == GetInnerMaterialName() && innerMaterial == GetOuterMaterialName()))
-  {
-
-  }
-  else
-  {
-    //G4cout << "Photon not on WLS Boundary.." << G4endl;
-    return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
-  }
-
-  const G4Material* WLSMaterial;
-
-  if(fInnerMaterial -> GetName() == "Quartz")
-  {
-    WLSMaterial = fInnerMaterial;
-  }
-  else
-  {
-    WLSMaterial = fOuterMaterial;
-  }
-
-  G4double paintThickness = GetPaintThickness();
-  G4MaterialPropertiesTable* MPT = aTrack.GetMaterial() -> GetMaterialPropertiesTable();
-  if(!MPT)
-  {
-    return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
-  }
-
-  G4MaterialPropertyVector* attVector = MPT -> GetProperty(kWLSABSLENGTH);
-  if(!attVector)
-  {
-    return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
-  }
-
-  G4double thePhotonEnergy = aTrack.GetDynamicParticle()->GetTotalEnergy();
-  G4double attLength = abs(attVector -> Value(thePhotonEnergy)) /1000;
-
-  //Weird issue. Geant4 thinks the unit is mm where it should be micrometer.
-  //Also, correcting for the negative absorption length
-
-  G4double probWLS = 1 - exp(-paintThickness / attLength);
-  G4double randomNum = G4UniformRand();
-
-  if(randomNum > probWLS)
-  {
-    //std::cout << "Photon Energy: " << thePhotonEnergy << std::endl;
-    if(aTrack.GetCreatorProcess())
-    {
-        std::cout << "Creator Process of the Photons: " << aTrack.GetCreatorProcess() -> GetProcessName() << std::endl;
-    }
-    //gPhotonNotAbsorbed++;
-    std::cout << "absorption lengths: " << attLength / micrometer << std::endl;
-    std::cout << "random Num: " << randomNum << std::endl;
-    std::cout << "prob: " << probWLS << std::endl;
-    return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
-  }
-
-  /**
-  *By this point, the photon should get absorbed.
-  **/
   std::vector<G4Track*> proposedSecondaries;
-
+  aParticleChange.Initialize(aTrack);
   aParticleChange.ProposeTrackStatus(fStopAndKill);
 
   if(verboseLevel > 1)
@@ -183,7 +100,12 @@ G4VParticleChange* WLSBoundaryProcess::PostStepDoIt(const G4Track& aTrack,
   }
 
   G4StepPoint* pPostStepPoint = aStep.GetPostStepPoint();
-
+  G4MaterialPropertiesTable* MPT =
+    aTrack.GetMaterial()->GetMaterialPropertiesTable();
+  if(!MPT)
+  {
+    return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
+  }
   if(!MPT->GetProperty(kWLSCOMPONENT))
   {
     return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
@@ -305,7 +227,7 @@ G4VParticleChange* WLSBoundaryProcess::PostStepDoIt(const G4Track& aTrack,
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void WLSBoundaryProcess::BuildPhysicsTable(const G4ParticleDefinition&)
+void G4OpWLS3::BuildPhysicsTable(const G4ParticleDefinition&)
 {
   if(theIntegralTable)
   {
@@ -370,31 +292,41 @@ void WLSBoundaryProcess::BuildPhysicsTable(const G4ParticleDefinition&)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4double WLSBoundaryProcess::GetMeanFreePath(const G4Track& aTrack, G4double,
-                                  G4ForceCondition* condition)
-/**
-* a dummy attLength is returned
-* if the photon is on the correct volume boundary
-* condition will be forced to implement this process
-**/
+G4double G4OpWLS3::GetMeanFreePath(const G4Track& aTrack, G4double,
+                                  G4ForceCondition*)
 {
+  G4double thePhotonEnergy = aTrack.GetDynamicParticle()->GetTotalEnergy();
   G4double attLength       = DBL_MAX;
-/*
-  const G4Step* aStep = aTrack.GetStep();
-  const G4String outerMat = aStep -> GetPreStepPoint() -> GetMaterial() -> GetName();
-  const G4String innerMat = aStep -> GetPostStepPoint() -> GetMaterial() -> GetName();
+  G4MaterialPropertiesTable* MPT =
+    aTrack.GetMaterial()->GetMaterialPropertiesTable();
 
-  if((outerMat == GetOuterMaterialName() && innerMat == GetInnerMaterialName()) || (innerMat == GetOuterMaterialName() && outerMat == GetInnerMaterialName()))
+  if(MPT)
   {
-    *condition = Forced;
+    G4MaterialPropertyVector* attVector = MPT->GetProperty(kWLSABSLENGTH);
+    if(attVector)
+    {
+      attLength = attVector->Value(thePhotonEnergy, idx_wls);
+    }
   }
-  */
-  *condition = Forced;
-  return attLength;
+/*
+  if(aTrack.GetMaterial() -> GetName() == "Quartz")
+  {
+    if(thePhotonEnergy / eV != 3.5)
+    {
+        std::cout << "ATTT LENGTHS ARE:" << attLength / micrometer << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+        std::cout << "Energy of the photon: " << thePhotonEnergy /eV << std::endl;
+        if(aTrack.GetCreatorProcess())
+        {
+            std::cout << "The CREATOR PROCESS: " << aTrack.GetCreatorProcess() -> GetProcessName() << std::endl;
+        }
+    }
+  }
+*/
+  return abs(attLength);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void WLSBoundaryProcess::UseTimeProfile(const G4String name)
+void G4OpWLS3::UseTimeProfile(const G4String name)
 {
   if(WLSTimeGeneratorProfile)
   {
@@ -419,39 +351,8 @@ void WLSBoundaryProcess::UseTimeProfile(const G4String name)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void WLSBoundaryProcess::SetVerboseLevel(G4int verbose)
+void G4OpWLS3::SetVerboseLevel(G4int verbose)
 {
   verboseLevel = verbose;
   G4OpticalParameters::Instance()->SetWLSVerboseLevel(verboseLevel);
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4String& WLSBoundaryProcess::GetOuterMaterialName()
-{
-    return fOuterMaterialName;
-}
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4String& WLSBoundaryProcess::GetInnerMaterialName()
-{
-    return fInnerMaterialName;
-}
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4double WLSBoundaryProcess::GetPaintThickness()
-{
-    return fPaintThickness;
-}
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void WLSBoundaryProcess::SetOuterMaterialName(G4String& name)
-{
-    fOuterMaterialName = name;
-}
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void WLSBoundaryProcess::SetInnerMaterialName(G4String& name)
-{
-    fInnerMaterialName = name;
-}
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void WLSBoundaryProcess::SetPaintThickness(G4double thickness)
-{
-    fPaintThickness = thickness;
 }

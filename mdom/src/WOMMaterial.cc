@@ -115,15 +115,16 @@ void WOMMaterial::GenerateFillerMaterial()
        5.719* eV , 5.8176* eV, 5.9162* eV, 6.0148* eV, 6.1134* eV, 6.212* eV };
     G4double numEntries = rIndexEnergy.size();
     std::vector<G4double> rIndex;
+    std::vector<G4double> absLen;
     for(int i = 0; i < numEntries; i++)
     {
         rIndex.push_back(1.33);
-        //absLen.push_back(1.0 * m);
+        absLen.push_back(1.0 * m);
     }
 
     mptFiller = new G4MaterialPropertiesTable();
     mptFiller -> AddProperty("RINDEX", rIndexEnergy, rIndex, numEntries);
-
+    mptFiller -> AddProperty("ABSLENGTH", rIndexEnergy, absLen, numEntries);
     filler -> SetMaterialPropertiesTable(mptFiller);
 }
 void WOMMaterial::GeneratePaintMaterial()
@@ -218,15 +219,17 @@ void WOMMaterial::GenerateTubeInsideMaterial()
        4.9302* eV, 5.0288* eV, 5.1274* eV, 5.226* eV , 5.3246* eV, 5.4232* eV, 5.5218* eV, 5.6204* eV,
        5.719* eV , 5.8176* eV, 5.9162* eV, 6.0148* eV, 6.1134* eV, 6.212* eV };
     std::vector<G4double> rIndex;
+    std::vector<G4double> absLen;
     G4double numEntries = rIndexEnergy.size();
     for(int i = 0; i < numEntries; i++)
     {
         rIndex.push_back(1.0);
+        absLen.push_back(1.0 * m);
     }
 
     mptAir = new G4MaterialPropertiesTable();
     mptAir -> AddProperty("RINDEX", rIndexEnergy, rIndex, numEntries);
-
+    mptAir -> AddProperty("ABSLENGTH", rIndexEnergy, absLen, numEntries);
     air -> SetMaterialPropertiesTable(mptAir);
 }
 std::vector<G4double>& WOMMaterial::WavelengthToEnergy(std::vector<G4double>& wLen)

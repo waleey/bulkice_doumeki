@@ -61,6 +61,8 @@ G4bool          gMultipleAngle = false;
 G4bool          gWriteZenithAngle = false;
 G4bool          gPhotonSim = false;
 
+G4int           gPhotonNotAbsorbed = 0; //Photons that reaches the WLS tube but don't get absorbed.
+
 enum {PMT, MDOM, DOM, LOM16, LOM18, DEGG, WOM};
 
 OMSimAnalysisManager gAnalysisManager;

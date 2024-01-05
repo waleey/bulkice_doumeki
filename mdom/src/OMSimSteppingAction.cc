@@ -82,7 +82,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 //Commented out temporarily.
                 if(aTrack -> GetCreatorProcess())
                 {
-                    if(aTrack -> GetCreatorProcess() -> GetProcessName() == "WLSBoundary")
+                    if(aTrack -> GetCreatorProcess() -> GetProcessName() == "OpWLS")
                     {
                         gWLSAndHitCount++;
                         creator = "WLSBoundary";

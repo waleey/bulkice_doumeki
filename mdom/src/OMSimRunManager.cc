@@ -15,7 +15,7 @@ extern G4double gStartAngle;
 extern G4double gFinalAngle;
 extern G4double gAngleIncrement;
 extern G4bool gMultipleAngle;
-
+extern G4int gPhotonNotAbsorbed;
 G4double gAngle = 0;
 
 //G4int gIdx = 0;
@@ -290,7 +290,9 @@ void OMSimRunManager::CloseFile()
     G4cout << "::::::::::::This is the end of Run Action:::::::::::" << G4endl;
 
 	std::cout << "Cherenkov Produced: " << gNumCherenkov << std::endl
-	<< "Scintillation Photons Produced: " << gNumScint << std::endl;
+	<< "Scintillation Photons Produced: " << gNumScint << std::endl
+	<< "Photon Reached WLS but Not Absorbed: " << gPhotonNotAbsorbed << std::endl;
+
 
 // 	Close output data file
     gAnalysisManager.datafile.close();

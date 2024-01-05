@@ -227,7 +227,7 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
     << "uz: " << uz  << std::endl;*/
 
     fParticleGun -> SetParticleDefinition(particle);
-    fParticleGun -> SetParticleEnergy((radData -> RandomGen(1.6, 4.3) * eV));
+    fParticleGun -> SetParticleEnergy((3.5 * eV));
     fParticleGun -> SetParticlePosition(position);
     fParticleGun -> SetParticleMomentumDirection(direction);
 
