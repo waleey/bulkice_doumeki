@@ -163,9 +163,9 @@ void OMSimPhysicsList::ConstructProcess()
 			pmanager->AddDiscreteProcess(new G4OpRayleigh);
 			pmanager->AddDiscreteProcess(new G4OpMieHG);
 			//pmanager->AddDiscreteProcess(new G4OpWLS);
-			//pmanager->AddDiscreteProcess(new WLSBoundaryProcess);
+			pmanager->AddDiscreteProcess(new WLSBoundaryProcess);
 			//pmanager->AddDiscreteProcess(new G4OpWLS2);
-			pmanager->AddDiscreteProcess(new G4OpWLS3);
+			//pmanager->AddDiscreteProcess(new G4OpWLS3);
 		}
 		else if (particleName == "gamma") {
 			pmanager->AddDiscreteProcess(theGammaConversionModel);

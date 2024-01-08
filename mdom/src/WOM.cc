@@ -1,4 +1,4 @@
-//#define WLS_BOUNDARY 10
+#define WLS_BOUNDARY 10
 #include "WOM.hh"
 /**
 *Very rough draft of possible WOM Simulation
@@ -262,7 +262,7 @@ G4VSolid* WOM::PMTConstruction()
 }
 G4VSolid* WOM::PMTCathodeConstruction()
 {
-    G4Tubs* pmtCathode = new G4Tubs("PMT_Cathode_Solid", 0.0, /*fPMTHolderRad*/ fWOMPaintOuterRad, fPMTCathodeHalfLength, 0., 2 * CLHEP::pi);
+    G4Tubs* pmtCathode = new G4Tubs("PMT_Cathode_Solid", 0.0, fPMTHolderRad /*fWOMPaintOuterRad*/, fPMTCathodeHalfLength, 0., 2 * CLHEP::pi);
     return pmtCathode;
 }
 void WOM::SubtractHarnessPlug()

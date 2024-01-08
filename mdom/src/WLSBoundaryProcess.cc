@@ -112,10 +112,12 @@ G4VParticleChange* WLSBoundaryProcess::PostStepDoIt(const G4Track& aTrack,
 
   G4String innerMaterial = fInnerMaterial -> GetName();
   G4String outerMaterial = fOuterMaterial -> GetName();
-
-  if((innerMaterial == GetInnerMaterialName() && outerMaterial == GetOuterMaterialName()) || (outerMaterial == GetInnerMaterialName() && innerMaterial == GetOuterMaterialName()))
+  if(innerMaterial == "Quartz" || innerMaterial == "Filler")
   {
+    if(outerMaterial == "Quartz" || outerMaterial == "Filler")
+    {
 
+    }
   }
   else
   {
@@ -163,7 +165,7 @@ G4VParticleChange* WLSBoundaryProcess::PostStepDoIt(const G4Track& aTrack,
     {
         std::cout << "Creator Process of the Photons: " << aTrack.GetCreatorProcess() -> GetProcessName() << std::endl;
     }
-    //gPhotonNotAbsorbed++;
+    gPhotonNotAbsorbed++;
     std::cout << "absorption lengths: " << attLength / micrometer << std::endl;
     std::cout << "random Num: " << randomNum << std::endl;
     std::cout << "prob: " << probWLS << std::endl;
@@ -256,7 +258,6 @@ G4VParticleChange* WLSBoundaryProcess::PostStepDoIt(const G4Track& aTrack,
       G4cout << "G4OpWLS: Created photon with energy: " << sampledEnergy
              << G4endl;
     }
-
     // Generate random photon direction
     G4double cost = 1. - 2. * G4UniformRand();
     G4double sint = std::sqrt((1. - cost) * (1. + cost));
@@ -300,7 +301,6 @@ G4VParticleChange* WLSBoundaryProcess::PostStepDoIt(const G4Track& aTrack,
     G4cout << "\n Exiting from G4OpWLS::DoIt -- NumberOfSecondaries = "
            << aParticleChange.GetNumberOfSecondaries() << G4endl;
   }
-
   return G4VDiscreteProcess::PostStepDoIt(aTrack, aStep);
 }
 
@@ -379,17 +379,19 @@ G4double WLSBoundaryProcess::GetMeanFreePath(const G4Track& aTrack, G4double,
 **/
 {
   G4double attLength       = DBL_MAX;
-/*
+
   const G4Step* aStep = aTrack.GetStep();
   const G4String outerMat = aStep -> GetPreStepPoint() -> GetMaterial() -> GetName();
   const G4String innerMat = aStep -> GetPostStepPoint() -> GetMaterial() -> GetName();
 
-  if((outerMat == GetOuterMaterialName() && innerMat == GetInnerMaterialName()) || (innerMat == GetOuterMaterialName() && outerMat == GetInnerMaterialName()))
+  if(outerMat == "Quartz" || outerMat == "Filler")
   {
-    *condition = Forced;
+    if(innerMat == "Quartz" || innerMat == "Filler")
+    {
+        *condition = Forced;
+    }
   }
-  */
-  *condition = Forced;
+  //*condition = Forced;
   return attLength;
 }
 
