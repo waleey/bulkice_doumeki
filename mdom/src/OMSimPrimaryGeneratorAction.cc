@@ -188,7 +188,7 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
     OMSimRadioactivityData* radData = new OMSimRadioactivityData();
 
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-    G4String particleName = "e+";
+    G4String particleName = "opticalphoton";
     G4ParticleDefinition* particle = particleTable -> FindParticle(particleName);
 
     G4double angle = gZenithAngle;
@@ -227,7 +227,7 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
     << "uz: " << uz  << std::endl;*/
 
     fParticleGun -> SetParticleDefinition(particle);
-    fParticleGun -> SetParticleEnergy((radData -> RandomGen(10, 12) * MeV));
+    fParticleGun -> SetParticleEnergy((3.5 * eV));
     fParticleGun -> SetParticlePosition(position);
     fParticleGun -> SetParticleMomentumDirection(direction);
 

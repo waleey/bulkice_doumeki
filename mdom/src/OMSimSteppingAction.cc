@@ -82,10 +82,10 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 //Commented out temporarily.
                 if(aTrack -> GetCreatorProcess())
                 {
-                    if(aTrack -> GetCreatorProcess() -> GetProcessName() == "OpWLS")
+                    if(aTrack -> GetCreatorProcess() -> GetProcessName() == "OpWLS" || aTrack -> GetCreatorProcess() -> GetProcessName() == "WLSBoundary")
                     {
                         gWLSAndHitCount++;
-                        creator = "OpWLS";
+                        creator = "WLSBoundary";
 
                     }
                 }
@@ -174,7 +174,7 @@ void OMSimSteppingAction::WOMCheck(const G4Step* aStep)
 
         if(aStep -> GetTrack() -> GetCreatorProcess())
         {
-            if(aStep -> GetTrack() -> GetCreatorProcess() -> GetProcessName() == "OpWLS")
+            if(aStep -> GetTrack() -> GetCreatorProcess() -> GetProcessName() == "WLSBoundary")
             {
                 if(tempID != processID)
                 {

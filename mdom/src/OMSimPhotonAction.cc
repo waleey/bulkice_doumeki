@@ -26,6 +26,7 @@ void OMSimPhotonAction::GeneratePrimaries(G4Event* anEvent)
     fParticleGun -> SetParticleDefinition(particle);
     std::vector<G4double> energy;
 
+/*
     G4String fileName = "/home/waly/bulkice_doumeki/mdom/InputFile/energy_temp_photon_Ch.dat";
     std::ifstream file(fileName, std::ios::binary);
     G4double temp;
@@ -43,11 +44,12 @@ void OMSimPhotonAction::GeneratePrimaries(G4Event* anEvent)
     }
 
     G4int nPhotons = energy.size();
-
+*/
+    G4int nPhotons = 100000;
     for(int i = 0; i < nPhotons; i++)
     {
         G4ThreeVector position = GeneratePosition();
-        G4double energyP = energy.at(i);
+        G4double energyP = 3.55 * eV;
         fParticleGun -> SetParticlePosition(position);
         fParticleGun -> SetParticleMomentumDirection(direction);
         fParticleGun -> SetParticleEnergy(energyP);
