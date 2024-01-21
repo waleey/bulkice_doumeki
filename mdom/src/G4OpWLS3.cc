@@ -322,7 +322,7 @@ G4double G4OpWLS3::GetMeanFreePath(const G4Track& aTrack, G4double,
     }
   }
 */
-  return abs(attLength);
+  return abs(attLength) / 1000;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
