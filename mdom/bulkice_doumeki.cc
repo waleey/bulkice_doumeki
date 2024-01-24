@@ -47,7 +47,7 @@ G4int           gNumScint = 0;
 G4int           gEvent = 0;
 G4int           gDepthIndex = 88; //default value
 G4int           gRunID = 0; //Run ID for each run
-G4double        gPaintThickness = 0;
+G4double        gPaintThickness = 0; //no need to use it for WLS Surface process.
 /**
 variables for optical photon waves
 **/
@@ -97,7 +97,7 @@ void help() //needs change
 }
 void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
 {
-    if(argc == 6 || argc ==  9/*change this t0 9 when done with paint thickness test */ || argc == 11 /*change this to 10 when done with paint thickness test*/ || argc == 2)
+    if(argc == 6 || argc ==  8 || argc == 10 || argc == 2)
     {
         G4String model = argv[1];
 
@@ -116,11 +116,6 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             help();
             exit(0);
         }
-
-        G4String outputFolder = argv[4];
-        gRunID = atoi(argv[5]);
-        worldsize = 20 * m;
-        ghitsfilename += outputFolder + "/";
 
         if(model == "dom")
         {
@@ -170,19 +165,23 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             exit(0);
         }
 
+        G4String outputFolder = argv[4];
+        gRunID = atoi(argv[5]);
+        worldsize = 20 * m;
+        ghitsfilename += outputFolder + "/";
+
         if(interaction_channel == "opticalphoton")
         {
             gDistance = atof(argv[6]);
             gPhotonSim = true;
 
-            if(argc == 9)
+            if(argc == 8)
             {
                 gZenithAngle = atof(argv[7]);
                 gStartAngle = gZenithAngle;
                 gFinalAngle = gZenithAngle;
                 gAngleIncrement = 10; //some dummy number, doesn't affect the output.
                 gMultipleAngle = false;
-                gPaintThickness = atof(argv[8]); // remove this when done with paint thickness experiment.
 
                 ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gZenithAngle) + "_"+ std::to_string(gRunID);
             }
@@ -192,7 +191,6 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
                 gStartAngle = atof(argv[7]);
                 gFinalAngle = atof(argv[8]);
                 gAngleIncrement = atof(argv[9]);
-                gPaintThickness = atof(argv[10]); //will remove later
 
 
                 ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gStartAngle) + "_"
@@ -223,94 +221,6 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         exit(0);
     }
 }
-  /*  if(argc == 6 || argc == 3)
-    {
-        std::string model = argv[1];
-        interaction_channel = argv[2];
-
-        if(model == "dom")
-        {
-            std::cout << "*****DOM simulation selected*****" << std::endl;
-            PMT_model = 2;
-            gPMT = 5;
-        }
-        else if(model == "mdom")
-        {
-            std::cout << "*****MDOM simulation selected*****" << std::endl;
-            PMT_model = 1;
-            gPMT = 0;
-        }
-        else if(model == "lom16")
-        {
-            std::cout << "*****LOM16 simulation selected*****" << std::endl;
-            PMT_model = 3;
-            gPMT = 3;
-        }
-        else if(model == "lom18")
-        {
-            std::cout << "*****LOM18 simulation selected*****" << std::endl;
-            PMT_model = 4;
-            gPMT = 3;
-        }
-        else if(model == "pmt")
-        {
-            std::cout << "*****Single PMT simulation selected*****" << std::endl;
-            PMT_model = 0;
-        }
-        else if(model == "degg")
-        {
-            std::cout << "*****DEGG simulation selected*****" << std::endl;
-            PMT_model = 5;
-            gPMT = 4;
-        }
-        else if(model == "wom")
-        {
-            std::cout << "*****WOM simulation selected*****" << std::endl;
-            PMT_model = 6;
-            gPMT = 5;
-        }
-        else if(model == "help")
-        {
-            help();
-            exit(0);
-        }
-        else
-        {
-            std::cout << "Invalid OM Model selected!" << std::endl;
-            help();
-            exit(0);
-        }
-
-        if(argc == 6)
-        {
-            //macroname = argv[3];
-            G4String outputFolder = argv[4];
-            gDepthIndex = atoi(argv[3]);
-            if(gDepthIndex < 0 || gDepthIndex > 108)
-            {
-                std::cerr << "Invalid depth index." << std::endl;
-                help();
-                exit(0);
-            }
-            gRunID = atoi(argv[5]);
-            worldsize = 20;
-            ghitsfilename += outputFolder+ "/" + model + "_" + interaction_channel + "_" + std::to_string(gRunID);
-        }
-        else
-        {
-            //worldsize = 0.25;
-            worldsize = 2.5;
-            ghitsfilename += model;
-        }
-
-    }
-    else
-    {
-        std::cerr << "Invalid number of argument given. Aborting...." << std::endl;
-        help();
-        exit(0);
-    }
-}*/
 
 std::vector<G4String> explode(G4String s, char d) {
         std::vector<G4String> o;
@@ -362,20 +272,11 @@ std::vector<double> readColumnDouble (G4String fn, int col) {
 
 int main(int argc, char** argv)
 {
-    /*std::time_t currentTime = std::time(nullptr);
-    char buffer[80];
-    std::strftime(buffer, sizeof(buffer), "%H%M%S", std::localtime(&currentTime));
-    std::string time(buffer);*/
-
-
-
-
     G4double world_size(0);
     G4String macroname;
     G4int PMT_model(0);
     G4String interaction_channel;
     ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel);
-    //ghitsfilename +=  "_" + time;
 
     OMSimRunManager* runManager = new OMSimRunManager(PMT_model, world_size, interaction_channel);
     runManager -> Initialize();
