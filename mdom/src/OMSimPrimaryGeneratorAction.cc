@@ -2,6 +2,7 @@
 #include "OMSimDetectorConstruction.hh"
 #include "OMSimRadioactivityData.hh"
 
+#include "PrimaryGeneratorMessenger.hh"
 
 //#include "G4ParticleTypes.hh"
 extern G4double gZenithAngle;
@@ -17,7 +18,8 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
         fPhotonAction(0),
         fParticleGun(0),
         fActionType(0),
-        fPhotonAngle(0)
+        fPhotonAngle(0),
+        fGeneratorMessenger(0)
 {
 
 	fParticleGun = new G4ParticleGun(1);
@@ -31,6 +33,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
 	fPhotonAction = new OMSimPhotonAction(fParticleGun);
+	fGeneratorMessenger = new PrimaryGeneratorMessenger(this);
 }
 OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
     :   fPositronAction(0),
@@ -43,7 +46,8 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
         fPhotonAction(0),
         fParticleGun(0),
         fActionType(0),
-        fInteraction(interaction)
+        fInteraction(interaction),
+        fGeneratorMessenger(0)
 {
 
 	fParticleGun = new G4ParticleGun(1);
@@ -56,6 +60,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
 	fPhotonAction = new OMSimPhotonAction(fParticleGun);
+	fGeneratorMessenger = new PrimaryGeneratorMessenger(this);
 }
 
 OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
@@ -69,6 +74,7 @@ OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 	delete fTh232Action;
 	delete fPhotonAction;
 	delete fParticleGun;
+	delete fGeneratorMessenger;
 }
 
 void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
@@ -116,6 +122,14 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             //std::cout << "Generating Photon wave!" << std::endl;
             fPhotonAction -> GeneratePrimaries(anEvent);
             GenerateToVisualize();
+            break;
+        case wave:
+            GenerateWave();
+            fParticleGun -> GeneratePrimaryVertex(anEvent);
+            break;
+        case beam:
+            GenerateBeam();
+            fParticleGun -> GeneratePrimaryVertex(anEvent);
             break;
         default:
             GenerateToVisualize();
@@ -234,6 +248,59 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
     delete radData;
 
 }
+
+void OMSimPrimaryGeneratorAction::GenerateWave()
+{
+    OMSimRadioactivityData* radData = new OMSimRadioactivityData();
+
+    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+    G4String particleName = fParticleName;
+    G4ParticleDefinition* particle = particleTable -> FindParticle(particleName);
+
+    G4double angle = fAngle;
+    G4double distance = fDistance;
+    G4double energy;
+    if(fFinalEnergy != 0)
+    {
+        energy = radData -> RandomGen(fStartEnergy, fFinalEnergy);
+    }
+    else
+    {
+        energy = fEnergy;
+    }
+
+    G4double r = radData -> RandomGen(-1, 1);
+    G4double y = - distance * sin(angle * deg) + r * cos(angle * deg);
+    G4double z = - distance * cos(angle * deg) - r * sin(angle * deg);
+    G4double x = 0;
+
+    x = x * m;
+    y = y * m;
+    z = z * m;
+
+    G4ThreeVector position(x, y, z);
+
+    G4double ux = 0;
+    G4double uy = sin(angle * deg) ;
+    G4double uz =  cos(angle * deg);
+
+    G4ThreeVector direction(ux, uy, uz);
+
+    fParticleGun -> SetParticleDefinition(particle);
+    fParticleGun -> SetParticleEnergy((energy));
+    fParticleGun -> SetParticlePosition(position);
+    fParticleGun -> SetParticleMomentumDirection(direction);
+
+    delete radData;
+}
+
+void OMSimPrimaryGeneratorAction::GenerateBeam()
+{
+    /**
+    The beam generator class will be here.
+    **/
+}
+
 void OMSimPrimaryGeneratorAction::SetAngle(G4double angle)
 {
     fPhotonAction -> SetAngle(angle);
