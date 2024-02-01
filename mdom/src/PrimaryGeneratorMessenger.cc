@@ -33,7 +33,7 @@ PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(OMSimPrimaryGeneratorAction
     fParticleType -> SetDefaultValue("opticalphoton");
 
     //setting up the angle for plane waves
-    fAngle = new G4UIcmdWithADouble("/particleGen/angle/", this);
+    fAngle = new G4UIcmdWithADouble("/particleGen/angle", this);
     fAngle -> SetGuidance("Angle of incidence in degrees..");
     fAngle -> SetGuidance("Angle must be within 0 to 180 degrees.");
     fAngle -> SetGuidance("[usage] /particleGen/angle [your angle]");
@@ -43,7 +43,7 @@ PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(OMSimPrimaryGeneratorAction
     fAngle -> SetDefaultValue(45.);
 
     //setting up the distance from the center
-    fDistance = new G4UIcmdWithADouble("/particleGen/distance/", this);
+    fDistance = new G4UIcmdWithADouble("/particleGen/distance", this);
     fDistance -> SetGuidance("Distance of the source from the center.");
     fDistance -> SetGuidance("Distance must be within 0 to 5 in meter. (user can change the limit from the code later)");
     fDistance -> SetGuidance("[usage] /particleGen/distance [distance]");
@@ -52,7 +52,7 @@ PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(OMSimPrimaryGeneratorAction
     fDistance -> SetDefaultValue(2);
 
     //setting up the energy range
-    fStartEnergy = new G4UIcmdWithADoubleAndUnit("/particleGen/startEnergy/", this);
+    fStartEnergy = new G4UIcmdWithADoubleAndUnit("/particleGen/startEnergy", this);
     fStartEnergy -> SetGuidance("lower limit in energy range in eV.");
     fStartEnergy -> SetGuidance("[usage] /particleGen/startEnergy [energy] [unit]");
     fStartEnergy -> SetParameterName("StartEnergy", true);
@@ -61,7 +61,7 @@ PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(OMSimPrimaryGeneratorAction
     fStartEnergy -> SetDefaultUnit("eV");
 
     //setting up the energy range
-    fFinalEnergy = new G4UIcmdWithADoubleAndUnit("/particleGen/finalEnergy/", this);
+    fFinalEnergy = new G4UIcmdWithADoubleAndUnit("/particleGen/finalEnergy", this);
     fFinalEnergy -> SetGuidance("upper limit in energy range in eV.");
     fFinalEnergy -> SetGuidance("[usage] /particleGen/finalEnergy [energy] [unit]");
     fFinalEnergy -> SetParameterName("FinalEnergy", true);
@@ -70,7 +70,7 @@ PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(OMSimPrimaryGeneratorAction
     fFinalEnergy -> SetDefaultUnit("eV");
 
     //setting up energy for mono-energetic beam
-    fEnergy = new G4UIcmdWithADoubleAndUnit("/particleGen/fEnergy", this);
+    fEnergy = new G4UIcmdWithADoubleAndUnit("/particleGen/Energy", this);
     fEnergy -> SetGuidance("Setting up energy for monoenergetic beams.");
     fEnergy -> SetGuidance("[usage] /particleGen/fEnergy [energy] [unit]");
     fEnergy -> SetParameterName("Energy", true);
@@ -79,7 +79,7 @@ PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(OMSimPrimaryGeneratorAction
     fEnergy -> SetDefaultUnit("eV");
 
     //z position of the pencil beam
-    fZPosition = new G4UIcmdWithADouble("/particleGen/z/", this);
+    fZPosition = new G4UIcmdWithADouble("/particleGen/z", this);
     fZPosition -> SetGuidance("z coordiante of the pencil beam in cm");
     fZPosition -> SetGuidance("[usage] /particleGen/z [coordinate]");
     fZPosition -> SetParameterName("Z", true);
@@ -114,31 +114,31 @@ void PrimaryGeneratorMessenger::SetNewValue(G4UIcommand* command, G4String newVa
             exit(0);
         }
     }
-    if (command == fParticleType)
+    else if (command == fParticleType)
     {
         fPrimaGen -> SetParticleName(newValue);
     }
-    if(command == fAngle)
+    else if(command == fAngle)
     {
         fPrimaGen -> SetParticleAngle(fAngle -> GetNewDoubleValue(newValue));
     }
-    if(command == fDistance)
+    else if(command == fDistance)
     {
         fPrimaGen -> SetParticleDistance(fDistance -> GetNewDoubleValue(newValue));
     }
-    if(command == fStartEnergy)
+    else if(command == fStartEnergy)
     {
         fPrimaGen -> SetStartEnergy(fStartEnergy -> GetNewDoubleValue(newValue));
     }
-    if(command == fFinalEnergy)
+    else if(command == fFinalEnergy)
     {
         fPrimaGen -> SetFinalEnergy(fFinalEnergy -> GetNewDoubleValue(newValue));
     }
-    if(command == fEnergy)
+    else if(command == fEnergy)
     {
         fPrimaGen -> SetParticleEnergy(fEnergy -> GetNewDoubleValue(newValue));
     }
-    if(command == fZPosition)
+    else if(command == fZPosition)
     {
         fPrimaGen -> SetBeamPosition(fZPosition -> GetNewDoubleValue(newValue));
     }
