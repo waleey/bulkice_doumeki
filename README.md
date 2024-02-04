@@ -7,25 +7,104 @@ This is a GEANT4 based simulation of different optical modules currently in use 
 
 -Make sure you have Geant4 installed in your local machine.  
 
--use "git clone https://github.com/waleey/bulkice_doumeki.git" to clone the rep on your local machine.  
+**Prerequisite for compiling bulkice\_doumeki:**
 
--Go to "mdom" directory and create "build" directory.
+- **Set up env.sh file (must do before compilation):**
+  - Go to "/path\_to\_bulkice\_doumeki/mdom/"
+  - Open env.sh file in writing mode.
+  - Set G4BUILD variable to your Geant4 installation directory
+  - Save and exit.
+  - Type ". env.sh" on your terminal to set up the environment
+- **Set up build directory and compile:**
+  - Go to "/path\_to\_bulkice\_doumeki/mdom/"
+  - Type "mkdir build"
+  - Type "cd build"
+  - Type "cmake **..**"
+  - Type "make -jN" or "make"
 
--copy "data" directory inside your build directory.  
+This will generate a binary executable under the "/path\_to\_bulkice\_doumeki/mdom/build/" directory.
 
--Modify CMakeLists.txt to make sure everything is added to the path correctly.   
+- **Set Up the Output Folder**
 
--Go to bulkice_doumeki.cc and:  
-	-change external variable "ghitsfilename" to where you wanna save the output file. Please follow the existing  
-		format to avoid error.  
-	-Above change is the only change you might have to make to run the code. 	
- -go to the build dir and type "cmake .."  
- 
--then type "make -jN" inside build dir. N is the number of cores on your local machine. It helps compile faster.
--setup the environment using env.sh script. Type ". env.sh" isnide your build directory.
--run "./bulkice_doumeki help" to see available command line arguments for different experiments.	
--follow instructions in bulkice_doumeki.cc to use different cmd line arguments to produce different  
-outputs.
+By default, Output will be dumped in a folder in the build directory.
+
+  - Go to "/path\_to\_bulkice\_doumeki/mdom/build/"
+  - Type "mkdir output". (You can name your output folder however you want).
+  - Changing the output folder to a different directory will require changing the code, and will be explained later along with how to change the output fields.
+
+- **Simulating Events**
+
+Events can be simulated in two different ways. One is using the Visualization driver OpenGL, where you can see the detector geometry and the particle interaction, but it has limited capabilities in terms of visualizing a large number of particles. Another way is running it in batch mode, where you can simulate a realistic number of events easily.
+
+- **Visualization**
+
+Visualization is currently under development, so limited functionality is available. You can only visualize a plane wave of optical photons at an user-defined angle and their interaction with the WOM module. In order to do that:
+
+- Make sure you are in the build directory and the program is compiled and the executable is generated.
+- An example run could be **"./bulkice\_doumeki wom vis 45"**. Here, the simulated photon wave will make a 45 degree angle with the detector surface.
+
+- **Batch Mode**
+  - **Simulating IBD/ENEES/ALL/Radioactive\_Bancground Noise:**
+    - Type **"./bulkice\_doumeki [om model] [interaction channel] [depth index] [output folder] [run id]"**
+    - Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]
+    - Available interaction channels: [ibd, enees, all, radioactivity]
+    - Example run: " **./bulkice\_doumeki mdom ibd 88 output 0**"
+
+- **Simulating Photon Waves for Measuring Angular Sensitivity:**
+
+**Simulating photon waves at a single angle:**
+
+  - Type "**./bulkice\_doumeki [om model] opticalphoton [depth index] [output folder] [run id] [distance from the detector center (m)] [angle (degree)]"**
+  - Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]
+  - Example run: " **./bulkice\_doumeki wom opticalphoton 88 output 0 2 45**".
+
+**Simulating photon waves within a range of angles:**
+
+  - Type "**./bulkice\_doumeki [om model] opticalphoton [depth index] [output folder] [run id] [distance from the detector center (m)] [start angle (degree)] [final angle (degree)] [increment (degree)]"**
+  - Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]
+  - Example run: " **./bulkice\_doumeki wom opticalphoton 88 output 0 2 0 180 0.5**".
+
+**Explanation of Input Parameters:**
+
+**om model:**
+
+Available Optical Module models in the simulation. For now, they are MDOM, WOM, DOM, DEGG, LOM16, and LOM18
+
+**interaction channel:**
+
+Possible interaction the input particles might have in the volume. If we are injecting positron flux, the possible interaction is **ibd** (Inverse Beta Decay). If we are injecting an electron flux, the possible interaction would be **enees** (Electron-Neutrino Electron Elastic Scattering). If someone wants both interactions to happen simultaneously, the channel would be **all**.
+
+One could be interested in studying the angular sensitivity of the detector to optical photons. Therefore, they have to use the **opticalphoton** interaction channel. More on this later.
+
+**depth index:**
+
+The ice property varies with depth, and each depth is denoted by a depth index in the range [0, 108]. For example, 2.2Km depth has an index of 88. The depth indexes for each depth are given in this table:
+
+**DEPTH INDEX TABLE**
+
+**output folder**
+
+By default, the output folder would be in the build directory of the simulation. If the user wants to dump the output data to a separate directory, they can provide the full path to the directory on the command line. An example with a full path would be: " **./bulkice\_doumeki mdom ibd 88 /home/waly/dump/ 0".**
+
+**run id:**
+
+Each run can be assigned an unique run id by the user. It is mainly to keep track of the files while running multiple runs in batch mode. One can set it to whatever integer number they like.
+
+**distance from detector center:**
+
+This option is available for simulating plane wave of photons only. It let's the user define a distance (in meters) from the center of the detector from where the photon wave will be generated.
+
+**angle, start angle finish angle, increment:**
+
+This is for simulating a plane wave of photons where the wave vector makes a specific angle with the detector surface.
+
+If one wants to simulate a plane wave only at one angle, they might specify only the angle in degree.
+
+If one simulates a range of angles with a specific step size, they might specify that start angle, final angle and the increment (step size). All are in degrees.
+
+**Advanced Features:**
+
+**\<To be available soon\>**
 
 
 *NB: * I am still in the process of building and debugging it. Especially, running the simulation in parallel with sntools to have new positron and electron flux each time is still under development and will be updated soon. Nevertheless, please feel free to share any suggestion, criticism, or thoughts. My email: wkarim@u.rochester.edu slack: Waly M Z Karim  

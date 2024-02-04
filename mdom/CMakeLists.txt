@@ -36,13 +36,13 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #Copying the merger program to the build folder
 #
 # Set the source directory you want to copy
-#set(SOURCE_DIR "${PROJECT_SOURCE_DIR}/../data")
+set(SOURCE_DIR "${PROJECT_SOURCE_DIR}/../data")
 
 # Set the destination directory where you want to copy the source directory
-#set(DESTINATION_DIR "${PROJECT_SOURCE_DIR}/build/")
+set(DESTINATION_DIR "${PROJECT_SOURCE_DIR}/build/")
 
 # Copy the directory
-#file(COPY "${SOURCE_DIR}" DESTINATION "${DESTINATION_DIR}")
+file(COPY "${SOURCE_DIR}" DESTINATION "${DESTINATION_DIR}")
 
 
 #----------------------------------------------------------------------------
