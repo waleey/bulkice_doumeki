@@ -16,6 +16,9 @@
 #include "OMSimTh232Action.hh"
 #include "OMSimPhotonAction.hh"
 
+
+class PrimaryGeneratorMessenger;
+
 class OMSimPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
 public:
@@ -32,8 +35,19 @@ public:
 	inline void SetActionType(G4int actionType) { fActionType = actionType; }
 	void SetAngle(G4double angle);
 
+    //Setters for messenger class
+	inline void SetParticleName(G4String& name) {fParticleName = name; }
+    inline void SetParticleDistance(G4double distance) {fDistance = distance; }
+    inline void SetParticleAngle(G4double angle) {fAngle = angle; }
+    inline void SetParticleEnergy(G4double energy) {fEnergy = energy; }
+    inline void SetBeamPosition(G4double z) {fZPosition = z; }
+    inline void SetStartEnergy(G4double energy) {fStartEnergy = energy; }
+    inline void SetFinalEnergy(G4double energy) {fFinalEnergy = energy; }
+
 private:
     void GenerateToVisualize();
+    void GenerateWave();
+    void GenerateBeam();
 
 	OMSimPositronAction* fPositronAction;
 	OMSimNeutronAction* fNeutronAction;
@@ -46,9 +60,19 @@ private:
 	G4ParticleGun *fParticleGun;
 	G4int fActionType;
 
+	G4String fParticleName;
+	G4double fDistance;
+	G4double fAngle;
+	G4double fEnergy;
+	G4double fStartEnergy;
+	G4double fFinalEnergy;
+	G4double fZPosition;
 	G4String fInteraction;
     G4double fPhotonAngle;
-	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization};
+
+    PrimaryGeneratorMessenger* fGeneratorMessenger;
+
+	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization, wave, beam};
 };
 
 

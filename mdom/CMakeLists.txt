@@ -33,6 +33,49 @@ file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
 #----------------------------------------------------------------------------
+#Copying the merger program to the build folder
+#
+# Set the source directory you want to copy
+#set(SOURCE_DIR "${PROJECT_SOURCE_DIR}/../data")
+
+# Set the destination directory where you want to copy the source directory
+#set(DESTINATION_DIR "${PROJECT_SOURCE_DIR}/build/")
+
+# Copy the directory
+#file(COPY "${SOURCE_DIR}" DESTINATION "${DESTINATION_DIR}")
+
+
+#----------------------------------------------------------------------------
+#Copying the merger program to the build folder
+#
+# Set the source directory you want to copy
+set(SOURCE_DIR "${PROJECT_SOURCE_DIR}/../merger")
+
+# Set the destination directory where you want to copy the source directory
+set(DESTINATION_DIR "${PROJECT_SOURCE_DIR}/build/")
+
+# Copy the directory
+file(COPY "${SOURCE_DIR}" DESTINATION "${DESTINATION_DIR}")
+
+#----------------------------------------------------------------------------
+#Creating the output folder
+#
+#set(OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/output")
+
+# Add a custom command to create the folder
+#add_custom_command(
+#   OUTPUT "${OUTPUT_DIRECTORY}"
+#   COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTPUT_DIRECTORY}"
+#   COMMENT "Creating directory ${OUTPUT_DIRECTORY}"
+#)
+
+# Set a target that depends on the custom command
+#add_custom_target(create_my_folder DEPENDS "${OUTPUT_DIRECTORY}")
+
+# Add dependencies to make sure the folder is created before building
+#add_dependencies(${PROJECT_NAME} create_my_folder)
+
+#----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg")
@@ -50,7 +93,7 @@ target_link_libraries(bulkice_doumeki ${Geant4_LIBRARIES} ${HBOOK_LIBRARIES})
 # relies on these scripts being in the current working directory.
 #
 set(bulkice_doumeki_SCRIPTS
-    100run_pos.mac vis.mac run_pos.mac ray_trace.mac 10run_pos.mac env.sh
+    100run_pos.mac vis.mac run_pos.mac ray_trace.mac 10run_pos.mac env.sh 
   )
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg")
