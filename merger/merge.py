@@ -30,7 +30,7 @@ def parseCommandLine():
 def merge():
     progenitorModelS, outfileS, distanceS, omModelG, simTypeG, depthIndex, outputFolderG, runIDG = parseCommandLine()
     basefolderS = '/home/waly/snewpy/SNEWPY_models/Nakazato_2013/' #you need to change this path
-    basefolderG = '/home/waly/bulkice_doumeki/mdom/build/' #you need to change this path
+    basefolderG = '' #goes back to the build folder!
    
     #initializing modules to call sntools and bulkice_doumeki
     stool = stools(progenitorModelS, distanceS, outfileS, basefolderS)
@@ -60,7 +60,7 @@ def merge():
     Write the output of sntools to input files of bulkice_doumeki.
     If you need to save the output somewhere else, change baseFolderW.
     """
-    baseFolderW = '/home/waly/bulkice_doumeki/mdom/InputFile/' #will change this later
+    baseFolderW = '../InputFile/' #goes back to to the InputFile dir.
     
     if(useStool):
         with NUANCEReader(outfileS) as reader:
