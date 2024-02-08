@@ -1,13 +1,13 @@
-!!Welcome to bulkice_doumeki simulation!! *Read Me is not up to date!!*
+# Bulk-Ice DOUMEKI
 
 This is a GEANT4 based simulation of different optical modules currently in use and to be deployed in future in IceCube Neutrino Observatory in South Pole. Currently available optical modules for simulation are MDOM, LOM16, LOM18, PDOM, D-Egg, WOM (currently under development). Except for WOM, the optical module simulation was initially written by M. Unland and C. Lozano, and later they were modified by me. The simulation also contains detailed depth dependent ice properties under antarctic ice sheet and it can simulation 40*40*40 cubic meter of ice at different temperature. Currently, it can simulate positron and electron flux from CCSN neutrinos, background radioactivity inside pressure vessel of MDOM, LOMs, and D-Egg, and photon wave with different Zenith Angle. It also accepts SNEWPY neutrino flux models in a python program called "merger" and use sntools to simulate the positron and electron flux from ibd and enees interactions. 
 
 
-*Quick Start Guide*
+## Quick Start Guide
 
 -Make sure you have Geant4 installed in your local machine.  
 
-**Prerequisite for compiling bulkice\_doumeki:**
+### Prerequisite for compiling bulkice\_doumeki: 
 
 - **Set up env.sh file (must do before compilation):**
   - Go to "/path\_to\_bulkice\_doumeki/mdom/"
@@ -25,46 +25,45 @@ This is a GEANT4 based simulation of different optical modules currently in use 
 This will generate a binary executable under the "/path\_to\_bulkice\_doumeki/mdom/build/" directory.
 
 - **Set Up the Output Folder**
-
-By default, Output will be dumped in a folder in the build directory.
-
   - Go to "/path\_to\_bulkice\_doumeki/mdom/build/"
   - Type "mkdir output". (You can name your output folder however you want).
   - Changing the output folder to a different directory will require changing the code, and will be explained later along with how to change the output fields.
+  - Note: by default, Output will be dumped in a folder in the build directory.
 
-- **Simulating Events**
+## Simulating Events
 
 Events can be simulated in two different ways. One is using the Visualization driver OpenGL, where you can see the detector geometry and the particle interaction, but it has limited capabilities in terms of visualizing a large number of particles. Another way is running it in batch mode, where you can simulate a realistic number of events easily.
 
-- **Visualization**
+## Visualization
 
 Visualization is currently under development, so limited functionality is available. You can only visualize a plane wave of optical photons at an user-defined angle and their interaction with the WOM module. In order to do that:
 
 - Make sure you are in the build directory and the program is compiled and the executable is generated.
 - An example run could be **"./bulkice\_doumeki wom vis 45"**. Here, the simulated photon wave will make a 45 degree angle with the detector surface.
 
-- **Batch Mode**
-  - **Simulating IBD/ENEES/ALL/Radioactive\_Bancground Noise:**
+## Batch Mode
+
+### Simulating IBD/ENEES/ALL/Radioactive\_Bancground Noise
     - Type **"./bulkice\_doumeki [om model] [interaction channel] [depth index] [output folder] [run id]"**
     - Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]
     - Available interaction channels: [ibd, enees, all, radioactivity]
     - Example run: " **./bulkice\_doumeki mdom ibd 88 output 0**"
 
-- **Simulating Photon Waves for Measuring Angular Sensitivity:**
+### Simulating Photon Waves for Measuring Angular Sensitivity
 
-**Simulating photon waves at a single angle:**
+#### Simulating photon waves at a single angle
 
   - Type "**./bulkice\_doumeki [om model] opticalphoton [depth index] [output folder] [run id] [distance from the detector center (m)] [angle (degree)]"**
   - Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]
   - Example run: " **./bulkice\_doumeki wom opticalphoton 88 output 0 2 45**".
 
-**Simulating photon waves within a range of angles:**
+#### Simulating photon waves within a range of angles
 
   - Type "**./bulkice\_doumeki [om model] opticalphoton [depth index] [output folder] [run id] [distance from the detector center (m)] [start angle (degree)] [final angle (degree)] [increment (degree)]"**
   - Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]
   - Example run: " **./bulkice\_doumeki wom opticalphoton 88 output 0 2 0 180 0.5**".
 
-**Explanation of Input Parameters:**
+## Explanation of Input Parameters
 
 **om model:**
 
