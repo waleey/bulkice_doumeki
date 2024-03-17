@@ -16,7 +16,7 @@ extern G4String gQEFile;
 extern G4int gPosCount;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
-
+extern G4bool gWOM;
 
 G4int gVesselCount = 0;
 G4int gPMTBodyCount = 0;
@@ -80,6 +80,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
                 //Commented out temporarily.
+                /*
                 if(aTrack -> GetCreatorProcess())
                 {
                     if(aTrack -> GetCreatorProcess() -> GetProcessName() == "OpWLS" || aTrack -> GetCreatorProcess() -> GetProcessName() == "WLSBoundary")
@@ -94,12 +95,12 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     creator = "direct";
                 }
 
-
+                */
                 G4double Ekin;
                 G4double t1, t2;
                 G4Track* aTrack = aStep -> GetTrack();
                 G4ThreeVector vertex_pos;
-                //vertex_pos = aTrack -> GetVertexPosition();
+                vertex_pos = aTrack -> GetVertexPosition();
                 G4double hc = 1240 * nm;
                 G4double lambda;
 
@@ -124,9 +125,28 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 extern std::vector<G4String> explode (G4String s, char d);
                 G4ThreeVector deltapos;
 
+                if(!gWOM)
+                {
+                    n = explode(aStep->GetPreStepPoint()->GetPhysicalVolume()->GetName(),'_');
+                    gAnalysisManager.stats_PMT_hit.push_back(atoi(n.at(1)));
 
-                n = explode(aStep->GetPreStepPoint()->GetPhysicalVolume()->GetName(),'_');
-                gAnalysisManager.stats_PMT_hit.push_back(atoi(n.at(1)));
+                }
+                else
+                {
+                    G4String pmtName = aStep -> GetPostStepPoint() -> GetPhysicalVolume() -> GetName();
+                    if(pmtName == "0_physical")
+                    {
+                        gAnalysisManager.stats_PMT_hit.push_back(0);
+                    }
+                    else if(pmtName == "1_physical")
+                    {
+                        gAnalysisManager.stats_PMT_hit.push_back(1);
+                    }
+                    else
+                    {
+                        gAnalysisManager.stats_PMT_hit.push_back(10000); //dummy number for invalid PMT
+                    }
+                }
 
                 if (gHittype == "individual") {
                     deltapos = aTrack->GetVertexPosition() - aTrack->GetPosition();
@@ -141,11 +161,11 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     gAnalysisManager.stats_hit_time.push_back(t1);
                     gAnalysisManager.stats_photon_energy.push_back(Ekin/eV);
                     gAnalysisManager.stats_event_distance.push_back(deltapos.mag()/m);
-                    //gAnalysisManager.stats_vertex_position.push_back(vertex_pos);
+                    gAnalysisManager.stats_vertex_position.push_back(vertex_pos);
                     gAnalysisManager.stats_positron_id.push_back(aTrack -> GetParentID());
                     gAnalysisManager.stats_survived_qe.push_back(survived);
                     //Will be removed soon
-                   gAnalysisManager.stats_creator.push_back(creator);
+                   //gAnalysisManager.stats_creator.push_back(creator);
                 }
 
                 aTrack->SetTrackStatus(fStopAndKill);
