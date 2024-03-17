@@ -169,11 +169,11 @@ void WOM::Construction()
     new G4PVPlacement(pmtGlobalRot, G4ThreeVector(0, 0, -fPMTGlobalZ), fPMTBodyLogical2, "PMT_Body_Physical2", fGelLogical, false, 0, true);
     //new G4PVPlacement(pmtGlobalRot, G4ThreeVector(0, 0, -fPMTGlobalZ), fPMTBodyLogical2, "PMT_Body_Physical2", fLogicMother, false, 0, true); //delete this later
     //Placing PMT Cathode Solid
-    new G4PVPlacement(0, G4ThreeVector(0, 0, fPMTCathodeZ), fPMTCathodeLogical1, "PMT_Cathode_Physical1", fGelLogical, false, 0, true);
+    new G4PVPlacement(0, G4ThreeVector(0, 0, fPMTCathodeZ), fPMTCathodeLogical1, "0_physical", fGelLogical, false, 0, true);
     //new G4PVPlacement(0, G4ThreeVector(0, 0, fPMTCathodeZ), fPMTCathodeLogical1, "PMT_Cathode_Physical1", fLogicMother, false, 0, true); //delete this later
     G4RotationMatrix* pmtCathodeRot = new G4RotationMatrix();
     pmtCathodeRot -> rotateY(CLHEP::pi);
-    new G4PVPlacement(pmtCathodeRot, G4ThreeVector(0, 0, -fPMTCathodeZ), fPMTCathodeLogical2, "PMT_Cathode_Physical2", fGelLogical, false, 0, true);
+    new G4PVPlacement(pmtCathodeRot, G4ThreeVector(0, 0, -fPMTCathodeZ), fPMTCathodeLogical2, "1_physical", fGelLogical, false, 0, true);
     //new G4PVPlacement(pmtCathodeRot, G4ThreeVector(0, 0, -fPMTCathodeZ), fPMTCathodeLogical2, "PMT_Cathode_Physical2", fLogicMother, false, 0, true); //delete this later
     #ifdef WLS_BOUNDARY
 

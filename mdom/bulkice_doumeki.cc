@@ -60,6 +60,7 @@ G4double        gAngleIncrement = 10;
 G4bool          gMultipleAngle = false;
 G4bool          gWriteZenithAngle = false;
 G4bool          gPhotonSim = false;
+G4bool          gWOM = false;
 
 G4int           gPhotonNotAbsorbed = 0; //Photons that reaches the WLS tube but don't get absorbed.
 
@@ -157,6 +158,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             std::cout << "*****WOM simulation selected*****" << std::endl;
             PMT_model = 6;
             gPMT = 5;
+            gWOM = true;
         }
         else
         {
