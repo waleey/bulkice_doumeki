@@ -91,7 +91,7 @@ void OMSimPhysicsList::ConstructProcess()
 	G4Cerenkov* theCerenkovProcess = new G4Cerenkov("Cerenkov");
     theCerenkovProcess->SetTrackSecondariesFirst(false);
     theCerenkovProcess->SetMaxBetaChangePerStep(10.0);
-    theCerenkovProcess->SetMaxNumPhotonsPerStep(300);
+    theCerenkovProcess->SetMaxNumPhotonsPerStep(10);
 
 //The Scintillation Process
     /*G4Scintillation* theScintillationProcess = new G4Scintillation("Scintillation");
@@ -100,6 +100,10 @@ void OMSimPhysicsList::ConstructProcess()
 
     OMSimScintillation* theScintillationProcess = new OMSimScintillation("Scintillation");
     theScintillationProcess -> SetTrackSecondariesFirst(false);
+    /**
+    *Keeping the scintillation turned off
+    *for now.
+    **/
 
 //	The Livermore models
 	G4eIonisation* theIonizationModel = new G4eIonisation();
@@ -204,9 +208,12 @@ void OMSimPhysicsList::ConstructProcess()
                 pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxAtRest);
                 pmanager -> SetProcessOrderingToLast(theScintillationProcess, idxPostStep);
             }*/
-            pmanager -> AddProcess(theScintillationProcess);
-            pmanager -> SetProcessOrdering(theScintillationProcess, idxPostStep);
-            pmanager -> SetProcessOrdering(theScintillationProcess, idxAtRest);
+            //pmanager -> AddProcess(theScintillationProcess);
+            //pmanager -> SetProcessOrdering(theScintillationProcess, idxPostStep);
+            //pmanager -> SetProcessOrdering(theScintillationProcess, idxAtRest);
+            /**
+            *Commented out the Scint Process
+            **/
         }
 
 	}

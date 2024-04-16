@@ -44,6 +44,7 @@ extern G4bool gVisual;
 extern G4double gmdomseparation;
 extern G4int gn_mDOMs;
 extern G4bool gCADImport;
+extern G4bool gVis;
 
 
 
@@ -133,7 +134,9 @@ void LOM18::Construction()
     G4LogicalVolume* lEquatorbandLogical = CreateEquatorBand();
 
     //Placements
-    PlacePMTs(lInnerVolumeLogical); //only comment it out for getting visuals!!
+    if(!gVis)
+        PlacePMTs(lInnerVolumeLogical); //only comment it out for getting visuals!!
+
     PlaceGelpads(lInnerVolumeLogical);
     new G4PVPlacement(0, G4ThreeVector(0, 0, 0), lEquatorbandLogical, "Gel_physical", lInnerVolumeLogical, false, 0); //Innervolume (mother volume for all components)
     if (gCADImport) PlaceCADSupportStructure(lInnerVolumeLogical);

@@ -8,7 +8,9 @@
 #include "G4VUserDetectorConstruction.hh"
 #include "G4NistManager.hh"
 #include "G4MaterialPropertiesTable.hh"
-#include "G4Box.hh"
+#include "G4Tubs.hh"
+#include "G4Element.hh"
+//#include "G4VSolid.hh"
 
 #include "OMSimInputData.hh"
 #include "OMSimPMTConstruction.hh"
@@ -39,11 +41,11 @@ public:
 
 private:
     //G4Orb *mWorldSolid;
-    G4Box *mWorldSolid;
+    G4VSolid *mWorldSolid;
     G4LogicalVolume *mWorldLogical;
     G4VPhysicalVolume *mWorldPhysical;
     void ConstructWorld();
-    void ConstructWorldMat();
+    void ConstructWorldMat(G4Material*, G4Material*);
     OMSimInputData *mData;
     OMSimRadioactivityData* radData;
 

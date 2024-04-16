@@ -83,6 +83,7 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 	{
         fActionType = Visualization;
 	}
+	fActionType = Visualization; //temporarily just for checking
 	switch(fActionType)
 	{
         case Positron:
@@ -202,15 +203,16 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
     OMSimRadioactivityData* radData = new OMSimRadioactivityData();
 
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-    G4String particleName = "opticalphoton";
+    G4String particleName = "mu-";
     G4ParticleDefinition* particle = particleTable -> FindParticle(particleName);
 
+    /*
     G4double angle = gZenithAngle;
     G4double distance = 1;
     /*G4double l = radData -> RandomGen(-3, 3);
     G4double x = 0;
     G4double y = - 3 * sin(angle * deg) + l * cos(angle * deg);
-    G4double z = - 3 * cos(angle * deg) - l * sin(angle * deg);*/
+    G4double z = - 3 * cos(angle * deg) - l * sin(angle * deg);*
 
     G4double r = radData -> RandomGen(-1, 1);
     G4double y = - distance * sin(angle * deg) + r * cos(angle * deg);
@@ -223,7 +225,7 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
 /*std::cout <<
     "x: " << x / m<< std::endl
     << "y: " << y / m << std::endl
-    << "z: " << z / m << std::endl;*/
+    << "z: " << z / m << std::endl;
 
 
     G4ThreeVector position(x, y, z);
@@ -238,12 +240,13 @@ void OMSimPrimaryGeneratorAction::GenerateToVisualize()
     << "alpha: " << alpha / deg << std::endl
     << "ux: " << ux << std::endl
     << "uy: " << uy  << std::endl
-    << "uz: " << uz  << std::endl;*/
+    << "uz: " << uz  << std::endl;
+    */
 
     fParticleGun -> SetParticleDefinition(particle);
-    fParticleGun -> SetParticleEnergy((3.5 * eV));
-    fParticleGun -> SetParticlePosition(position);
-    fParticleGun -> SetParticleMomentumDirection(direction);
+    fParticleGun -> SetParticleEnergy((1 * GeV));
+    fParticleGun -> SetParticlePosition(G4ThreeVector(0, 0, 5 * m));
+    fParticleGun -> SetParticleMomentumDirection(G4ThreeVector(0, 0, -1));
 
     delete radData;
 

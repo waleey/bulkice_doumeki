@@ -44,6 +44,7 @@ extern G4bool gVisual;
 extern G4double gmdomseparation;
 extern G4int gn_mDOMs;
 extern G4bool gCADImport;
+extern G4bool gVis;
 
 //main
 //ToDo:
@@ -115,7 +116,10 @@ void LOM16::Construction()
 
     //Placements
     new G4PVPlacement(0, G4ThreeVector(0, 0, 0), lInnerVolumeLogical, "Gel_physical", lGlassLogical, false, 0); //Innervolume (mother volume for all components)
-    PlacePMTs(lInnerVolumeLogical);
+    if(!gVis)
+        PlacePMTs(lInnerVolumeLogical);
+
+
     PlaceGelpads(lInnerVolumeLogical);
     if (gCADImport) PlaceCADSupportStructure(lInnerVolumeLogical);
     new G4PVPlacement( 0 , G4ThreeVector(0, 0, 0) , lEquatorbandLogical, "Equatorband" , lInnerVolumeLogical, false, 0);
