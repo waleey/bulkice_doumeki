@@ -27,7 +27,7 @@ void OMSimPhotonAction::GeneratePrimaries(G4Event* anEvent)
     std::vector<G4double> energy;
 
 /*
-    G4String fileName = "/home/waly/bulkice_doumeki/mdom/InputFile/energy_temp_photon_Ch.dat";
+    G4String fileName = "../InputFile/energy_temp_photon_Ch.dat";
     std::ifstream file(fileName, std::ios::binary);
     G4double temp;
     if(!file.is_open())

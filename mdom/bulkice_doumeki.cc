@@ -96,18 +96,71 @@ void help() //needs change
 
     std::cout << "To see associated depth with each depth index, go to build -> data -> Materials -> IceCubeIce.dat -> jDepth_spice" << std::endl;
 }
+int GetModel(G4String& model)
+{
+    if(model == "help")
+        {
+            help();
+            exit(0);
+        }
+    if(model == "dom")
+        {
+            std::cout << "*****DOM simulation selected*****" << std::endl;
+            gPMT = 5;
+            return 2;
+        }
+        else if(model == "mdom")
+        {
+            std::cout << "*****MDOM simulation selected*****" << std::endl;
+            gPMT = 0;
+            return 1;
+        }
+        else if(model == "lom16")
+        {
+            std::cout << "*****LOM16 simulation selected*****" << std::endl;
+            gPMT = 3;
+            return 3;
+        }
+        else if(model == "lom18")
+        {
+            std::cout << "*****LOM18 simulation selected*****" << std::endl;
+            gPMT = 3;
+            return 4;
+        }
+        else if(model == "pmt")
+        {
+            std::cout << "*****Single PMT simulation selected*****" << std::endl;
+            return 0;
+        }
+        else if(model == "degg")
+        {
+            std::cout << "*****DEGG simulation selected*****" << std::endl;
+            gPMT = 4;
+            return 5;
+        }
+        else if(model == "wom")
+        {
+            std::cout << "*****WOM simulation selected*****" << std::endl;
+            gPMT = 5;
+            gWOM = true;
+            return 6;
+        }
+        else
+        {
+            std::cout << "Invalid OM Model selected!" << std::endl;
+            help();
+            exit(0);
+        }
+
+}
 void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
 {
     if(argc == 6 || argc ==  8 || argc == 10 || argc == 2)
     {
         G4String model = argv[1];
 
+        PMT_model = GetModel(model);
 
-        if(model == "help")
-        {
-            help();
-            exit(0);
-        }
         interaction_channel = argv[2];
         gDepthIndex = atoi(argv[3]);
 
@@ -118,54 +171,6 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             exit(0);
         }
 
-        if(model == "dom")
-        {
-            std::cout << "*****DOM simulation selected*****" << std::endl;
-            PMT_model = 2;
-            gPMT = 5;
-        }
-        else if(model == "mdom")
-        {
-            std::cout << "*****MDOM simulation selected*****" << std::endl;
-            PMT_model = 1;
-            gPMT = 0;
-        }
-        else if(model == "lom16")
-        {
-            std::cout << "*****LOM16 simulation selected*****" << std::endl;
-            PMT_model = 3;
-            gPMT = 3;
-        }
-        else if(model == "lom18")
-        {
-            std::cout << "*****LOM18 simulation selected*****" << std::endl;
-            PMT_model = 4;
-            gPMT = 3;
-        }
-        else if(model == "pmt")
-        {
-            std::cout << "*****Single PMT simulation selected*****" << std::endl;
-            PMT_model = 0;
-        }
-        else if(model == "degg")
-        {
-            std::cout << "*****DEGG simulation selected*****" << std::endl;
-            PMT_model = 5;
-            gPMT = 4;
-        }
-        else if(model == "wom")
-        {
-            std::cout << "*****WOM simulation selected*****" << std::endl;
-            PMT_model = 6;
-            gPMT = 5;
-            gWOM = true;
-        }
-        else
-        {
-            std::cout << "Invalid OM Model selected!" << std::endl;
-            help();
-            exit(0);
-        }
 
         G4String outputFolder = argv[4];
         gRunID = atoi(argv[5]);
@@ -207,14 +212,16 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gRunID);
         }
     }
-    else if(argc == 4)
+    else if(argc == 3)
     {
-        PMT_model = 6;
+
+        G4String model = argv[1];
+        PMT_model = GetModel(model);
         gPMT = 5;
         gVis = true;
         interaction_channel = argv[2];
-        worldsize = 20;
-        gZenithAngle = atof(argv[3]);
+        //worldsize = 20;
+        //gZenithAngle = atof(argv[3]);
     }
     else
     {

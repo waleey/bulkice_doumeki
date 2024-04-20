@@ -43,7 +43,7 @@ public:
 private:
 
 
-  G4String  fQeDataName = "/home/waly/bulkice_doumeki/mdom/InputFile/TA0001_HamamatsuQE.data"; // name of qe data file
+  G4String  fQeDataName = "../InputFile/TA0001_HamamatsuQE.data"; // name of qe data file
 
   std::vector<double> fQeTable;          // Qe data
   std::vector<double> fWaveLengthTable;  // Wavelength data

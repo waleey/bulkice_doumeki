@@ -141,7 +141,8 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
      {
         G4cout << "Constructing WOM" << G4endl;
         fWOM = new WOM(mWorldLogical, mData);
-        fWOM -> PlaceIt();
+        G4RotationMatrix* mRot = new G4RotationMatrix();
+        fWOM -> PlaceIt(*mRot, G4ThreeVector(0, 0, 0));
      }
     else{ //Add your costume detector contruction here and call it with -m 6 (or greater)
         G4cout << "Constructing custome detector construction" << G4endl;
