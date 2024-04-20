@@ -139,22 +139,22 @@
 #/vis/modeling/trajectories/drawByCharge-0/set -1 white
 #/vis/modeling/trajectories/drawByCharge-0/set 0 red
 
-/vis/scene/add/trajectories rich
+#/vis/scene/add/trajectories rich
 #Adding Generic Trajectory for all particles
-/vis/modeling/trajectories/create/generic
-/vis/modeling/trajectories/generic-0/default/setDrawStepPts 1
-/vis/modeling/trajectories/generic-0/default/setStepPtsSize 16
-/vis/modeling/trajectories/generic-0/default/setLineColour cyan
-/vis/modeling/trajectories/generic-0/default/setStepPtsColour yellow
+#/vis/modeling/trajectories/create/generic
+#/vis/modeling/trajectories/generic-0/default/setDrawStepPts 1
+#/vis/modeling/trajectories/generic-0/default/setStepPtsSize 16
+#/vis/modeling/trajectories/generic-0/default/setLineColour cyan
+#/vis/modeling/trajectories/generic-0/default/setStepPtsColour yellow
 
 #Adding Trajectory color based on creator process
-/vis/modeling/trajectories/drawByCharge-0/default/setLineWidth 20
+#/vis/modeling/trajectories/drawByCharge-0/default/setLineWidth 20
 
-/vis/modeling/trajectories/create/drawByAttribute
-/vis/modeling/trajectories/drawByAttribute-0/verbose true
-/vis/modeling/trajectories/drawByAttribute-0/setAttribute CPN
+#/vis/modeling/trajectories/create/drawByAttribute
+#/vis/modeling/trajectories/drawByAttribute-0/verbose true
+#/vis/modeling/trajectories/drawByAttribute-0/setAttribute CPN
 
-/vis/modeling/trajectories/drawByAttribute-0/addValue wlsKey OpWLS
-/vis/modeling/trajectories/drawByAttribute-0/wlsKey/setLineColour red
+#/vis/modeling/trajectories/drawByAttribute-0/addValue wlsKey OpWLS
+#/vis/modeling/trajectories/drawByAttribute-0/wlsKey/setLineColour red
 
-/run/beamOn 5
+#/run/beamOn 5

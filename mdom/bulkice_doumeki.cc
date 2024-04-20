@@ -220,7 +220,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         gPMT = 5;
         gVis = true;
         interaction_channel = argv[2];
-        //worldsize = 20;
+        worldsize = 20;
         //gZenithAngle = atof(argv[3]);
     }
     else

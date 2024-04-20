@@ -65,7 +65,7 @@ OMSimDetectorConstruction::~OMSimDetectorConstruction()
 void OMSimDetectorConstruction::ConstructWorld()
 {
     //ConstructWorldMat();
-
+    //fworldSize = 20;
     mWorldSolid = new G4Box("World", fworldSize * m, fworldSize * m, fworldSize* m);
     //mWorldSolid = new G4Box("World", .5 * m, .5 * m, .5 * m);
     //mWorldLogical = new G4LogicalVolume(mWorldSolid, ice, "World_log", 0, 0, 0);
@@ -122,11 +122,13 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
     else if (fDOM == 3){ //LOM16
         G4cout << "Constructing LOM16" << G4endl;
         fLOM16 = new LOM16(mData,gPlaceHarness);
+        OMSimRadioactivityData::SetGlassRad(155, 155 - 15);
         fLOM16->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
     }
     else if (fDOM == 4){ //LOM18
         G4cout << "Constructing LOM18" << G4endl;
         fLOM18 = new LOM18(mData,gPlaceHarness);
+        OMSimRadioactivityData::SetGlassRad(165, 165 - 30);
         fLOM18->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
         G4cout << "::::::::::::::LOM18 successfully constructed::::::::::::" << G4endl;
     }

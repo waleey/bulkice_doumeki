@@ -132,6 +132,18 @@ void OMSimRunManager::BeamOn()
                 GenerateU235();
                 GenerateTh232();
                 break;
+            case lom18:
+                GenerateK40();
+                GenerateU238();
+                GenerateU235();
+                GenerateTh232();
+                break;
+            case lom16:
+                GenerateK40();
+                GenerateU238();
+                GenerateU235();
+                GenerateTh232();
+                break;
             case degg:
                 GenerateK40();
                 GenerateU238();
@@ -151,6 +163,8 @@ void OMSimRunManager::BeamOn()
         /**
         optical photon wave simulation
         **/
+        std::cout << "WYA:::::::::::" << std::endl;
+        exit(0);
         GeneratePhoton();
     }
     else

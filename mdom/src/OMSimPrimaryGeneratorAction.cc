@@ -120,7 +120,7 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             break;
         case Photon:
             //std::cout << "Generating Photon wave!" << std::endl;
-            fPhotonAction -> GeneratePrimaries(anEvent);
+            //fPhotonAction -> GeneratePrimaries(anEvent);
             GenerateToVisualize();
             break;
         case wave:
