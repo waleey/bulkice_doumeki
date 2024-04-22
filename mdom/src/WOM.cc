@@ -18,6 +18,7 @@ WOM::WOM(G4LogicalVolume* LogicMother, OMSimInputData* data) : fLogicMother(Logi
 }
 WOM::~WOM()
 {
+    /*
     //Deleting the solids
     delete fGlassSolid;
     delete fGelSolid;
@@ -35,6 +36,7 @@ WOM::~WOM()
     delete fPMTCathodeLogical1;
     delete fPMTCathodeLogical2;
     delete fPMTCathode;
+    */
 }
 void WOM::PlaceIt()
 {

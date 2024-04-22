@@ -122,13 +122,17 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
     else if (fDOM == 3){ //LOM16
         G4cout << "Constructing LOM16" << G4endl;
         fLOM16 = new LOM16(mData,gPlaceHarness);
-        OMSimRadioactivityData::SetGlassRad(155, 155 - 15);
+        glassOutRad = fLOM16 -> GetGlassOuterRad();
+        glassInRad = fLOM16 -> GetGlassInnerRad();
+        OMSimRadioactivityData::SetGlassRad(glassOutRad, glassInRad);
         fLOM16->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
     }
     else if (fDOM == 4){ //LOM18
         G4cout << "Constructing LOM18" << G4endl;
         fLOM18 = new LOM18(mData,gPlaceHarness);
-        OMSimRadioactivityData::SetGlassRad(165, 165 - 30);
+        glassOutRad = 165;
+        glassInRad = 165 - 30;
+        OMSimRadioactivityData::SetGlassRad(glassOutRad, glassInRad);
         fLOM18->PlaceIt(G4ThreeVector(0, 0, 0), G4RotationMatrix(), mWorldLogical, "");
         G4cout << "::::::::::::::LOM18 successfully constructed::::::::::::" << G4endl;
     }
@@ -144,6 +148,9 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
         G4cout << "Constructing WOM" << G4endl;
         fWOM = new WOM(mWorldLogical, mData);
         G4RotationMatrix* mRot = new G4RotationMatrix();
+        glassOutRad = fWOM -> GetGlassOuterRad();
+        glassInRad = fWOM -> GetGlassInnerRad();
+        OMSimRadioactivityData::SetGlassRad(glassOutRad, glassInRad);
         fWOM -> PlaceIt(*mRot, G4ThreeVector(0, 0, 0));
      }
     else{ //Add your costume detector contruction here and call it with -m 6 (or greater)
@@ -186,6 +193,10 @@ G4ThreeVector OMSimDetectorConstruction::DrawFromVolume()
             fOuterSolid = fDEGG -> GetOuterSolid();
             fInnerSolid = fDEGG -> GetInnerSolid();
             break;
+        case 6:
+            fOuterSolid = fWOM -> GetOuterSolid();
+            fInnerSolid = fWOM -> GetInnerSolid();
+            break;
         default:
             std::cerr << "Invalid OM Model. Aborting..." << std::endl;
             exit(0);
@@ -203,9 +214,9 @@ G4ThreeVector OMSimDetectorConstruction::DrawFromVolume()
     do
     {
         point.set(
-            (radData -> RandomGen(glassInRad - 50, glassOutRad + 50) * sin(theta) * cos(phi)) * mm,
-            (radData -> RandomGen(glassInRad - 50, glassOutRad + 50) * sin(theta) * sin(phi)) * mm,
-            (radData -> RandomGen(glassInRad - 50, glassOutRad + 50) * cos(theta)) * mm
+            (radData -> RandomGen(glassInRad - 700, glassOutRad + 700) * sin(theta) * cos(phi)) * mm,
+            (radData -> RandomGen(glassInRad - 700, glassOutRad + 700) * sin(theta) * sin(phi)) * mm,
+            (radData -> RandomGen(glassInRad - 700, glassOutRad + 700) * cos(theta)) * mm
         );
     }while(!(fOuterSolid -> Inside(point) && !fInnerSolid -> Inside(point)) && ++iTry < maxTries);
 

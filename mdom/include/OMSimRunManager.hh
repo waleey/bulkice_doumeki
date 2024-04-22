@@ -68,11 +68,11 @@ private:
     /**
     *Activity is given in Bq/Kg unit
     **/
-    std::vector<G4double> K40Activity {0, 61, 61, 61, 61, 2.548};
-    std::vector<G4double> U238Activity {0, 4.61, 4.61, 4.61, 4.61, 0.2146};
-    std::vector<G4double> U235Activity {0, 0.60, 0.60, 0.60, 0.60, 0};
-    std::vector<G4double> Th232Activity {0, 1.28, 1.28, 1.28, 1.28, 0.1373};
-    std::vector<G4double> glassWeight {10., 13.0, 10.0, 10.0, 10.0, 13.0}; //for now, weight of Degg is assumed to be equal to MDOM. Will be changed later.
+    std::vector<G4double> K40Activity {0, 61, 61, 61, 61, 2.548, 61};
+    std::vector<G4double> U238Activity {0, 4.61, 4.61, 4.61, 4.61, 0.2146, 4.61};
+    std::vector<G4double> U235Activity {0, 0.60, 0.60, 0.60, 0.60, 0, 0.60};
+    std::vector<G4double> Th232Activity {0, 1.28, 1.28, 1.28, 1.28, 0.1373, 1.28};
+    std::vector<G4double> glassWeight {10., 13.0, 10.0, 10.0, 10.0, 13.0, 13.0}; //for now, weight of Degg is assumed to be equal to MDOM. Will be changed later.
 
     enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization}; //make sure this order is the same in primary generator class enum
     enum {pmt, mdom, dom, lom16, lom18, degg, wom};
