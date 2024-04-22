@@ -24,6 +24,8 @@ public:
 
     inline G4UnionSolid* GetOuterSolid() { return lGlassSolid; }
     inline G4UnionSolid* GetInnerSolid() { return lGelSolid; }
+    inline G4double GetGlassOuterRad() { return mGlassOutRad; }
+    inline G4double GetGlassInnerRad() { return mGlassInRad; }
 
 
 

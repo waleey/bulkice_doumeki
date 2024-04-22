@@ -149,6 +149,11 @@ void OMSimRunManager::BeamOn()
                 GenerateU238();
                 GenerateTh232();
                 break;
+            case wom:
+                GenerateK40();
+                GenerateU238();
+                GenerateTh232();
+                break;
             default:
                 std::cerr << "Radioactivity is not defined for this OM model yet. Aborting...." << std::endl;
                 exit(0);
@@ -163,8 +168,7 @@ void OMSimRunManager::BeamOn()
         /**
         optical photon wave simulation
         **/
-        std::cout << "WYA:::::::::::" << std::endl;
-        exit(0);
+
         GeneratePhoton();
     }
     else

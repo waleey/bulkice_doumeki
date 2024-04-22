@@ -31,9 +31,10 @@ public:
     void PlaceIt();
     void PlaceIt(G4RotationMatrix, G4ThreeVector);
 
-   // inline G4MultiUnion* GetOuterSolid() { return fGlassSolid; }
-    //inline G4MultiUnion* GetInnerSolid() { return fGelSolid; }
-
+    inline G4MultiUnion* GetOuterSolid() { return fGlassSolid; }
+    inline G4MultiUnion* GetInnerSolid() { return fGelSolid; }
+    inline G4double GetGlassOuterRad() { return fGlassTubeOuterRad / mm; }
+    inline G4double GetGlassInnerRad() { return fGlassTubeInnerRad / mm; }
 private:
     void Construction();
     void GetSharedData();
