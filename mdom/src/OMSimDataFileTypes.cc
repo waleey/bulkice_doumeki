@@ -165,7 +165,7 @@ void abcMaterialData::ExtractRefractionIndex()
 **/
 void abcMaterialData::AddScintillationSpectrum(std::vector<G4double>& vasEnergy, std::vector<G4double>& vasScint)
 {
-    G4String filename = "/home/waly/bulkice_doumeki/mdom/InputFile/VAS_Scintillation_Spectrum.data"; //Change it according to your file path
+    G4String filename = "../InputFile/VAS_Scintillation_Spectrum.data"; //Change it according to your file path
     //G4String filename = "/home/waly/bulkice_doumeki/mdom/InputFile/Vitrovex_scint.txt";
     //G4String filename = "/home/waly/bulkice_doumeki/mdom/InputFile/vis_corrected.txt";
     std::ifstream file(filename);

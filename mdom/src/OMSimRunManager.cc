@@ -16,6 +16,7 @@ extern G4double gFinalAngle;
 extern G4double gAngleIncrement;
 extern G4bool gMultipleAngle;
 extern G4int gPhotonNotAbsorbed;
+extern G4bool gVis;
 G4double gAngle = 0;
 
 //G4int gIdx = 0;
@@ -77,9 +78,10 @@ OMSimRunManager::~OMSimRunManager()
 {
     std::cout << "::::::::::::::this is the end of a run:::::::::::::"<< std::endl;
 
-    #ifdef G4VIS_USE
-    delete fVisManager;
-    #endif
+    if(gVis)
+    {
+    	delete fVisManager;
+    }
 
     delete fRunManager;
     delete fRadData;
@@ -130,6 +132,18 @@ void OMSimRunManager::BeamOn()
                 GenerateU235();
                 GenerateTh232();
                 break;
+            case lom18:
+                GenerateK40();
+                GenerateU238();
+                GenerateU235();
+                GenerateTh232();
+                break;
+            case lom16:
+                GenerateK40();
+                GenerateU238();
+                GenerateU235();
+                GenerateTh232();
+                break;
             case degg:
                 GenerateK40();
                 GenerateU238();
@@ -149,6 +163,8 @@ void OMSimRunManager::BeamOn()
         /**
         optical photon wave simulation
         **/
+        std::cout << "WYA:::::::::::" << std::endl;
+        exit(0);
         GeneratePhoton();
     }
     else
