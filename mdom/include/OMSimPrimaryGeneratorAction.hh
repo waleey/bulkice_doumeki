@@ -34,6 +34,7 @@ public:
 	void SetPosition(G4ThreeVector&);
 	inline void SetActionType(G4int actionType) { fActionType = actionType; }
 	void SetAngle(G4double angle);
+	void SetupMuons(G4int);
 
     //Setters for messenger class
 	inline void SetParticleName(G4String& name) {fParticleName = name; }
@@ -72,7 +73,7 @@ private:
 
     PrimaryGeneratorMessenger* fGeneratorMessenger;
 
-	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization, wave, beam};
+	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization, wave, beam, muon};
 };
 
 

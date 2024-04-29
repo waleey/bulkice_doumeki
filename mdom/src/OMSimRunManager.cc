@@ -151,6 +151,10 @@ void OMSimRunManager::BeamOn()
         **/
         GeneratePhoton();
     }
+    else if(fInteraction == "muon")
+    {
+        GenerateMuons();
+    }
     else
     {
         std::cerr << "Invalid interaction channel. Aborting..." << std::endl;
@@ -272,6 +276,16 @@ void OMSimRunManager::GeneratePhoton()
     {
         gAngle = angle;
         fPrimaryGenerator -> SetAngle(angle);
+        fRunManager -> BeamOn(1);
+    }
+}
+void OMSimRunManager::GenerateMuons()
+{
+    fPrimaryGenerator -> SetActionType(muon);
+    G4int numParticles = 100;
+    fPrimaryGenerator -> SetupMuons(numParticles);
+    for(int i = 0; i < numParticles; i++)
+    {
         fRunManager -> BeamOn(1);
     }
 }

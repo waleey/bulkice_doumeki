@@ -132,6 +132,10 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             GenerateBeam();
             fParticleGun -> GeneratePrimaryVertex(anEvent);
             break;
+        case muon:
+            std::cout << "Generating MUONs!" << std::endl;
+            fParticleGun -> GeneratePrimaryVertex(anEvent);
+            break;
         default:
             GenerateToVisualize();
             fParticleGun -> GeneratePrimaryVertex(anEvent);
@@ -307,4 +311,16 @@ void OMSimPrimaryGeneratorAction::GenerateBeam()
 void OMSimPrimaryGeneratorAction::SetAngle(G4double angle)
 {
     fPhotonAction -> SetAngle(angle);
+}
+
+void OMSimPrimaryGeneratorAction::SetupMuons(G4int numParticles)
+{
+
+    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+    G4String particleName = "mu-";
+    G4ParticleDefinition* particle = particleTable -> FindParticle(particleName);
+    fParticleGun -> SetParticleDefinition(particle);
+    fParticleGun -> SetParticleEnergy((1 * GeV));
+    fParticleGun -> SetParticlePosition(G4ThreeVector(0, 0, 5 * m));
+    fParticleGun -> SetParticleMomentumDirection(G4ThreeVector(0, 0, -1));
 }
