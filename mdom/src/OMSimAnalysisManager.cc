@@ -17,35 +17,70 @@ OMSimAnalysisManager::OMSimAnalysisManager(){
 
 OMSimAnalysisManager::~OMSimAnalysisManager(){}
 
+// # %ECSV 1.0
+// # ---
+// # delimiter: ','
+// # datatype: [
+// #   { name: index,   datatype: int32   },
+// #   { name: Species, datatype: string  },
+// #   { name: Name,    datatype: string  },
+// #   { name: Legs,    datatype: int32   },
+// #   { name: Height,  datatype: float64, unit: m },
+// #   { name: Mammal,  datatype: bool    },
+// # ]
+// index,Species,Name,Legs,Height,Mammal
+// 1,pig,Bland,4,,True
+// 2,cow,Daisy,4,2,True
+// 3,goldfish,Dobbin,,0.05,False
+// 4,ant,,6,0.001,False
+// 5,ant,,6,0.001,False
+// 6,human,Mark,2,1.9,True
+
 void OMSimAnalysisManager::Write()
 {
 	if(datafile.is_open())
 	{
+//    datafile << "# %ECSV 1.0\n# ---\n# delimiter: ','\n"
+//             << "# datatype: [\n"
+//             << "#   { name: RUN_ID,          datatype: int32             },\n"
+//             << "#   { name: STATS_HIT_TIME,  datatype: float64, unit: ns },\n"
+//             << "#   { name: PHOTON_ENERGY,   datatype: float64, unit: eV },\n"
+//             << "#   { name: PMT_ID,          datatype: int32             },\n"
+//             << "#   { name: PHOTON_POS_X,    datatype: float64, unit: m  },\n"
+//             << "#   { name: PHOTON_POS_Y,    datatype: float64, unit: m  },\n"
+//             << "#   { name: PHOTON_POS_Z,    datatype: float64, unit: m  },\n"
+//             << "#   { name: STATS_VERTEX_X,  datatype: float64, unit: m  },\n"
+//             << "#   { name: STATS_VERTEX_Y,  datatype: float64, unit: m  },\n"
+//             << "#   { name: STATS_VERTEX_Z,  datatype: float64, unit: m  },\n"
+//             << "#   { name: POSITRON_ID,     datatype: int32,            },\n"
+//             << "#   { name: SURVIVED_QE,     datatype: bool,             },\n"
+//             << "# ]\nRUN_ID,STATS_HIT_TIME,PHOTON_ENERGY,PMT_ID,PHOTON_POS_X,PHOTON_POS_Y,PHOTON_POS_Z,STATS_VERTEX_X,STATS_VERTEX_Y,STATS_VERTEX_Z,POSITRON_ID,SURVIVED_QE\n";
+
         G4cout << "+++++++++++++The size of this event is " << stats_event_id.size() << " ++++++++++++" << G4endl;
         //datafile << "Run ID: " << fRunId << G4endl;
         //datafile << "Event Size: " << stats_event_id.size() << G4endl;
         for (int i = 0; i < (int) stats_event_id.size(); i++)
         {
             //datafile << stats_event_id.at(i) << "\t";
-            datafile << fRunId << "\t";
-            datafile << std::fixed << stats_hit_time.at(i) /ns << "\t";
-            //datafile << stats_photon_flight_time.at(i) /ns << "\t";
-            //datafile << stats_photon_track_length.at(i) << "\t";
-            datafile << stats_photon_energy.at(i) << "\t";
-            datafile << stats_PMT_hit.at(i) << "\t";
-            //datafile << stats_event_distance.at(i) << "\t";
-            datafile << stats_photon_position.at(i).x()/m << "\t";
-            datafile << stats_photon_position.at(i).y()/m << "\t";
-            datafile << stats_photon_position.at(i).z()/m << "\t";
-            datafile << stats_vertex_position.at(i).x()/m << "\t";
-            datafile << stats_vertex_position.at(i).y()/m << "\t";
-            datafile << stats_vertex_position.at(i).z()/m << "\t";
-            datafile << stats_positron_id.at(i) << "\t";
-            datafile << stats_survived_qe.at(i) << "\t";
-            if(gPhotonSim)
-            {
-                datafile << gAngle << "\t";
-            }
+            datafile << fRunId << ",";
+            datafile << std::fixed << stats_hit_time.at(i) /ns << ",";
+            //datafile << stats_photon_flight_time.at(i) /ns << ",";
+            //datafile << stats_photon_track_length.at(i) << ",";
+            datafile << stats_photon_energy.at(i) << ",";
+            datafile << stats_PMT_hit.at(i) << ",";
+            //datafile << stats_event_distance.at(i) << ",";
+            datafile << stats_photon_position.at(i).x()/m << ",";
+            datafile << stats_photon_position.at(i).y()/m << ",";
+            datafile << stats_photon_position.at(i).z()/m << ",";
+            datafile << stats_vertex_position.at(i).x()/m << ",";
+            datafile << stats_vertex_position.at(i).y()/m << ",";
+            datafile << stats_vertex_position.at(i).z()/m << ",";
+            datafile << stats_positron_id.at(i) << ",";
+            datafile << stats_survived_qe.at(i);
+//            if(gPhotonSim)
+//            {
+//                datafile << gAngle << "\t";
+//            }
            // datafile << stats_photon_direction.at(i).x() << "\t";
             //datafile << stats_photon_direction.at(i).y() << "\t";
             //datafile << stats_photon_direction.at(i).z() << "\t";
