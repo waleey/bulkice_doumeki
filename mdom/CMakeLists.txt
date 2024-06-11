@@ -14,9 +14,9 @@ if(WITH_GEANT4_UIVIS)
 else()
   find_package(Geant4 REQUIRED)
 endif()
-#find_package(Boost REQUIRED)
+find_package(Boost REQUIRED)
 
-#include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
 
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
