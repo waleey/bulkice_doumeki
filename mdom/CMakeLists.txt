@@ -14,9 +14,10 @@ if(WITH_GEANT4_UIVIS)
 else()
   find_package(Geant4 REQUIRED)
 endif()
-#find_package(Boost REQUIRED)
 
-#include_directories(${Boost_INCLUDE_DIRS})
+#set(BOOST_ROOT "~/local/boost_1_xx_0")
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
 
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
@@ -33,7 +34,7 @@ file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
 #----------------------------------------------------------------------------
-#Copying the merger program to the build folder
+#Copying the data program to the build folder
 #
 # Set the source directory you want to copy
 set(SOURCE_DIR "${PROJECT_SOURCE_DIR}/../data")
