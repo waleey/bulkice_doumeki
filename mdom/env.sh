@@ -5,8 +5,8 @@
 # you may need to modify #data section too.
 #
 
-export G4BUILD=/home/jakob/software/Geant4/geant4-v11.1.2-install
-if [ "$G4BUILD" != "/home/jakob/software/Geant4/geant4-v11.1.2-install" ]; then
+export G4BUILD=/home/jakob/software/geant4/geant4-v11.2.2-install
+if [ "$G4BUILD" != "/home/jakob/software/geant4/geant4-v11.2.2-install" ]; then
     echo "Error: G4BUILD is not set to the correct path."
     exit 1  # Terminate the script with an error code
 fi #terminate the run if the installation directory isn't set up properly!
