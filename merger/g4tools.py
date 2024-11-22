@@ -9,7 +9,7 @@ class G4tools:
         self.depthIndex = depthIndex
         self.outputFolder = outputFolder
         self.runID = runID
-        self.executable = baseFolder + "./bulkice_doumeki"
+        self.executable = baseFolder + "bulkice_doumeki"
 
     def callG4(self):
         print('called bulkice_doumeki')
