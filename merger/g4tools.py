@@ -15,7 +15,8 @@ class G4tools:
         print('called bulkice_doumeki')
         try:
             #subprocess.check_call(['. env.sh'])
-            subprocess.check_call([self.executable, self.omModel, self.interaction, self.depthIndex, self.outputFolder, self.runID])
+            subprocess.check_call([self.executable, self.omModel, self.interaction, self.depthIndex, self.outputFolder, self.runID], 
+                                  cwd = self.baseFolder)
 
         except subprocess.CalledProcessError as e:
             print(f"error running package {e}")
