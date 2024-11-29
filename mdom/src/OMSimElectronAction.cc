@@ -2,6 +2,9 @@
 
 #include "G4ParticleDefinition.hh"
 #include "G4Electron.hh"
+
+extern G4int gRunID;
+
 OMSimElectronAction::OMSimElectronAction(G4ParticleGun* particleGun)
     :   fParticleGun(particleGun),
         fParticleExist(true),
@@ -50,7 +53,8 @@ void OMSimElectronAction::GeneratePrimaries(G4Event* anEvent)
 void OMSimElectronAction::LoadData()
 {
     using namespace std;
-    G4String filePath = "../InputFile/Electron/e20002nkibd_"; //will change soon
+    //G4String filePath = "../InputFile/Electron/e20002nkibd_"; //will change soon.
+    G4String filePath = "../../analysis/files/input_geant4/gamma/Electron/ele_gamma_" + std::to_string(gRunID) + "_"; //will change soon
     G4double temp;
     G4String fileName;
 
