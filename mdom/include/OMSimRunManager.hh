@@ -61,6 +61,7 @@ private:
     void GenerateK40();
     void GenerateU238();
     void GenerateU235();
+    void GenerateDecayChain(G4String chainName);
     void GenerateTh232();
     void GeneratePhoton();
     void GenerateToVisualize();
@@ -74,7 +75,7 @@ private:
     std::vector<G4double> Th232Activity {0, 1.28, 1.28, 1.28, 1.28, 0.1373, 1.28};
     std::vector<G4double> glassWeight {10., 13.0, 10.0, 10.0, 10.0, 13.0, 13.0}; //for now, weight of Degg is assumed to be equal to MDOM. Will be changed later.
 
-    enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization}; //make sure this order is the same in primary generator class enum
+    enum {Positron, Neutron, Electron, K40, U238, U235, Th232, DecayChain, Photon, Visualization}; //make sure this order is the same in primary generator class enum
     enum {pmt, mdom, dom, lom16, lom18, degg, wom};
 
     G4double startingtime;

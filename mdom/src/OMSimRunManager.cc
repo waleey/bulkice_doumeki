@@ -1,10 +1,13 @@
 #include "OMSimRunManager.hh"
 #include "OMSimAnalysisManager.hh"
+#include "OMSimDecayChainAction.hh"
+#include "OMSimUtils.hh"
 
 #define G4VIS_USE 1
 
 extern OMSimAnalysisManager gAnalysisManager;
 extern G4String	ghitsfilename;
+extern std::fstream gRadioDecayFile;
 extern G4String	gHittype;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
@@ -20,7 +23,7 @@ extern G4bool gVis;
 G4double gAngle = 0;
 
 //G4int gIdx = 0;
-G4double OMSimRadioactivityData::ftimeWindow = 60.0; //for now just running for 1 sec.
+G4double OMSimRadioactivityData::ftimeWindow = 1.0; //for now just running for 1 sec.
 OMSimRunManager::OMSimRunManager()
 {
 
@@ -127,10 +130,11 @@ void OMSimRunManager::BeamOn()
         switch(fpmtModel)
         {
             case mdom:
-                GenerateK40();
-                GenerateU238();
-                GenerateU235();
-                GenerateTh232();
+                //GenerateK40();
+                //GenerateU238();
+                //GenerateU235();
+                //GenerateTh232();
+                GenerateDecayChain("U238");
                 break;
             case lom18:
                 GenerateK40();
@@ -215,10 +219,14 @@ void OMSimRunManager::GenerateK40()
 {
     fPrimaryGenerator -> SetActionType(K40); //This member function needs to be implemented
     G4double activity = K40Activity.at(fpmtModel);
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow / 60;
+    G4double timeWindow = OMSimRadioactivityData::ftimeWindow;
     G4double meanRate = activity * timeWindow * glassWeight.at(fpmtModel); //multiplied by mdom vessel weight of 13. Will be made flexible later.
     G4int numParticle = fRadData -> GetNumDecay(meanRate);
     G4ThreeVector point;
+
+    std::cout << "Time [s]: " << timeWindow << std::endl;
+    std::cout << "Number of decays : " << numParticle << std::endl;
+
     for(int i = 0; i < numParticle; i++)
     {
         gEvent++;
@@ -233,10 +241,14 @@ void OMSimRunManager::GenerateU238()
 {
     fPrimaryGenerator -> SetActionType(U238); //This member function needs to be implemented
     G4double activity = U238Activity.at(fpmtModel);
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow / 60;
+    G4double timeWindow = OMSimRadioactivityData::ftimeWindow;
     G4double meanRate = activity * timeWindow * glassWeight.at(fpmtModel); //multiplied by mdom vessel weight of 13. Will be made flexible later.
     G4int numParticle = fRadData -> GetNumDecay(meanRate);
     G4ThreeVector point;
+
+    std::cout << "Time [s]: " << timeWindow << std::endl;
+    std::cout << "Number of decays : " << numParticle << std::endl;
+
     for(int i = 0; i < numParticle; i++)
     {
         gEvent++;
@@ -247,14 +259,115 @@ void OMSimRunManager::GenerateU238()
 
 }
 
+
+void OMSimRunManager::GenerateDecayChain(G4String chainName)
+{
+    fPrimaryGenerator -> SetActionType(DecayChain);
+
+    std::string filename = "../InputFile/";
+    G4double activity;
+    
+    if (chainName == "U238"){
+        filename += "U238DecayChain.txt";
+        activity = U238Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
+    }
+    else if (chainName == "U235"){
+        filename += "U235DecayChain.txt";
+        activity = U235Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
+    }
+    else if (chainName == "Th232"){
+        filename += "Th232DecayChain.txt";
+        activity = Th232Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
+    }
+    else
+    {
+        std::cerr << "Invalid decay chain name. Aborting..." << std::endl;
+        exit(0);
+    }
+    
+    // Time window and mean rate
+    G4double timeWindow = fRadData -> GetTimeWindow();
+    G4double meanRate = activity * timeWindow;
+
+    std::cout << "Simulating Full " << chainName << " Decay Chain" << std::endl;
+    std::cout << "Time window [s]: " << timeWindow << std::endl;
+    std::cout << chainName << " Activity [Bq]: " << activity << std::endl;
+
+    G4ThreeVector point;
+
+    // load decay chain configuration file
+    std::vector<ElementData> decayChain = loadDataFromFile(filename);
+
+    // loop through the decay chain
+    for (const auto& [isotopeName, Z, A, excitationEnergy, totalAngularMomentum, branchingRatio] : decayChain) 
+    {
+        // configure isotope
+        fPrimaryGenerator -> SetZ(Z);
+        fPrimaryGenerator -> SetA(A);
+        fPrimaryGenerator -> SetExcitationEnergy(excitationEnergy);
+        fPrimaryGenerator -> SetTotalAngularMomentum(totalAngularMomentum);
+        fPrimaryGenerator -> GenerateIsotope();
+        G4double const originalLifeTime = fPrimaryGenerator -> GetPDGLifeTime(); // safe original PDG life time
+        fPrimaryGenerator -> SetPDGLifeTime(0 * ns);
+
+        // number of decays
+        G4int numDecays = fRadData -> GetNumDecay(meanRate); // pull from Poisson distribution
+
+        if (branchingRatio < 1.0) //use rejection sampling for branching ratios != 1
+        {
+            G4int counter = 0;
+            for (G4int i = 0; i < numDecays; ++i)
+            {
+                G4double rand = fRadData -> RandomGen(0., 1.);
+                if (branchingRatio > rand)
+                {
+                    ++counter;
+                }
+            }
+            numDecays = counter;
+        }
+
+        std::cout << "----------------------------------------------------\n|   " 
+                  << numDecays 
+                  << " decays " 
+                  << isotopeName 
+                  << " (Z=" 
+                  << Z 
+                  << ", A=" 
+                  << A 
+                  << ", E=" 
+                  << excitationEnergy * keV 
+                  << " keV, J=" 
+                  << totalAngularMomentum * 1/2 
+                  << ")\n----------------------------------------------------" 
+                  << std::endl;
+
+
+        for (G4int i = 0; i < numDecays; ++i)
+        {
+            // Generate a random point for the decay
+            point = fDetectorConstruction -> DrawFromVolume();
+            // Set particle position    
+            fPrimaryGenerator -> SetPosition(point);
+            // Process one event with RunManager
+            fRunManager -> BeamOn(1);
+        }
+        fPrimaryGenerator -> SetPDGLifeTime(originalLifeTime); // restore original PDG life time
+    }
+}
+
 void OMSimRunManager::GenerateU235()
 {
     fPrimaryGenerator -> SetActionType(U235); //This member function needs to be implemented
     G4double activity = U235Activity.at(fpmtModel);
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow / 60;
+    G4double timeWindow = OMSimRadioactivityData::ftimeWindow;
     G4double meanRate = activity * timeWindow * glassWeight.at(fpmtModel); //multiplied by mdom vessel weight of 13. Will be made flexible later.
     G4int numParticle = fRadData -> GetNumDecay(meanRate);
     G4ThreeVector point;
+
+    std::cout << "Time [s]: " << timeWindow << std::endl;
+    std::cout << "Number of decays : " << numParticle << std::endl;
+
     for(int i = 0; i < numParticle; i++)
     {
         gEvent++;
@@ -268,10 +381,14 @@ void OMSimRunManager::GenerateTh232()
 {
     fPrimaryGenerator -> SetActionType(Th232); //This member function needs to be implemented
     G4double activity = Th232Activity.at(fpmtModel);
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow / 60;
+    G4double timeWindow = OMSimRadioactivityData::ftimeWindow;
     G4double meanRate = activity * timeWindow * glassWeight.at(fpmtModel); //multiplied by mdom vessel weight of 13. Will be made flexible later.
     G4int numParticle = fRadData -> GetNumDecay(meanRate);
     G4ThreeVector point;
+
+    std::cout << "Time [s]: " << timeWindow << std::endl;
+    std::cout << "Number of decays : " << numParticle << std::endl;
+
     for(int i = 0; i < numParticle; i++)
     {
         gEvent++;
@@ -303,16 +420,20 @@ void OMSimRunManager::OpenFile()
 	gAnalysisManager.datafile.open(filename, std::ios::out /*| std::ios::app*/);
 	gNumCherenkov = 0;
 	gNumScint = 0;
+
+    gRadioDecayFile.open("radiodecay_output.csv", std::ios::out /*| std::ios::app*/);
+    gRadioDecayFile << "TrackID,ParticleName,Energy\n";
 }
 
 void OMSimRunManager::CloseFile()
 {
     G4cout << "::::::::::::This is the end of Run Action:::::::::::" << G4endl;
 
-	std::cout << "Cherenkov Produced: " << gNumCherenkov << std::endl
+	/*
+    std::cout << "Cherenkov Produced: " << gNumCherenkov << std::endl
 	<< "Scintillation Photons Produced: " << gNumScint << std::endl
 	<< "Photon Reached WLS but Not Absorbed: " << gPhotonNotAbsorbed << std::endl;
-
+    */    
 
 // 	Close output data file
     gAnalysisManager.datafile.close();
@@ -321,4 +442,6 @@ void OMSimRunManager::CloseFile()
 //std::cout << "Total Positron Count in World Volume:: " << gPosCount << std::endl;
     std::cout << "Total Event Produced: " << gEvent << std::endl;
     G4cout << "Computation time: " << finishtime - startingtime << " seconds." << G4endl;
+
+    gRadioDecayFile.close();
 }
