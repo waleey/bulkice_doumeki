@@ -1,2 +1,4 @@
 mdom/build/*
 analysis/files/*
+analysis/tests/*
+analysis/network/*
