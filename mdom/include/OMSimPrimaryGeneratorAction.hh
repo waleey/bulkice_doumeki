@@ -14,6 +14,7 @@
 #include "OMSimU238Action.hh"
 #include "OMSimU235Action.hh"
 #include "OMSimTh232Action.hh"
+#include "OMSimDecayChainAction.hh"
 #include "OMSimPhotonAction.hh"
 
 
@@ -29,9 +30,17 @@ public:
 
 public:
 	void GeneratePrimaries(G4Event* anEvent);
+	void GenerateIsotope();
 	bool ParticleExist();
 	void LoadData();
 	void SetPosition(G4ThreeVector&);
+	void SetZ(G4int);
+	void SetA(G4int);
+	void SetExcitationEnergy(G4double);
+	void SetTotalAngularMomentum(G4int);
+	void SetPDGLifeTime(G4double);
+	G4double GetPDGLifeTime();
+
 	inline void SetActionType(G4int actionType) { fActionType = actionType; }
 	void SetAngle(G4double angle);
 
@@ -56,6 +65,7 @@ private:
 	OMSimU238Action* fU238Action;
 	OMSimU235Action* fU235Action;
 	OMSimTh232Action* fTh232Action;
+	OMSimDecayChainAction* fDecayChainAction;
 	OMSimPhotonAction* fPhotonAction;
 	G4ParticleGun *fParticleGun;
 	G4int fActionType;
@@ -72,7 +82,7 @@ private:
 
     PrimaryGeneratorMessenger* fGeneratorMessenger;
 
-	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization, wave, beam};
+	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, DecayChain, Photon, Visualization, wave, beam};
 };
 
 

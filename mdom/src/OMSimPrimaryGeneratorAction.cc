@@ -15,6 +15,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
         fU238Action(0),
         fU235Action(0),
         fTh232Action(0),
+        fDecayChainAction(0),
         fPhotonAction(0),
         fParticleGun(0),
         fActionType(0),
@@ -32,6 +33,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
 	fU238Action = new OMSimU238Action(fParticleGun);
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
+    fDecayChainAction = new OMSimDecayChainAction(fParticleGun);
 	fPhotonAction = new OMSimPhotonAction(fParticleGun);
 	fGeneratorMessenger = new PrimaryGeneratorMessenger(this);
 }
@@ -43,6 +45,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
         fU238Action(0),
         fU235Action(0),
         fTh232Action(0),
+        fDecayChainAction(0),
         fPhotonAction(0),
         fParticleGun(0),
         fActionType(0),
@@ -59,6 +62,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
 	fU238Action = new OMSimU238Action(fParticleGun);
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
+    fDecayChainAction = new OMSimDecayChainAction(fParticleGun);
 	fPhotonAction = new OMSimPhotonAction(fParticleGun);
 	fGeneratorMessenger = new PrimaryGeneratorMessenger(this);
 }
@@ -72,6 +76,7 @@ OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 	delete fU238Action;
 	delete fU235Action;
 	delete fTh232Action;
+    delete fDecayChainAction;
 	delete fPhotonAction;
 	delete fParticleGun;
 	delete fGeneratorMessenger;
@@ -112,6 +117,9 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
         case Th232:
             std::cout << "Generating Th232!" << std::endl;
             fTh232Action -> GeneratePrimaries(anEvent);
+            break;
+        case DecayChain:
+            fDecayChainAction -> GeneratePrimaries(anEvent);
             break;
         case Visualization:
             //std::cout << "Visualization called!" << std::endl;
@@ -190,12 +198,113 @@ void OMSimPrimaryGeneratorAction::SetPosition(G4ThreeVector& position)
         case Th232:
             fTh232Action -> SetPosition(position);
             break;
+        case DecayChain:
+            fDecayChainAction -> SetPosition(position);
+            break;
         default:
             std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetPosition() " << std::endl
             << "Aborting...." << std::endl;
             exit(0);
     }
 }
+
+void OMSimPrimaryGeneratorAction::SetZ(G4int z)
+{
+    switch(fActionType)
+    {
+        case DecayChain:
+            fDecayChainAction -> SetZ(z);
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetZ() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+
+void OMSimPrimaryGeneratorAction::SetA(G4int a)
+{
+    switch(fActionType)
+    {
+        case DecayChain:
+            fDecayChainAction -> SetA(a);
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetA() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+
+void OMSimPrimaryGeneratorAction::SetExcitationEnergy(G4double excitationEnergy)
+{
+    switch(fActionType)
+    {
+        case DecayChain:
+            fDecayChainAction -> SetExcitationEnergy(excitationEnergy);
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetExcitationEnergy() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+
+void OMSimPrimaryGeneratorAction::SetTotalAngularMomentum(G4int totalAngularMomentum)
+{
+    switch(fActionType)
+    {
+        case DecayChain:
+            fDecayChainAction -> SetTotalAngularMomentum(totalAngularMomentum);
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetTotalAngularMomentum() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+
+
+void OMSimPrimaryGeneratorAction::SetPDGLifeTime(G4double meanLifeTime)
+{
+    switch(fActionType)
+    {
+        case DecayChain:
+            fDecayChainAction -> SetPDGLifeTime(meanLifeTime);
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetPDGLifeTime() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+
+G4double OMSimPrimaryGeneratorAction::GetPDGLifeTime()
+{
+    switch(fActionType)
+    {
+        case DecayChain:
+            return (fDecayChainAction -> GetPDGLifeTime());
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::GetPDGLifeTime() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+
+void OMSimPrimaryGeneratorAction::GenerateIsotope()
+{
+    switch(fActionType)
+    {
+        case DecayChain:
+            return (fDecayChainAction -> GenerateIsotope());
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::GenerateIsotope() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+
 void OMSimPrimaryGeneratorAction::GenerateToVisualize()
 {
 
