@@ -4,6 +4,7 @@
 #include "G4VUserPhysicsList.hh"
 #include "globals.hh"
 #include "G4RadioactiveDecayPhysics.hh"
+#include "G4RadioactiveDecay.hh"
 
 class G4VPhysicsConstructor;
 class G4ProductionCuts;
@@ -21,6 +22,6 @@ class OMSimPhysicsList: public G4VUserPhysicsList
 
 	private:
         G4RadioactiveDecayPhysics* radioactiveList;
-
+		G4RadioactiveDecay* radioactiveDecay;
 };
 #endif
