@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <string>
 #include "G4RunManager.hh"
 #include "G4UIterminal.hh"
@@ -19,6 +20,8 @@
 #include <ctime>
 #include <string>
 
+
+std::fstream gRadioDecayFile;
 
 //setting up the external variables
 G4int           gGlass = 0;

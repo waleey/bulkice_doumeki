@@ -7,6 +7,8 @@
 #include "G4SystemOfUnits.hh"
 #include "OMSimRadioactivityData.hh"
 
+extern std::fstream gRadioDecayFile;
+
 OMSimTrackingAction::OMSimTrackingAction()
 :G4UserTrackingAction(), counter(0)
 {
@@ -30,19 +32,40 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
     **/
     G4double timeWindow = OMSimRadioactivityData::ftimeWindow * s;
     OMSimRadioactivityData* radData = new OMSimRadioactivityData();
+    
+    if (aTrack -> GetParticleDefinition() -> GetParticleName() == "gamma") {
+        std::cout << "+++ (PRE) Gamma Energy [keV]: " << aTrack -> GetKineticEnergy() * 1000 << std::endl;
+    }
+    
+    if (gRadioDecayFile.is_open()){
+                G4int trackID = aTrack -> GetTrackID();
+                G4String particleName = aTrack -> GetParticleDefinition() -> GetParticleName();
+                G4double kineticEnergy = aTrack -> GetKineticEnergy();
+                gRadioDecayFile << trackID << "," << particleName << "," << kineticEnergy / CLHEP::MeV << "\n";
+            }
+
+    if (aTrack -> GetParticleDefinition() -> GetPDGCharge() > 2.) // print every isotope name
+    {
+        std::cout << "-------------------\n" << aTrack -> GetParticleDefinition()->GetParticleName() << "\n-------------------" << std::endl; 
+    }
+    
     if(aTrack -> GetCreatorProcess())
     {
-           if(!(aTrack -> GetParticleDefinition() -> GetPDGStable()))
+        // Remove the const qualifier to make the track modifiable
+        G4Track* mTrack = const_cast<G4Track*>(aTrack);
+        // check if particle is instable
+        if(!(mTrack -> GetParticleDefinition() -> GetPDGStable()))
+        {  
+            //G4double excitationEnergy = ((const G4Ions*)(mTrack -> GetParticleDefinition())) -> GetExcitationEnergy(); // in MeV
+            G4double meanLife = mTrack -> GetParticleDefinition() -> GetPDGLifeTime(); 
+            std::cout << "+++ Mean Life Time [ns]: " << meanLife << std::endl;
+            //std::cout << "+++ Excitation Energy [keV]: " << excitationEnergy * 1000 << std::endl;
+            if (meanLife * 10 > timeWindow) // || excitationEnergy == 0)) // long lived states and ground states are killed
             {
-                if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > OMSimRadioactivityData::ftimeWindow * s)
-                //if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > 60 * s)
-                {
-                    aTrack -> GetDefinition() -> SetPDGLifeTime((radData -> GetInitialTime()) * s);
-                    /*std::cout << aTrack -> GetParticleDefinition() -> GetPDGLifeTime() << std::endl;
-                    std::cout << aTrack -> GetGlobalTime() << std::endl;
-                    std::cout << aTrack -> GetParticleDefinition() -> GetParticleName() << std::endl;*/
-                }
+                mTrack -> SetTrackStatus(fStopAndKill);
+                std::cout << ".... ---- |||| STOP AND KILL |||| ---- ...." << std::endl;
             }
+        }
     }
     delete radData;
 }
