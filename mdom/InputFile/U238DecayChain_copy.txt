@@ -1,2 +1,6 @@
 Name	AtomicNumber	MassNumber	ExcitationEnergy	TotalAngularMomentum	BranchingRatio
+U238	92	238	0.0	0	1.0
+Th234	90	234	0.0	0	1.0
+Pa234m	91	234	73.92	0	1.0
+Pa234	91	234	0.0	0	0.016
 U234	92	234	0.0	0	1.0
