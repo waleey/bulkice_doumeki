@@ -78,7 +78,7 @@ file(COPY "${SOURCE_DIR}" DESTINATION "${DESTINATION_DIR}")
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg")
 #set(OProfile_DIR "/bin//operf")
 # Link against OProfile libraries
 #find_package(OProfile REQUIRED)
