@@ -11,6 +11,7 @@ extern G4int gVesselCount;
 extern G4int gWLSCount;
 extern G4int gPMTBodyCount;
 extern G4int gWLSAndHitCount;
+extern G4bool gVerbose;
 
 OMSimAnalysisManager::OMSimAnalysisManager(){
     std::cerr << "OMSimAnalysisManager is generated" << std::endl;}
@@ -21,7 +22,9 @@ void OMSimAnalysisManager::Write()
 {
 	if(datafile.is_open())
 	{
-        G4cout << "+++++++++++++The size of this event is " << stats_event_id.size() << " ++++++++++++" << G4endl;
+        if (gVerbose){
+		G4cout << "+++++++++++++The size of this event is " << stats_event_id.size() << " ++++++++++++" << G4endl;
+		}
         //datafile << "Run ID: " << fRunId << G4endl;
         //datafile << "Event Size: " << stats_event_id.size() << G4endl;
         for (int i = 0; i < (int) stats_event_id.size(); i++)
@@ -59,11 +62,12 @@ void OMSimAnalysisManager::Write()
         G4cout << "********Failed to open " << ghitsfilename << " file*******" << G4endl;
 	}
 
+	if (gVerbose){
 	std::cout << "Photon reaching Pressure Vessel: " << gVesselCount << std::endl
 	<< "Photon getting absorbed by PMT no_optic: " << gPMTBodyCount << std::endl
 	<< "Photon getting absorbed by WLS material: " << gWLSCount << std::endl
 	<< "Photon making hit and produced from WLS: " << gWLSAndHitCount << std::endl;
-
+	}
 	gWLSAndHitCount = 0;
 	gVesselCount = 0;
 	gPMTBodyCount = 0;
