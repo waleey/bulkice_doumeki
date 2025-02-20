@@ -22,6 +22,8 @@
 
 
 std::fstream gRadioDecayFile;
+G4bool gVerbose = false;
+G4bool gRadioSampleExponential = true;
 
 //setting up the external variables
 G4int           gGlass = 0;
@@ -34,7 +36,7 @@ G4int           gPMT = 0;
 G4bool          gPlaceHarness = true;
 G4int           gHarness = 1;
 G4int           gRopeNumber = 1;
-G4double        gworldsize = 0.5 * m;
+G4double        gworldsize = 10;
 G4double        gElectronFactor = 9.5;
 G4bool          gCADImport = true;
 G4String        gHittype = "individual"; // seems like individual records each hit per pmt
@@ -177,7 +179,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
 
         G4String outputFolder = argv[4];
         gRunID = atoi(argv[5]);
-        worldsize = 20 * m;
+        //worldsize = 20 * m;
         ghitsfilename += outputFolder + "/";
 
         if(interaction_channel == "opticalphoton")
@@ -223,7 +225,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         gPMT = 5;
         gVis = true;
         interaction_channel = argv[2];
-        worldsize = 20;
+        //worldsize = 20;
         //gZenithAngle = atof(argv[3]);
     }
     else
@@ -284,7 +286,7 @@ std::vector<double> readColumnDouble (G4String fn, int col) {
 
 int main(int argc, char** argv)
 {
-    G4double world_size(0);
+    G4double world_size = gworldsize;
     G4String macroname;
     G4int PMT_model(0);
     G4String interaction_channel;
