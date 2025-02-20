@@ -3,13 +3,15 @@
 #include "G4ParticleDefinition.hh"
 #include "G4Positron.hh"
 
+extern G4double gworldsize;
+extern G4bool gVerbose;
 OMSimPositronAction::OMSimPositronAction(G4ParticleGun* particleGun)
     :   fParticleGun(particleGun),
         fParticleExist(true),
         fParticleNum(0),
         fIdx(0)
 {
-
+    fRadData = new OMSimRadioactivityData();
 }
 OMSimPositronAction::~OMSimPositronAction()
 {
@@ -17,6 +19,7 @@ OMSimPositronAction::~OMSimPositronAction()
 }
 void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
 {
+    /*
     try
     {
         std::cout << "Positron x: " << fPositronData.at(X).at(fIdx) << std::endl
@@ -36,11 +39,43 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
     fParticleGun -> SetParticleTime(fPositronData.at(TIME).at(fIdx) * ms);
     fParticleGun -> SetParticleDefinition(G4Positron::PositronDefinition());
     fParticleGun -> GeneratePrimaryVertex(anEvent);
+    */
+    
+    G4double positionRandom[3] = {fRadData -> RandomGen(-gworldsize, gworldsize),fRadData -> RandomGen(-gworldsize, gworldsize),fRadData -> RandomGen(-gworldsize, gworldsize)};
+    G4ThreeVector orientationRandom = fRadData -> SetupOrientation();
+    G4double timeRandom = fRadData -> RandomGen(0, 1);
+
+    fParticleGun -> SetParticlePosition(G4ThreeVector(positionRandom[0] * m, positionRandom[1] * m, positionRandom[2] * m));
+    fParticleGun -> SetParticleMomentumDirection(orientationRandom);
+    fParticleGun -> SetParticleEnergy(10 * MeV);
+    fParticleGun -> SetParticleTime(timeRandom * s);
+    fParticleGun -> SetParticleDefinition(G4Positron::PositronDefinition());
+    fParticleGun -> GeneratePrimaryVertex(anEvent);
+
+    if (fIdx % 1000 == 0){
+        std::cerr << (fIdx / 1000) << " percent done" << std::endl;
+    }
+
+    try
+    {
+        if (true)//(gVerbose)
+        {
+            std::cout << "Positron x: " << positionRandom[0] << std::endl
+                    << "Positron y: " << positionRandom[1] << std::endl
+                    << "Positron z: " << positionRandom[2] << std::endl;
+        }
+    }
+    catch(...)
+    {
+        std::cerr << "Vector out of range. " << std::endl
+        << "OMSimPositronAction::GeneratePrimaries()" << std::endl;
+        exit(0);
+    } 
 
     fIdx++;
     if(fIdx == fParticleNum)
     {
-        std::cout << "Total " << fIdx << " poistrons are generated!" << std::endl;
+        std::cout << "Total " << fIdx << " positrons are generated!" << std::endl;
         fParticleExist = false;
     }
 }
@@ -72,5 +107,5 @@ void OMSimPositronAction::LoadData()
         file.close();
     }
     fParticleNum = fPositronData.at(0).size();
-
+    fParticleNum = 12500;
 }
