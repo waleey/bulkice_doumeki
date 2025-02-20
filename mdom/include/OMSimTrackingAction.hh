@@ -17,7 +17,8 @@ class OMSimTrackingAction : public G4UserTrackingAction
 	private:
         G4int counter;
         G4TrackingManager* ftrackingManager;
-
+		std::map<const G4ParticleDefinition*, G4double> fOriginalLifeTimes;
+		std::map<const G4ParticleDefinition*, G4double> fOriginalGlobalTimes;
 };
 
 #endif
