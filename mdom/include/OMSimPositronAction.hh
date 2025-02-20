@@ -4,6 +4,7 @@
 #include "G4ParticleGun.hh"
 #include "G4Event.hh"
 #include "G4SystemOfUnits.hh"
+#include "OMSimRadioactivityData.hh"
 
 #include <fstream>
 #include <vector>
@@ -24,6 +25,8 @@ private:
     bool fParticleExist;
     G4int fParticleNum;
     G4int fIdx;
+
+    OMSimRadioactivityData* fRadData;
 
     std::vector<G4double> energy;
     std::vector<G4double> fX;
