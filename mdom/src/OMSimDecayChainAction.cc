@@ -1,5 +1,6 @@
 #include "OMSimDecayChainAction.hh"
-
+extern G4bool gVerbose;
+extern G4bool gRadioSampleExponential;
 
 OMSimDecayChainAction::OMSimDecayChainAction()   
 {
@@ -34,9 +35,25 @@ void OMSimDecayChainAction::GeneratePrimaries(G4Event* anEvent) {
     G4double charge = 0. * eplus;
     // random direction
     G4ThreeVector orientation = fRadData -> SetupOrientation();
-    // random time
-    G4double initialTime = fRadData -> GetInitialTime() * s;
+    G4double timeWindow = fRadData -> GetTimeWindow() * s;
+    G4double meanLifeTime = fisotope -> GetPDGLifeTime() * ns;
 
+    G4String type = "flat"; // for long decay times sample from flat distribution
+
+    // for short decay times sample from exponential distribution
+    if (gRadioSampleExponential and meanLifeTime <= 1000 * s and meanLifeTime != 0) {type = "exp";}
+    G4double initialTime = fRadData ->GetInitialTime(type, meanLifeTime) * s;
+    
+    if (gVerbose){
+    std::cout << "+++ (DECAY):"
+              << " Sampling : " << type
+              << " ||| Mean Life Time [ns] = " << meanLifeTime
+              << " ||| Time Window [ns] = " << timeWindow
+              << " ||| Initial Time [ns] : " << initialTime << std::endl;
+    }
+    // now that initial time is set, set life time to zero
+    fisotope -> SetPDGLifeTime(0 * ns);
+    
     try
     {
         fParticleGun -> SetParticlePosition(fPosition);
