@@ -1,0 +1,7 @@
+/home/jakob/software/doumeki/bulkice_doumeki/build/CMakeFiles/bulkice_doumeki.dir
+/home/jakob/software/doumeki/bulkice_doumeki/build/CMakeFiles/edit_cache.dir
+/home/jakob/software/doumeki/bulkice_doumeki/build/CMakeFiles/rebuild_cache.dir
+/home/jakob/software/doumeki/bulkice_doumeki/build/CMakeFiles/list_install_components.dir
+/home/jakob/software/doumeki/bulkice_doumeki/build/CMakeFiles/install.dir
+/home/jakob/software/doumeki/bulkice_doumeki/build/CMakeFiles/install/local.dir
+/home/jakob/software/doumeki/bulkice_doumeki/build/CMakeFiles/install/strip.dir

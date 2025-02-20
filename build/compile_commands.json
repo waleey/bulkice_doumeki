@@ -1,0 +1,254 @@
+[
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/bulkice_doumeki.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/bulkice_doumeki.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/bulkice_doumeki.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/G4OpWLS3.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/G4OpWLS3.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/G4OpWLS3.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/G4OpWLS3.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/Interpolation.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/Interpolation.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/Interpolation.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/Interpolation.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimAnalysisManager.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimAnalysisManager.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimAnalysisManager.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimAnalysisManager.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimDEGG.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDEGG.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDEGG.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimDEGG.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimDEGGHarness.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDEGGHarness.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDEGGHarness.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimDEGGHarness.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimDataFileTypes.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDataFileTypes.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimDataFileTypes.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimDecayChainAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDecayChainAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDecayChainAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimDecayChainAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDetectorConstruction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimDetectorConstruction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimDetectorConstruction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimElectronAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimElectronAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimElectronAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimEventAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimEventAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimEventAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimInputData.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimInputData.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimInputData.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimK40Action.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimK40Action.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimK40Action.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimLOM16.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimLOM16.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM16.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimLOM18.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimLOM18.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimLOM18.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimMDOM.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimMDOM.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOM.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimMDOMHarness.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimMDOMHarness.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimMDOMHarness.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimNeutronAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimNeutronAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimNeutronAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPDOM.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPDOM.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimPDOM.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPMTConstruction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPMTConstruction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTConstruction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPMTQE.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPMTQE.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTQE.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPMTResponse.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPMTResponse.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimPMTResponse.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPhotonAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPhotonAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPhotonAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimPhotonAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPhysicsList.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPhysicsList.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimPhysicsList.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPositronAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPositronAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimPositronAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPrimaryGeneratorAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimPrimaryGeneratorAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimPrimaryGeneratorAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimRadioactivityData.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimRadioactivityData.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimRadioactivityData.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimRunAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimRunAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimRunAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimRunManager.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimRunManager.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimRunManager.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimScintillation.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimScintillation.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimScintillation.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimSteppingAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimSteppingAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimSteppingVerbose.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimSteppingVerbose.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimSteppingVerbose.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimTh232Action.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimTh232Action.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimTh232Action.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimTrackingAction.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimTrackingAction.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimTrackingAction.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimU235Action.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimU235Action.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimU235Action.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimU238Action.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimU238Action.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimU238Action.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/OMSimUtils.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimUtils.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/OMSimUtils.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/OMSimUtils.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/PrimaryGeneratorMessenger.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/PrimaryGeneratorMessenger.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/PrimaryGeneratorMessenger.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/PrimaryGeneratorMessenger.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/WLSBoundaryProcess.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/WLSBoundaryProcess.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/WLSBoundaryProcess.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/WLSBoundaryProcess.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/WOM.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/WOM.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/WOM.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/WOM.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/WOMMaterial.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/WOMMaterial.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/WOMMaterial.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/WOMMaterial.cc.o"
+},
+{
+  "directory": "/home/jakob/software/doumeki/bulkice_doumeki/build",
+  "command": "/usr/bin/c++ -DG4LIB_BUILD_DLL -DG4UI_USE_XM -DG4VIS_USE_OPENGLX -DG4VIS_USE_OPENGLXM -DG4VIS_USE_TOOLSSG_X11_GLES -DG4VIS_USE_TOOLSSG_XT_GLES -DG4VIS_USE_TOOLSSG_XT_ZB -DPTL_BUILD_DLL -I/home/jakob/software/doumeki/bulkice_doumeki/mdom/include -isystem /home/jakob/software/geant4/geant4-v11.2.2-install/include/Geant4  -g -pg -g -o CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o -c /home/jakob/software/doumeki/bulkice_doumeki/mdom/src/abcDetectorComponent.cc",
+  "file": "/home/jakob/software/doumeki/bulkice_doumeki/mdom/src/abcDetectorComponent.cc",
+  "output": "CMakeFiles/bulkice_doumeki.dir/src/abcDetectorComponent.cc.o"
+}
+]
