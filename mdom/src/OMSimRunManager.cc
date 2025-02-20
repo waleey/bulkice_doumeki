@@ -131,10 +131,10 @@ void OMSimRunManager::BeamOn()
         {
             case mdom:
                 //GenerateK40();
-                //GenerateU238();
+                GenerateU238();
                 //GenerateU235();
                 //GenerateTh232();
-                GenerateDecayChain("U238");
+                //GenerateDecayChain("U238");
                 break;
             case lom18:
                 GenerateK40();
@@ -290,7 +290,7 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
     fPrimaryGenerator -> SetActionType(DecayChain);
     std::string filename = "../InputFile/";
     G4double activity;
-    
+
     if (chainName == "U238"){
         filename += "U238DecayChain.txt";
         activity = U238Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
@@ -321,7 +321,6 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
 
     // load decay chain configuration file
     std::vector<ElementData> decayChain = loadDataFromFile(filename);
-
     // loop through the decay chain
     for (const auto& [isotopeName, Z, A, excitationEnergy, totalAngularMomentum, branchingRatio] : decayChain) 
     {
@@ -332,7 +331,7 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
         fPrimaryGenerator -> SetTotalAngularMomentum(totalAngularMomentum);
         fPrimaryGenerator -> GenerateIsotope();
         G4double const originalLifeTime = fPrimaryGenerator -> GetPDGLifeTime(); // safe original PDG life time
-        fPrimaryGenerator -> SetPDGLifeTime(0 * ns);
+        //fPrimaryGenerator -> SetPDGLifeTime(0 * ns);
 
         // number of decays
         G4int numDecays = fRadData -> GetNumDecay(meanRate); // pull from Poisson distribution
@@ -358,7 +357,7 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
                   << ", A=" 
                   << A 
                   << ", E=" 
-                  << excitationEnergy * keV 
+                  << excitationEnergy
                   << " keV, J=" 
                   << totalAngularMomentum * 1/2 
                   << ")\n----------------------------------------------------" 
@@ -371,8 +370,9 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
             fPrimaryGenerator -> SetPosition(point);
             // Process one event with RunManager
             fRunManager -> BeamOn(1);
+            // restore original PDG life time, inside loop, because life-time is needed to compute initial decay time
+            fPrimaryGenerator -> SetPDGLifeTime(originalLifeTime);
         }
-        fPrimaryGenerator -> SetPDGLifeTime(originalLifeTime); // restore original PDG life time
     }
 }
 
@@ -396,6 +396,7 @@ void OMSimRunManager::OpenFile()
     G4cout << ":::::::::This is the beginning of Run Action::::::::" << G4endl;
     startingtime = clock() / CLOCKS_PER_SEC;
     G4String filename = ghitsfilename + ".dat";
+    std::cout << "filename :" << filename << std::endl;
 	gAnalysisManager.datafile.open(filename, std::ios::out /*| std::ios::app*/);
 	gNumCherenkov = 0;
 	gNumScint = 0;
