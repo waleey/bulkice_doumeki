@@ -149,6 +149,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 }
 
                 if (gHittype == "individual") {
+                    std::cout << "+++ (STEP) Optical Photon reached photocathode!" << std::endl;
                     deltapos = aTrack->GetVertexPosition() - aTrack->GetPosition();
                     t1 = aTrack->GetGlobalTime() /ns;
                     t2 = aTrack->GetLocalTime();
