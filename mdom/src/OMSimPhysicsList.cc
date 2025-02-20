@@ -44,9 +44,22 @@
 
 OMSimPhysicsList::OMSimPhysicsList():  G4VUserPhysicsList()
 {
-	defaultCutValue = 0.1*mm;
+	defaultCutValue = 0.001*mm;
 	SetVerboseLevel(0);
 	radioactiveList = new G4RadioactiveDecayPhysics();
+	radioactiveDecay = new G4RadioactiveDecay();
+	
+	const G4double meanLife = 1 * ps; 
+	G4DeexPrecoParameters* deex = 
+    G4NuclearLevelData::GetInstance()->GetParameters();
+	deex->SetCorrelatedGamma(false);
+	deex->SetStoreAllLevels(true);
+	deex->SetInternalConversionFlag(true);	  
+	deex->SetIsomerProduction(true);  
+	deex->SetMaxLifeTime(meanLife);
+
+	G4NuclideTable* nucltbl = G4NuclideTable::GetInstance();
+	nucltbl->SetMeanLifeThreshold(meanLife);
 }
 
 OMSimPhysicsList::~OMSimPhysicsList()
@@ -86,6 +99,9 @@ void OMSimPhysicsList::ConstructProcess()
 
 //  The Radioactive Decay Process
 	radioactiveList -> ConstructProcess();
+
+	radioactiveDecay -> SetARM(true);
+	plh -> RegisterProcess(radioactiveDecay, G4GenericIon::GenericIon());
 
 //	The Cherenkov process
 	G4Cerenkov* theCerenkovProcess = new G4Cerenkov("Cerenkov");
