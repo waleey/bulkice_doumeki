@@ -139,3 +139,28 @@ def plot_example_trace(self, num = 5):
     plt.tight_layout()
     plt.show()
     plt.close()
+
+def plot_summary_combined_data(self):
+    
+    fig, ax = plt.subplots(2,1)
+
+    # Plots hit times of all time-sorted optical photons
+    ax[0].vlines(self.hit_time_st / 1E9, ymin = 0, ymax = 1, lw = 0.1, alpha = 0.2)
+    ax[0].axvline(1, color = "k", lw = 2, ls = "--")
+    ax[0].set_ylim(0,1)
+    ax[0].set_xlabel("Time [s]")
+    ax[0].set_yticks([])
+
+    # Plots histogram of time difference for time-sorted optical photons
+    # for all photons and QE biased
+    ax[1].hist(self.hit_diff_time_st / 1E6, bins = 100, histtype="step", label = "all hits", lw = 2)
+    ax[1].hist(self.hit_diff_time_st_qe / 1E6, bins = 100, histtype="step", label = "QE biased", lw = 2, ls = "--")
+
+    ax[1].set_yscale("log")
+    ax[1].set_xlabel("Time Difference [ms]")
+    ax[1].set_ylabel("Counts")
+    ax[1].legend()
+
+    plt.tight_layout()
+    plt.show()
+    plt.close()
