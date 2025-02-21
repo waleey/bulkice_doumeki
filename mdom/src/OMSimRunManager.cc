@@ -131,10 +131,10 @@ void OMSimRunManager::BeamOn()
         {
             case mdom:
                 //GenerateK40();
-                GenerateU238();
+                //GenerateU238();
                 //GenerateU235();
                 //GenerateTh232();
-                //GenerateDecayChain("U238");
+                GenerateDecayChain("U238");
                 break;
             case lom18:
                 GenerateK40();
