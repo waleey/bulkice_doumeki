@@ -1,4 +1,6 @@
 #include "OMSimRadioactivityData.hh"
+
+extern G4bool gVerbose;
 /**
 *Time window will be set in Particle Setup Class
 *Out and In rad will be set in Detector Construction.
@@ -56,15 +58,28 @@ G4double OMSimRadioactivityData::GetInitialTime()
     return finitialTime;
 }
 
+G4double OMSimRadioactivityData::GetInitialTime(G4String type, G4double meanLifeTime)
+{
+    if (type == "flat") {GenerateFlatInitialTime();}
+    else if (type == "exp") {GenerateExpInitialTime(meanLifeTime);}
+    return finitialTime;
+}
+
 void OMSimRadioactivityData::GenerateFlatInitialTime()
 {
     finitialTime = RandomGen(0.0, ftimeWindow);
-    //finitialTime = RandomGen(0.0, 60);
 }
 
-void OMSimRadioactivityData::GenerateExpInitialTime()
+void OMSimRadioactivityData::GenerateExpInitialTime(G4double meanLifeTime)
 {
-
+    // inverse CDF sampling for normalized PDF between [0, ftimeWindow] and given meanLifeTime
+    // for large fTimeWindow > 10E16 s floating point precision issues emerge
+    // switch to flat distribution for those cases
+    G4double randomCDF = RandomGen(0.0, 1.0);
+    if (gVerbose){
+        std::cout << "+++ (RAD): randomCDF = " << randomCDF << std::endl;
+    }
+    finitialTime = -meanLifeTime * log(1 - randomCDF * (1 - exp(-ftimeWindow/meanLifeTime)));
 }
 
 void OMSimRadioactivityData::GeneratePosition()
