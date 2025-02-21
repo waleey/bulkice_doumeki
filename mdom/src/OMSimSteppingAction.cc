@@ -17,6 +17,7 @@ extern G4int gPosCount;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
 extern G4bool gWOM;
+extern G4bool gVerbose;
 
 G4int gVesselCount = 0;
 G4int gPMTBodyCount = 0;
@@ -149,7 +150,9 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 }
 
                 if (gHittype == "individual") {
-                    std::cout << "+++ (STEP) Optical Photon reached photocathode!" << std::endl;
+                    if (gVerbose){
+                        std::cout << "+++ (STEP) Optical Photon reached photocathode!" << std::endl;
+                    }
                     deltapos = aTrack->GetVertexPosition() - aTrack->GetPosition();
                     t1 = aTrack->GetGlobalTime() /ns;
                     t2 = aTrack->GetLocalTime();
