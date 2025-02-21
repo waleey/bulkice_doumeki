@@ -25,6 +25,7 @@ extern G4double gworldsize;
 extern G4int gDOM;
 extern G4bool gCADImport;
 extern G4bool gPlaceHarness;
+extern G4bool gVerbose;
 
 G4double OMSimRadioactivityData::fglassInRad = 0.0;
 G4double OMSimRadioactivityData::fglassOutRad = 0.0;
@@ -229,9 +230,11 @@ G4ThreeVector OMSimDetectorConstruction::DrawFromVolume()
     }
     else
     {
-            std::cout << "x: " << point.x() / mm << std::endl
-            << "y: " << point.y() / mm << std::endl
-            << "z: " << point.z() / mm << std::endl;
+            if (gVerbose){
+                std::cout << "x: " << point.x() / mm << std::endl
+                << "y: " << point.y() / mm << std::endl
+                << "z: " << point.z() / mm << std::endl;
+            }
         return point;
     }
 
