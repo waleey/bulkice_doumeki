@@ -29,9 +29,13 @@ class Decay:
         self.url = "https://www-nds.iaea.org/relnsd/v1/data?fields=decay_rads&nuclides="+refname
 
     def get_data(self):
+        print("Loading simulation data...")
         self.get_sim_data()
+        print("Loading reference data from https://www-nds.iaea.org ...")
         self.get_ref_data()
-        if self.return_hit_time: self.get_hit_data()
+        if self.return_hit_time: 
+            print("Sorting and filtering photon hits...")
+            self.get_hit_data()
 
     def get_sim_data(self):
         # simulatation data
@@ -132,11 +136,13 @@ class Decay:
     def run(self, return_hit_times = False, flag_comb_hits = False):
         
         self.return_hit_time = return_hit_times
+        self.flag_comb_hits = flag_comb_hits
 
-        if flag_comb_hits:
+        if self.flag_comb_hits:
             self.hit_path = self.dir + "/hits_" + self.isolist[0] + "Chain" + "_" + self.mode + ".dat"
 
             self.get_hit_data()
+            plot_summary_combined_data(self)
 
         else:
             for iso in self.isolist:
