@@ -20,6 +20,7 @@ extern G4double gAngleIncrement;
 extern G4bool gMultipleAngle;
 extern G4int gPhotonNotAbsorbed;
 extern G4bool gVis;
+extern G4bool gVerbose;
 G4double gAngle = 0;
 
 //G4int gIdx = 0;
@@ -134,7 +135,10 @@ void OMSimRunManager::BeamOn()
                 //GenerateU238();
                 //GenerateU235();
                 //GenerateTh232();
+                GenerateDecayChain("K40");
                 GenerateDecayChain("U238");
+                GenerateDecayChain("U235");
+                GenerateDecayChain("Th232");
                 break;
             case lom18:
                 GenerateK40();
@@ -291,6 +295,7 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
     std::string filename = "../InputFile/";
     G4double activity;
 
+    // Select decay chain
     if (chainName == "U238"){
         filename += "U238DecayChain.txt";
         activity = U238Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
@@ -303,6 +308,10 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
         filename += "Th232DecayChain.txt";
         activity = Th232Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
     }
+    else if (chainName == "K40"){
+        filename += "K40DecayChain.txt";
+        activity = K40Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
+    }
     else
     {
         std::cerr << "Invalid decay chain name. Aborting..." << std::endl;
@@ -311,25 +320,112 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
     
     // Time window and mean rate
     G4double timeWindow = fRadData -> GetTimeWindow();
-    G4double meanRate = activity * timeWindow;
 
+    G4double lifeTimeThresh = - timeWindow / std::log(0.99) * s;
+    G4double leakTimeThresh = timeWindow * std::log(0.01)/std::log(0.99) * s;
+    G4double leakTimeWindow;
+
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
     std::cout << "Simulating Full " << chainName << " Decay Chain" << std::endl;
-    std::cout << "Time window [s]: " << timeWindow << std::endl;
     std::cout << chainName << " Activity [Bq]: " << activity << std::endl;
+    std::cout << "Time window [s]: " << timeWindow << std::endl;
+    std::cout << "Threshold Mean Life [s]: " << lifeTimeThresh << std::endl;
+    std::cout << "Threshold Leak Time [s]: " << leakTimeThresh << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 
     G4ThreeVector point;
+    std::vector<std::string> skipIsotopes; // Set to store isotope names
 
     // load decay chain configuration file
     std::vector<ElementData> decayChain = loadDataFromFile(filename);
-    // loop through the decay chain
-    for (const auto& [isotopeName, Z, A, excitationEnergy, totalAngularMomentum, branchingRatio] : decayChain) 
+    // loop over the decay chain
+    for (size_t i = 0; i < decayChain.size(); i++)
     {
-        // configure isotope
+        const auto& [isotopeName, Z, A, excitationEnergy, totalAngularMomentum, branchingRatio] = decayChain[i]; 
+        
+        if (std::find(skipIsotopes.begin(), skipIsotopes.end(), isotopeName) != skipIsotopes.end())
+        {
+            std::cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n|" 
+                  << "   0 decays " 
+                  << isotopeName 
+                  << "\n| --> Skipping because " << isotopeName << " is included in skip list."
+                  << "\n::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" 
+                  << std::endl;
+            continue;
+        }        
+
+        G4double meanRate;
+        G4double timeLow;
+        G4double timeHigh;
+
+        G4double maxLifeTime = 0;
+        std::vector<std::string> skipGroup; // sub-group of isotope names to avoid
+        size_t j = i + 1;
+
+        while (j < decayChain.size())
+        {
+            const auto& [nextIsotopeName, nextZ, nextA, nextExcitationEnergy, nextTotalAngularMomentum, nextBranchingRatio] = decayChain[j]; 
+            
+
+            fPrimaryGenerator -> SetZ(nextZ);
+            fPrimaryGenerator -> SetA(nextA);
+            fPrimaryGenerator -> SetExcitationEnergy(nextExcitationEnergy);
+            fPrimaryGenerator -> SetTotalAngularMomentum(nextTotalAngularMomentum);
+            fPrimaryGenerator -> GenerateIsotope();
+            G4double nextLifeTime = fPrimaryGenerator -> GetPDGLifeTime(); // safe original PDG life time
+            if (nextIsotopeName == "Pa234m") // hard coded life time for Pa234m, can be loaded from data?
+            {
+                nextLifeTime = 1.00325e+11;
+                //std::cout << "Pa234m lifetime " << nextLifeTime / ns << " ns!" << std::endl;
+            }
+            if (nextLifeTime < lifeTimeThresh / ns)
+            {
+                skipGroup.push_back(nextIsotopeName);
+                maxLifeTime = std::max(maxLifeTime, nextLifeTime);
+                j++;
+            }
+            else
+            {
+                //skipGroup.push_back(nextIsotopeName); // last daughter to fulfill criteria has semi-stable daugher lifetime
+                break; // stop if we reach a "semi-stable" isotope
+            }
+        }
+        
+        if (skipGroup.size() != 0)
+        {
+            leakTimeWindow = -maxLifeTime * std::log(0.01) / s; // duration in for which 99% of daughters decay, take max of leak chain
+            meanRate = activity * (timeWindow+leakTimeWindow); // needs to move inside the isotope loop
+            timeLow = -leakTimeWindow; // lower time window
+            timeHigh = timeWindow; // higher time window
+            skipIsotopes.insert(skipIsotopes.end(), skipGroup.begin(), skipGroup.end()); // when leak time is simulated, avoid injecting daughters to prevent double counting
+            
+            // print all isotopes that will be skipped
+            std::cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+                        << "| Simulate leakage in time window [" << timeLow << ", " << timeHigh << "] s."
+                        << std::endl;
+            for (const auto& iso : skipGroup)
+            {
+                std::cout << "| Adding " << iso << " to skip list." << std::endl;
+            }
+            std::cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+                        << std::endl;
+        }
+        else
+        {
+            meanRate = activity * timeWindow; // needs to move inside the isotope loop
+            timeLow = 0; // lower time window
+            timeHigh = timeWindow; // higher time window
+        }
+        
+        // configure primary generator/isotope
         fPrimaryGenerator -> SetZ(Z);
         fPrimaryGenerator -> SetA(A);
         fPrimaryGenerator -> SetExcitationEnergy(excitationEnergy);
         fPrimaryGenerator -> SetTotalAngularMomentum(totalAngularMomentum);
         fPrimaryGenerator -> GenerateIsotope();
+        fPrimaryGenerator -> SetTimeLow(timeLow); // set ftimeLow in fradData, used inside OMSimDecayChainAction class
+        fPrimaryGenerator -> SetTimeHigh(timeHigh); // set ftimeHigh in fradData
+
         G4double const originalLifeTime = fPrimaryGenerator -> GetPDGLifeTime(); // safe original PDG life time
         //fPrimaryGenerator -> SetPDGLifeTime(0 * ns);
 
@@ -348,7 +444,7 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
             }
             numDecays = counter;
         }
-        std::cout << "----------------------------------------------------\n|   " 
+        std::cout << "----------------------------------------------------------------------\n|   " 
                   << numDecays 
                   << " decays " 
                   << isotopeName 
@@ -360,7 +456,9 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
                   << excitationEnergy
                   << " keV, J=" 
                   << totalAngularMomentum * 1/2 
-                  << ")\n----------------------------------------------------" 
+                  << ", tau="
+                  << originalLifeTime / ns
+                  << " ns)\n----------------------------------------------------------------------" 
                   << std::endl;
         for (G4int i = 0; i < numDecays; ++i)
         {
