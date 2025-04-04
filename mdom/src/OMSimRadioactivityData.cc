@@ -70,6 +70,12 @@ void OMSimRadioactivityData::GenerateFlatInitialTime()
     finitialTime = RandomGen(0.0, ftimeWindow);
 }
 
+G4double OMSimRadioactivityData::GetInitialTimeBounds(G4double timeLow, G4double timeHigh)
+{
+    finitialTime = RandomGen(timeLow, timeHigh);
+    return finitialTime;
+}
+
 void OMSimRadioactivityData::GenerateExpInitialTime(G4double meanLifeTime)
 {
     // inverse CDF sampling for normalized PDF between [0, ftimeWindow] and given meanLifeTime
