@@ -24,6 +24,7 @@
 std::fstream gRadioDecayFile;
 G4bool gVerbose = false;
 G4bool gRadioSampleExponential = true;
+G4bool gTrackingBiasing = false;
 
 //setting up the external variables
 G4int           gGlass = 0;
@@ -36,7 +37,7 @@ G4int           gPMT = 0;
 G4bool          gPlaceHarness = true;
 G4int           gHarness = 1;
 G4int           gRopeNumber = 1;
-G4double        gworldsize = 10;
+G4double        gworldsize = 40;
 G4double        gElectronFactor = 9.5;
 G4bool          gCADImport = true;
 G4String        gHittype = "individual"; // seems like individual records each hit per pmt
@@ -185,6 +186,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         if(interaction_channel == "opticalphoton")
         {
             gDistance = atof(argv[6]);
+            std::cout << "Distance [m]: " << gDistance << std::endl;
             gPhotonSim = true;
 
             if(argc == 8)
