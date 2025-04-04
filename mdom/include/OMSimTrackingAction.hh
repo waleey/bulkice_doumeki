@@ -4,6 +4,7 @@
 #include "G4UserTrackingAction.hh"
 #include "G4TrackingManager.hh"
 #include "G4OpticalPhoton.hh"
+#include "OMSimPMTQE.hh"
 
 class OMSimTrackingAction : public G4UserTrackingAction
 {
@@ -15,6 +16,7 @@ class OMSimTrackingAction : public G4UserTrackingAction
 		void PostUserTrackingAction(const G4Track*);
 
 	private:
+		OMSimPMTQE* pmt_qe = new OMSimPMTQE();
         G4int counter;
         G4TrackingManager* ftrackingManager;
 		std::map<const G4ParticleDefinition*, G4double> fOriginalLifeTimes;

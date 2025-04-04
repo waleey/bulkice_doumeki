@@ -10,8 +10,9 @@
 
 extern std::fstream gRadioDecayFile;
 extern G4bool gVerbose;
-
 extern G4bool gRadioSampleExponential;
+extern G4bool gTrackingBiasing;
+extern G4String gHittype;
 
 OMSimTrackingAction::OMSimTrackingAction()
 :G4UserTrackingAction(), counter(0)
@@ -48,9 +49,39 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
             }
 
 
-    if (aTrack -> GetParticleDefinition() -> GetParticleName() == "opticalphoton" and gVerbose)
+    if (aTrack -> GetParticleDefinition() -> GetParticleName() == "opticalphoton")// and gVerbose)
     {
-        std::cout << "+++ (PRE-TRACK) Optical Photon found!" << std::endl;
+        if (gTrackingBiasing)
+        {
+            G4double hc = 1240 * nm; // hc constant (unit eV*nm)
+            G4double Ekin = aTrack->GetKineticEnergy();
+            G4double lambda = (hc/Ekin) * nm; // wavelength
+            pmt_qe -> ReadQeTable();
+            G4double qe = (pmt_qe -> GetQe(lambda)) / 100; // pdf value
+            G4double random = CLHEP::RandFlat::shoot(0.0, 1.0); // random value between 0 and 1
+            G4bool survived = (random < (qe)) ? true : false; // rejection sampling
+            G4ThreeVector position = aTrack -> GetPosition();
+            if (gVerbose)
+            {
+                std::cout << "+++ (PRE-TRACK) Optical photon with wavelength [nm]: " << lambda / nm << ", QE: " << qe << ", Random: " << random << ", Survived: " << survived << std::endl;
+                std::cout << "                Position: x=" << position[0] / m << "m, y=" << position[1] / m << "m, z=" << position[2] / m << std::endl;
+            }
+
+            if (!survived) // kill photon
+            {
+                G4Track* mTrack = const_cast<G4Track*>(aTrack);
+                mTrack -> SetTrackStatus(fStopAndKill);
+                if (gVerbose)
+                {
+                    std::cout << "+++ (PRE-TRACK) QE Biasing killed optical photon!" << std::endl;
+                }
+            }
+            else 
+            {
+                std::cout << "+++ (INFO) Optical photons survived! What happens next?" << std::endl;
+                std::cout << "+++ (INFO) gHittype=" << gHittype << std::endl;
+            }
+        }
     }
 
     if (aTrack -> GetParticleDefinition() -> GetParticleName() == "gamma" and gVerbose) // prints the energy for each gamma
