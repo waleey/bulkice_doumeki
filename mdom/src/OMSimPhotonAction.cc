@@ -45,11 +45,17 @@ void OMSimPhotonAction::GeneratePrimaries(G4Event* anEvent)
 
     G4int nPhotons = energy.size();
 */
-    G4int nPhotons = 100000;
+
+    G4double initialEnergy = 1 * eV;
+    G4double finalEnergy = 8 * eV;
+    G4int nPhotons = 10000000;
+
+    std::cout << "Generating " << nPhotons << " between " << initialEnergy / eV << " eV and " << finalEnergy / eV << " eV." << std::endl;
     for(int i = 0; i < nPhotons; i++)
     {
         G4ThreeVector position = GeneratePosition();
-        G4double energyP = 3.55 * eV;
+        //G4double energyP = 3.55 * eV;
+        G4double energyP = fRadData -> RandomGen(initialEnergy, finalEnergy);
         fParticleGun -> SetParticlePosition(position);
         fParticleGun -> SetParticleMomentumDirection(direction);
         fParticleGun -> SetParticleEnergy(energyP);
@@ -140,6 +146,8 @@ G4ThreeVector OMSimPhotonAction::GeneratePosition()
     x = x * m;
     y = y * m;
     z = z * m;
+
+    //std::cout << "+++ (PHOTON-ACTION): Position x=" << x << " m, y=" << y << " m, z=" << z << " m." << std::endl;
 
     return G4ThreeVector(x, y, z);
 }
