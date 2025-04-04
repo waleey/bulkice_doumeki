@@ -23,6 +23,8 @@ public:
     inline void SetPosition(G4ThreeVector& position) { fPosition = position; }
     inline void SetZ(G4int z) { fZ = z; }
     inline void SetA(G4int a) { fA = a; }
+    inline void SetTimeLow(G4double timeLow) {ftimeLow = timeLow; }
+    inline void SetTimeHigh(G4double timeHigh) {ftimeHigh = timeHigh; }
     inline void SetExcitationEnergy(G4double excitationEnergy) { fexcitationEnergy = excitationEnergy; }
     inline void SetTotalAngularMomentum(G4int totalAngularMomentum) { ftotalAngularMomentum = totalAngularMomentum; }
     inline void SetPDGLifeTime(G4double meanLifeTime) {fisotope -> SetPDGLifeTime(meanLifeTime); }
@@ -33,6 +35,8 @@ private:
     G4ThreeVector fPosition;
     G4int fZ;
     G4int fA;
+    G4double ftimeLow;
+    G4double ftimeHigh;
     G4double fexcitationEnergy;
     G4int ftotalAngularMomentum;
     G4ParticleGun* fParticleGun;
