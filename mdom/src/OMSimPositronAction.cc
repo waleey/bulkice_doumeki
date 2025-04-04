@@ -52,13 +52,13 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
     fParticleGun -> SetParticleDefinition(G4Positron::PositronDefinition());
     fParticleGun -> GeneratePrimaryVertex(anEvent);
 
-    if (fIdx % 1000 == 0){
-        std::cerr << (fIdx / 1000) << " percent done" << std::endl;
+    if ((fIdx * 100) % fParticleNum == 0){
+        std::cerr << ((fIdx * 100)/ fParticleNum) << " percent done" << std::endl;
     }
 
     try
     {
-        if (true)//(gVerbose)
+        if (gVerbose)
         {
             std::cout << "Positron x: " << positionRandom[0] << std::endl
                     << "Positron y: " << positionRandom[1] << std::endl
@@ -107,5 +107,5 @@ void OMSimPositronAction::LoadData()
         file.close();
     }
     fParticleNum = fPositronData.at(0).size();
-    fParticleNum = 12500;
+    fParticleNum = 10000;
 }
