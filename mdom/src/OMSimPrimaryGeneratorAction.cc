@@ -6,6 +6,7 @@
 
 //#include "G4ParticleTypes.hh"
 extern G4double gZenithAngle;
+extern G4bool gVerbose;
 
 OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
     :   fPositronAction(0),
@@ -91,7 +92,9 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 	switch(fActionType)
 	{
         case Positron:
+        if (gVerbose){
             std::cout << "Generating Positrons!" << std::endl;
+        }
             fPositronAction -> GeneratePrimaries(anEvent);
             break;
         case Neutron:
@@ -128,8 +131,9 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             break;
         case Photon:
             //std::cout << "Generating Photon wave!" << std::endl;
-            //fPhotonAction -> GeneratePrimaries(anEvent);
-            GenerateToVisualize();
+            std::cout << "+++(PRIM) Generating Photons!" << std::endl;
+            fPhotonAction -> GeneratePrimaries(anEvent);
+            //GenerateToVisualize();
             break;
         case wave:
             GenerateWave();
@@ -273,6 +277,34 @@ void OMSimPrimaryGeneratorAction::SetPDGLifeTime(G4double meanLifeTime)
             break;
         default:
             std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetPDGLifeTime() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+
+void OMSimPrimaryGeneratorAction::SetTimeLow(G4double timeLow)
+{
+    switch(fActionType)
+    {
+        case DecayChain:
+            fDecayChainAction -> SetTimeLow(timeLow);
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetTimeLow() " << std::endl
+            << "Aborting...." << std::endl;
+            exit(0);
+    }
+}
+
+void OMSimPrimaryGeneratorAction::SetTimeHigh(G4double timeHigh)
+{
+    switch(fActionType)
+    {
+        case DecayChain:
+            fDecayChainAction -> SetTimeHigh(timeHigh);
+            break;
+        default:
+            std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::SetTimeHigh() " << std::endl
             << "Aborting...." << std::endl;
             exit(0);
     }

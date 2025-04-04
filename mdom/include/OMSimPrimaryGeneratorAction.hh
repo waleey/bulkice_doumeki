@@ -40,6 +40,8 @@ public:
 	void SetTotalAngularMomentum(G4int);
 	void SetPDGLifeTime(G4double);
 	G4double GetPDGLifeTime();
+	void SetTimeLow(G4double);
+    void SetTimeHigh(G4double);
 	inline void SetActionType(G4int actionType) { fActionType = actionType; }
 	void SetAngle(G4double angle);
 
