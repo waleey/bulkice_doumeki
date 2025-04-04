@@ -24,26 +24,21 @@ std::vector<ElementData> loadDataFromFile(const std::string& filename) {
         }
 
         std::stringstream ss(line);
-        std::string token;
         ElementData element;
+        std::string field;
 
-        // Parse the line assuming comma or tab separation
-        std::getline(ss, element.name, '\t');               // First column: Name
+        // Read tab-separated values correctly
+        std::getline(ss, element.isotopeName, '\t');  // Isotope name
+        std::getline(ss, field, '\t'); element.atomicNumber = std::stoi(field); // Atomic Number
+        std::getline(ss, field, '\t'); element.massNumber = std::stoi(field);   // Mass Number
+        std::getline(ss, field, '\t'); element.excitationEnergy = std::stod(field); // Excitation Energy
+        std::getline(ss, field, '\t'); element.totalAngularMomentum = std::stoi(field); // Total Angular Momentum
+        std::getline(ss, field, '\t'); element.branchingRatio = std::stod(field); // Branching Ratio
 
         if (ss.fail()) {
-            std::cerr << "Failed to parse with '\t' delimiter. ss state: " << ss.str() << std::endl;
-        }
-        
-        ss >> element.atomicNumber; ss.ignore(1, ',');     // Second column: Atomic Number
-        ss >> element.massNumber; ss.ignore(1, ',');       // Third column: Mass Number
-        ss >> element.excitationEnergy; ss.ignore(1, ',');         // Fourth column: Half-Life
-        ss >> element.totalAngularMomentum; ss.ignore(1, ',');        // Fifth column: Decay Mode
-        ss >> element.branchingRatio;                      // Sixth column: Branching Ratio
-
-        if (!ss.fail()) {
-            data.push_back(element);
-        } else {
             std::cerr << "Error: Failed to parse line: " << line << std::endl;
+        } else {
+            data.push_back(element);
         }
     }
 

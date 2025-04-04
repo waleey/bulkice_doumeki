@@ -6,7 +6,7 @@
 
 // Define the ElementData struct
 struct ElementData {
-    std::string name;  // E.g., "U238"
+    std::string isotopeName;  // E.g., "U238"
     int atomicNumber;  // E.g., 92
     int massNumber;    // E.g., 238
     double excitationEnergy;   // in [keV] E.g., 0.0, 73.92, ...
