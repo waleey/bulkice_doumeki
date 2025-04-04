@@ -18,6 +18,7 @@ extern G4int gNumCherenkov;
 extern G4int gNumScint;
 extern G4bool gWOM;
 extern G4bool gVerbose;
+extern G4bool gTrackingBiasing;
 
 G4int gVesselCount = 0;
 G4int gPMTBodyCount = 0;
@@ -77,7 +78,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
         if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
-            if( aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") {
+            if((aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") and (aTrack->GetGlobalTime() / ns > 0)) {
 
 
                 //Commented out temporarily.
@@ -122,6 +123,11 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 double random = CLHEP::RandFlat::shoot(0.0, 1.0);
                 //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
                 G4int survived = (random < (qe)) ? 1 : 0;
+                if (gTrackingBiasing)
+                    {
+                        survived = 1; // if tracking biasing is activated, all photons that reach cathode will pass
+                    }
+
                 std::vector<G4String> n;
                 extern std::vector<G4String> explode (G4String s, char d);
                 G4ThreeVector deltapos;
