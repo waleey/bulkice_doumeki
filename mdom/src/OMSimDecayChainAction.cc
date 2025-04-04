@@ -38,15 +38,10 @@ void OMSimDecayChainAction::GeneratePrimaries(G4Event* anEvent) {
     G4double timeWindow = fRadData -> GetTimeWindow() * s;
     G4double meanLifeTime = fisotope -> GetPDGLifeTime() * ns;
 
-    G4String type = "flat"; // for long decay times sample from flat distribution
-
-    // for short decay times sample from exponential distribution
-    //if (gRadioSampleExponential and meanLifeTime <= 1000 * s and meanLifeTime != 0) {type = "exp";}
     G4double initialTime = fRadData -> GetInitialTimeBounds(ftimeLow, ftimeHigh) * s;
     
     if (gVerbose){
     std::cout << "+++ (DECAY):"
-              << " Sampling : " << type
               << " ||| Mean Life Time [ns] = " << meanLifeTime
               << " ||| Time Window [ns] = " << timeWindow
               << " ||| Time Low [ns] = " << ftimeLow * s
