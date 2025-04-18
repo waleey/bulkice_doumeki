@@ -7,6 +7,7 @@
 
 extern OMSimAnalysisManager gAnalysisManager;
 extern G4String	ghitsfilename;
+extern std::ofstream gBinaryHitFile;
 extern std::fstream gRadioDecayFile;
 extern G4String	gHittype;
 extern G4int gNumCherenkov;
@@ -20,11 +21,13 @@ extern G4double gAngleIncrement;
 extern G4bool gMultipleAngle;
 extern G4int gPhotonNotAbsorbed;
 extern G4bool gVis;
+extern G4String gHittype;
+extern G4double gBkgSimTime;
 extern G4bool gVerbose;
 G4double gAngle = 0;
 
 //G4int gIdx = 0;
-G4double OMSimRadioactivityData::ftimeWindow = 1.0; //for now just running for 1 sec.
+G4double OMSimRadioactivityData::ftimeWindow = gBkgSimTime;
 OMSimRunManager::OMSimRunManager()
 {
 
@@ -321,14 +324,17 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
     // Time window and mean rate
     G4double timeWindow = fRadData -> GetTimeWindow();
 
-    G4double lifeTimeThresh = - timeWindow / std::log(0.99) * s;
-    G4double leakTimeThresh = timeWindow * std::log(0.01)/std::log(0.99) * s;
+    G4double prob1 = 0.1; // probability for isotope to decay in the next timeWindow duration
+    G4double prob2 = 0.9; // probability that isotope decayed in leak time window
+    G4double lifeTimeThresh = - timeWindow / std::log(1-prob1) * s;
+    G4double leakTimeThresh = timeWindow * std::log(1-prob2)/std::log(1-prob1) * s;
     G4double leakTimeWindow;
 
     std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
     std::cout << "Simulating Full " << chainName << " Decay Chain" << std::endl;
     std::cout << chainName << " Activity [Bq]: " << activity << std::endl;
     std::cout << "Time window [s]: " << timeWindow << std::endl;
+    std::cout << "p1 [%]: " << prob1 * 100 << " ,p2 [%]: " << prob2 * 100 << std::endl;    
     std::cout << "Threshold Mean Life [s]: " << lifeTimeThresh << std::endl;
     std::cout << "Threshold Leak Time [s]: " << leakTimeThresh << std::endl;
     std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
@@ -393,7 +399,7 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
         
         if (skipGroup.size() != 0)
         {
-            leakTimeWindow = -maxLifeTime * std::log(0.01) / s; // duration in for which 99% of daughters decay, take max of leak chain
+            leakTimeWindow = -maxLifeTime * std::log(1-prob2) / s; // duration in for which 99% of daughters decay, take max of leak chain
             meanRate = activity * (timeWindow+leakTimeWindow); // needs to move inside the isotope loop
             timeLow = -leakTimeWindow; // lower time window
             timeHigh = timeWindow; // higher time window
@@ -493,12 +499,20 @@ void OMSimRunManager::OpenFile()
 {
     G4cout << ":::::::::This is the beginning of Run Action::::::::" << G4endl;
     startingtime = clock() / CLOCKS_PER_SEC;
-    G4String filename = ghitsfilename + ".dat";
-    std::cout << "filename :" << filename << std::endl;
-	gAnalysisManager.datafile.open(filename, std::ios::out /*| std::ios::app*/);
-	gNumCherenkov = 0;
-	gNumScint = 0;
 
+    if (gHittype != "binary")
+    {   G4String filename = ghitsfilename + ".dat";
+        std::cout << "filename :" << filename << std::endl;
+        gAnalysisManager.datafile.open(filename, std::ios::out /*| std::ios::app*/);
+        gNumCherenkov = 0;
+        gNumScint = 0;
+    }
+    else
+    {
+        G4String binaryName = ghitsfilename + ".bin";
+        std::cout << "filename :" << binaryName << std::endl;
+        gBinaryHitFile.open(binaryName, std::ios::binary);
+    }
     gRadioDecayFile.open("radiodecay_output.csv", std::ios::out /*| std::ios::app*/);
     gRadioDecayFile << "TrackID,ParticleName,Energy\n";
 }
@@ -520,5 +534,7 @@ void OMSimRunManager::CloseFile()
     std::cout << "Total Event Produced: " << gEvent << std::endl;
     G4cout << "Computation time: " << finishtime - startingtime << " seconds." << G4endl;
     
+    gBinaryHitFile.close();
+
     gRadioDecayFile.close();
 }
