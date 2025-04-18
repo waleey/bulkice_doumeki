@@ -19,6 +19,7 @@ extern G4int gNumScint;
 extern G4bool gWOM;
 extern G4bool gVerbose;
 extern G4bool gTrackingBiasing;
+extern G4double gBkgSimTime;
 
 G4int gVesselCount = 0;
 G4int gPMTBodyCount = 0;
@@ -78,7 +79,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
         if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
-            if((aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") and (aTrack->GetGlobalTime() / ns > 0)) {
+            if((aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") and (aTrack->GetGlobalTime() / s >= 0) and (aTrack->GetGlobalTime() / s <= gBkgSimTime)) {
 
 
                 //Commented out temporarily.
@@ -135,8 +136,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 if(!gWOM)
                 {
                     n = explode(aStep->GetPreStepPoint()->GetPhysicalVolume()->GetName(),'_');
-                    gAnalysisManager.stats_PMT_hit.push_back(atoi(n.at(1)));
-
+                    //gAnalysisManager.stats_PMT_hit.push_back(atoi(n.at(1)));
+                    gAnalysisManager.stats_PMT_hit.push_back(static_cast<uint8_t>(atoi(n.at(1))));
                 }
                 else
                 {
@@ -151,7 +152,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     }
                     else
                     {
-                        gAnalysisManager.stats_PMT_hit.push_back(10000); //dummy number for invalid PMT
+                        gAnalysisManager.stats_PMT_hit.push_back(100); //dummy number for invalid PMT
                     }
                 }
 
@@ -177,7 +178,15 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     //Will be removed soon
                    //gAnalysisManager.stats_creator.push_back(creator);
                 }
-
+                
+                else if (gHittype == "binary")
+                {
+                    if (survived)
+                    {
+                        gAnalysisManager.stats_event_id.push_back(gAnalysisManager.current_event_id);
+                        gAnalysisManager.stats_hit_time.push_back(aTrack->GetGlobalTime() /ns);
+                    }
+                }
                 aTrack->SetTrackStatus(fStopAndKill);
                 //} 	// kills counted photon to prevent scattering and double-counting
 
