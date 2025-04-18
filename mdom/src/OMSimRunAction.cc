@@ -37,6 +37,9 @@ void OMSimRunAction::EndOfRunAction(const G4Run*)
 	if (gHittype == "collective") {
 		gAnalysisManager.WriteAccept(); // mainly for acceptance
 	}
+	if (gHittype == "binary") {
+		gAnalysisManager.WriteBinary(); //  efficient data storage
+	}
 //  setting all arrays to zero
     gAnalysisManager.Reset();
 }
