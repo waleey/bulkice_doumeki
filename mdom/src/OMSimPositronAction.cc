@@ -2,9 +2,13 @@
 
 #include "G4ParticleDefinition.hh"
 #include "G4Positron.hh"
+#include <cmath>
 
 extern G4double gworldsize;
 extern G4bool gVerbose;
+extern G4int gRunID;
+extern G4double gPositronDensity;
+
 OMSimPositronAction::OMSimPositronAction(G4ParticleGun* particleGun)
     :   fParticleGun(particleGun),
         fParticleExist(true),
@@ -40,7 +44,9 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
     fParticleGun -> SetParticleDefinition(G4Positron::PositronDefinition());
     fParticleGun -> GeneratePrimaryVertex(anEvent);
     */
-    
+
+    //Monoenergetic positrons, randomized inside PositronAction
+
     G4double positionRandom[3] = {fRadData -> RandomGen(-gworldsize, gworldsize),fRadData -> RandomGen(-gworldsize, gworldsize),fRadData -> RandomGen(-gworldsize, gworldsize)};
     G4ThreeVector orientationRandom = fRadData -> SetupOrientation();
     G4double timeRandom = fRadData -> RandomGen(0, 1);
@@ -82,7 +88,7 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
 void OMSimPositronAction::LoadData()
 {
     using namespace std;
-    G4String filePath = "../InputFile/Positron/pos20002nkibd_"; //will change soon.
+    G4String filePath = "../../analysis/files/input_geant4/gamma/Positron/pos_gamma_" + std::to_string(gRunID) + "_"; //will change soon
     G4double temp;
     G4String fileName;
 
@@ -106,6 +112,14 @@ void OMSimPositronAction::LoadData()
 
         file.close();
     }
-    fParticleNum = fPositronData.at(0).size();
-    fParticleNum = 10000;
+    //fParticleNum = fPositronData.at(0).size();
+    G4double meanRate = gPositronDensity * pow((gworldsize * 2),3);
+    fParticleNum = fRadData -> GetNumDecay(meanRate);
+    std::cout << "---------------------\n" 
+              << "Positron density [pos/m3]: " << gPositronDensity << "\n"
+              << "Simulation Volume [m]: " << pow((gworldsize * 2),3) << "\n"
+              << "Number of expected positrons: " << meanRate << "\n"
+              << "Number of simulate positrons: " << fParticleNum << "\n"
+              << "---------------------" << std::endl;
+    //std::cout << "Number of positrons: " << fParticleNum << std::endl;
 }
