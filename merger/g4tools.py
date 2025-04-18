@@ -9,13 +9,14 @@ class G4tools:
         self.depthIndex = depthIndex
         self.outputFolder = outputFolder
         self.runID = runID
-        self.executable = baseFolder + "./bulkice_doumeki"
+        self.executable = "./bulkice_doumeki"
 
     def callG4(self):
         print('called bulkice_doumeki')
         try:
             #subprocess.check_call(['. env.sh'])
-            subprocess.check_call([self.executable, self.omModel, self.interaction, self.depthIndex, self.outputFolder, self.runID])
+            subprocess.check_call([self.executable, self.omModel, self.interaction, self.depthIndex, self.outputFolder, self.runID],
+                                  cwd = self.baseFolder)
 
         except subprocess.CalledProcessError as e:
             print(f"error running package {e}")
