@@ -17,6 +17,7 @@ class OMSimAnalysisManager
 		void Reset();
 		void Write();
 		void WriteAccept();
+		void WriteBinary();
 		void Debug() { std::cerr << "OMSimAnalysisManager is alive" << std::endl; }
 
 		void SetRunId(G4int RunId);
@@ -30,7 +31,8 @@ class OMSimAnalysisManager
 		std::vector<G4double>	stats_photon_flight_time;
 		std::vector<G4double>	stats_photon_track_length;
 		std::vector<G4double>	stats_photon_energy;
-		std::vector<G4int>	stats_PMT_hit;
+		//std::vector<G4int>	stats_PMT_hit;
+		std::vector<uint8_t> stats_PMT_hit;
 		std::vector<G4ThreeVector>	stats_photon_direction;
 		std::vector<G4ThreeVector>	stats_photon_position;
 		std::vector<G4ThreeVector> stats_vertex_position;

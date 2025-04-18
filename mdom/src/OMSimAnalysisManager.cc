@@ -11,6 +11,7 @@ extern G4int gVesselCount;
 extern G4int gWLSCount;
 extern G4int gPMTBodyCount;
 extern G4int gWLSAndHitCount;
+extern std::ofstream gBinaryHitFile;
 extern G4bool gVerbose;
 
 OMSimAnalysisManager::OMSimAnalysisManager(){
@@ -30,21 +31,21 @@ void OMSimAnalysisManager::Write()
         for (int i = 0; i < (int) stats_event_id.size(); i++)
         {
             //datafile << stats_event_id.at(i) << "\t";
-            datafile << fRunId << "\t";
+            ////datafile << fRunId << "\t";
             datafile << std::fixed << stats_hit_time.at(i) /ns << "\t";
             //datafile << stats_photon_flight_time.at(i) /ns << "\t";
             //datafile << stats_photon_track_length.at(i) << "\t";
-            datafile << stats_photon_energy.at(i) << "\t";
+            ////datafile << stats_photon_energy.at(i) << "\t";
             datafile << stats_PMT_hit.at(i) << "\t";
             //datafile << stats_event_distance.at(i) << "\t";
-            datafile << stats_photon_position.at(i).x()/m << "\t";
-            datafile << stats_photon_position.at(i).y()/m << "\t";
-            datafile << stats_photon_position.at(i).z()/m << "\t";
-            datafile << stats_vertex_position.at(i).x()/m << "\t";
-            datafile << stats_vertex_position.at(i).y()/m << "\t";
-            datafile << stats_vertex_position.at(i).z()/m << "\t";
-            datafile << stats_positron_id.at(i) << "\t";
-            datafile << stats_survived_qe.at(i) << "\t";
+            ////datafile << stats_photon_position.at(i).x()/m << "\t";
+            ////datafile << stats_photon_position.at(i).y()/m << "\t";
+            ////datafile << stats_photon_position.at(i).z()/m << "\t";
+            ////datafile << stats_vertex_position.at(i).x()/m << "\t";
+            ////datafile << stats_vertex_position.at(i).y()/m << "\t";
+            ////datafile << stats_vertex_position.at(i).z()/m << "\t";
+            ////datafile << stats_positron_id.at(i) << "\t";
+            ////datafile << stats_survived_qe.at(i) << "\t";
             if(gPhotonSim)
             {
                 datafile << gAngle << "\t";
@@ -106,6 +107,29 @@ void OMSimAnalysisManager::WriteAccept()
 	datafile << G4endl;
 }
 
+
+void OMSimAnalysisManager::WriteBinary()
+{
+	if(gBinaryHitFile.is_open())
+	{
+		for (int i = 0; i < stats_event_id.size(); i++) 
+		{
+			float time = stats_hit_time.at(i) / ns;
+			int pmt = stats_PMT_hit.at(i);
+			gBinaryHitFile.write(reinterpret_cast<char*>(&time), sizeof(float));
+			gBinaryHitFile.write(reinterpret_cast<char*>(&pmt), sizeof(uint8_t));
+		}
+	}
+	else
+	{
+        G4cout << "********Failed to open " << ghitsfilename << " in WriteBinary file*******" << G4endl;
+	}
+
+	gWLSAndHitCount = 0;
+	gVesselCount = 0;
+	gPMTBodyCount = 0;
+	gWLSCount = 0;
+}
 
 void OMSimAnalysisManager::Reset()
 {
