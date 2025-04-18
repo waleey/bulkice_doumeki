@@ -37,13 +37,18 @@ def merge():
     #progenitorModelS, outfileS, distanceS, omModelG, simTypeG, depthIndex, outputFolderG, runIDG = parseCommandLine()
     nameS, distanceS, omModelG, simTypeG, depthIndex, runIDG = parseCommandLine()
 
-    #basefolderS = '/home/jakob/software/snewpy/models/Nakazato_2013/' #you need to change this path
-    basefolderS = '/home/jakob/software/doumeki/bulkice_doumeki/mdom/analysis/files/input/'
-    basefolderG = '/home/jakob/software/doumeki/bulkice_doumeki/mdom/build/' #goes back to the build folder!
+    doumekiFolder = '/home/jakob/software/doumeki/bulkice_doumeki/' # change here!!!
 
-    infileS = '/home/jakob/software/doumeki/bulkice_doumeki/analysis/files/input_sntools/gamma/' + nameS + '_' + runIDG + '.txt'
-    outfileS = '/home/jakob/software/doumeki/bulkice_doumeki/analysis/files/output_sntools/gamma/' + nameS + '_' + runIDG + '.kin'
-    outputFolderG = '/home/jakob/software/doumeki/bulkice_doumeki/analysis/files/output_geant4/'
+    basefolderG = doumekiFolder + 'mdom/build/' #goes back to the build folder!
+
+    if simTypeG != "radioactivity":
+        outTypeG = "signal/"
+    else:
+        outTypeG = "background/"
+
+    infileS = doumekiFolder + 'analysis/files/input_sntools/gamma/' + nameS + '_' + runIDG + '.txt'
+    outfileS = doumekiFolder + 'analysis/files/output_sntools/gamma/' + nameS + '_' + runIDG + '.kin'
+    outputFolderG = doumekiFolder + 'analysis/files/output_geant4/' + outTypeG
    
     #initializing modules to call sntools and bulkice_doumeki
     #stool = stools(progenitorModelS, distanceS, infileS, outfileS, basefolderS)
@@ -74,7 +79,7 @@ def merge():
     Write the output of sntools to input files of bulkice_doumeki.
     If you need to save the output somewhere else, change baseFolderW.
     """
-    baseFolderW = '/home/jakob/software/doumeki/bulkice_doumeki/analysis/files/input_geant4/gamma/' #goes back to to the InputFile dir.
+    baseFolderW = doumekiFolder + 'analysis/files/input_geant4/gamma/' #goes back to to the InputFile dir.
     nameW = "gamma_" + runIDG
 
     if(useStool):
