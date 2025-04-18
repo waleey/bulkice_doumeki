@@ -21,10 +21,13 @@
 #include <string>
 
 
-std::fstream gRadioDecayFile;
-G4bool gVerbose = false;
-G4bool gRadioSampleExponential = true;
-G4bool gTrackingBiasing = false;
+std::fstream    gRadioDecayFile;
+std::ofstream   gBinaryHitFile;
+G4bool          gVerbose = false;
+G4bool          gRadioSampleExponential = true;
+G4bool          gTrackingBiasing = false;
+G4double        gBkgSimTime = 1.0;
+G4double        gPositronDensity = 0;
 
 //setting up the external variables
 G4int           gGlass = 0;
@@ -37,7 +40,7 @@ G4int           gPMT = 0;
 G4bool          gPlaceHarness = true;
 G4int           gHarness = 1;
 G4int           gRopeNumber = 1;
-G4double        gworldsize = 40;
+G4double        gworldsize = 20;
 G4double        gElectronFactor = 9.5;
 G4bool          gCADImport = true;
 G4String        gHittype = "individual"; // seems like individual records each hit per pmt
@@ -161,7 +164,8 @@ int GetModel(G4String& model)
 }
 void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
 {
-    if(argc == 6 || argc ==  8 || argc == 10 || argc == 2)
+//    if(argc == 6 || argc ==  8 || argc == 10 || argc == 2)
+    if(argc == 7 || argc ==  8 || argc == 10 || argc == 2)
     {
         G4String model = argv[1];
 
@@ -180,6 +184,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
 
         G4String outputFolder = argv[4];
         gRunID = atoi(argv[5]);
+        gPositronDensity = atof(argv[6]);
         //worldsize = 20 * m;
         ghitsfilename += outputFolder + "/";
 
@@ -216,7 +221,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             /**
             neutrino flux simulations here
             **/
-            ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gRunID);
+            ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gPositronDensity) + "_" + std::to_string(gRunID);
         }
     }
     else if(argc == 3)
