@@ -7,7 +7,7 @@ def get_mean_square_energy(mean_energy, alpha):
 
 class GenerateLightcurve:
     
-    def __init__(self, parameter_range, format, flavor_same, time_const):
+    def __init__(self, parameter_range, format, flavor_same, time_const, file_same):
         self.time_start = parameter_range["time_start"].to(u.s).value
         self.time_end = parameter_range["time_end"].to(u.s).value
         self.time_steps = parameter_range["time_steps"]
@@ -21,6 +21,17 @@ class GenerateLightcurve:
         self.format = format
         self.flavor_same = flavor_same
         self.time_const = time_const
+        self.file_same = file_same
+
+        if self.file_same == "low":
+            self.lumi_high = self.lumi_low
+            self.mean_energy_high = self.mean_energy_low
+            self.alpha_high = self.alpha_low            
+
+        elif self.file_same == "high":
+            self.lumi_low = self.lumi_high
+            self.mean_energy_low = self.mean_energy_high
+            self.alpha_low = self.alpha_high
 
         self.time = np.linspace(start = self.time_start, stop = self.time_end, num = self.time_steps)
 
@@ -30,6 +41,7 @@ class GenerateLightcurve:
         print("Luminosity: {:.2e} - {:.2e}".format(self.lumi_low, self.lumi_high))
         print("Mean Energy: {:.2e} - {:.2e}".format(self.mean_energy_low, self.mean_energy_high))
         print("Alpha: {:.2e} - {:.2e}".format(self.alpha_low, self.alpha_high))
+        print("Number of files: {}".format(num_files))
         
         self.num_files = num_files
         # if flavors differ, generate random entries for each one, i.e. three time more
@@ -93,6 +105,7 @@ time_end = 1 * u.s
 time_steps = 11
 
 flavour_same = True # flavour has same luminosity, mean energy and mean squared energy
+file_same = None # false, "low", "high", every file has the same entry
 format = "mean_squared_energy" # "alpha", "mean_squared_energy"
 
 lumi_low = 1E51 * u.erg/u.s 
@@ -114,9 +127,8 @@ parameter_range = {"time_start": time_start,
                    "alpha_low": alpha_low,
                    "alpha_high": alpha_high}
 
-num_files = 10
+num_files = 500
 filebase = "/home/jakob/software/doumeki/bulkice_doumeki/analysis/files/input_sntools/gamma/gamma"
 
-genlc = GenerateLightcurve(parameter_range=parameter_range, format = format, flavor_same = flavour_same, time_const = True)
+genlc = GenerateLightcurve(parameter_range=parameter_range, format = format, flavor_same = flavour_same, time_const = True, file_same = file_same)
 genlc.run(num_files = num_files, filebase = filebase)    
-
