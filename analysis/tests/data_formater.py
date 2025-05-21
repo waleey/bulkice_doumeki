@@ -1,6 +1,7 @@
 import os
 from tqdm import tqdm
 
+from astropy import units as u
 from pmt_locator import *
 import awkward as ak
 
@@ -13,6 +14,8 @@ class DataFormater:
                  out_dir,
                  events_per_file = 1000,
                  apply_filter = True,
+                 trigger_window = 20,
+                 trigger_pmts = 2,
                  data_augmentation = False,
                  generate_darknoise = False):
         
@@ -22,6 +25,8 @@ class DataFormater:
         self.out_dir = out_dir
         self.events_per_file = events_per_file
         self.apply_filter = apply_filter
+        self.trigger_window = trigger_window
+        self.trigger_pmts = trigger_pmts
         self.data_augmentation = data_augmentation
         self.generate_darknoise = generate_darknoise
 
@@ -108,19 +113,67 @@ class DataFormater:
         self.hit = ak.concatenate([self.time[..., np.newaxis], self.pos], axis = -1)
 
     def save(self, idx):
+        """Save hit data (time and positions) to parquet.
+
+        Args:
+            idx (int): Batch index.
+        """
         out_path = os.path.join(self.out_dir, f"data_{idx}.pq")
         ak.to_parquet(self.hit, out_path)
 
+    def singlet_filter(self):
+        ...
+        # progress bar for while loop        
+        perc = 0 # percent
+        psteps = 100 # number of steps
+        pbar = tqdm(total = psteps) # process bar
+
+        time_filtered = []
+        pmt_filtered = []
+        for e, (time, pmt) in enumerate(zip(self.time, self.pmt)):
+            print(f"Event {e}/{self.events_per_file}")
+            size = len(time)
+            tf = [] # temporary time filtered list
+            pf = [] # temporary pmt filtered list
+
+            while len(time) > 0:
+                # update progress bar
+                if ((size - len(time)) > perc * size/psteps):
+                    pbar.update(1)
+                    perc += 1
+
+                # temporal coincidence
+                mask_time = time - time[0] < self.trigger_window
+                num_hit = np.sum(mask_time)
+                # spatial coincidence, require at least two PMTs
+                num_pmt = len(np.unique(pmt[mask_time]))
+
+                if num_hit > 1 and num_pmt > self.trigger_pmts:
+                    tf.append(time[mask_time][0])
+                    pf.append(pmt[mask_time][0])
+                time = time[num_hit:]
+            print(len(tf))
+            time_filtered.append(np.array(tf))    
+            pmt_filtered.append(np.array(pf))    
+
+    def pmt_smearing(self):
+        ...
+
     def reset(self):
+        """Explicitly reset parameters for batch mode. 
+        """
         self.time = 0
         self.pmt = 0
         self.pos = 0
         self.hit = 0
 
     def run(self):
+        """Main function. Loads data, combines it, performs operations on the data and saves it in a parquet format. 
+        """
         self.load_pmt_positions()
         idx = np.arange(self.num_sig) # index array
 
+        # batch mode, combine data is only applied to batch_idx
         for b in tqdm(range(self.num_batches)):
             self.batch_idx = idx[b*self.events_per_file:(b+1)*self.events_per_file]
             self.combine_data()
