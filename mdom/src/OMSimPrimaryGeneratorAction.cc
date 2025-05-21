@@ -27,7 +27,8 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
 	fParticleGun = new G4ParticleGun(1);
 	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
 
-	fPositronAction = new OMSimPositronAction(fParticleGun);
+	fPositronAction = new OMSimPositronInjector(fParticleGun);
+    //fPositronAction = new OMSimPositronAction(fParticleGun);
 	fNeutronAction = new OMSimNeutronAction(fParticleGun);
 	fElectronAction = new OMSimElectronAction(fParticleGun);
 	fK40Action = new OMSimK40Action(fParticleGun);
@@ -56,7 +57,9 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
 
 	fParticleGun = new G4ParticleGun(1);
 	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
-	fPositronAction = new OMSimPositronAction(fParticleGun);
+
+    fPositronAction = new OMSimPositronInjector(fParticleGun);
+	//fPositronAction = new OMSimPositronAction(fParticleGun);
 	fNeutronAction = new OMSimNeutronAction(fParticleGun);
 	fElectronAction = new OMSimElectronAction(fParticleGun);
 	fK40Action = new OMSimK40Action(fParticleGun);
