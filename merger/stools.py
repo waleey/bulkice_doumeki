@@ -22,7 +22,7 @@ class stools:
         print(f'+++ Simulating IceCube detector with dimensions x={icecube.x/100}m, y={icecube.y/100}m, z={icecube.z/100}m')
         try:
             if self.channel is not None:
-                subprocess.check_call(['sntools', self.inFile, '--format', 'gamma' '--channel', self.channel, '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile])
+                subprocess.check_call(['sntools', self.inFile, '--format', 'gamma', '--channel', self.channel, '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile])
 
             else:
                 subprocess.check_call(['sntools', self.inFile, '--format', 'gamma', '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile])
