@@ -6,13 +6,14 @@ from tqdm import tqdm
 
 import numpy as np
 from scipy.stats import poisson
+from astropy import units as u
 
 def parseCommandLine():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('time_low', type=float, help='Start time t0')    
-    parser.add_argument('time_high', type=float, help='End time t1')    
-    parser.add_argument('mean_rate', type=float, help='Mean rate per PMT')    
+    parser.add_argument('time_low', type=float, help='Start time t0 [s]')    
+    parser.add_argument('time_high', type=float, help='End time t1 [s]')    
+    parser.add_argument('mean_rate', type=float, help='Mean rate per PMT [Hz]')    
     parser.add_argument('num_pmts', type=int, help='Number of PMTs')
     parser.add_argument('num_files', type=int, help='Number of files')
     parser.add_argument('dir', type=str, help='Path to directory')    
@@ -23,9 +24,9 @@ def parseCommandLine():
 
 class DarkNoiseGenerator:
     def __init__(self, time_low, time_high, mean_rate, num_pmts):
-        self.time_low = time_low
-        self.time_high = time_high
-        self.mean_rate = mean_rate
+        self.time_low = time_low * u.s
+        self.time_high = time_high * u.s
+        self.mean_rate = mean_rate * u.Hz
         self.num_pmts = num_pmts
 
         assert time_high > time_low, "Error: time_high <= time_low!"
@@ -33,10 +34,9 @@ class DarkNoiseGenerator:
     def generate(self):
         self.noise_per_pmt = poisson.rvs(mu = self.mean_rate, size = self.num_pmts)
 
-        self.time = np.random.uniform(low = self.time_low, high = self.time_high, size = np.sum(self.noise_per_pmt)).astype(dtype = np.float64)
+        self.time = np.random.uniform(low = self.time_low.value, high = self.time_high.value, size = np.sum(self.noise_per_pmt)).astype(dtype = np.float64) * u.s
+        self.time = self.time.to_value(u.ns)
         self.pmt = np.repeat(np.arange(self.num_pmts), self.noise_per_pmt).astype(dtype = np.uint8)
-
-        self.data = np.array([self.time, self.pmt])
 
     def reset(self):
         self.noise_per_pmt = 0
@@ -47,7 +47,6 @@ class DarkNoiseGenerator:
     def save(self, idx):
         path = os.path.join(self.noi_dir, f"noi_{str(idx)}")
         np.savez(path, time = self.time, pmt = self.pmt)
-        #self.data.tofile(path, format())
 
     def run(self, noi_dir, num_files):
         self.noi_dir = noi_dir
