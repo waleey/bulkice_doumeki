@@ -9,6 +9,11 @@ import re
 import json
 from tqdm import tqdm
 
+from pmt_locator import PMTLocator
+pmtlocator = PMTLocator()
+ploc_car = pmtlocator.get_pmt_location_cartesian()
+ploc_sph = pmtlocator.get_pmt_location_spherical()
+
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
@@ -269,11 +274,14 @@ class SigBkgPlotter:
                  filebase, 
                  type,
                  plotdir, 
+                 filename = None,
                  simvol = None,
                  actvol = None, 
                  energy = None, 
                  chain = None,
-                 time = None, 
+                 time = None,
+                 time_window = None, 
+                 prob = None,
                  pos_den = None,
                  num_simpos = None,
                  mask = None,
@@ -284,15 +292,22 @@ class SigBkgPlotter:
         self.filebase = filebase
         self.type = type
         self.plotdir = plotdir
+        self.filename = filename
         self.simvol = simvol
         self.actvol = actvol
         self.energy = energy
         self.chain = chain
         self.time = time
+        self.prob = prob
         self.pos_den = pos_den
         self.num_simpos = num_simpos
         self.mask = mask
         self.depth = depth   
+
+        if time_window is not None:
+            self.time_window = time_window
+        else:
+            self.time_window = 20
 
         if pmtres is not None:
             self.pmtres = pmtres
@@ -305,19 +320,19 @@ class SigBkgPlotter:
             self.rescaling = self.num_simpos / (self.pos_den * self.actvol ** 3)
             
             self.suffix = f"_{self.simvol}m_{self.energy}MeV_{self.time}s"
-            self.filename = self.filebase + self.suffix + ".dat"
+            if self.filename is None: self.filename = self.filebase + self.suffix + ".dat"
 
         
         elif self.type == "background":
-            assert ((self.simvol is not None) and (self.time is not None)), f"'type = background' requires simvol (={self.simvol}) and time (={self.time}) to be defined."
+            assert ((self.simvol is not None) and (self.time is not None) and (self.prob is not None)), f"'type = background' requires simvol (={self.simvol}) and time (={self.time}) to be defined."
             
             self.rescaling = self.time
 
             if self.chain is not None:
                 self.suffix = f"_{self.chain}_{self.simvol}m_{self.time}s"
             else: 
-                self.suffix = f"_{self.simvol}m_{self.time}s"
-            self.filename = self.filebase + self.suffix + ".dat"
+                self.suffix = f"_t={self.time}s_p={self.prob}%_V={self.simvol}m"
+            if self.filename is None: self.filename = self.filebase + self.suffix + ".dat"
 
         
         elif self.type == "reference":
@@ -326,7 +341,7 @@ class SigBkgPlotter:
             self.rescaling = self.time
             
             self.suffix = f"_{self.time}s"
-            self.filename = self.filebase + ".dat"
+            if self.filename is None: self.filename = self.filebase + ".dat"
 
         else:
             raise ValueError(f"type = {self.type} is not supported.")
@@ -369,7 +384,14 @@ class SigBkgPlotter:
 
     def plot(self):
 
-        plot_trigger_duration(self.df, self.type, self.rescaling)
+        plot_position_cathesian(self.df, mode = "hit")
+        plt.savefig(self.plotdir + "vertex_position_cartesian" + self.suffix + ".png")
+        plt.show()
+        plt.close()
+        """
+        a = 1/0
+
+        plot_trigger_duration(self.df, self.type, self.rescaling, time_window = self.time_window)
         plt.savefig(self.plotdir + "trigger_duration" + self.suffix + ".png", bbox_inches = "tight")
         plt.show()
         plt.close()
@@ -413,7 +435,7 @@ class SigBkgPlotter:
             plt.show()
             plt.close()
             
-            plot_trigger_pmt_mode(self.df, rescaling = self.rescaling)
+            plot_trigger_pmt_mode(self.df, self.rescaling, time_window = self.time_window)
             plt.savefig(self.plotdir + "trigger_pmt_mode" + self.suffix + ".png", bbox_inches = "tight")
             plt.show()
             plt.close()
@@ -426,7 +448,7 @@ class SigBkgPlotter:
                 plt.show()
                 plt.close()
 
-            plot_vertex(self.df, rescaling = self.rescaling)
+            plot_vertex(self.df, self.rescaling, time_window = self.time_window)
             plt.savefig(self.plotdir + "vertex" + self.suffix + ".png", bbox_inches = "tight")
             plt.show()
             plt.close()
@@ -435,7 +457,7 @@ class SigBkgPlotter:
             plt.savefig(self.plotdir + "vertex_tw" + self.suffix + ".png", bbox_inches = "tight")
             plt.show()
             plt.close()
-
+        """
 def load_data(path, type, mask, time):
 
         if type == "reference":
@@ -447,11 +469,19 @@ def load_data(path, type, mask, time):
         
         else: # signal or background data from bulkice doumeki
             df = pd.read_csv(path, delimiter="\t", header = None)
-
-            if type == "background": # add extra column for run ID for background files
-                df.insert(loc = 0, column = "run_id", value=np.ones(df.shape[0], dtype = int))
-
-            df.columns = ["run_id", "event_id", "time", "energy", "pmt_id", "hit_pos_x", "hit_pos_y", "hit_pos_z", 
+            
+            # really crappy condition, definitely needs rework
+            if df.shape[1] == 6:
+                df.columns = ["run_id", "event_id", "time", "energy", "pmt_id", "survival"]
+                for r in np.unique(df.run_id):
+                    run_mask = (df.run_id == r).values
+                    df.loc[run_mask, "time"] += r*1E9
+                df = df[df.time <= time * 1E9]
+ 
+            else:
+                if type == "background": # add extra column for run ID for background files
+                    df.insert(loc = 0, column = "run_id", value=np.ones(df.shape[0], dtype = int))
+                df.columns = ["run_id", "event_id", "time", "energy", "pmt_id", "hit_pos_x", "hit_pos_y", "hit_pos_z", 
                         "ver_pos_x", "ver_pos_y", "ver_pos_z", "parent_id", "survival", "angle"]
             
             if mask is not None:
@@ -1311,6 +1341,7 @@ def plot_position_cathesian(df, mode = "vertex"):
 
     ax1 = fig.add_subplot(1,4,1, projection='3d')
     ax1.scatter(x,y,z, alpha = 0.05)
+    if mode == "hit": ax1.scatter(ploc_car[:,0],ploc_car[:,1],ploc_car[:,2], color = "black")
     ax1.scatter(0,0,0, color = "red")
     ax1.view_init(elev=30., azim=45)
     ax1.set_xlabel("x [m]")
@@ -1320,18 +1351,21 @@ def plot_position_cathesian(df, mode = "vertex"):
 
     ax2 = fig.add_subplot(1,4,2)
     ax2.scatter(x,y, alpha = 0.1)
+    if mode == "hit": ax2.scatter(ploc_car[:,0],ploc_car[:,1], color = "black")
     ax2.scatter(0,0, color = "red", zorder = 10)
     ax2.set_xlabel("x [m]")
     ax2.set_ylabel("y [m]")
 
     ax3 = fig.add_subplot(1,4,3)
     ax3.scatter(x,z, alpha = 0.1)
+    if mode == "hit": ax3.scatter(ploc_car[:,0],ploc_car[:,2], color = "black")
     ax3.scatter(0,0, color = "red", zorder = 10)
     ax3.set_xlabel("x [m]")
     ax3.set_ylabel("z [m]")
 
     ax4 = fig.add_subplot(1,4,4)
     ax4.scatter(y,z, alpha = 0.1)
+    if mode == "hit": ax4.scatter(ploc_car[:,1],ploc_car[:,2], color = "black")
     ax4.scatter(0,0, color = "red", zorder = 10)
     ax4.set_xlabel("y [m]")
     ax4.set_ylabel("z [m]")
@@ -1365,6 +1399,7 @@ def plot_position_polar(df, mode = "vertex", bins = 20):
 
     ax2 = fig.add_subplot(1,2,2, polar = True)
     sc = ax2.scatter(phi, np.rad2deg(theta), c=r, alpha = 0.5)
+    if mode == "hit": ax2.scatter(ploc_sph[:,1],np.rad2deg(ploc_sph[:,2]), color = "black")
     ax2.set_ylim(0,180)
     ax2.set_yticks([0,45,90,135,180])
 
