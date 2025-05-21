@@ -9,6 +9,7 @@ extern OMSimAnalysisManager gAnalysisManager;
 extern G4String	ghitsfilename;
 extern std::ofstream gBinaryHitFile;
 extern std::fstream gRadioDecayFile;
+extern std::fstream gPositronData;
 extern G4String	gHittype;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
@@ -193,7 +194,7 @@ void OMSimRunManager::GeneratePositron()
 {
     fPrimaryGenerator -> SetActionType(Positron);
     fPrimaryGenerator -> LoadData();
-   while(fPrimaryGenerator -> ParticleExist())
+    while(fPrimaryGenerator -> ParticleExist())
     {
         gEvent++;
         fRunManager -> BeamOn(1);
@@ -515,6 +516,9 @@ void OMSimRunManager::OpenFile()
     }
     gRadioDecayFile.open("radiodecay_output.csv", std::ios::out /*| std::ios::app*/);
     gRadioDecayFile << "TrackID,ParticleName,Energy\n";
+
+    gPositronData.open("positron_data.csv", std::ios::out);
+    gPositronData << "E_nu,E_p0,E_p1,th_uni,th_0,th_1,phi\n";
 }
 
 void OMSimRunManager::CloseFile()
@@ -537,4 +541,6 @@ void OMSimRunManager::CloseFile()
     gBinaryHitFile.close();
 
     gRadioDecayFile.close();
+    
+    gPositronData.close();
 }
