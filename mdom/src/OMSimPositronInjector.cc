@@ -111,9 +111,9 @@ void OMSimPositronInjector::GeneratePrimaries(G4Event* anEvent)
 
     // random positron position inside simulation volume
     G4ThreeVector positronPosition (
-        fRadData -> RandomGen(-gworldsize, gworldsize),
-        fRadData -> RandomGen(-gworldsize, gworldsize),
-        fRadData -> RandomGen(-gworldsize, gworldsize)
+        fRadData -> RandomGen(-gworldsize, gworldsize) * m,
+        fRadData -> RandomGen(-gworldsize, gworldsize) * m,
+        fRadData -> RandomGen(-gworldsize, gworldsize) * m
     );
 
     if (gVerbose)
@@ -125,7 +125,7 @@ void OMSimPositronInjector::GeneratePrimaries(G4Event* anEvent)
         std::cout << "Neutrino direction: " << neutrinoDirection << "\n";
         std::cout << "Positron direction (neutrino frame): " << positronDirectionInNeutrinoFrame << "\n";
         std::cout << "Positron direction (lab frame): " << positronDirection << "\n";
-        std::cout << "Positron position (lab frame): " << positronPosition << "\n";
+        std::cout << "Positron position (lab frame): " << positronPosition / m << "\n";
     }
 
     // save positron energy, cos(zenith) and azimuth to file
