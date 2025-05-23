@@ -2,6 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <string>
+#include <format>
 #include "G4RunManager.hh"
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
@@ -16,6 +17,7 @@
 
 #include "OMSimAnalysisManager.hh"
 #include "OMSimRunManager.hh"
+#include "OMSimUtils.hh"
 
 #include <ctime>
 #include <string>
@@ -37,7 +39,8 @@ G4double        gNeutrinoEnergyPinch = 2;
 G4String        gNeutrinoEnergyType = "gamma";
 
 // positron variables
-G4double        gPositronDensity = 0;
+G4double        gPositronDensity = 0.1;
+G4String        gPositronNumber = "poisson"; // decides whether number of positron is pulled from Poisson or not
 G4int           gPositronEnergyOrder = 1;
 G4int           gPositronZenithOrder = 1;
 G4String        gPositronZenithType = "realistic";
@@ -112,7 +115,7 @@ void help() //needs change
 
     std::cout << "Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]" << std::endl;
 
-    std::cout << "Available interaction channels: [ibd, enees, all, radioactivity]" << std::endl;
+    std::cout << "Available interaction channels: [neu, ibd, enees, all, radioactivity]" << std::endl;
 
     std::cout << "Available depth index: [0, 1, ......, 108]" << std::endl;
 
@@ -177,8 +180,7 @@ int GetModel(G4String& model)
 }
 void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
 {
-//    if(argc == 6 || argc ==  8 || argc == 10 || argc == 2)
-    if(argc == 7 || argc ==  8 || argc == 10 || argc == 2)
+    if(argc == 6 || argc ==  8 || argc == 10 || argc == 11 | argc == 2)
     {
         G4String model = argv[1];
 
@@ -197,7 +199,6 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
 
         G4String outputFolder = argv[4];
         gRunID = atoi(argv[5]);
-        gPositronDensity = atof(argv[6]);
         //worldsize = 20 * m;
         ghitsfilename += outputFolder + "/";
 
@@ -234,7 +235,30 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             /**
             neutrino flux simulations here
             **/
-            ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gPositronDensity) + "_" + std::to_string(gRunID);
+            if (interaction_channel == "neu")
+            {
+                gPositronDensity = atof(argv[6]);
+                gNeutrinoMeanEnergy = atof(argv[7]);
+                gNeutrinoEnergyPinch = atof(argv[8]);
+                gNeutrinoEnergyType = argv[9];
+                G4int verbose = atoi(argv[10]);
+
+
+
+                if (verbose==0) {gVerbose = false; }
+                else {gVerbose = true; }
+
+                G4String energySpectrumType;
+                if (gNeutrinoEnergyType == "mono"){ energySpectrumType = "mono"; }
+                else{ energySpectrumType = std::to_string(gNeutrinoEnergyPinch); }
+
+                ghitsfilename += model + "_posden_" + sanitize_for_filename(gPositronDensity) + "_meanE_" + boost::str(boost::format("%.0f") % gNeutrinoMeanEnergy) 
+                            + "MeV_alpha_" + energySpectrumType + "_" + std::to_string(gRunID);
+            }
+            else
+            {
+                ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gRunID);
+            }
         }
     }
     else if(argc == 3)
