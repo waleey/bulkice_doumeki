@@ -31,21 +31,21 @@ void OMSimAnalysisManager::Write()
         for (int i = 0; i < (int) stats_event_id.size(); i++)
         {
             //datafile << stats_event_id.at(i) << "\t";
-            ////datafile << fRunId << "\t";
+            datafile << fRunId << "\t";
             datafile << std::fixed << stats_hit_time.at(i) /ns << "\t";
             //datafile << stats_photon_flight_time.at(i) /ns << "\t";
             //datafile << stats_photon_track_length.at(i) << "\t";
-            ////datafile << stats_photon_energy.at(i) << "\t";
+            datafile << stats_photon_energy.at(i) << "\t";
             datafile << stats_PMT_hit.at(i) << "\t";
             //datafile << stats_event_distance.at(i) << "\t";
-            ////datafile << stats_photon_position.at(i).x()/m << "\t";
-            ////datafile << stats_photon_position.at(i).y()/m << "\t";
-            ////datafile << stats_photon_position.at(i).z()/m << "\t";
-            ////datafile << stats_vertex_position.at(i).x()/m << "\t";
-            ////datafile << stats_vertex_position.at(i).y()/m << "\t";
-            ////datafile << stats_vertex_position.at(i).z()/m << "\t";
-            ////datafile << stats_positron_id.at(i) << "\t";
-            ////datafile << stats_survived_qe.at(i) << "\t";
+            datafile << stats_photon_position.at(i).x()/m << "\t";
+            datafile << stats_photon_position.at(i).y()/m << "\t";
+            datafile << stats_photon_position.at(i).z()/m << "\t";
+            datafile << stats_vertex_position.at(i).x()/m << "\t";
+            datafile << stats_vertex_position.at(i).y()/m << "\t";
+            datafile << stats_vertex_position.at(i).z()/m << "\t";
+            datafile << stats_positron_id.at(i) << "\t";
+            datafile << stats_survived_qe.at(i) << "\t";
             if(gPhotonSim)
             {
                 datafile << gAngle << "\t";

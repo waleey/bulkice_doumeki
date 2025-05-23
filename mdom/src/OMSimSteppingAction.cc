@@ -136,8 +136,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 if(!gWOM)
                 {
                     n = explode(aStep->GetPreStepPoint()->GetPhysicalVolume()->GetName(),'_');
-                    //gAnalysisManager.stats_PMT_hit.push_back(atoi(n.at(1)));
-                    gAnalysisManager.stats_PMT_hit.push_back(static_cast<uint8_t>(atoi(n.at(1))));
+                    gAnalysisManager.stats_PMT_hit.push_back(atoi(n.at(1)));
+                    //gAnalysisManager.stats_PMT_hit.push_back(static_cast<uint8_t>(atoi(n.at(1))));
                 }
                 else
                 {
