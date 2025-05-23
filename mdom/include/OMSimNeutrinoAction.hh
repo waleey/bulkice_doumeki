@@ -1,5 +1,5 @@
-#ifndef OMSIMPOSITRONINJECTOR_HH_INCLUDED
-#define OMSIMPOSITRONINJECTOR_HH_INCLUDED
+#ifndef OMSIMNEUTRINOACTION_HH_INCLUDED
+#define OMSIMNEUTRINOACTION_HH_INCLUDED
 
 #include "G4ParticleGun.hh"
 #include "G4Event.hh"
@@ -10,16 +10,15 @@
 #include <vector>
 #include <iostream>
 
-class OMSimPositronInjector
+class OMSimNeutrinoAction
 {
 public:
-    OMSimPositronInjector(G4ParticleGun*);
-    ~OMSimPositronInjector();
+    OMSimNeutrinoAction(G4ParticleGun*);
+    ~OMSimNeutrinoAction();
 
     void GeneratePrimaries(G4Event*);
-    inline bool PositronExist() { return fParticleExist; }
     void LoadData();
-
+    inline bool NeutrinoExist() { return fParticleExist; }
 
 private:
 
@@ -37,18 +36,6 @@ private:
 
     OMSimRadioactivityData* fRadData;
 
-    std::vector<G4double> energy;
-    std::vector<G4double> fX;
-    std::vector<G4double> fY;
-    std::vector<G4double> fZ;
-    std::vector<G4double> alpha_X;
-    std::vector<G4double> alpha_Y;
-    std::vector<G4double> alpha_Z;
-    std::vector<G4double> inTime;
-    std::vector<std::vector<G4double>> fPositronData {energy, fX, fY, fZ, alpha_X, alpha_Y, alpha_Z, inTime};
-    std::vector<std::string>  dtypes {"energy", "x", "y", "z", "ax", "ay", "az", "time"};
-    enum {ENERGY, X, Y, Z, AX, AY, AZ, TIME};
-
     G4double SampleEnergy(G4double, G4double);
     G4double SampleZenith(G4double, G4double, G4String, G4int);
     G4ThreeVector rotateFrameFromeTo(const G4ThreeVector&, const G4ThreeVector&, const G4ThreeVector&);
@@ -56,4 +43,4 @@ private:
 };
 
 
-#endif // OMSIMPOSITRONINJECTOR_HH_INCLUDED
+#endif // OMSIMNEUTRINOACTION_HH_INCLUDED

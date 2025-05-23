@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#include "OMSimPositronInjector.hh"
+#include "OMSimNeutrinoAction.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4Positron.hh"
 #include "CLHEP/Random/RandGamma.h"
@@ -17,12 +17,13 @@ extern G4double gNeutrinoMeanEnergy;
 extern G4double gNeutrinoEnergyPinch;
 extern G4String gNeutrinoEnergyType;
 extern G4double gPositronDensity;
+extern G4String gPositronNumber;
 extern G4int    gPositronEnergyOrder;
 extern G4int    gPositronZenithOrder;
 extern G4String gPositronZenithType;
 
 
-OMSimPositronInjector::OMSimPositronInjector(G4ParticleGun* particleGun)
+OMSimNeutrinoAction::OMSimNeutrinoAction(G4ParticleGun* particleGun)
     :   fParticleGun(particleGun),
         fParticleExist(true),
         fParticleNum(0),
@@ -31,11 +32,13 @@ OMSimPositronInjector::OMSimPositronInjector(G4ParticleGun* particleGun)
 {
     fRadData = new OMSimRadioactivityData();
 }
-OMSimPositronInjector::~OMSimPositronInjector()
+
+OMSimNeutrinoAction::~OMSimNeutrinoAction()
 {
 
 }
-void OMSimPositronInjector::GeneratePrimaries(G4Event* anEvent)
+
+void OMSimNeutrinoAction::GeneratePrimaries(G4Event* anEvent)
 {
     // pull neutrino energy from distribution
     G4double neutrinoEnergy = 0.0 * MeV;
@@ -162,7 +165,7 @@ void OMSimPositronInjector::GeneratePrimaries(G4Event* anEvent)
     }
 }
 
-G4double OMSimPositronInjector::SampleEnergy(G4double meanEnergy, G4double alpha)
+G4double OMSimNeutrinoAction::SampleEnergy(G4double meanEnergy, G4double alpha)
 {
     G4double k = alpha + 1;
     G4double theta = meanEnergy / k;
@@ -171,7 +174,7 @@ G4double OMSimPositronInjector::SampleEnergy(G4double meanEnergy, G4double alpha
     return CLHEP::RandGamma::shoot(k, lambda);; // uses global RNG
 }
 
-G4double OMSimPositronInjector::SampleZenith(G4double positronVe0, G4double neutrinoEnergy, G4String mode, G4int order)
+G4double OMSimNeutrinoAction::SampleZenith(G4double positronVe0, G4double neutrinoEnergy, G4String mode, G4int order)
 {  
     // mean of the cos(zenith) distribution
     G4double mu0 = 1.0/3.0 * positronVe0 * a0; //zeroth order
@@ -201,7 +204,7 @@ G4double OMSimPositronInjector::SampleZenith(G4double positronVe0, G4double neut
         if (std::abs(cos1) > 1){ return cos2; }
         else { return cos1; }
     }
-    else if (mode=="numeric")
+    else
     {
         G4double pdf_max = 0.5 * (1 + 3 * std::abs(mu)); // maximum of the pdf
         G4double x;
@@ -217,7 +220,7 @@ G4double OMSimPositronInjector::SampleZenith(G4double positronVe0, G4double neut
     }
 }
 
-G4ThreeVector OMSimPositronInjector::rotateFrameFromeTo(const G4ThreeVector& original, const G4ThreeVector& from, const G4ThreeVector& to)
+G4ThreeVector OMSimNeutrinoAction::rotateFrameFromeTo(const G4ThreeVector& original, const G4ThreeVector& from, const G4ThreeVector& to)
 {
     // normalize from and to vector
     G4ThreeVector v = from.unit();
@@ -240,24 +243,27 @@ G4ThreeVector OMSimPositronInjector::rotateFrameFromeTo(const G4ThreeVector& ori
             G4ThreeVector flipped = G4ThreeVector(-original.x(), original.y(), -original.z()); // rotation around y-axis
             return flipped;
         }
-
-        axis = axis.unit();
-        G4double angle = std::atan2(sinAngle, cosAngle);
-        G4ThreeVector rotated = original;
-        rotated.rotate(angle, axis);
-        return rotated;
     }
+    // general case: perform rotation
+    axis = axis.unit();
+    G4double angle = std::atan2(sinAngle, cosAngle);
+    G4ThreeVector rotated = original;
+    rotated.rotate(angle, axis);
+    return rotated;
 }
 
-void OMSimPositronInjector::LoadData()
+void OMSimNeutrinoAction::LoadData()
 {
     G4double meanRate = gPositronDensity * pow((gworldsize * 2),3);
-    fParticleNum = fRadData -> GetNumDecay(meanRate);
+
+    if (gPositronNumber == "poisson") { fParticleNum = fRadData -> GetNumDecay(meanRate); }
+    else {fParticleNum = meanRate; }
+
     std::cout << "---------------------\n" 
               << "Positron density [pos/m3]: " << gPositronDensity << "\n"
               << "Simulation Volume [m]: " << pow((gworldsize * 2),3) << "\n"
               << "Number of expected positrons: " << meanRate << "\n"
-              << "Number of simulate positrons: " << fParticleNum << "\n"
+              << "Number of simulated positrons: " << fParticleNum << "\n"
               << "---------------------" << std::endl;
-    //std::cout << "Number of positrons: " << fParticleNum << std::endl;
+
 }
