@@ -2,7 +2,6 @@
 #include <sstream>
 #include <fstream>
 #include <string>
-#include <format>
 #include "G4RunManager.hh"
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
