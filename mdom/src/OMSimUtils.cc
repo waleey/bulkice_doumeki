@@ -2,6 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <format>
+#include <boost/format.hpp>
+#include <algorithm>
 
 // Implement the loadDataFromFile function
 std::vector<ElementData> loadDataFromFile(const std::string& filename) {
@@ -44,4 +47,11 @@ std::vector<ElementData> loadDataFromFile(const std::string& filename) {
 
     file.close();
     return data;
+}
+
+std::string sanitize_for_filename(double value) {
+    std::string formatted = boost::str(boost::format("%.0E") % value); // Scientific, uppercase E, 1 decimal
+    // Remove the decimal point (e.g., 5.0E-01 → 50E-01)
+    formatted.erase(std::remove(formatted.begin(), formatted.end(), '.'), formatted.end());
+    return formatted;
 }

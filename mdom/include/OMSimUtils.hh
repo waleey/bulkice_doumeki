@@ -16,5 +16,6 @@ struct ElementData {
 
 // Declare the loadDataFromFile function
 std::vector<ElementData> loadDataFromFile(const std::string& filename);
+std::string sanitize_for_filename(double value);
 
 #endif // OmSimUtils_h
