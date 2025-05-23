@@ -25,6 +25,7 @@ private:
     bool fParticleExist;
     G4int fParticleNum;
     G4int fIdx;
+    G4int fPerc;
 
     OMSimRadioactivityData* fRadData;
 
