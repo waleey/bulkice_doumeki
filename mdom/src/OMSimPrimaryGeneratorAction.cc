@@ -9,7 +9,8 @@ extern G4double gZenithAngle;
 extern G4bool gVerbose;
 
 OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
-    :   fPositronAction(0),
+    :   fNeutrinoAction(0),
+        fPositronAction(0),
         fNeutronAction(0),
         fElectronAction(0),
         fK40Action(0),
@@ -27,8 +28,8 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
 	fParticleGun = new G4ParticleGun(1);
 	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
 
-	fPositronAction = new OMSimPositronInjector(fParticleGun);
-    //fPositronAction = new OMSimPositronAction(fParticleGun);
+    fNeutrinoAction = new OMSimNeutrinoAction(fParticleGun);
+    fPositronAction = new OMSimPositronAction(fParticleGun);
 	fNeutronAction = new OMSimNeutronAction(fParticleGun);
 	fElectronAction = new OMSimElectronAction(fParticleGun);
 	fK40Action = new OMSimK40Action(fParticleGun);
@@ -40,7 +41,8 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
 	fGeneratorMessenger = new PrimaryGeneratorMessenger(this);
 }
 OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
-    :   fPositronAction(0),
+    :   fNeutrinoAction(0),
+        fPositronAction(0),
         fNeutronAction(0),
         fElectronAction(0),
         fK40Action(0),
@@ -58,8 +60,8 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
 	fParticleGun = new G4ParticleGun(1);
 	G4cout << ":::::::::::::::Particle Gun Created:::::::::::" << G4endl;
 
-    fPositronAction = new OMSimPositronInjector(fParticleGun);
-	//fPositronAction = new OMSimPositronAction(fParticleGun);
+    fNeutrinoAction = new OMSimNeutrinoAction(fParticleGun);
+    fPositronAction = new OMSimPositronAction(fParticleGun);
 	fNeutronAction = new OMSimNeutronAction(fParticleGun);
 	fElectronAction = new OMSimElectronAction(fParticleGun);
 	fK40Action = new OMSimK40Action(fParticleGun);
@@ -73,7 +75,8 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
 
 OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 {
-	delete fPositronAction;
+	delete fNeutrinoAction;
+    delete fPositronAction;
 	delete fNeutronAction;
 	delete fElectronAction;
 	delete fK40Action;
@@ -94,10 +97,12 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 	}
 	switch(fActionType)
 	{
+        case Neutrino:
+            if (gVerbose){ std::cout << "Generating Neutrinos!" << std::endl; }
+            fNeutrinoAction -> GeneratePrimaries(anEvent);
+            break;
         case Positron:
-        if (gVerbose){
             std::cout << "Generating Positrons!" << std::endl;
-        }
             fPositronAction -> GeneratePrimaries(anEvent);
             break;
         case Neutron:
@@ -134,7 +139,6 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             break;
         case Photon:
             //std::cout << "Generating Photon wave!" << std::endl;
-            std::cout << "+++(PRIM) Generating Photons!" << std::endl;
             fPhotonAction -> GeneratePrimaries(anEvent);
             //GenerateToVisualize();
             break;
@@ -158,6 +162,8 @@ bool OMSimPrimaryGeneratorAction::ParticleExist()
 {
     switch(fActionType)
     {
+        case Neutrino:
+            return fNeutrinoAction -> NeutrinoExist();
         case Positron:
             return fPositronAction -> PositronExist();
         case Neutron:
@@ -174,6 +180,9 @@ void OMSimPrimaryGeneratorAction::LoadData()
 {
     switch(fActionType)
     {
+        case Neutrino:
+            fNeutrinoAction -> LoadData();
+            break;
         case Positron:
             fPositronAction -> LoadData();
             break;

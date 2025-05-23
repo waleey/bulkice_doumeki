@@ -7,7 +7,7 @@
 #include "G4ParticleTable.hh"
 //#include "G4ParticleTable.hh"
 
-#include "OMSimPositronInjector.hh"
+#include "OMSimNeutrinoAction.hh"
 #include "OMSimPositronAction.hh"
 #include "OMSimNeutronAction.hh"
 #include "OMSimElectronAction.hh"
@@ -60,8 +60,8 @@ private:
     void GenerateWave();
     void GenerateBeam();
 
-	OMSimPositronInjector* fPositronAction;
-	//OMSimPositronAction* fPositronAction;
+	OMSimNeutrinoAction* fNeutrinoAction;
+	OMSimPositronAction* fPositronAction;
 	OMSimNeutronAction* fNeutronAction;
 	OMSimElectronAction* fElectronAction;
 	OMSimK40Action* fK40Action;
@@ -85,7 +85,7 @@ private:
 
     PrimaryGeneratorMessenger* fGeneratorMessenger;
 
-	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, DecayChain, Photon, Visualization, wave, beam};
+	enum {Neutrino, Positron, Neutron, Electron, K40, U238, U235, Th232, DecayChain, Photon, Visualization, wave, beam};
 };
 
 
