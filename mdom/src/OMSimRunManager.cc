@@ -114,11 +114,14 @@ void OMSimRunManager::Initialize()
 
 void OMSimRunManager::BeamOn()
 {
-    if(fInteraction == "ibd")
+    if (fInteraction == "neu")
+    {
+        GenerateNeutrino();
+    }
+    else if(fInteraction == "ibd")
     {
         //GenerateNeutron();
         GeneratePositron();
-
     }
     else if(fInteraction == "enees")
     {
@@ -187,6 +190,17 @@ void OMSimRunManager::BeamOn()
     {
         std::cerr << "Invalid interaction channel. Aborting..." << std::endl;
         exit(0);
+    }
+}
+
+void OMSimRunManager::GenerateNeutrino()
+{
+    fPrimaryGenerator -> SetActionType(Neutrino);
+    fPrimaryGenerator -> LoadData();
+    while(fPrimaryGenerator -> ParticleExist())
+    {
+        gEvent++;
+        fRunManager -> BeamOn(1);
     }
 }
 
