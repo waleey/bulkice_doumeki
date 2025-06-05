@@ -249,7 +249,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
 
                 G4String energySpectrumType;
                 if (gNeutrinoEnergyType == "mono"){ energySpectrumType = "mono"; }
-                else{ energySpectrumType = std::to_string(gNeutrinoEnergyPinch); }
+                else{ energySpectrumType = boost::str(boost::format("%.0f") % gNeutrinoEnergyPinch); }
 
                 ghitsfilename += model + "_posden_" + sanitize_for_filename(gPositronDensity) + "_meanE_" + boost::str(boost::format("%.0f") % gNeutrinoMeanEnergy) 
                             + "MeV_alpha_" + energySpectrumType + "_" + std::to_string(gRunID);
