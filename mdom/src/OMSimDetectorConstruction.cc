@@ -67,18 +67,24 @@ void OMSimDetectorConstruction::ConstructWorld()
 {
     //ConstructWorldMat();
     //fworldSize = 20;
-    mWorldSolid = new G4Box("World", fworldSize * m, fworldSize * m, fworldSize* m);
+    ////mWorldSolid = new G4Box("World", fworldSize * m, fworldSize * m, fworldSize* m);
     //mWorldSolid = new G4Box("World", .5 * m, .5 * m, .5 * m);
     //mWorldLogical = new G4LogicalVolume(mWorldSolid, ice, "World_log", 0, 0, 0);
     //mWorldPhysical = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), mWorldLogical, "World_phys", 0, false, 0, true);
+    ////mWorldLogical = new G4LogicalVolume(mWorldSolid, mData->GetMaterial("argWorld"), "World_log", 0, 0, 0);
+    ////mWorldPhysical = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), mWorldLogical, "World_phys", 0, false, 0);
+    ////G4VisAttributes* World_vis = new G4VisAttributes(G4Colour(0.45,0.5,0.35,0.2));
+    //G4VisAttributes* World_vis = new G4VisAttributes(G4Colour(0,0,0,0));
+    ////mWorldLogical -> SetVisAttributes(World_vis);
+    ////G4cout << "::::::::::::::::::World Volume Constructed Sucessfully:::::::::::::::::::" << G4endl;
+
+    mWorldSolid = new G4Orb("World", fworldSize * m);
     mWorldLogical = new G4LogicalVolume(mWorldSolid, mData->GetMaterial("argWorld"), "World_log", 0, 0, 0);
     mWorldPhysical = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), mWorldLogical, "World_phys", 0, false, 0);
     G4VisAttributes* World_vis = new G4VisAttributes(G4Colour(0.45,0.5,0.35,0.2));
-    //G4VisAttributes* World_vis = new G4VisAttributes(G4Colour(0,0,0,0));
     mWorldLogical -> SetVisAttributes(World_vis);
-
+    
     G4cout << "::::::::::::::::::World Volume Constructed Sucessfully:::::::::::::::::::" << G4endl;
-
 }
 
 // DONE UP TO THIS POINT
