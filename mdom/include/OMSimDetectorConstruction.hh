@@ -9,6 +9,7 @@
 #include "G4NistManager.hh"
 #include "G4MaterialPropertiesTable.hh"
 #include "G4Box.hh"
+#include "G4Orb.hh"
 
 #include "OMSimInputData.hh"
 #include "OMSimPMTConstruction.hh"
@@ -38,8 +39,8 @@ public:
 
 
 private:
-    //G4Orb *mWorldSolid;
-    G4Box *mWorldSolid;
+    G4Orb *mWorldSolid;
+    //G4Box *mWorldSolid;
     G4LogicalVolume *mWorldLogical;
     G4VPhysicalVolume *mWorldPhysical;
     void ConstructWorld();
