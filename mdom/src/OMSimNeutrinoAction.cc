@@ -267,7 +267,8 @@ G4ThreeVector OMSimNeutrinoAction::rotateFrameFromeTo(const G4ThreeVector& origi
 
 void OMSimNeutrinoAction::LoadData()
 {
-    G4double meanRate = gPositronDensity * pow((gworldsize * 2),3);
+    G4double meanRate = gPositronDensity * 4/3 * M_PI * pow(gworldsize,3);
+    //G4double meanRate = gPositronDensity * pow((gworldsize * 2),3);
 
     if (gPositronNumber == "poisson") { fParticleNum = fRadData -> GetNumDecay(meanRate); }
     else {fParticleNum = meanRate; }
