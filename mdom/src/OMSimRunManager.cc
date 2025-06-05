@@ -532,7 +532,7 @@ void OMSimRunManager::OpenFile()
     gRadioDecayFile << "TrackID,ParticleName,Energy\n";
 
     gPositronData.open("positron_data.csv", std::ios::out);
-    gPositronData << "E_nu,E_p0,E_p1,th_uni,th_0,th_1,phi\n";
+    gPositronData << "E_nu,E_p0,E_p1,th_uni,th_0,th_1,phi,posx,posy,poz\n";
 }
 
 void OMSimRunManager::CloseFile()
