@@ -5,6 +5,7 @@
 #include "G4ParticleDefinition.hh"
 #include "G4Positron.hh"
 #include "CLHEP/Random/RandGamma.h"
+#include "Randomize.hh"
 
 extern G4double gworldsize;
 extern G4bool   gVerbose;
@@ -113,10 +114,21 @@ void OMSimNeutrinoAction::GeneratePrimaries(G4Event* anEvent)
     G4ThreeVector positronDirection = rotateFrameFromeTo(positronDirectionInNeutrinoFrame, G4ThreeVector(0,0,1), neutrinoDirection);
 
     // random positron position inside simulation volume
+    // for box volume
+    //G4ThreeVector positronPosition (
+    //    fRadData -> RandomGen(-gworldsize, gworldsize) * m,
+    //    fRadData -> RandomGen(-gworldsize, gworldsize) * m,
+    //    fRadData -> RandomGen(-gworldsize, gworldsize) * m
+    //);
+    // for spherical volume
+    G4double positronPositionAzimuth = 2*M_PI * G4UniformRand();
+    G4double positronPositionZenith = std::acos(1 - 2 * G4UniformRand());
+    G4double positronPositionRadius = gworldsize * std::cbrt(G4UniformRand());
+
     G4ThreeVector positronPosition (
-        fRadData -> RandomGen(-gworldsize, gworldsize) * m,
-        fRadData -> RandomGen(-gworldsize, gworldsize) * m,
-        fRadData -> RandomGen(-gworldsize, gworldsize) * m
+        positronPositionRadius * std::sin(positronPositionZenith) * std::cos(positronPositionAzimuth) * m,
+        positronPositionRadius * std::sin(positronPositionZenith) * std::sin(positronPositionAzimuth) * m,
+        positronPositionRadius * std::cos(positronPositionZenith) * m
     );
 
     if (gVerbose)
@@ -136,7 +148,8 @@ void OMSimNeutrinoAction::GeneratePrimaries(G4Event* anEvent)
     {
         gPositronData << neutrinoEnergy / MeV << "," << positronEnergy0 / MeV << "," << positronEnergy1 / MeV << "," 
                       << positronCosZenithUni << "," << positronCosZenith0 << "," << positronCosZenith1 << "," 
-                      << positronAzimuth << "\n";
+                      << positronAzimuth << "," << positronPosition[0] / m << "," << positronPosition[1] / m << "," 
+                      << positronPosition[2] / m << "\n";
         gPositronData.flush();
     }
     
