@@ -1,3 +1,11 @@
+
+
+#Only Add this line if u r using MacOS
+#----------------------------------------------------------------------------
+#set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk")
+#include_directories("/opt/homebrew/include")
+#ink_directories("/opt/homebrew/lib")
+
 #----------------------------------------------------------------------------
 # Setup the project
 cmake_minimum_required(VERSION 3.16...3.21 FATAL_ERROR)
@@ -8,6 +16,8 @@ project(bulkice_doumeki)
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
 # to build a batch mode only executable
 #
+
+
 option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
   find_package(Geant4 REQUIRED ui_all vis_all)
@@ -43,7 +53,6 @@ set(DESTINATION_DIR "${PROJECT_SOURCE_DIR}/build/")
 
 # Copy the directory
 file(COPY "${SOURCE_DIR}" DESTINATION "${DESTINATION_DIR}")
-
 
 #----------------------------------------------------------------------------
 #Copying the merger program to the build folder
