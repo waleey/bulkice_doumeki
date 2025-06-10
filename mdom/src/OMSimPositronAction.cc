@@ -20,8 +20,8 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
     try
     {
         std::cout << "Positron x: " << fPositronData.at(X).at(fIdx) << std::endl
-    << "Positron y: " << fPositronData.at(Y).at(fIdx) << std::endl
-    << "Positron z: " << fPositronData.at(Z).at(fIdx) << std::endl;
+        << "Positron y: " << fPositronData.at(Y).at(fIdx) << std::endl
+        << "Positron z: " << fPositronData.at(Z).at(fIdx) << std::endl;
     }
     catch(...)
     {
@@ -29,14 +29,21 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
         << "OMSimPositronAction::GeneratePrimaries()" << std::endl;
         exit(0);
     }
-
-    fParticleGun -> SetParticlePosition(G4ThreeVector(fPositronData.at(X).at(fIdx) * m, fPositronData.at(Y).at(fIdx) * m, fPositronData.at(Z).at(fIdx) * m));
-    fParticleGun -> SetParticleMomentumDirection(G4ThreeVector(fPositronData.at(AX).at(fIdx), fPositronData.at(AY).at(fIdx), fPositronData.at(AZ).at(fIdx)));
-    fParticleGun -> SetParticleEnergy(fPositronData.at(ENERGY).at(fIdx) * MeV);
-    fParticleGun -> SetParticleTime(fPositronData.at(TIME).at(fIdx) * ms);
-    fParticleGun -> SetParticleDefinition(G4Positron::PositronDefinition());
-    fParticleGun -> GeneratePrimaryVertex(anEvent);
-
+    try
+    {
+        fParticleGun -> SetParticlePosition(G4ThreeVector(fPositronData.at(X).at(fIdx) * m, fPositronData.at(Y).at(fIdx) * m, fPositronData.at(Z).at(fIdx) * m));
+        fParticleGun -> SetParticleMomentumDirection(G4ThreeVector(fPositronData.at(AX).at(fIdx), fPositronData.at(AY).at(fIdx), fPositronData.at(AZ).at(fIdx)));
+        fParticleGun -> SetParticleEnergy(fPositronData.at(ENERGY).at(fIdx) * MeV);
+        fParticleGun -> SetParticleTime(fPositronData.at(TIME).at(fIdx) * ms);
+        fParticleGun -> SetParticleDefinition(G4Positron::PositronDefinition());
+        fParticleGun -> GeneratePrimaryVertex(anEvent);
+    }
+    catch(...)
+    {
+        std::cerr << "Vector out of range. " << std::endl
+        << "OMSimPositronAction::GeneratePrimaries()" << std::endl;
+        exit(0);
+    }
     fIdx++;
     if(fIdx == fParticleNum)
     {

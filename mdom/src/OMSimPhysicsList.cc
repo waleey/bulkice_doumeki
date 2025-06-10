@@ -61,6 +61,7 @@ void OMSimPhysicsList::ConstructParticle()
     G4Electron::ElectronDefinition();
     G4Positron::PositronDefinition();
     G4Proton::ProtonDefinition();
+	G4AntiProton::AntiProtonDefinition();
     G4Neutron::NeutronDefinition();
     G4MuonMinus::MuonMinusDefinition();
     G4MuonPlus::MuonPlusDefinition();
@@ -133,12 +134,12 @@ void OMSimPhysicsList::ConstructProcess()
     G4NeutronCaptureProcess* theNeutronCaptureProcess = new G4NeutronCaptureProcess();
 
 //  Atomic Deexcitation Process
-    G4UAtomicDeexcitation* deexc = new G4UAtomicDeexcitation();
+    //G4UAtomicDeexcitation* deexc = new G4UAtomicDeexcitation();
 
-    deexc -> SetFluo(true);
-    deexc -> SetAuger(true);
-    deexc -> SetPIXE(true);
-    G4LossTableManager::Instance() -> SetAtomDeexcitation(deexc);
+    //deexc -> SetFluo(true);
+    //deexc -> SetAuger(true);
+    //deexc -> SetPIXE(true);
+    //G4LossTableManager::Instance() -> SetAtomDeexcitation(deexc);
 
 //  Gamma Conversion Process
 	G4GammaConversion* theGammaConversionModel = new G4GammaConversion();

@@ -119,9 +119,9 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             fParticleGun -> GeneratePrimaryVertex(anEvent);
             break;
         case Photon:
-            //std::cout << "Generating Photon wave!" << std::endl;
-            //fPhotonAction -> GeneratePrimaries(anEvent);
-            GenerateToVisualize();
+            std::cout << "Generating Photon wave!" << std::endl;
+            fPhotonAction -> GeneratePrimaries(anEvent);
+            //GenerateToVisualize();
             break;
         case wave:
             GenerateWave();

@@ -30,7 +30,7 @@
 #include "G4VSensitiveDetector.hh"
 #include "G4SystemOfUnits.hh"
 
-#include <bits/stdc++.h>
+#include "bits/stdc++.h"
 #include <cstdlib>
 
 extern G4int gPhotonNotAbsorbed;
