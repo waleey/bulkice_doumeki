@@ -18,5 +18,8 @@ source $G4BUILD/share/Geant4/geant4make/geant4make.sh
 source $G4BUILD/bin/geant4.sh
 
 #Only uncomment these lies if on mac:
-export PKG_CONFIG_PATH=/opt/homebrew/opt/qt@5/lib/pkgconfig/
-export PATH=/opt/homebrew/opt/qt@5/bin:$PATH
+OS=`uname -o`
+if [[ "${OS}" == "Darwin" ]]; then
+    export PKG_CONFIG_PATH=/opt/homebrew/opt/qt@5/lib/pkgconfig/
+    export PATH=/opt/homebrew/opt/qt@5/bin:$PATH
+fi
