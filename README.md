@@ -107,3 +107,10 @@ If one simulates a range of angles with a specific step size, they might specify
 
 
 *NB: * I am still in the process of building and debugging it. Especially, running the simulation in parallel with sntools to have new positron and electron flux each time is still under development and will be updated soon. Nevertheless, please feel free to share any suggestion, criticism, or thoughts. My email: wkarim@u.rochester.edu slack: Waly M Z Karim  
+
+## A Note about Input Particle Files
+
+When running the `opticalphoton`, `ibd`, and other input types, the particle energies and positions are read from files in the folder
+```
+mdom/InputFile
+```
