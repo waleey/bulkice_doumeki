@@ -16,6 +16,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
         fU235Action(0),
         fTh232Action(0),
         fPhotonAction(0),
+        fGammaAction(0),
         fParticleGun(0),
         fActionType(0),
         fPhotonAngle(0),
@@ -33,6 +34,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction()
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
 	fPhotonAction = new OMSimPhotonAction(fParticleGun);
+    fGammaAction = new OMSimGammaAction(fParticleGun);
 	fGeneratorMessenger = new PrimaryGeneratorMessenger(this);
 }
 OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
@@ -44,6 +46,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
         fU235Action(0),
         fTh232Action(0),
         fPhotonAction(0),
+        fGammaAction(0),
         fParticleGun(0),
         fActionType(0),
         fInteraction(interaction),
@@ -60,6 +63,7 @@ OMSimPrimaryGeneratorAction::OMSimPrimaryGeneratorAction(G4String& interaction)
 	fU235Action = new OMSimU235Action(fParticleGun);
 	fTh232Action = new OMSimTh232Action(fParticleGun);
 	fPhotonAction = new OMSimPhotonAction(fParticleGun);
+    fGammaAction = new OMSimGammaAction(fParticleGun);
 	fGeneratorMessenger = new PrimaryGeneratorMessenger(this);
 }
 
@@ -73,6 +77,7 @@ OMSimPrimaryGeneratorAction::~OMSimPrimaryGeneratorAction()
 	delete fU235Action;
 	delete fTh232Action;
 	delete fPhotonAction;
+    delete fGammaAction;
 	delete fParticleGun;
 	delete fGeneratorMessenger;
 }
@@ -131,6 +136,10 @@ void OMSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
             GenerateBeam();
             fParticleGun -> GeneratePrimaryVertex(anEvent);
             break;
+        case Gamma:
+            std::cout << "Generating Gamma!" << std::endl;
+            fGammaAction -> GeneratePrimaries(anEvent);
+            break;
         default:
             GenerateToVisualize();
             fParticleGun -> GeneratePrimaryVertex(anEvent);
@@ -149,6 +158,8 @@ bool OMSimPrimaryGeneratorAction::ParticleExist()
             return fNeutronAction -> NeutronExist();
         case Electron:
             return fElectronAction -> ElectronExist();
+        case Gamma:
+            return fGammaAction -> GammaExist();
         default:
             std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::ParticleExist() " << std::endl
             << "Aborting...." << std::endl;
@@ -167,6 +178,9 @@ void OMSimPrimaryGeneratorAction::LoadData()
             break;
         case Electron:
             fElectronAction -> LoadData();
+            break;
+        case Gamma:
+            fGammaAction -> LoadData();
             break;
         default:
             std::cerr << "Invalid action type in OMSimPrimaryGeneratorAction::ParticleExist() " << std::endl

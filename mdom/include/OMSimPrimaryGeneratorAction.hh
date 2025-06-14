@@ -15,6 +15,7 @@
 #include "OMSimU235Action.hh"
 #include "OMSimTh232Action.hh"
 #include "OMSimPhotonAction.hh"
+#include "OMSimGammaAction.hh"
 
 
 class PrimaryGeneratorMessenger;
@@ -57,6 +58,7 @@ private:
 	OMSimU235Action* fU235Action;
 	OMSimTh232Action* fTh232Action;
 	OMSimPhotonAction* fPhotonAction;
+	OMSimGammaAction* fGammaAction;
 	G4ParticleGun *fParticleGun;
 	G4int fActionType;
 
@@ -72,7 +74,7 @@ private:
 
     PrimaryGeneratorMessenger* fGeneratorMessenger;
 
-	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization, wave, beam};
+	enum {Positron, Neutron, Electron, K40, U238, U235, Th232, Photon, Visualization, wave, beam, Gamma};
 };
 
 

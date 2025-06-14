@@ -116,6 +116,10 @@ void OMSimRunManager::BeamOn()
     {
         GenerateElectron();
     }
+    else if(fInteraction == "gamma")
+    {
+        GenerateGamma();
+    }
     else if(fInteraction == "all")
     {
         GeneratePositron();
@@ -210,7 +214,16 @@ void OMSimRunManager::GenerateElectron()
         fRunManager -> BeamOn(1);
     }
 }
-
+void OMSimRunManager::GenerateGamma()
+{
+    fPrimaryGenerator -> SetActionType(Gamma);
+    fPrimaryGenerator -> LoadData();
+    while(fPrimaryGenerator -> ParticleExist())
+    {
+        gEvent++;
+        fRunManager -> BeamOn(1);
+    }
+}
 void OMSimRunManager::GenerateK40()
 {
     fPrimaryGenerator -> SetActionType(K40); //This member function needs to be implemented
