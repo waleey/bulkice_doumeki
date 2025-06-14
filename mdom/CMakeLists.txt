@@ -2,9 +2,9 @@
 
 #Only Add this line if u r using MacOS
 #----------------------------------------------------------------------------
-#set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk")
-#include_directories("/opt/homebrew/include")
-#ink_directories("/opt/homebrew/lib")
+set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk")
+include_directories("/opt/homebrew/include")
+link_directories("/opt/homebrew/lib")
 
 #----------------------------------------------------------------------------
 # Setup the project
