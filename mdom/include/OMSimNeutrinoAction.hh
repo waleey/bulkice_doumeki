@@ -9,6 +9,14 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <numeric>
+#include "spline.h"
+
+extern G4double gSimulationTime;
+extern G4double gSimulationRadius;
+extern G4double gNeutrinoFlux;
+extern G4double gNeutrinoMeanEnergy;
+extern G4double gNeutrinoEnergyPinch;
 
 class OMSimNeutrinoAction
 {
@@ -25,7 +33,11 @@ private:
     G4double neutronMass = 939.565 * MeV;
     G4double protonMass = 938.272 * MeV;
     G4double electronMass = 0.511 * MeV;
-    G4double IBDThresholdEnergy = (neutronMass-protonMass) + electronMass;
+    G4double iceDensity = 0.92 * g/(cm*cm*cm);
+    G4double waterMolarMass = 18 * g / mole;
+    G4double avogadroNumber = 6.022E23 / mole;
+
+    G4double IBDThresholdEnergy = (std::pow(neutronMass + electronMass, 2) - std::pow(protonMass, 2))/(2 * protonMass);
     G4double a0 = -0.1;
 
     G4ParticleGun* fParticleGun;
@@ -34,10 +46,40 @@ private:
     G4int fIdx;
     G4int fPerc;
 
+    // copy global variables
+    G4double fSimulationTime = gSimulationTime;
+    G4double fSimulationRadius = gSimulationRadius;
+    G4double fNeutrinoFlux = gNeutrinoFlux;
+    G4double fNeutrinoMeanEnergy = gNeutrinoMeanEnergy;
+    G4double fNeutrinoEnergyPinch = gNeutrinoEnergyPinch;
+
+    tk::spline fInverseCDF;
+
     OMSimRadioactivityData* fRadData;
 
-    G4double SampleEnergy(G4double, G4double);
-    G4double SampleZenith(G4double, G4double, G4String, G4int);
+    G4double SampleNeutrinoEnergy();
+    G4double SamplePositronZenith(G4double, G4double, G4String, G4int);
+
+    void InverseCDFNeutrinoSpectrumCrossSection();
+    std::vector<double> CDFNeutrinoSpectrumCrossSection(const std::vector<double>&);
+    std::pair<std::vector<double>, std::vector<double>> NormalizedPDFNeutrinoSpectrumCrossSection(G4double, G4double, G4int);
+
+    std::pair<G4double, G4double> NumberNeutrinoInteractions();
+    G4double IntegralNeutrinoSpectrumCrossSection(G4double, G4double, G4int);
+    G4double NeutrinoBlackBodySpectrum(G4double, G4double, G4double);
+    
+    G4double IBDCrossSection(G4double, G4int);
+    G4double IBDCrossSectionZeroth(G4double);
+    G4double IBDCrossSectionFirst(G4double);
+
+    G4double IBDPositronEnergyZeroth(G4double);
+    G4double IBDPositronMomentumZeroth(G4double);
+    G4double IBDPositronVeZeroth(G4double);
+    G4double IBDPositronEnergyFirst(G4double, G4double, G4double);
+
+    G4double TargetNumber();
+    G4double SimulationVolume();
+
     G4ThreeVector rotateFrameFromeTo(const G4ThreeVector&, const G4ThreeVector&, const G4ThreeVector&);
 
 };

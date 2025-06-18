@@ -21,11 +21,14 @@
 #include <ctime>
 #include <string>
 
-
 std::fstream    gRadioDecayFile;
 std::fstream    gPositronData;
 std::ofstream   gBinaryHitFile;
 G4bool          gVerbose = false;
+
+// general variables
+G4double        gSimulationTime = 1.0 * s;
+G4double        gSimulationRadius = 20 * m;
 
 // radioactivity variables
 G4bool          gRadioSampleExponential = true;
@@ -33,16 +36,14 @@ G4bool          gTrackingBiasing = false;
 G4double        gBkgSimTime = 1.0;
 
 // neutrino variables
+G4double        gNeutrinoFlux = 0.8357743 * 6241509074461 * MeV/(s*cm*cm); // energy flux of CCSN with L = 1E53 erg/s at 10 kpc 
 G4double        gNeutrinoMeanEnergy = 10 * MeV;
 G4double        gNeutrinoEnergyPinch = 2;
-G4String        gNeutrinoEnergyType = "gamma";
 
-// positron variables
-G4double        gPositronDensity = 0.1;
-G4String        gPositronNumber = "poisson"; // decides whether number of positron is pulled from Poisson or not
+// order
+G4int           gCrossSectionOrder = 1;
 G4int           gPositronEnergyOrder = 1;
 G4int           gPositronZenithOrder = 1;
-G4String        gPositronZenithType = "realistic";
 
 //setting up the external variables
 G4int           gGlass = 0;
@@ -236,23 +237,17 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             **/
             if (interaction_channel == "neu")
             {
-                gPositronDensity = atof(argv[6]);
-                gNeutrinoMeanEnergy = atof(argv[7]);
+                // transform from J/s/cm2 to MeV/s/mm2
+                gNeutrinoFlux = atof(argv[6]) * joule/(s*cm*cm);                
+                gNeutrinoMeanEnergy = atof(argv[7]) * MeV;
                 gNeutrinoEnergyPinch = atof(argv[8]);
-                gNeutrinoEnergyType = argv[9];
-                G4int verbose = atoi(argv[10]);
-
-
+                G4int verbose = atoi(argv[9]);
 
                 if (verbose==0) {gVerbose = false; }
                 else {gVerbose = true; }
 
-                G4String energySpectrumType;
-                if (gNeutrinoEnergyType == "mono"){ energySpectrumType = "mono"; }
-                else{ energySpectrumType = boost::str(boost::format("%.0f") % gNeutrinoEnergyPinch); }
-
-                ghitsfilename += model + "_posden_" + sanitize_for_filename(gPositronDensity) + "_meanE_" + boost::str(boost::format("%.0f") % gNeutrinoMeanEnergy) 
-                            + "MeV_alpha_" + energySpectrumType + "_" + std::to_string(gRunID);
+                ghitsfilename += model + "_flux_" + sanitize_for_filename(atof(argv[6])) + "_meanE_" + boost::str(boost::format("%.0f") % gNeutrinoMeanEnergy) 
+                            + "MeV_alpha_" + boost::str(boost::format("%.0f") % gNeutrinoEnergyPinch) + "_" + std::to_string(gRunID);
             }
             else
             {
