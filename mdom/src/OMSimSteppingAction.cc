@@ -19,7 +19,7 @@ extern G4int gNumScint;
 extern G4bool gWOM;
 extern G4bool gVerbose;
 extern G4bool gTrackingBiasing;
-extern G4double gBkgSimTime;
+extern G4double gSimulationTime;
 
 G4int gVesselCount = 0;
 G4int gPMTBodyCount = 0;
@@ -79,7 +79,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
         if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
-            if((aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") and (aTrack->GetGlobalTime() / s >= 0) and (aTrack->GetGlobalTime() / s <= gBkgSimTime)) {
+            if((aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") and (aTrack->GetGlobalTime() / s >= 0) and (aTrack->GetGlobalTime() / s <= gSimulationTime / s)) {
 
 
                 //Commented out temporarily.
