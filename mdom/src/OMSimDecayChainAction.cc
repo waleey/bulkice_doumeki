@@ -1,6 +1,8 @@
 #include "OMSimDecayChainAction.hh"
+#include "CLHEP/Random/RandFlat.h"
+
 extern G4bool gVerbose;
-extern G4bool gRadioSampleExponential;
+extern G4double gSimulationTime;
 
 OMSimDecayChainAction::OMSimDecayChainAction()   
 {
@@ -35,17 +37,17 @@ void OMSimDecayChainAction::GeneratePrimaries(G4Event* anEvent) {
     G4double charge = 0. * eplus;
     // random direction
     G4ThreeVector orientation = fRadData -> SetupOrientation();
-    G4double timeWindow = fRadData -> GetTimeWindow() * s;
-    G4double meanLifeTime = fisotope -> GetPDGLifeTime() * ns;
+    G4double timeWindow = gSimulationTime;
+    G4double meanLifeTime = fisotope -> GetPDGLifeTime();
 
-    G4double initialTime = fRadData -> GetInitialTimeBounds(ftimeLow, ftimeHigh) * s;
+    G4double initialTime = CLHEP::RandFlat::shoot(ftimeLow, ftimeHigh);
     
     if (gVerbose){
     std::cout << "+++ (DECAY):"
               << " ||| Mean Life Time [ns] = " << meanLifeTime
               << " ||| Time Window [ns] = " << timeWindow
-              << " ||| Time Low [ns] = " << ftimeLow * s
-              << " ||| Time High [ns] = " << ftimeHigh * s
+              << " ||| Time Low [ns] = " << ftimeLow
+              << " ||| Time High [ns] = " << ftimeHigh
               << " ||| Initial Time [ns] : " << initialTime << std::endl;
     }
     // now that initial time is set, set life time to zero
