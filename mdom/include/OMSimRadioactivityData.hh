@@ -32,7 +32,6 @@ public:
     G4double GetTimeWindow();
     G4double GetInitialTime();
     G4double GetInitialTime(G4String, G4double);
-    G4double GetInitialTimeBounds(G4double, G4double);
     G4double RandomGen(G4double, G4double);
 
 
