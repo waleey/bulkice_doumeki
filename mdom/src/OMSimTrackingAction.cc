@@ -5,13 +5,12 @@
 #include "G4Track.hh"
 #include "G4ThreeVector.hh"
 #include "G4SystemOfUnits.hh"
-#include "OMSimRadioactivityData.hh"
 #include "G4Ions.hh"
 
 extern std::fstream gRadioDecayFile;
 extern G4bool gVerbose;
-extern G4bool gRadioSampleExponential;
 extern G4bool gTrackingBiasing;
+extern G4double gSimulationTime;
 extern G4String gHittype;
 
 OMSimTrackingAction::OMSimTrackingAction()
@@ -37,8 +36,7 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
     **/
 
     
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow * s;
-    OMSimRadioactivityData* radData = new OMSimRadioactivityData();
+    G4double timeWindow = gSimulationTime;
     
     // save track ID, particle ID and particle energy of all particles
     if (gRadioDecayFile.is_open()){
@@ -106,15 +104,14 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
             // temporarily set lifetime to zero to force immediate decay
             G4double originalLifeTime = mTrack -> GetDefinition() -> GetPDGLifeTime();
 
-            G4double globalTime = mTrack -> GetGlobalTime() * ns; // global time of track
-            G4double remainTime = timeWindow * ns - globalTime; // remaining time
-            G4double u = radData -> RandomGen(0.,1.) * ns; // sampled probability between 0 and 1
-            G4double decayTime = -log(1-u) * originalLifeTime * ns; // sampled decay time
-            //decayTime = 0.1 * s;
+            G4double globalTime = mTrack -> GetGlobalTime(); // global time of track
+            G4double remainTime = timeWindow - globalTime; // remaining time
+            G4double u = CLHEP::RandFlat::shoot(0.0,1.0); // random number between 0 and 1
+            G4double decayTime = -log(1-u) * originalLifeTime; // sampled decay time
 
             if (gVerbose){
                 std::cout << "+++ (PRE-TRACK) Global Time [ns]: " << globalTime 
-                        << " ||| Time Window [ns]: " << timeWindow * ns
+                        << " ||| Time Window [ns]: " << timeWindow
                         << " ||| Remaining Time [ns]: " << remainTime
                         << std::endl;
                 std::cout << "+++ (PRE-TRACK) Mean Life Time [ns]: " << originalLifeTime 
@@ -124,57 +121,36 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
                         << " ||| Kinetic Energy [keV]: " << kineticEnergy * 1000
                         << std::endl;
             }
-            if (gRadioSampleExponential)
-            {   
-                if (decayTime != 0.0)
+             
+            if (decayTime != 0.0)
+            {
+                if (decayTime > remainTime)
                 {
-                    if (decayTime > remainTime)
-                    {
-                        mTrack -> SetTrackStatus(fStopAndKill);
-                        if (gVerbose){
-                            std::cout << ".... ---- |||| STOP AND KILL |||| ---- ...." << std::endl;
-                        }
-                    }   
-                    else
-                    {
-                        // update global time with the decay time
-                        G4double newTime = globalTime + decayTime;
-                        mTrack -> SetGlobalTime(newTime);
-
-                        // Store the global time for restoration in PostUserTrackingAction
-                        fOriginalGlobalTimes[mTrack->GetDefinition()] = newTime;
-
-                        // Store the original lifetime for restoration in PostUserTrackingAction
-                        fOriginalLifeTimes[mTrack->GetDefinition()] = originalLifeTime;
-
-                        // force immediate decay
-                        G4ParticleDefinition* mParticleDefinition = const_cast<G4ParticleDefinition*>(aTrack->GetParticleDefinition());
-                        mParticleDefinition -> SetPDGLifeTime(0 * ns);
-                    }
-                }
-            }
-            else
-            {               
-                if(!(aTrack -> GetParticleDefinition() -> GetPDGStable()))
-                {
-                    if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > OMSimRadioactivityData::ftimeWindow * s)
-                    {
-                        aTrack -> GetDefinition() -> SetPDGLifeTime((radData -> GetInitialTime()) * s);
-                    }
-                }
-                /*if ((originalLifeTime * 10 * ns > timeWindow * ns) || (excitationEnergy == 0)) // long lived states and ground states are killed
-                {
+                    // if decay outside simulation window, kill immediately
                     mTrack -> SetTrackStatus(fStopAndKill);
                     if (gVerbose){
                         std::cout << ".... ---- |||| STOP AND KILL |||| ---- ...." << std::endl;
                     }
-                }*/
-                
+                }   
+                else
+                {
+                    // update global time with the decay time
+                    G4double newTime = globalTime + decayTime;
+                    mTrack -> SetGlobalTime(newTime);
+
+                    // Store the global time for restoration in PostUserTrackingAction
+                    fOriginalGlobalTimes[mTrack->GetDefinition()] = newTime;
+
+                    // Store the original lifetime for restoration in PostUserTrackingAction
+                    fOriginalLifeTimes[mTrack->GetDefinition()] = originalLifeTime;
+
+                    // force immediate decay
+                    G4ParticleDefinition* mParticleDefinition = const_cast<G4ParticleDefinition*>(aTrack->GetParticleDefinition());
+                    mParticleDefinition -> SetPDGLifeTime(0 * ns);
+                }
             }
         }
-    }
-    delete radData;
-    
+    }    
 }
 
 void OMSimTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
