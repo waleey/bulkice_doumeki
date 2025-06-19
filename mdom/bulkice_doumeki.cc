@@ -31,12 +31,11 @@ G4double        gSimulationTime = 1.0 * s;
 G4double        gSimulationRadius = 20 * m;
 
 // radioactivity variables
-G4bool          gRadioSampleExponential = true;
 G4bool          gTrackingBiasing = false;
-G4double        gBkgSimTime = 1.0;
+G4double        gRadioactiveLeakContainment = 0.9;
 
 // neutrino variables
-G4double        gNeutrinoFlux = 0.8357743 * 6241509074461 * MeV/(s*cm*cm); // energy flux of CCSN with L = 1E53 erg/s at 10 kpc 
+G4double        gNeutrinoFlux = 0.8357743 * joule/(s*cm*cm); // energy flux of CCSN with L = 1E53 erg/s at 10 kpc 
 G4double        gNeutrinoMeanEnergy = 10 * MeV;
 G4double        gNeutrinoEnergyPinch = 2;
 
