@@ -23,12 +23,13 @@ extern G4bool gMultipleAngle;
 extern G4int gPhotonNotAbsorbed;
 extern G4bool gVis;
 extern G4String gHittype;
-extern G4double gBkgSimTime;
+extern G4double gRadioactiveLeakContainment;
+extern G4double gSimulationTime;
 extern G4bool gVerbose;
 G4double gAngle = 0;
 
 //G4int gIdx = 0;
-G4double OMSimRadioactivityData::ftimeWindow = gBkgSimTime;
+G4double OMSimRadioactivityData::ftimeWindow = gSimulationTime / s;
 OMSimRunManager::OMSimRunManager()
 {
 
@@ -316,19 +317,19 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
     // Select decay chain
     if (chainName == "U238"){
         filename += "U238DecayChain.txt";
-        activity = U238Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
+        activity = U238Activity.at(fpmtModel) * glassWeight.at(fpmtModel) * 1/s;
     }
     else if (chainName == "U235"){
         filename += "U235DecayChain.txt";
-        activity = U235Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
+        activity = U235Activity.at(fpmtModel) * glassWeight.at(fpmtModel) * 1/s;
     }
     else if (chainName == "Th232"){
         filename += "Th232DecayChain.txt";
-        activity = Th232Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
+        activity = Th232Activity.at(fpmtModel) * glassWeight.at(fpmtModel) * 1/s;
     }
     else if (chainName == "K40"){
         filename += "K40DecayChain.txt";
-        activity = K40Activity.at(fpmtModel) * glassWeight.at(fpmtModel);
+        activity = K40Activity.at(fpmtModel) * glassWeight.at(fpmtModel) * 1/s;
     }
     else
     {
@@ -336,22 +337,22 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
         exit(0);
     }
     
-    // Time window and mean rate
-    G4double timeWindow = fRadData -> GetTimeWindow();
+    // Time window
+    G4double timeWindow = gSimulationTime;
 
-    G4double prob1 = 0.1; // probability for isotope to decay in the next timeWindow duration
-    G4double prob2 = 0.9; // probability that isotope decayed in leak time window
-    G4double lifeTimeThresh = - timeWindow / std::log(1-prob1) * s;
-    G4double leakTimeThresh = timeWindow * std::log(1-prob2)/std::log(1-prob1) * s;
+    G4double prob1 = 1-gRadioactiveLeakContainment; // probability for isotope to decay in the next timeWindow duration
+    G4double prob2 = gRadioactiveLeakContainment; // probability that isotope decayed in leak time window
+    G4double lifeTimeThresh = - timeWindow / std::log(1-prob1);
+    G4double leakTimeThresh = timeWindow * std::log(1-prob2)/std::log(1-prob1);
     G4double leakTimeWindow;
 
     std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
     std::cout << "Simulating Full " << chainName << " Decay Chain" << std::endl;
-    std::cout << chainName << " Activity [Bq]: " << activity << std::endl;
-    std::cout << "Time window [s]: " << timeWindow << std::endl;
-    std::cout << "p1 [%]: " << prob1 * 100 << " ,p2 [%]: " << prob2 * 100 << std::endl;    
-    std::cout << "Threshold Mean Life [s]: " << lifeTimeThresh << std::endl;
-    std::cout << "Threshold Leak Time [s]: " << leakTimeThresh << std::endl;
+    std::cout << chainName << " Activity [Bq/Hz]: " << activity * s << std::endl;
+    std::cout << "Time window [s]: " << timeWindow / s<< std::endl;
+    std::cout << "p1 [%]: " << prob1 * 100 << ", p2 [%]: " << prob2 * 100 << std::endl;    
+    std::cout << "Threshold Mean Life [s]: " << lifeTimeThresh / s << std::endl;
+    std::cout << "Threshold Leak Time [s]: " << leakTimeThresh / s << std::endl;
     std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 
     G4ThreeVector point;
@@ -450,14 +451,14 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
         G4double const originalLifeTime = fPrimaryGenerator -> GetPDGLifeTime(); // safe original PDG life time
         //fPrimaryGenerator -> SetPDGLifeTime(0 * ns);
 
-        // number of decays
-        G4int numDecays = fRadData -> GetNumDecay(meanRate); // pull from Poisson distribution
+        // number of decays pulled from Poisson distribution
+        G4int numDecays = CLHEP::RandPoisson::shoot(meanRate); // pull from Poisson distribution
         if (branchingRatio < 1.0) //use rejection sampling for branching ratios != 1
         {
             G4int counter = 0;
             for (G4int i = 0; i < numDecays; ++i)
             {
-                G4double rand = fRadData -> RandomGen(0., 1.);
+                G4double rand = CLHEP::RandFlat::shoot(0.0,1.0);
                 if (branchingRatio > rand)
                 {
                     ++counter;
