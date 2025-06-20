@@ -6,6 +6,7 @@
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
 #include "G4SystemOfUnits.hh"
+#include "CLHEP/Random/Random.h"
 
 #define G4VIS_USE 1
 #ifdef G4VIS_USE
@@ -323,6 +324,11 @@ std::vector<double> readColumnDouble (G4String fn, int col) {
 
 int main(int argc, char** argv)
 {
+    // Set random seed based on current time
+    G4long seed = time(nullptr);
+    G4Random::setTheSeed(seed);
+    G4cout << "Random seed set to: " << seed << G4endl;
+
     G4double world_size = gworldsize;
     G4String macroname;
     G4int PMT_model(0);
