@@ -247,7 +247,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
                 else {gVerbose = true; }
 
                 ghitsfilename += model + "_flux_" + sanitize_for_filename(atof(argv[6])) + "_meanE_" + boost::str(boost::format("%.0f") % gNeutrinoMeanEnergy) 
-                            + "MeV_alpha_" + boost::str(boost::format("%.0f") % gNeutrinoEnergyPinch) + "_" + std::to_string(gRunID);
+                            + "MeV_alpha_" + boost::str(boost::format("%.1f") % gNeutrinoEnergyPinch) + "_" + std::to_string(gRunID);
             }
             else
             {
