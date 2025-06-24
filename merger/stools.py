@@ -14,10 +14,10 @@ class stools:
         print('Called sntools....')
         try:
             if self.channel is not None:
-                subprocess.check_call(['sntools', self.inFile, '--format', 'SNEWPY-Nakazato_2013', '--channel', self.channel, '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile])
+                subprocess.check_call(['sntools', self.inFile, '--format', 'gamma', '--channel', self.channel, '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile,'--maxworkers','4','--verbose','--endtime','1'])
 
             else:
-                subprocess.check_call(['sntools', self.inFile, '--format', 'SNEWPY-Nakazato_2013', '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile])
+                subprocess.check_call(['sntools', self.inFile, '--format', 'gamma', '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile,'--maxworkers','4','--verbose']) #,'--endtime','10'])
         except subprocess.CalledProcessError as e:
             print(f"error running package {e}")
 
