@@ -273,7 +273,7 @@ std::vector<double> OMSimNeutrinoAction::CDFNeutrinoSpectrumCrossSection(const s
 std::pair<std::vector<double>, std::vector<double>> OMSimNeutrinoAction::NormalizedPDFNeutrinoSpectrumCrossSection(G4double neutrinoMeanEnergy, G4double neutrinoEnergyPinch, G4int order)
 {
     G4double Emin = IBDThresholdEnergy - 0.01 * MeV; // avoid zero
-    G4double Emax = 100.0 * MeV;
+    G4double Emax = 5 * neutrinoMeanEnergy;
     G4double dE = 0.1 * MeV; // integration step size
 
     std::vector<double> pdf;
@@ -309,7 +309,7 @@ std::pair<G4double, G4double> OMSimNeutrinoAction::NumberNeutrinoInteractions()
 G4double OMSimNeutrinoAction::IntegralNeutrinoSpectrumCrossSection(G4double neutrinoMeanEnergy, G4double neutrinoEnergyPinch, G4int order)
 {
     G4double Emin = 0.01 * MeV; // avoid zero
-    G4double Emax = 100.0 * MeV;
+    G4double Emax = 5 * neutrinoMeanEnergy;
     G4double dE = 0.1 * MeV; // integration step size
 
     G4double integral = 0.0;
