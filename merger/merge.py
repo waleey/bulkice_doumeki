@@ -42,7 +42,7 @@ def merge():
     #initializing modules to call sntools and bulkice_doumeki
     stool=stools(args.progenitorModel,args.inputFormat,args.distance,args.outfileS,basefolderS,args.start_time,args.end_time)
     bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,args.runID,basefolderG)
-    useStool = False
+    useStool = True 
      
     if(args.simType == 'ibd'):
         stool.setChannel('ibd') #IBD events specified
@@ -75,12 +75,12 @@ def merge():
 
         writer = WritePrimaries(events, baseFolderW)
 
-        if(simTypeG == 'ibd'):
+        if(args.simType == 'ibd'):
             #print("writes ibd")
             writer.writePositron()
             writer.writeNeutron()
 
-        elif(simTypeG == 'enees'):
+        elif(args.simType == 'enees'):
             writer.writeElectron()
 
         else:
