@@ -12,14 +12,14 @@ extern G4String gQEFile;
 class OMSimSteppingAction : public G4UserSteppingAction
 {
   public:
-    OMSimSteppingAction();
+    OMSimSteppingAction(OMSimPMTQE* pmtQe);
    ~OMSimSteppingAction(){};
 
     void UserSteppingAction(const G4Step*);
     bool QEcheck(G4double lambda);
 
   private:
-    OMSimPMTQE* pmt_qe = new OMSimPMTQE();
+    OMSimPMTQE* pmt_qe;
 
     void WOMCheck(const G4Step*);
     long vesselID = 0;

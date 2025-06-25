@@ -18,7 +18,7 @@ extern G4int gNumCherenkov;
 extern G4int gNumScint;
 extern G4bool gWOM;
 extern G4bool gVerbose;
-extern G4bool gTrackingBiasing;
+extern G4bool gPhotonQEBiasing;
 extern G4double gSimulationTime;
 
 G4int gVesselCount = 0;
@@ -27,9 +27,9 @@ G4int gWLSCount = 0;
 G4int gWLSAndHitCount = 0;
 
 
-OMSimSteppingAction::OMSimSteppingAction()
+OMSimSteppingAction::OMSimSteppingAction(OMSimPMTQE* pmtQe)
 {
-
+    pmt_qe = pmtQe;
 }
 
 
@@ -44,31 +44,6 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
             aTrack->SetTrackStatus(fStopAndKill);
         }
     }
-    /**
-    *Checking if ions are escaping the volume without ionisation.
-    **/
-
-   /* if(aTrack -> GetCreatorProcess() && !(aTrack -> GetParticleDefinition() -> GetPDGStable()))
-    {
-
-        std::cout << "Beginning of Tracking..." << std::endl;
-        if(true)
-        {
-            G4String particle_name = aTrack -> GetParticleDefinition() -> GetParticleName();
-            G4String pre_place = aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName();
-            G4String post_place = aStep -> GetPostStepPoint() -> GetPhysicalVolume() -> GetName();
-            G4String process = aStep -> GetPostStepPoint() -> GetProcessDefinedStep() -> GetProcessName();
-            G4double step_length = aStep -> GetStepLength();
-
-            std::cout << "Particle: " << particle_name << std::endl
-            << "Pre position: " << pre_place << std::endl
-            << "Post place: " << post_place << std::endl
-            << "Process going through: " << process << std::endl
-            << "Step Length: " << step_length / mm << std::endl;
-        }
-
-    }*/
-
 
     //	Check if optical photon is about to hit a photocathode, if so, destroy it and save the hit
     if ( aTrack->GetDefinition()->GetParticleName() == "opticalphoton" ) {
@@ -79,59 +54,31 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
         if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
-            if((aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") and (aTrack->GetGlobalTime() / s >= 0) and (aTrack->GetGlobalTime() / s <= gSimulationTime / s)) {
+            if((aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") && (aTrack->GetGlobalTime() >= 0) && (aTrack->GetGlobalTime() <= gSimulationTime)) {
 
+                G4double Ekin = aTrack->GetKineticEnergy();
+                G4double t1 = aTrack->GetGlobalTime();
+                G4double t2 = aTrack->GetLocalTime();
+                G4ThreeVector vertex_pos = aTrack -> GetVertexPosition();
+		        G4double hc = 1239.84198433 * eV * nm; // hc constant (unit eV*nm)
+                G4double quantumEfficiencyMax = 0.25871250; //
 
-                //Commented out temporarily.
-                /*
-                if(aTrack -> GetCreatorProcess())
-                {
-                    if(aTrack -> GetCreatorProcess() -> GetProcessName() == "OpWLS" || aTrack -> GetCreatorProcess() -> GetProcessName() == "WLSBoundary")
-                    {
-                        gWLSAndHitCount++;
-                        creator = "WLSBoundary";
+                G4double lambda = (hc/Ekin);
+                G4double qe = (pmt_qe -> GetQe(lambda)) / 100;
+                G4double random = CLHEP::RandFlat::shoot(0.0, 1.0);
+                G4int survived;
+                if (gPhotonQEBiasing) { survived = (random < (qe/quantumEfficiencyMax)) ? 1 : 0; }
+                else { survived = (random < (qe)) ? 1 : 0; }
 
-                    }
-                }
-                else
-                {
-                    creator = "direct";
-                }
+                if (!survived && gPhotonQEBiasing && gVerbose){ std::cout << "(STEP): Photon killed because of biasing!\n" << random << ">" << qe/quantumEfficiencyMax << std::endl; }
+                if (!survived && gVerbose){ std::cout << "(STEP): Photon killed because of biasing!\n" << random << ">" << qe << std::endl; }
 
-                */
-                G4double Ekin;
-                G4double t1, t2;
-                G4Track* aTrack = aStep -> GetTrack();
-                G4ThreeVector vertex_pos;
-                vertex_pos = aTrack -> GetVertexPosition();
-                G4double hc = 1240 * nm;
-                G4double lambda;
-
-               /* std::string creator = aTrack -> GetCreatorProcess() -> GetProcessName();
-                if(creator == "Cerenkov")
-                {
-                    gNumCherenkov++;
-                }
-                else if(creator == "Scintillation")
-                {
-                    gNumScint++;
-                }*/
-                Ekin = aTrack->GetKineticEnergy() ;
-                lambda = (hc/Ekin) * nm;
-                pmt_qe -> ReadQeTable();
-               // std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
-                double qe = (pmt_qe -> GetQe(lambda)) / 100;
-                double random = CLHEP::RandFlat::shoot(0.0, 1.0);
-                //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
-                G4int survived = (random < (qe)) ? 1 : 0;
-                if (gTrackingBiasing)
-                    {
-                        survived = 1; // if tracking biasing is activated, all photons that reach cathode will pass
-                    }
+                if (survived && gPhotonQEBiasing && gVerbose){ std::cout << "(STEP): Photon survived because of biasing!\n" << random << ">" << qe/quantumEfficiencyMax << std::endl; }
+                if (survived && gVerbose){ std::cout << "(STEP): Photon survived because of biasing!\n" << random << ">" << qe << std::endl; }
 
                 std::vector<G4String> n;
                 extern std::vector<G4String> explode (G4String s, char d);
-                G4ThreeVector deltapos;
+                G4ThreeVector deltapos = aTrack->GetVertexPosition() - aTrack->GetPosition();
 
                 if(!gWOM)
                 {
@@ -160,10 +107,6 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     if (gVerbose){
                         std::cout << "+++ (STEP) Optical Photon reached photocathode!" << std::endl;
                     }
-                    deltapos = aTrack->GetVertexPosition() - aTrack->GetPosition();
-                    t1 = aTrack->GetGlobalTime() /ns;
-                    t2 = aTrack->GetLocalTime();
-                    Ekin = aTrack->GetKineticEnergy();
                     gAnalysisManager.stats_photon_direction.push_back(aTrack->GetMomentumDirection());
                     gAnalysisManager.stats_photon_position.push_back(aTrack->GetPosition());
                     gAnalysisManager.stats_event_id.push_back(gAnalysisManager.current_event_id);
