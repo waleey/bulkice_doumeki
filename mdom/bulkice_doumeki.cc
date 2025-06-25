@@ -32,7 +32,7 @@ G4double        gSimulationTime = 1.0 * s;
 G4double        gworldsize = 20; // in m
 
 // radioactivity variables
-G4bool          gTrackingBiasing = false;
+G4bool          gPhotonQEBiasing = true;
 G4double        gRadioactiveLeakContainment = 0.9;
 
 // neutrino variables
