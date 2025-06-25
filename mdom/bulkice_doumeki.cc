@@ -29,7 +29,7 @@ G4bool          gVerbose = false;
 
 // general variables
 G4double        gSimulationTime = 1.0 * s;
-G4double        gSimulationRadius = 20 * m;
+G4double        gworldsize = 20; // in m
 
 // radioactivity variables
 G4bool          gTrackingBiasing = false;
@@ -56,7 +56,7 @@ G4int           gPMT = 0;
 G4bool          gPlaceHarness = true;
 G4int           gHarness = 1;
 G4int           gRopeNumber = 1;
-G4double        gworldsize = 20;
+//G4double        gworldsize = 20;
 G4double        gElectronFactor = 9.5;
 G4bool          gCADImport = true;
 G4String        gHittype = "individual"; // seems like individual records each hit per pmt

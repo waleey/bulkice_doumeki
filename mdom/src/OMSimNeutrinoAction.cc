@@ -87,7 +87,7 @@ void OMSimNeutrinoAction::GeneratePrimaries(G4Event* anEvent)
     // for spherical volume
     G4double positronPositionAzimuth = 2*M_PI * G4UniformRand();
     G4double positronPositionZenith = std::acos(1 - 2 * G4UniformRand());
-    G4double positronPositionRadius = fSimulationRadius * std::cbrt(G4UniformRand());
+    G4double positronPositionRadius = fworldsize * std::cbrt(G4UniformRand());
 
     G4ThreeVector positronPosition (
         positronPositionRadius * std::sin(positronPositionZenith) * std::cos(positronPositionAzimuth),
@@ -397,7 +397,7 @@ G4double OMSimNeutrinoAction::IBDPositronEnergyFirst(G4double neutrinoEnergy, G4
 
 G4double OMSimNeutrinoAction::SimulationVolume()
 {
-    return (4*M_PI/3 * std::pow(fSimulationRadius, 3));
+    return (4*M_PI/3 * std::pow(fworldsize, 3));
 }
 
 G4double OMSimNeutrinoAction::TargetNumber()

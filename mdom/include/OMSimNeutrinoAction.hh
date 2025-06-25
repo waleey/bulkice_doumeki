@@ -13,7 +13,7 @@
 #include "spline.h"
 
 extern G4double gSimulationTime;
-extern G4double gSimulationRadius;
+extern G4double gworldsize;
 extern G4double gNeutrinoFlux;
 extern G4double gNeutrinoMeanEnergy;
 extern G4double gNeutrinoEnergyPinch;
@@ -48,7 +48,7 @@ private:
 
     // copy global variables
     G4double fSimulationTime = gSimulationTime;
-    G4double fSimulationRadius = gSimulationRadius;
+    G4double fworldsize = gworldsize * m;
     G4double fNeutrinoFlux = gNeutrinoFlux;
     G4double fNeutrinoMeanEnergy = gNeutrinoMeanEnergy;
     G4double fNeutrinoEnergyPinch = gNeutrinoEnergyPinch;

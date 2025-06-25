@@ -2,12 +2,8 @@
 
 #include "G4ParticleDefinition.hh"
 #include "G4Positron.hh"
-#include <cmath>
 
-extern G4double gworldsize;
-extern G4bool gVerbose;
 extern G4int gRunID;
-extern G4double gPositronDensity;
 
 OMSimPositronAction::OMSimPositronAction(G4ParticleGun* particleGun)
     :   fParticleGun(particleGun),
