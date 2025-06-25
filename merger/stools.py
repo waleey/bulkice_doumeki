@@ -21,8 +21,10 @@ class stools:
                 else:
                     subprocess.check_call(['sntools', self.inFile, '--format', self.format, '--channel', self.channel, '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile,'--maxworkers','4','--verbose','--starttime',self.start])
             else:
-                subprocess.check_call(['sntools', self.inFile, '--format', self.format, '--detector','IceCube', '--distance', self.distance, '--output', self.outFile,'--maxworkers','4','--verbose','--starttime',self.start]) 
-        except subprocess.CalledProcessError as e:
+if self.end != 'None':
+                    subprocess.check_call(['sntools', self.inFile, '--format', self.format, '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile,'--maxworkers','4','--verbose','--starttime',self.start,'--endtime',self.end])
+                else:
+                    subprocess.check_call(['sntools', self.inFile, '--format', self.format, '--detector', 'IceCube', '--distance', self.distance, '--output', self.outFile,'--maxworkers','4','--verbose','--starttime',self.start])        except subprocess.CalledProcessError as e:
             print(f"error running package {e}")
 
     def getChannel(self):
