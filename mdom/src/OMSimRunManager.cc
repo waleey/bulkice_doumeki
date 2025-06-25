@@ -1,6 +1,7 @@
 #include "OMSimRunManager.hh"
 #include "OMSimAnalysisManager.hh"
 #include "OMSimUtils.hh"
+#include "OMSimPMTQE.hh"
 
 
 #define G4VIS_USE 1
@@ -54,6 +55,8 @@ OMSimRunManager::OMSimRunManager(G4int pmtModel, G4double worldSize, G4String& i
         fActionType(0)
 {
     fRunManager = new G4RunManager();
+    OMSimPMTQE* qe = new OMSimPMTQE(); // create QE table instance
+    qe -> ReadQeTable(); // load QE table once
     fDetectorConstruction = new OMSimDetectorConstruction(fpmtModel, fworldSize);
     fRunManager -> SetUserInitialization(fDetectorConstruction);
     fPhysicsList = new OMSimPhysicsList();
@@ -70,10 +73,10 @@ OMSimRunManager::OMSimRunManager(G4int pmtModel, G4double worldSize, G4String& i
     fRunAction = new OMSimRunAction();
     fRunManager -> SetUserAction(fRunAction);
     fEventAction = new OMSimEventAction();
-     fRunManager -> SetUserAction(fEventAction);
+    fRunManager -> SetUserAction(fEventAction);
     fTrackingAction = new OMSimTrackingAction();
-     fRunManager -> SetUserAction(fTrackingAction);
-    fSteppingAction = new OMSimSteppingAction();
+    fRunManager -> SetUserAction(fTrackingAction);
+    fSteppingAction = new OMSimSteppingAction(qe);
     fRunManager -> SetUserAction(fSteppingAction);
     fRadData = new OMSimRadioactivityData();
     #ifdef G4VIS_USE
