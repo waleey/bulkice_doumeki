@@ -15,15 +15,16 @@ def parseCommandLine():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('progenitorModel', help='name of the progenitor file to be used in sntools')
+    parser.add_argument('inputFormat', help='format of the progenitor file to be used in sntools')
     parser.add_argument('outfileS', help='name of the output file for sntools')
     parser.add_argument('distance', help='distance to the progenitor from earth in kpc')
     parser.add_argument('omModel', help='Optical Module model to be used: [dom, mdom, lom18, lom16, pmt]')
     parser.add_argument('simType', help='Simulation type: [ibd, enees, all, radioactivity]')
     parser.add_argument('depthIndex', help='Simulation depth index: [0, 1, ....., 108]')
     parser.add_argument('outputFolderG', help = 'Output folder for bulkice_doumeki')
-    parser.add_argument('-t', '--start_time', dest='start_time', type=int, default=0,
+    parser.add_argument('-t', '--start_time', dest='start_time', default='0',
                          help='Simulation start time passed to sntools [ms]')
-    parser.add_argument('-T', '--end_time', dest='end_time', type=int, default=None,
+    parser.add_argument('-T', '--end_time', dest='end_time', default='None',
                          help='Simulation start time passed to sntools [ms]')
     parser.add_argument('runID', help = 'Run ID for each simulation run in bulkice_doumeki')
     args = parser.parse_args()
@@ -39,8 +40,8 @@ def merge():
     basefolderG = '/home/vboxuser/BulkIceDoumeki/bulkice_doumeki-main/mdom/build'  #goes back to the build folder!
    
     #initializing modules to call sntools and bulkice_doumeki
-    stool = stools(args.progenitorModel, args.distance, args.outfileS, basefolderS)
-    bulkice = G4tools(args.omModel, args.simType, args.depthIndex, args.outputFolderG, args.runID, basefolderG)
+    stool=stools(args.progenitorModel,args.inputFormat,args.distance,args.outfileS,basefolderS,args.start_time,args.end_time)
+    bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,args.runID,basefolderG)
     useStool = False
      
     if(args.simType == 'ibd'):
