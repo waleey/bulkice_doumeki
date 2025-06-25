@@ -9,7 +9,7 @@
 
 extern std::fstream gRadioDecayFile;
 extern G4bool gVerbose;
-extern G4bool gTrackingBiasing;
+extern G4bool gPhotonQEBiasing;
 extern G4double gSimulationTime;
 extern G4String gHittype;
 
@@ -47,13 +47,38 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
             }
 
 
-    if (aTrack -> GetParticleDefinition() -> GetParticleName() == "opticalphoton")// and gVerbose)
+    if (gPhotonQEBiasing)
     {
-        if (gTrackingBiasing)
+        if (aTrack -> GetParticleDefinition() -> GetParticleName() == "opticalphoton")// and gVerbose)
         {
-            G4double hc = 1240 * nm; // hc constant (unit eV*nm)
-            G4double Ekin = aTrack->GetKineticEnergy();
-            G4double lambda = (hc/Ekin) * nm; // wavelength
+
+            G4Track* mTrack = const_cast<G4Track*>(aTrack); // make track modifiable
+
+            G4double photonKineticEnergy = aTrack->GetKineticEnergy(); // kinetic energy
+            G4double photonWavelength = (fhc/photonKineticEnergy); // wavelength
+
+            if (photonWavelength < fWavelengthAcceptanceLow || photonWavelength > fWavelengthAcceptanceHigh)
+            {
+                if (gVerbose) { std::cout << "+++ (PRE-TRACK) Photon killed because it's outside the wavelength acceptance range!\nWavelength [nm]: " << photonWavelength / nm << ", [" << fWavelengthAcceptanceLow / nm << "," << fWavelengthAcceptanceHigh / nm << "]" << std::endl; }
+                mTrack -> SetTrackStatus(fStopAndKill);
+            }
+
+            else
+            {
+                G4double random = CLHEP::RandFlat::shoot(0.0, 1.0); // random value between 0 and 1
+                G4bool survival = (random < (fQuantumEfficiencyMax)) ? true : false; // rejection sampling
+
+                if (!survival)
+                {
+                    if (gVerbose) { std::cout << "+++ (PRE-TRACK) Photon killed because of biasing!\nWavelength [nm]: " << photonWavelength / nm << ", " << random << ">" << fQuantumEfficiencyMax << std::endl; }
+                    mTrack -> SetTrackStatus(fStopAndKill);
+                }
+                else
+                {
+                    if (gVerbose) { std::cout << "+++ (PRE-TRACK) Photon survived!\nWavelength [nm]: " << photonWavelength / nm << ", " << random << "<" << fQuantumEfficiencyMax << std::endl; }
+                }
+            }
+            /*
             pmt_qe -> ReadQeTable();
             G4double qe = (pmt_qe -> GetQe(lambda)) / 100; // pdf value
             G4double random = CLHEP::RandFlat::shoot(0.0, 1.0); // random value between 0 and 1
@@ -79,6 +104,7 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
                 std::cout << "+++ (INFO) Optical photons survived! What happens next?" << std::endl;
                 std::cout << "+++ (INFO) gHittype=" << gHittype << std::endl;
             }
+            */
         }
     }
 

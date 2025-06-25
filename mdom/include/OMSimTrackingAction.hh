@@ -21,6 +21,12 @@ class OMSimTrackingAction : public G4UserTrackingAction
         G4TrackingManager* ftrackingManager;
 		std::map<const G4ParticleDefinition*, G4double> fOriginalLifeTimes;
 		std::map<const G4ParticleDefinition*, G4double> fOriginalGlobalTimes;
+
+		G4double fWavelengthAcceptanceLow = 260 * nm;
+        G4double fWavelengthAcceptanceHigh = 720 * nm;
+        G4double fQuantumEfficiencyMax = 0.25871250;
+		G4double fhc = 1239.84198433 * eV * nm; // hc constant (unit eV*nm)
+
 };
 
 #endif
