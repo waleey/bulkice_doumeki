@@ -72,7 +72,6 @@ def merge():
     if(useStool):
         with NUANCEReader(args.outfileS) as reader:
             events = reader.get_events()
-
         writer = WritePrimaries(events, baseFolderW)
 
         if(args.simType == 'ibd'):
