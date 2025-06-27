@@ -115,7 +115,7 @@ void help() //needs change
 
     std::cout << "Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]" << std::endl;
 
-    std::cout << "Available interaction channels: [neu, ibd, enees, all, radioactivity]" << std::endl;
+    std::cout << "Available interaction channels: [neu, rad, ibd, enees, all, radioactivity]" << std::endl;
 
     std::cout << "Available depth index: [0, 1, ......, 108]" << std::endl;
 
@@ -180,7 +180,7 @@ int GetModel(G4String& model)
 }
 void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
 {
-    if(argc == 6 || argc ==  8 || argc == 10 || argc == 11 | argc == 2)
+    if(argc == 6 || argc ==  8 || argc == 9 || argc == 10 || argc == 11 | argc == 2)
     {
         G4String model = argv[1];
 
@@ -233,9 +233,27 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         else
         {
             /**
+            radioactive decay chain simulation here
+            **/
+            if (interaction_channel == "rad")
+            {
+                interaction_channel = "radioactivity";
+                gSimulationTime = atof(argv[6]) * s;
+                gRadioactiveLeakContainment = atof(argv[7]);
+                G4int verbose = atoi(argv[8]);
+
+                G4double simtime = gSimulationTime/s;
+
+                if (verbose==0) {gVerbose = false; }
+                else {gVerbose = true; }
+
+                ghitsfilename += model + "_rad_time_T=" + boost::str(boost::format("%.0f") % simtime) + "s_leak_p=" + boost::str(boost::format("%.2f") % gRadioactiveLeakContainment) + "_" + std::to_string(gRunID);
+            }
+
+            /**
             neutrino flux simulations here
             **/
-            if (interaction_channel == "neu")
+            else if (interaction_channel == "neu")
             {
                 // transform from J/s/cm2 to MeV/s/mm2
                 gNeutrinoFlux = atof(argv[6]) * joule/(s*cm*cm);                
