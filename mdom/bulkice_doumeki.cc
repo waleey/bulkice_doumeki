@@ -289,7 +289,7 @@ int main(int argc, char** argv)
     G4String interaction_channel;
     ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel, inputFolder);
 
-    OMSimRunManager* runManager = new OMSimRunManager(PMT_model, world_size, interaction_channel,inputFolder);
+    OMSimRunManager* runManager = new OMSimRunManager(PMT_model, world_size, interaction_channel);
     runManager -> Initialize();
 
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
