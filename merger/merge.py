@@ -5,6 +5,8 @@ from g4tools import G4tools
 from stools import stools
 import argparse
 import sys
+import multiprocess as mp
+import os
 """
 This is the main function that calls sntools and geant4.
 All variables in merge() function that is related to
@@ -27,12 +29,19 @@ def parseCommandLine():
     parser.add_argument('-T', '--end_time', dest='end_time', default='None',
                          help='Simulation start time passed to sntools [ms]')
     parser.add_argument('runID', help = 'Run ID for each simulation run in bulkice_doumeki')
+    
+    parser.add_argument('-c','--numCores', help = 'number of cores available for running',default=os.cpu_count())
     args = parser.parse_args()
 
     return args
 #    return args.progenitorModel, args.outfileS, args.distance, args.omModel, args.simType, args.depthIndex, args.outputFolderG, args.runID
     
-
+def bid():
+    args = parseCommandLine()
+    basefolderG = '/home/vboxuser/BulkIceDoumeki/bulkice_doumeki-main/mdom/build'  #goes back to the build folder!
+    bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,args.runID,basefolderG)
+    bulkice.callG4()
+    print('ran bulk ice doumeki')
 def merge():
     args = parseCommandLine()
 #    progenitorModelS, outfileS, distanceS, omModelG, simTypeG, depthIndex, outputFolderG, runIDG = parseCommandLine()
@@ -88,8 +97,11 @@ def merge():
             writer.writeElectron()
     
     #Calling Geant4 here
-    bulkice.callG4()
-
+    pool=mp.Pool(processes=int(args.numCores))
+    res=list(pool.apply_async(bid,())for i in range(4))
+    pool.close()
+    pool.join()
+    results=[r.get() for r in res]
 if __name__ == "__main__":
     merge()
 

@@ -63,7 +63,7 @@ class WritePrimaries:
 
         for event in self.events:
             if event.reaction_mode == reactionMode:
-                for track in event.tracks:
+                for track in event.tracks[:10]:
                     if(track['id'] == pdgID and track['state'] == 0):
                         self.energy.append(track['E'])
                         self.dirX.append(track['x'])
