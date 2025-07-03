@@ -73,8 +73,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 if (!survived && gPhotonQEBiasing && gVerbose){ std::cout << "(STEP): Photon killed because of biasing!\n" << random << ">" << qe/quantumEfficiencyMax << std::endl; }
                 if (!survived && gVerbose){ std::cout << "(STEP): Photon killed because of biasing!\n" << random << ">" << qe << std::endl; }
 
-                if (survived && gPhotonQEBiasing && gVerbose){ std::cout << "(STEP): Photon survived because of biasing!\n" << random << ">" << qe/quantumEfficiencyMax << std::endl; }
-                if (survived && gVerbose){ std::cout << "(STEP): Photon survived because of biasing!\n" << random << ">" << qe << std::endl; }
+                if (survived && gPhotonQEBiasing && gVerbose){ std::cout << "(STEP): Photon survived because of biasing!\n" << random << "<" << qe/quantumEfficiencyMax << std::endl; }
+                if (survived && gVerbose){ std::cout << "(STEP): Photon survived because of biasing!\n" << random << "<" << qe << std::endl; }
 
                 std::vector<G4String> n;
                 extern std::vector<G4String> explode (G4String s, char d);
@@ -84,7 +84,6 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 {
                     n = explode(aStep->GetPreStepPoint()->GetPhysicalVolume()->GetName(),'_');
                     gAnalysisManager.stats_PMT_hit.push_back(atoi(n.at(1)));
-                    //gAnalysisManager.stats_PMT_hit.push_back(static_cast<uint8_t>(atoi(n.at(1))));
                 }
                 else
                 {
@@ -126,8 +125,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 {
                     if (survived)
                     {
-                        gAnalysisManager.stats_event_id.push_back(gAnalysisManager.current_event_id);
-                        gAnalysisManager.stats_hit_time.push_back(aTrack->GetGlobalTime() /ns);
+                        gAnalysisManager.stats_PMT.push_back(static_cast<uint8_t>(atoi(n.at(1))));
+                        gAnalysisManager.stats_TIME.push_back(aTrack->GetGlobalTime() /ns);
                     }
                 }
                 aTrack->SetTrackStatus(fStopAndKill);
