@@ -146,6 +146,7 @@ void OMSimRunManager::BeamOn()
                 //GenerateU238();
                 //GenerateU235();
                 //GenerateTh232();
+                
                 GenerateDecayChain("K40");
                 GenerateDecayChain("U238");
                 GenerateDecayChain("U235");
@@ -400,10 +401,10 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
             G4double nextLifeTime = fPrimaryGenerator -> GetPDGLifeTime(); // safe original PDG life time
             if (nextIsotopeName == "Pa234m") // hard coded life time for Pa234m, can be loaded from data?
             {
-                nextLifeTime = 1.00325e+11;
+                nextLifeTime = 100.325 * s;
                 //std::cout << "Pa234m lifetime " << nextLifeTime / ns << " ns!" << std::endl;
             }
-            if (nextLifeTime < lifeTimeThresh / ns)
+            if (nextLifeTime < lifeTimeThresh)
             {
                 skipGroup.push_back(nextIsotopeName);
                 maxLifeTime = std::max(maxLifeTime, nextLifeTime);
@@ -418,7 +419,7 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
         
         if (skipGroup.size() != 0)
         {
-            leakTimeWindow = -maxLifeTime * std::log(1-prob2) / s; // duration in for which 99% of daughters decay, take max of leak chain
+            leakTimeWindow = -maxLifeTime * std::log(1-prob2); // duration in for which 99% of daughters decay, take max of leak chain
             meanRate = activity * (timeWindow+leakTimeWindow); // needs to move inside the isotope loop
             timeLow = -leakTimeWindow; // lower time window
             timeHigh = timeWindow; // higher time window
@@ -426,7 +427,7 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
             
             // print all isotopes that will be skipped
             std::cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
-                        << "| Simulate leakage in time window [" << timeLow << ", " << timeHigh << "] s."
+                        << "| Simulate leakage in time window [" << timeLow / s << ", " << timeHigh / s << "] s."
                         << std::endl;
             for (const auto& iso : skipGroup)
             {
@@ -455,7 +456,7 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
         //fPrimaryGenerator -> SetPDGLifeTime(0 * ns);
 
         // number of decays pulled from Poisson distribution
-        G4int numDecays = CLHEP::RandPoisson::shoot(meanRate); // pull from Poisson distribution
+        G4int numDecays = CLHEP::RandPoisson::shoot(meanRate);
         if (branchingRatio < 1.0) //use rejection sampling for branching ratios != 1
         {
             G4int counter = 0;
@@ -471,7 +472,9 @@ void OMSimRunManager::GenerateDecayChain(G4String chainName)
         }
         std::cout << "----------------------------------------------------------------------\n|   " 
                   << numDecays 
-                  << " decays " 
+                  << " decays ("
+                  << meanRate
+                  << " exp. decays) " 
                   << isotopeName 
                   << " (Z=" 
                   << Z 
