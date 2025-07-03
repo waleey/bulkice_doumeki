@@ -2,6 +2,7 @@
 
 #include "G4ParticleDefinition.hh"
 #include "G4Positron.hh"
+extern G4String inputFolder;
 
 OMSimPositronAction::OMSimPositronAction(G4ParticleGun* particleGun)
     :   fParticleGun(particleGun),
@@ -54,7 +55,7 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
 void OMSimPositronAction::LoadData()
 {
     using namespace std;
-    G4String filePath = "../InputFile/Positron/pos20002nkibd_"; //will change soon.
+    G4String filePath = "../"+inputFolder+"/Positron/pos20002nkibd_"; //will change soon.
     G4double temp;
     G4String fileName;
 
