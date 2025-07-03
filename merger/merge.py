@@ -37,9 +37,8 @@ def parseCommandLine():
     return args
 #    return args.progenitorModel, args.outfileS, args.distance, args.omModel, args.simType, args.depthIndex, args.outputFolderG, args.runID
     
-def bid(inputFile,chunk_num):
+def bid(inputFile,chunk_num,basefolderG):
     args = parseCommandLine()
-    basefolderG = '/home/vboxuser/BulkIceDoumeki/bulkice_doumeki-main/mdom/build'  #goes back to the build folder!
     bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,f'{args.runID}{chunk_num}',inputFile,basefolderG)
     bulkice.callG4()
     print('ran bulk ice doumeki')
@@ -104,11 +103,18 @@ def merge():
     
     #Calling Geant4 here
     pool=mp.Pool(processes=int(args.numCores))
-    res=list(pool.apply_async(bid,(f'InputFile{i}',i))for i in range(args.numCores))
+    res=list(pool.apply_async(bid,(f'InputFile{i}',i,basefolderG))for i in range(args.numCores))
     pool.close()
     pool.join()
     results=[r.get() for r in res]
 
+
+    #combining output files
+    with open(basefolderG+'/output/'+f'{args.omModel}_{args.simType}_{args.inputFormat}_{args.runID}.dat','w') as out:
+        for i in range(args.numCores):
+            with open(basefolderG+'/output/'+f'{args.omModel}_{args.simType}_{args.runID}{i}.dat','r') as out_chunk:
+                out.write(out_chunk.read())
+               
     tok=time.time()
     print(f"The total runtime was {tok-tik} seconds.")
 if __name__ == "__main__":
