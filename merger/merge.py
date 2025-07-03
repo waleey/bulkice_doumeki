@@ -43,6 +43,7 @@ def bid(inputFile,chunk_num):
     bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,f'{args.runID}{chunk_num}',inputFile,basefolderG)
     bulkice.callG4()
     print('ran bulk ice doumeki')
+
 def merge():
     tik=time.time()
     args = parseCommandLine()
@@ -51,7 +52,7 @@ def merge():
     basefolderG = '/home/vboxuser/BulkIceDoumeki/bulkice_doumeki-main/mdom/build'  #goes back to the build folder!
    
     #initializing modules to call sntools and bulkice_doumeki
-    stool=stools(args.progenitorModel,args.inputFormat,args.distance,args.outfileS,basefolderS,args.start_time,args.end_time)
+    stool=stools(args.progenitorModel,args.inputFormat,args.distance,args.outfileS,basefolderS,args.start_time,args.end_time, args.numCores)
     useStool = True 
      
     if(args.simType == 'ibd'):
