@@ -112,11 +112,11 @@ void OMSimAnalysisManager::WriteBinary()
 {
 	if(gBinaryHitFile.is_open())
 	{
-		for (int i = 0; i < stats_event_id.size(); i++) 
+		for (int i = 0; i < stats_TIME.size(); i++) 
 		{
-			float time = stats_hit_time.at(i) / ns;
-			int pmt = stats_PMT_hit.at(i);
-			gBinaryHitFile.write(reinterpret_cast<char*>(&time), sizeof(float));
+			double time = stats_TIME.at(i) / ns;
+			int pmt = stats_PMT.at(i);
+			gBinaryHitFile.write(reinterpret_cast<char*>(&time), sizeof(double));
 			gBinaryHitFile.write(reinterpret_cast<char*>(&pmt), sizeof(uint8_t));
 		}
 	}

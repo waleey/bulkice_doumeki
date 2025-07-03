@@ -31,8 +31,7 @@ class OMSimAnalysisManager
 		std::vector<G4double>	stats_photon_flight_time;
 		std::vector<G4double>	stats_photon_track_length;
 		std::vector<G4double>	stats_photon_energy;
-		//std::vector<G4int>	stats_PMT_hit;
-		std::vector<uint8_t> stats_PMT_hit;
+		std::vector<G4int>	stats_PMT_hit;
 		std::vector<G4ThreeVector>	stats_photon_direction;
 		std::vector<G4ThreeVector>	stats_photon_position;
 		std::vector<G4ThreeVector> stats_vertex_position;
@@ -42,6 +41,9 @@ class OMSimAnalysisManager
 		//will be removed later
 		std::vector<std::string> stats_creator;
 
+		// for binary mode only
+		std::vector<G4double>	stats_TIME;
+		std::vector<uint8_t> stats_PMT;
 
 
 	private:
