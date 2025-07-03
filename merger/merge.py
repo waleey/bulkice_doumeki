@@ -114,6 +114,7 @@ def merge():
         for i in range(args.numCores):
             with open(basefolderG+'/output/'+f'{args.omModel}_{args.simType}_{args.runID}{i}.dat','r') as out_chunk:
                 out.write(out_chunk.read())
+            os.remove(basefolderG+'/output/'+f'{args.omModel}_{args.simType}_{args.runID}{i}.dat')
                
     tok=time.time()
     print(f"The total runtime was {tok-tik} seconds.")
