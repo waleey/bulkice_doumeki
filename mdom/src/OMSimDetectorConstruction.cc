@@ -66,7 +66,7 @@ void OMSimDetectorConstruction::ConstructWorld()
 {
     //ConstructWorldMat();
     //fworldSize = 20;
-    mWorldSolid = new G4Box("World", fworldSize * m, fworldSize * m, fworldSize* m);
+    mWorldSolid = new G4Tubs("World", 0 , fworldSize * m, fworldSize * m, 0 , 2.0*M_PI);
     //mWorldSolid = new G4Box("World", .5 * m, .5 * m, .5 * m);
     //mWorldLogical = new G4LogicalVolume(mWorldSolid, ice, "World_log", 0, 0, 0);
     //mWorldPhysical = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), mWorldLogical, "World_phys", 0, false, 0, true);

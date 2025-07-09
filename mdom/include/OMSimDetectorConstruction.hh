@@ -39,7 +39,7 @@ public:
 
 private:
     //G4Orb *mWorldSolid;
-    G4Box *mWorldSolid;
+    G4Tubs *mWorldSolid;
     G4LogicalVolume *mWorldLogical;
     G4VPhysicalVolume *mWorldPhysical;
     void ConstructWorld();
