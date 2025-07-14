@@ -42,6 +42,7 @@ def bid(inputFile,chunk_num,basefolderG):
     bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,f'{args.runID}{chunk_num}',inputFile,basefolderG)
     bulkice.callG4()
     print('ran bulk ice doumeki')
+
 def merge():
     tik=time.time()
     args = parseCommandLine()
