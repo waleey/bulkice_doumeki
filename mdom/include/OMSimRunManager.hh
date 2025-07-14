@@ -34,6 +34,7 @@ public:
     inline void SetFinalAngle(G4double angle)   { fFinalAngle = angle; }
     inline void SetAngleIncrement(G4double angle) { fAngleIncrement = angle; }
     inline void SetDistance(G4double distance) { fDistance = distance; }*/
+    
 
 private:
     G4int fpmtModel;
