@@ -17,7 +17,7 @@ extern G4int gPosCount;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
 extern G4bool gWOM;
-
+extern G4bool QEFilter;
 G4int gVesselCount = 0;
 G4int gPMTBodyCount = 0;
 G4int gWLSCount = 0;
@@ -32,8 +32,8 @@ OMSimSteppingAction::OMSimSteppingAction()
 
 void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 {
-    G4Track* aTrack = aStep->GetTrack();
 
+    G4Track* aTrack = aStep->GetTrack();
     //kill particles that are stuck... e.g. doing a loop in the pressure vessel
     if ( aTrack-> GetCurrentStepNumber() > 100000) {
         G4cout << "Particle stuck   " <<  aTrack->GetDefinition()->GetParticleName()  << " " << 1239.84193/(aTrack->GetKineticEnergy()/eV)<< G4endl;
@@ -69,12 +69,31 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
     //	Check if optical photon is about to hit a photocathode, if so, destroy it and save the hit
     if ( aTrack->GetDefinition()->GetParticleName() == "opticalphoton" ) {
+        G4int survived;             
+	if (QEFilter){
+            // Check QE
+            G4double Ekin;
+            G4double hc = 1240 * nm;
+            G4double lambda;
 
-       //std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
-       //WOMCheck(aStep);
-       std::string creator;
+	    //std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
+            //WOMCheck(aStep);
+            std::string creator;
+            Ekin = aTrack->GetKineticEnergy() ;
+            lambda = (hc/Ekin) * nm;
+            pmt_qe -> ReadQeTable();
+            // std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
+            double qe = (pmt_qe -> GetQe(lambda)) / 100;
+	    double random = CLHEP::RandFlat::shoot(0.0, 1.0);
+            //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
+            survived = (random < (qe)) ? 1 : 0;}
+            
+            if (survived == 0){
+                aTrack->SetTrackStatus(fStopAndKill);}
 
-        if ( aTrack->GetTrackStatus() != fStopAndKill ) {
+
+
+	if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
             if( aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") {
 
@@ -96,15 +115,13 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 }
 
                 */
-                G4double Ekin;
+
                 G4double t1, t2;
                 G4Track* aTrack = aStep -> GetTrack();
                 G4ThreeVector vertex_pos;
                 vertex_pos = aTrack -> GetVertexPosition();
-                G4double hc = 1240 * nm;
-                G4double lambda;
-
-               /* std::string creator = aTrack -> GetCreatorProcess() -> GetProcessName();
+                
+		/* std::string creator = aTrack -> GetCreatorProcess() -> GetProcessName();
                 if(creator == "Cerenkov")
                 {
                     gNumCherenkov++;
@@ -113,19 +130,25 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 {
                     gNumScint++;
                 }*/
-                Ekin = aTrack->GetKineticEnergy() ;
-                lambda = (hc/Ekin) * nm;
-                pmt_qe -> ReadQeTable();
-               // std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
-                double qe = (pmt_qe -> GetQe(lambda)) / 100;
-                double random = CLHEP::RandFlat::shoot(0.0, 1.0);
-                //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
-                G4int survived = (random < (qe)) ? 1 : 0;
-                std::vector<G4String> n;
+		G4double hc = 1240 * nm;
+                G4double lambda;
+                G4double Ekin;
+
+		if ( !QEFilter){
+                    Ekin = aTrack->GetKineticEnergy() ;
+                    lambda = (hc/Ekin) * nm;
+                    pmt_qe -> ReadQeTable();
+                    // std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
+                    double qe = (pmt_qe -> GetQe(lambda)) / 100;
+                    double random = CLHEP::RandFlat::shoot(0.0, 1.0);
+                    //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
+                    G4int survived = (random < (qe)) ? 1 : 0;}
+                
+		std::vector<G4String> n;
                 extern std::vector<G4String> explode (G4String s, char d);
                 G4ThreeVector deltapos;
-
-                if(!gWOM)
+                
+		if(!gWOM)
                 {
                     n = explode(aStep->GetPreStepPoint()->GetPhysicalVolume()->GetName(),'_');
                     gAnalysisManager.stats_PMT_hit.push_back(atoi(n.at(1)));

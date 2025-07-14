@@ -17,6 +17,7 @@ extern G4double gAngleIncrement;
 extern G4bool gMultipleAngle;
 extern G4int gPhotonNotAbsorbed;
 extern G4bool gVis;
+extern G4bool QEFilter;
 G4double gAngle = 0;
 
 //G4int gIdx = 0;

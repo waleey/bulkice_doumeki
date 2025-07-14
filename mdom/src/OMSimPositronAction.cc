@@ -48,7 +48,7 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
     fIdx++;
     if(fIdx == fParticleNum)
     {
-        std::cout << "Total " << fIdx << " poistrons are generated!" << std::endl;
+        std::cout << "Total " << fIdx << " positrons are generated!" << std::endl;
         fParticleExist = false;
     }
 }

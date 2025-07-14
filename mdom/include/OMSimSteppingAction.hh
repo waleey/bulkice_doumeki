@@ -8,7 +8,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 extern G4String gQEFile;
-
+extern G4bool QEFilter;
 class OMSimSteppingAction : public G4UserSteppingAction
 {
   public:

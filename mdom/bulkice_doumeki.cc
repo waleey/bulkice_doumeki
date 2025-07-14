@@ -21,6 +21,7 @@
 
 
 //setting up the external variables
+G4bool          QEFilter;
 G4int           gGlass = 0;
 G4int           gGel = 0;
 G4double        gRefCone_angle = 51;
@@ -74,11 +75,11 @@ void help() //needs change
     std::cout << "Usage: " << std::endl;
 
     std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "[interaction channel]" << " " <<  "[depth index]" << " " << "[output folder] " << "[run id]"
-    <<" "<<"[input folder]"<< " (for simulating supernovae neutrino flux)" << std::endl;
+    <<" "<<"[input folder]"<< " (for simulating supernovae neutrino flux)"<<" "<<"[QEFilter]"<< std::endl;
 
     std::cout << " " << std::endl;
     //std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << "vis" << " (for visualization)" << std::endl;
-    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "opticalphoton" << " " << "[depth index]" << " " << "[output folder] " << "[run id] "<< "[distance (m)] "
+    std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "opticalphoton" << " " << "[depth index]" << " " << "[output folder] " << " " << "[run id] "<<' '<< "[input folder]"<< " " << "[distance (m)] "
     << "[zenith angle (degree)]" << " " << " (for photon wave with a single zenith angle)" << std::endl;
 
     std::cout << " " << std::endl;
@@ -154,9 +155,9 @@ int GetModel(G4String& model)
         }
 
 }
-void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel,G4String& inputFolder)
+void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel,G4String& inputFolder, G4bool& QEFilter)
 {
-    if(argc == 7 || argc ==  8 || argc == 10 || argc == 2)
+    if(argc == 8 || argc ==  9 || argc == 10 || argc == 2)
     {
         G4String model = argv[1];
 
@@ -178,15 +179,15 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         worldsize = 20 * m;
         ghitsfilename += outputFolder + "/";
         inputFolder=argv[6];
-
+        QEFilter=argv[7];
         if(interaction_channel == "opticalphoton")
         {
             gDistance = atof(argv[6]);
             gPhotonSim = true;
 
-            if(argc == 8)
+            if(argc == 9)
             {
-                gZenithAngle = atof(argv[7]);
+                gZenithAngle = atof(argv[8]);
                 gStartAngle = gZenithAngle;
                 gFinalAngle = gZenithAngle;
                 gAngleIncrement = 10; //some dummy number, doesn't affect the output.
@@ -197,9 +198,9 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
             else
             {
                 gMultipleAngle = true;
-                gStartAngle = atof(argv[7]);
-                gFinalAngle = atof(argv[8]);
-                gAngleIncrement = atof(argv[9]);
+                gStartAngle = atof(argv[8]);
+                gFinalAngle = atof(argv[9]);
+                gAngleIncrement = atof(argv[10]);
 
 
                 ghitsfilename += model + "_" + interaction_channel + "_" + std::to_string(gStartAngle) + "_"
@@ -287,7 +288,7 @@ int main(int argc, char** argv)
     G4String macroname;
     G4int PMT_model(0);
     G4String interaction_channel;
-    ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel, inputFolder);
+    ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel, inputFolder,QEFilter);
 
     OMSimRunManager* runManager = new OMSimRunManager(PMT_model, world_size, interaction_channel);
     runManager -> Initialize();

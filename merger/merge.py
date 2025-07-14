@@ -32,6 +32,9 @@ def parseCommandLine():
     parser.add_argument('runID', help = 'Run ID for each simulation run in bulkice_doumeki')
     
     parser.add_argument('-c','--numCores', type=int, help = 'number of cores available for running',default=os.cpu_count())
+   
+    parser.add_argument('-s','--sntools', type=bool, help = 'Use Sntools (True or False)',default=True)
+    parser.add_argument('-q','--QEFilter', type=str, help = 'Use QE Filter (true or false)',default='true')
     args = parser.parse_args()
 
     return args
@@ -39,7 +42,7 @@ def parseCommandLine():
     
 def bid(inputFile,chunk_num,basefolderG):
     args = parseCommandLine()
-    bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,f'{args.runID}{chunk_num}',inputFile,basefolderG)
+    bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,f'{args.runID}{chunk_num}',inputFile,basefolderG,args.QEFilter)
     bulkice.callG4()
     print('ran bulk ice doumeki')
 
@@ -52,7 +55,7 @@ def merge():
    
     #initializing modules to call sntools and bulkice_doumeki
     stool=stools(args.progenitorModel,args.inputFormat,args.distance,args.outfileS,basefolderS,args.start_time,args.end_time, args.numCores)
-    useStool = True 
+    useStool = args.sntools 
      
     if(args.simType == 'ibd'):
         stool.setChannel('ibd') #IBD events specified
