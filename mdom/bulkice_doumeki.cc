@@ -179,8 +179,11 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         worldsize = 20 * m;
         ghitsfilename += outputFolder + "/";
         inputFolder=argv[6];
-        QEFilter=argv[7];
-        if(interaction_channel == "opticalphoton")
+	std::cout<< "Argument 7:"<<argv[7]<<std::endl;
+	QEFilter=*argv[7] =='1';
+	//QEFilter=false;
+	std::cout<< "QEFilter:" << QEFilter <<std::endl;
+	if(interaction_channel == "opticalphoton")
         {
             gDistance = atof(argv[6]);
             gPhotonSim = true;
