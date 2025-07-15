@@ -69,7 +69,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
     //	Check if optical photon is about to hit a photocathode, if so, destroy it and save the hit
     if ( aTrack->GetDefinition()->GetParticleName() == "opticalphoton" ) {
-	G4int survived;             
+	G4int survived;
+	survived = 1;	
 	if (QEFilter){
             // Check QE
             G4double Ekin;
@@ -87,7 +88,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 	    double random = CLHEP::RandFlat::shoot(0.0, 1.0);
             //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
             survived = (random < (qe)) ? 1 : 0;
-            
+            //std::cout<<"-------Survived?"<<survived<<"----------"<<std::endl; 
             if (survived == 0){
                 //std::cout << "Killed Photon" << std::endl;
 		aTrack->SetTrackStatus(fStopAndKill);}}
@@ -188,7 +189,8 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     gAnalysisManager.stats_vertex_position.push_back(vertex_pos);
                     gAnalysisManager.stats_positron_id.push_back(aTrack -> GetParentID());
                     gAnalysisManager.stats_survived_qe.push_back(survived);
-                    //Will be removed soon
+		    std::cout<<"=============Hit Recorded! Survived:"<<survived<<"=========="<<std::endl;
+		    //Will be removed soon
                    //gAnalysisManager.stats_creator.push_back(creator);
                 }
 

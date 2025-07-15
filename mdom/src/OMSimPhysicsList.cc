@@ -44,6 +44,7 @@
 
 OMSimPhysicsList::OMSimPhysicsList():  G4VUserPhysicsList()
 {
+	//defaultCutValue = 10*cm;
 	defaultCutValue = 0.1*mm;
 	SetVerboseLevel(0);
 	radioactiveList = new G4RadioactiveDecayPhysics();
