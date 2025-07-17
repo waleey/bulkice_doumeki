@@ -69,33 +69,41 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 
     //	Check if optical photon is about to hit a photocathode, if so, destroy it and save the hit
     if ( aTrack->GetDefinition()->GetParticleName() == "opticalphoton" ) {
-	G4int survived;
-	survived = 1;	
-	if (QEFilter){
-            // Check QE
-            G4double Ekin;
-            G4double hc = 1240 * nm;
-            G4double lambda;
-
-	    //std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
-            //WOMCheck(aStep);
-            std::string creator;
-            Ekin = aTrack->GetKineticEnergy() ;
-            lambda = (hc/Ekin) * nm;
-            pmt_qe -> ReadQeTable();
-            // std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
-            double qe = (pmt_qe -> GetQe(lambda)) / 100;
-	    double random = CLHEP::RandFlat::shoot(0.0, 1.0);
-            //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
-            survived = (random < (qe)) ? 1 : 0;
-            //std::cout<<"-------Survived?"<<survived<<"----------"<<std::endl; 
-            if (survived == 0){
-                //std::cout << "Killed Photon" << std::endl;
-		aTrack->SetTrackStatus(fStopAndKill);}}
-
-
+        std:: string creator;
 
 	if ( aTrack->GetTrackStatus() != fStopAndKill ) {
+         	/*if ( !QEFilter){
+                    std::cout<<"Filtering by QE upon hit"<<std::endl;}
+                else if (QEFilter){
+                        std::cout<<"Filtered by QE before tracking"<<std::endl;}
+                else{
+                        std::cout<<"Doing nothing and causing problems"<<std::endl;}
+		*/
+		G4int survived;
+		survived = 1;	
+         	G4double Ekin;
+                G4double hc = 1240 * nm;
+                G4double lambda;
+	
+		if (QEFilter){
+            		// Check QE
+	    		//std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
+            		//WOMCheck(aStep);
+                	Ekin = aTrack->GetKineticEnergy() ;
+                	lambda = (hc/Ekin) * nm;
+                	pmt_qe -> ReadQeTable();
+                	// std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
+                	double qe = (pmt_qe -> GetQe(lambda)) / 100;
+	        	double random = CLHEP::RandFlat::shoot(0.0, 1.0);
+                	//std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
+                	survived = (random < (qe)) ? 1 : 0;
+                	//std::cout<<"-------Survived?"<<survived<<"----------"<<std::endl; 
+                	if (survived == 0){
+                    		//std::cout << "Killed Photon" << std::endl;
+		    		aTrack->SetTrackStatus(fStopAndKill);}}
+
+
+
 
             if( aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") {
 
@@ -132,20 +140,21 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                 {
                     gNumScint++;
                 }*/
-		G4double hc = 1240 * nm;
-                G4double lambda;
-                G4double Ekin;
-
 		if ( !QEFilter){
-                    Ekin = aTrack->GetKineticEnergy() ;
+		    std::cout<<"Filtering by QE upon hit"<<std::endl;
+		    Ekin = aTrack->GetKineticEnergy() ;
                     lambda = (hc/Ekin) * nm;
                     pmt_qe -> ReadQeTable();
                     // std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
                     double qe = (pmt_qe -> GetQe(lambda)) / 100;
                     double random = CLHEP::RandFlat::shoot(0.0, 1.0);
                     //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
-                    G4int survived = (random < (qe)) ? 1 : 0;}
-                
+                    survived = (random < (qe)) ? 1 : 0;}
+		else if (QEFilter){
+			std::cout<<"Filtered by QE before tracking"<<std::endl;}
+		else{
+			std::cout<<"Doing nothing and causing problems"<<std::endl;}
+		
 		std::vector<G4String> n;
                 extern std::vector<G4String> explode (G4String s, char d);
                 G4ThreeVector deltapos;

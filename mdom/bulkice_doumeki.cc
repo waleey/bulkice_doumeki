@@ -182,7 +182,13 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
 	std::cout<< "Argument 7:"<<argv[7]<<std::endl;
 	QEFilter=*argv[7] =='1';
 	//QEFilter=false;
-	std::cout<< "QEFilter:" << QEFilter <<std::endl;
+	if (QEFilter){
+		std::cout<< "Filtering by QE before tracking"<<std::endl;}
+	else if (!QEFilter){
+		std::cout<< "Filtering by QE upon hit"<< std::endl;}
+	else {
+		std::cout<<"Doing nothing and causing problems."<<std::endl;}
+
 	if(interaction_channel == "opticalphoton")
         {
             gDistance = atof(argv[6]);
