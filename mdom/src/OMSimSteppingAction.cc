@@ -23,7 +23,6 @@ G4int gPMTBodyCount = 0;
 G4int gWLSCount = 0;
 G4int gWLSAndHitCount = 0;
 
-
 OMSimSteppingAction::OMSimSteppingAction()
 {
 
@@ -71,7 +70,6 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
     if ( aTrack->GetDefinition()->GetParticleName() == "opticalphoton" ) {
         std:: string creator;
 
-	if ( aTrack->GetTrackStatus() != fStopAndKill ) {
          	/*if ( !QEFilter){
                     std::cout<<"Filtering by QE upon hit"<<std::endl;}
                 else if (QEFilter){
@@ -82,28 +80,28 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 		G4int survived;
 		survived = 1;	
          	G4double Ekin;
-                G4double hc = 1240 * nm;
                 G4double lambda;
-	
+		G4double hc = 1240 *nm;
 		if (QEFilter){
-            		// Check QE
+			// Check QE
 	    		//std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
             		//WOMCheck(aStep);
                 	Ekin = aTrack->GetKineticEnergy() ;
                 	lambda = (hc/Ekin) * nm;
-                	pmt_qe -> ReadQeTable();
-                	// std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
+			pmt_qe -> ReadQeTable();
+                	//std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
                 	double qe = (pmt_qe -> GetQe(lambda)) / 100;
 	        	double random = CLHEP::RandFlat::shoot(0.0, 1.0);
                 	//std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
                 	survived = (random < (qe)) ? 1 : 0;
-                	//std::cout<<"-------Survived?"<<survived<<"----------"<<std::endl; 
+			//std::cout<<"-------Survived?"<<survived<<"----------"<<std::endl; 
                 	if (survived == 0){
                     		//std::cout << "Killed Photon" << std::endl;
 		    		aTrack->SetTrackStatus(fStopAndKill);}}
 
 
 
+	if ( aTrack->GetTrackStatus() != fStopAndKill ) {
 
             if( aStep -> GetPostStepPoint() -> GetMaterial() -> GetName() == "RiAbs_Photocathode") {
 
@@ -145,7 +143,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 		    Ekin = aTrack->GetKineticEnergy() ;
                     lambda = (hc/Ekin) * nm;
                     pmt_qe -> ReadQeTable();
-                    // std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
+                    //std::cout << "+++++Final Wavelength: " << lambda / nm<< std::endl;
                     double qe = (pmt_qe -> GetQe(lambda)) / 100;
                     double random = CLHEP::RandFlat::shoot(0.0, 1.0);
                     //std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
