@@ -82,7 +82,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
          	G4double Ekin;
                 G4double lambda;
 		G4double hc = 1240 *nm;
-		if (QEFilter){
+		/*if (QEFilter){
 			// Check QE
 	    		//std::cout << "Photons are in: " << aStep -> GetPreStepPoint() -> GetPhysicalVolume() -> GetName() << std::endl;
             		//WOMCheck(aStep);
@@ -97,7 +97,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
 			//std::cout<<"-------Survived?"<<survived<<"----------"<<std::endl; 
                 	if (survived == 0){
                     		//std::cout << "Killed Photon" << std::endl;
-		    		aTrack->SetTrackStatus(fStopAndKill);}}
+		    		aTrack->SetTrackStatus(fStopAndKill);}}*/
 
 
 

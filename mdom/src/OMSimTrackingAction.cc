@@ -6,6 +6,10 @@
 #include "G4ThreeVector.hh"
 #include "G4SystemOfUnits.hh"
 #include "OMSimRadioactivityData.hh"
+#include "OMSimSteppingAction.hh"
+extern G4bool QEFilter;
+extern G4String gQEFile;
+
 
 OMSimTrackingAction::OMSimTrackingAction()
 :G4UserTrackingAction(), counter(0)
@@ -18,7 +22,7 @@ OMSimTrackingAction::~OMSimTrackingAction()
 }
 
 void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
-{
+{ 
     /**
     *temporal correlation between parent and daughter nucleus is preserved
     *if the mean life time of daughter nucleus is within the time window
@@ -45,6 +49,31 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
             }
     }
     delete radData;
+       
+    if(QEFilter){
+       if (aTrack -> GetDefinition()->GetParticleName()=="opticalphoton" ){
+	  if(aTrack -> GetCreatorProcess() ->GetProcessName() == "Cerenkov")
+                       {//std::cout<<"Optical Photon Produced by Cherenkov Process"<<std::endl;
+			//std::cout<<"by Cherenkov Process"<<std::endl;
+			G4int survived;
+			G4double Ekin;
+			G4double lambda;
+			G4double hc = 1240*nm;
+			Ekin = aTrack->GetKineticEnergy() ;
+                	lambda = (hc/Ekin) * nm;
+			pmt_qe -> ReadQeTable();
+                	//std::cout << "+++++Wavelength: " << lambda / nm<< std::endl;
+                	double qe = (pmt_qe -> GetQe(lambda)) / 100;
+	        	double random = CLHEP::RandFlat::shoot(0.0, 1.0);
+                	//std::cout << "++++++++++QE : " << qe << "++++" << std::endl;
+                	survived = (random < (qe)) ? 1 : 0;
+			//std::cout<<"-------Survived?"<<survived<<"----------"<<std::endl; 
+                	if (survived == 0){
+                    		//std::cout << "Killed Photon" << std::endl;
+		    		const_cast<G4Track*>(aTrack)->SetTrackStatus(fStopAndKill);
+				}
+				}}}
+
 }
 
 void OMSimTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
