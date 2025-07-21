@@ -146,6 +146,8 @@ void OMSimAnalysisManager::Reset()
 	stats_survived_qe.clear();
 	stats_creator.clear();
 	stats_event_distance.clear();
+	stats_TIME.clear();
+	stats_PMT.clear();
 }
 
 void OMSimAnalysisManager::SetRunId(G4int RunId)
