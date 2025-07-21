@@ -12,7 +12,7 @@ extern G4double gworldsize;
 extern G4bool   gVerbose;
 extern G4int    gRunID;
 
-extern std::fstream gPositronData;
+//extern std::fstream gPositronData;
 
 extern G4int    gCrossSectionOrder;
 extern G4int    gPositronEnergyOrder;
@@ -108,14 +108,14 @@ void OMSimNeutrinoAction::GeneratePrimaries(G4Event* anEvent)
     }
 
     // save positron energy, cos(zenith) and azimuth to file
-    if (gPositronData.is_open())
-    {
-        gPositronData << neutrinoEnergy / MeV << "," << positronEnergyZeroth / MeV << "," << positronEnergyFirst / MeV << "," 
-                      << positronCosZenithUni << "," << positronCosZenithZeroth << "," << positronCosZenithFirst << "," 
-                      << positronAzimuth << "," << positronPosition[0] / m << "," << positronPosition[1] / m << "," 
-                      << positronPosition[2] / m << "\n";
-        gPositronData.flush();
-    }
+    //if (gPositronData.is_open())
+    //{
+    //    gPositronData << neutrinoEnergy / MeV << "," << positronEnergyZeroth / MeV << "," << positronEnergyFirst / MeV << "," 
+    //                  << positronCosZenithUni << "," << positronCosZenithZeroth << "," << positronCosZenithFirst << "," 
+    //                  << positronAzimuth << "," << positronPosition[0] / m << "," << positronPosition[1] / m << "," 
+    //                  << positronPosition[2] / m << "\n";
+    //    gPositronData.flush();
+    //}
     
     // sample time from uniform distribution
     G4double timeRandom = fRadData -> RandomGen(0, 1);
@@ -242,8 +242,8 @@ void OMSimNeutrinoAction::LoadData()
     InverseCDFNeutrinoSpectrumCrossSection();
 
     std::cout << "---------------------\n" 
-              << "Positron density [pos/m3]: " << numberInteraction/volume << "\n"
-              << "Simulation Volume [m]: " << volume << "\n"
+              << "Positron density [pos/m3]: " << numberInteraction/volume * (m*m*m) << "\n"
+              << "Simulation Volume [m]: " << volume / (m*m*m) << "\n"
               << "Number of expected positrons: " << meanNumberInteraction << "\n"
               << "Number of simulated positrons: " << numberInteraction << "\n"
               << "---------------------" << std::endl;
