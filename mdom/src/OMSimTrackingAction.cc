@@ -7,7 +7,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4Ions.hh"
 
-extern std::fstream gRadioDecayFile;
+//extern std::fstream gRadioDecayFile;
 extern G4bool gVerbose;
 extern G4bool gPhotonQEBiasing;
 extern G4double gSimulationTime;
@@ -39,12 +39,12 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
     G4double timeWindow = gSimulationTime;
     
     // save track ID, particle ID and particle energy of all particles
-    if (gRadioDecayFile.is_open()){
-                G4int trackID = aTrack -> GetTrackID();
-                G4String particleName = aTrack -> GetParticleDefinition() -> GetParticleName();
-                G4double kineticEnergy = aTrack -> GetKineticEnergy();
-                gRadioDecayFile << trackID << "," << particleName << "," << kineticEnergy / CLHEP::MeV << "\n";
-            }
+    //if (gRadioDecayFile.is_open()){
+    //            G4int trackID = aTrack -> GetTrackID();
+    //            G4String particleName = aTrack -> GetParticleDefinition() -> GetParticleName();
+    //            G4double kineticEnergy = aTrack -> GetKineticEnergy();
+    //            gRadioDecayFile << trackID << "," << particleName << "," << kineticEnergy / CLHEP::MeV << "\n";
+    //        }
 
 
     if (gPhotonQEBiasing)
