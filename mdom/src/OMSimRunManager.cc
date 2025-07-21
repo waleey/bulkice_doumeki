@@ -9,8 +9,8 @@
 extern OMSimAnalysisManager gAnalysisManager;
 extern G4String	ghitsfilename;
 extern std::ofstream gBinaryHitFile;
-extern std::fstream gRadioDecayFile;
-extern std::fstream gPositronData;
+//extern std::fstream gRadioDecayFile;
+//extern std::fstream gPositronData;
 extern G4String	gHittype;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
@@ -147,9 +147,9 @@ void OMSimRunManager::BeamOn()
                 //GenerateU235();
                 //GenerateTh232();
                 
-                GenerateDecayChain("K40");
-                GenerateDecayChain("U238");
-                GenerateDecayChain("U235");
+                //GenerateDecayChain("K40");
+                //GenerateDecayChain("U238");
+                //GenerateDecayChain("U235");
                 GenerateDecayChain("Th232");
                 break;
             case lom18:
@@ -535,11 +535,11 @@ void OMSimRunManager::OpenFile()
         std::cout << "filename :" << binaryName << std::endl;
         gBinaryHitFile.open(binaryName, std::ios::binary);
     }
-    gRadioDecayFile.open("radiodecay_output.csv", std::ios::out /*| std::ios::app*/);
-    gRadioDecayFile << "TrackID,ParticleName,Energy\n";
+    //gRadioDecayFile.open("radiodecay_output.csv", std::ios::out /*| std::ios::app*/);
+    //gRadioDecayFile << "TrackID,ParticleName,Energy\n";
 
-    gPositronData.open("positron_data.csv", std::ios::out);
-    gPositronData << "E_nu,E_p0,E_p1,th_uni,th_0,th_1,phi,posx,posy,poz\n";
+    //gPositronData.open("positron_data.csv", std::ios::out);
+    //gPositronData << "E_nu,E_p0,E_p1,th_uni,th_0,th_1,phi,posx,posy,poz\n";
 }
 
 void OMSimRunManager::CloseFile()
@@ -561,7 +561,7 @@ void OMSimRunManager::CloseFile()
     
     gBinaryHitFile.close();
 
-    gRadioDecayFile.close();
+    //gRadioDecayFile.close();
     
-    gPositronData.close();
+    //gPositronData.close();
 }
