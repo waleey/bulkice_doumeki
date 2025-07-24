@@ -147,9 +147,9 @@ void OMSimRunManager::BeamOn()
                 //GenerateU235();
                 //GenerateTh232();
                 
-                //GenerateDecayChain("K40");
-                //GenerateDecayChain("U238");
-                //GenerateDecayChain("U235");
+                GenerateDecayChain("K40");
+                GenerateDecayChain("U238");
+                GenerateDecayChain("U235");
                 GenerateDecayChain("Th232");
                 break;
             case lom18:
