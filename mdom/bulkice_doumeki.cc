@@ -244,10 +244,11 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
 
                 G4double simtime = gSimulationTime/s;
 
-                if (verbose==0) {gVerbose = false; }
-                else {gVerbose = true; }
-
-                ghitsfilename += model + "_rad_time_T=" + boost::str(boost::format("%.0f") % simtime) + "s_leak_p=" + boost::str(boost::format("%.2f") % gRadioactiveLeakContainment) + "_" + std::to_string(gRunID);
+                if (verbose==0) { gVerbose = false; }
+                else { gVerbose = true; }
+                
+                if (gHittype == "binary"){ ghitsfilename += "rad_" + std::to_string(gRunID); }
+                else { ghitsfilename += model + "_rad_time_T=" + boost::str(boost::format("%.0f") % simtime) + "s_leak_p=" + boost::str(boost::format("%.2f") % gRadioactiveLeakContainment) + "_" + std::to_string(gRunID); }
             }
 
             /**
@@ -261,11 +262,11 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
                 gNeutrinoEnergyPinch = atof(argv[8]);
                 G4int verbose = atoi(argv[9]);
 
-                if (verbose==0) {gVerbose = false; }
-                else {gVerbose = true; }
-
-                ghitsfilename += model + "_flux_" + sanitize_for_filename(atof(argv[6])) + "_meanE_" + boost::str(boost::format("%.0f") % gNeutrinoMeanEnergy) 
-                            + "MeV_alpha_" + boost::str(boost::format("%.1f") % gNeutrinoEnergyPinch) + "_" + std::to_string(gRunID);
+                if (verbose==0) { gVerbose = false; }
+                else { gVerbose = true; }
+                
+                if (gHittype == "binary"){ ghitsfilename += "sig_" + std::to_string(gRunID); }
+                else { ghitsfilename += model + "_flux_" + sanitize_for_filename(atof(argv[6])) + "_meanE_" + boost::str(boost::format("%.0f") % gNeutrinoMeanEnergy) + "MeV_alpha_" + boost::str(boost::format("%.1f") % gNeutrinoEnergyPinch) + "_" + std::to_string(gRunID); }
             }
             else
             {
