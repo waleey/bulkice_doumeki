@@ -45,8 +45,13 @@ class DarkNoiseGenerator:
         self.data = 0
 
     def save(self, idx):
-        path = os.path.join(self.noi_dir, f"noi_{str(idx)}")
-        np.savez(path, time = self.time, pmt = self.pmt)
+        path = os.path.join(self.noi_dir, f"noi_{str(idx)}.bin")
+        #np.savez(path, time = self.time, pmt = self.pmt)
+        # Create structured array
+        data = np.empty(self.time.shape[0], dtype=[('time', 'f8'), ('pmt', 'u1')])
+        data['time'] = self.time
+        data['pmt'] = self.pmt
+        data.tofile(path)  # Write raw binary
 
     def run(self, noi_dir, num_files):
         self.noi_dir = noi_dir
