@@ -26,7 +26,9 @@ class NUANCEReader:
         lines = []
 
         for line in self.file_object.readlines():
-            if 'begin' in line:
+            if line[0] == '#':
+                continue
+            elif 'begin' in line:
                 evt_lines = []  # start new event lines
                 continue
             elif 'end' in line:
@@ -34,6 +36,5 @@ class NUANCEReader:
                 continue
             elif 'stop' in line:
                 continue
-
             evt_lines.append(line.strip()[2:])  # Removes leading '$ ' and trailing '\n'
         return events

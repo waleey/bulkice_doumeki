@@ -43,7 +43,7 @@ Visualization is currently under development, so limited functionality is availa
 
 ## Batch Mode
 
-### Simulating IBD/ENEES/ALL/Radioactive\_Bancground Noise
+### Simulating IBD/ENEES/ALL/Radioactive\_Background Noise
     - Type **"./bulkice\_doumeki [om model] [interaction channel] [depth index] [output folder] [run id]"**
     - Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]
     - Available interaction channels: [ibd, enees, all, radioactivity]
@@ -114,3 +114,7 @@ When running the `opticalphoton`, `ibd`, and other input types, the particle ene
 ```
 mdom/InputFile
 ```
+## A Note About Output Files
+
+Output files are .dat files consisting of columns of numbers separated by tabs. The columns in order are: the runID, the time of the hit in nanoseconds, the energy of the photon, the PMT ID, the x,y, and z coordinates of the photon in meters, the x,y,x coordinates of the vertex in meters, the positron ID, and a 1 or 0 representing whether or not the hit passed the quantum efficiency of the PMT. For `opticalphoton` simulations, there is an additional column giving the angle. 
+

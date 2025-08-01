@@ -1,5 +1,5 @@
 import numpy as np
-
+from particle import Particle
 """
 Each event in sntools is considered as an object here.
 events reaction_mode, vertex, tracks, and info are managed by Event class.

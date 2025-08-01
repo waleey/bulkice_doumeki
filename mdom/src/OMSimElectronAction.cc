@@ -2,6 +2,8 @@
 
 #include "G4ParticleDefinition.hh"
 #include "G4Electron.hh"
+
+extern G4String inputFolder;
 OMSimElectronAction::OMSimElectronAction(G4ParticleGun* particleGun)
     :   fParticleGun(particleGun),
         fParticleExist(true),
@@ -50,7 +52,7 @@ void OMSimElectronAction::GeneratePrimaries(G4Event* anEvent)
 void OMSimElectronAction::LoadData()
 {
     using namespace std;
-    G4String filePath = "../InputFile/Electron/e20002nkibd_"; //will change soon
+    G4String filePath = "../"+inputFolder+"/Electron/e20002nkibd_"; //will change soon
     G4double temp;
     G4String fileName;
 
