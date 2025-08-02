@@ -43,7 +43,7 @@ Visualization is currently under development, so limited functionality is availa
 
 ## Batch Mode
 
-### Simulating IBD/ENEES/ALL/Radioactive\_Bancground Noise
+### Simulating IBD/ENEES/ALL/Radioactive\_Background Noise
     - Type **"./bulkice\_doumeki [om model] [interaction channel] [depth index] [output folder] [run id]"**
     - Available OM Models: [dom, mdom, lom16, lom18, pmt, degg, wom]
     - Available interaction channels: [ibd, enees, all, radioactivity]
@@ -101,6 +101,30 @@ If one wants to simulate a plane wave only at one angle, they might specify only
 
 If one simulates a range of angles with a specific step size, they might specify that start angle, final angle and the increment (step size). All are in degrees.
 
+# Merger
+Connects sntools to bulkice_doumeki. 
+usage: <code> python3 merge.py [-h] [-t START_TIME] [-T END_TIME] progenitorModel inputFormat outfileS distance omModel simType depthIndex outputFolderG runID</code>
+
+Arguments:
+<ul>
+  <li>progenitorModel:      name of the progenitor file to be used in sntools</li>
+  <li>inputFormat:          format of the progenitor file to be used in sntools</li>
+  <li>outfileS:             name of the output file for sntools</li>
+  <li>distance:              distance to the progenitor from earth in kpc</li>
+  <li>omModel:               Optical Module model to be used: (dom, mdom, lom18, lom16, pmt)</li>
+  <li>simType:               Simulation type: (ibd, enees, all, radioactivity)</li>
+  <li>depthIndex:            Simulation depth index: (0, 1, ....., 108)</li>
+  <li>outputFolderG:         Output folder for bulkice_doumeki</li>
+  <li>runID:                 Run ID for each simulation run in bulkice_doumeki</li></ul>
+
+Options:<ul>
+  <li>-h, --help:            show this help message and exit</li>
+  <li>-t START_TIME, --start_time START_TIME:
+                        Simulation start time passed to sntools [ms]</li>
+  <li>-T END_TIME, --end_time END_TIME:
+                        Simulation start time passed to sntools [ms]</li></ul>
+
+
 **Advanced Features:**
 
 **\<To be available soon\>**
@@ -114,3 +138,7 @@ When running the `opticalphoton`, `ibd`, and other input types, the particle ene
 ```
 mdom/InputFile
 ```
+## A Note About Output Files
+
+Output files are .dat files consisting of columns of numbers separated by tabs. The columns in order are: the runID, the time of the hit in nanoseconds, the energy of the photon, the PMT ID, the x,y, and z coordinates of the photon in meters, the x,y,x coordinates of the vertex in meters, the positron ID, and a 1 or 0 representing whether or not the hit passed the quantum efficiency of the PMT. For `opticalphoton` simulations, there is an additional column giving the angle. 
+
