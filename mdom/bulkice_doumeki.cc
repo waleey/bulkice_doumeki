@@ -38,6 +38,7 @@ G4String        gHittype = "individual"; // seems like individual records each h
 G4bool          gVisual = true; // may be visualization on?
 G4int           gEnvironment = 2; // 1 is ICeCUbe ice without any ice property, 2 is with property, 0 is air.
 G4String        ghitsfilename = ""; //change location of your output file
+G4String        inputFolder = "";
 //G4double        gSimulatedTime = 1.0;
 G4int           gcounter = 0;
 G4int           gPosCount = 0;
@@ -73,7 +74,7 @@ void help() //needs change
     std::cout << "Usage: " << std::endl;
 
     std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << " " << "[interaction channel]" << " " <<  "[depth index]" << " " << "[output folder] " << "[run id]"
-    << " (for simulating supernovae neutrino flux)" << std::endl;
+    <<" "<<"[input folder]"<< " (for simulating supernovae neutrino flux)" << std::endl;
 
     std::cout << " " << std::endl;
     //std::cout << "./bulkice_doumeki" << " " << "[OM Model]" << "vis" << " (for visualization)" << std::endl;
@@ -153,9 +154,9 @@ int GetModel(G4String& model)
         }
 
 }
-void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel)
+void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsize, G4String& interaction_channel,G4String& inputFolder)
 {
-    if(argc == 6 || argc ==  8 || argc == 10 || argc == 2)
+    if(argc == 7 || argc ==  8 || argc == 10 || argc == 2)
     {
         G4String model = argv[1];
 
@@ -176,6 +177,7 @@ void ParseCommandLine(int argc, char** argv, G4int& PMT_model, G4double& worldsi
         gRunID = atoi(argv[5]);
         worldsize = 20 * m;
         ghitsfilename += outputFolder + "/";
+        inputFolder=argv[6];
 
         if(interaction_channel == "opticalphoton")
         {
@@ -285,7 +287,7 @@ int main(int argc, char** argv)
     G4String macroname;
     G4int PMT_model(0);
     G4String interaction_channel;
-    ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel);
+    ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel, inputFolder);
 
     OMSimRunManager* runManager = new OMSimRunManager(PMT_model, world_size, interaction_channel);
     runManager -> Initialize();

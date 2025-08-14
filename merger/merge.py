@@ -5,6 +5,9 @@ from g4tools import G4tools
 from stools import stools
 import argparse
 import sys
+import multiprocess as mp
+import os
+import time
 """
 This is the main function that calls sntools and geant4.
 All variables in merge() function that is related to
@@ -27,21 +30,28 @@ def parseCommandLine():
     parser.add_argument('-T', '--end_time', dest='end_time', default='None',
                          help='Simulation start time passed to sntools [ms]')
     parser.add_argument('runID', help = 'Run ID for each simulation run in bulkice_doumeki')
+    
+    parser.add_argument('-c','--numCores', type=int, help = 'number of cores available for running',default=os.cpu_count())
     args = parser.parse_args()
 
     return args
 #    return args.progenitorModel, args.outfileS, args.distance, args.omModel, args.simType, args.depthIndex, args.outputFolderG, args.runID
     
+def bid(inputFile,chunk_num,basefolderG):
+    args = parseCommandLine()
+    bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,f'{args.runID}{chunk_num}',inputFile,basefolderG)
+    bulkice.callG4()
+    print('ran bulk ice doumeki')
 
 def merge():
+    tik=time.time()
     args = parseCommandLine()
 #    progenitorModelS, outfileS, distanceS, omModelG, simTypeG, depthIndex, outputFolderG, runIDG = parseCommandLine()
     basefolderS = '' #you need to change this path
     basefolderG = '/home/vboxuser/BulkIceDoumeki/bulkice_doumeki-main/mdom/build'  #goes back to the build folder!
    
     #initializing modules to call sntools and bulkice_doumeki
-    stool=stools(args.progenitorModel,args.inputFormat,args.distance,args.outfileS,basefolderS,args.start_time,args.end_time)
-    bulkice=G4tools(args.omModel,args.simType,args.depthIndex,args.outputFolderG,args.runID,basefolderG)
+    stool=stools(args.progenitorModel,args.inputFormat,args.distance,args.outfileS,basefolderS,args.start_time,args.end_time, args.numCores)
     useStool = True 
      
     if(args.simType == 'ibd'):
@@ -67,13 +77,17 @@ def merge():
     Write the output of sntools to input files of bulkice_doumeki.
     If you need to save the output somewhere else, change baseFolderW.
     """
-    baseFolderW = '/home/vboxuser/BulkIceDoumeki/bulkice_doumeki-main/mdom/InputFile/' #goes back to to the InputFile dir.
-    
     if(useStool):
         with NUANCEReader(args.outfileS) as reader:
             events = reader.get_events()
-        writer = WritePrimaries(events, baseFolderW)
 
+    for i in range(args.numCores):
+        baseFolderW =f'/home/vboxuser/BulkIceDoumeki/bulkice_doumeki-main/mdom/InputFile{i}/' #goes back to to the InputFile dir.
+        if i < args.numCores-1:
+            writer = WritePrimaries(events[i*len(events)//args.numCores:i*len(events)//args.numCores+len(events)//args.numCores], baseFolderW)
+        elif i == args.numCores-1:
+            writer = WritePrimaries(events[i*len(events)//args.numCores:], baseFolderW)
+        
         if(args.simType == 'ibd'):
             #print("writes ibd")
             writer.writePositron()
@@ -88,8 +102,22 @@ def merge():
             writer.writeElectron()
     
     #Calling Geant4 here
-    bulkice.callG4()
+    pool=mp.Pool(processes=int(args.numCores))
+    res=list(pool.apply_async(bid,(f'InputFile{i}',i,basefolderG))for i in range(args.numCores))
+    pool.close()
+    pool.join()
+    results=[r.get() for r in res]
 
+
+    #combining output files
+    with open(basefolderG+'/output/'+f'{args.omModel}_{args.simType}_{args.inputFormat}_{args.runID}.dat','w') as out:
+        for i in range(args.numCores):
+            with open(basefolderG+'/output/'+f'{args.omModel}_{args.simType}_{args.runID}{i}.dat','r') as out_chunk:
+                out.write(out_chunk.read())
+            os.remove(basefolderG+'/output/'+f'{args.omModel}_{args.simType}_{args.runID}{i}.dat')
+               
+    tok=time.time()
+    print(f"The total runtime was {tok-tik} seconds.")
 if __name__ == "__main__":
     merge()
 

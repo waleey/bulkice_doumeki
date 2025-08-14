@@ -1,8 +1,7 @@
 #include "OMSimNeutronAction.hh"
-
 #include "G4ParticleDefinition.hh"
 #include "G4Neutron.hh"
-
+extern G4String inputFolder;
 OMSimNeutronAction::OMSimNeutronAction(G4ParticleGun* particleGun)
     :   fParticleGun(particleGun),
         fParticleExist(true),
@@ -52,7 +51,7 @@ void OMSimNeutronAction::GeneratePrimaries(G4Event* anEvent)
 void OMSimNeutronAction::LoadData()
 {
     using namespace std;
-    G4String filePath = "../InputFile/Neutron/neu20002nkibd_";
+    G4String filePath = "../"+inputFolder+"/Neutron/neu20002nkibd_";
     G4double temp;
     G4String fileName;
 

@@ -1,5 +1,5 @@
 from Event import Event
-
+import os
 
 class WritePrimaries:
 
@@ -25,6 +25,7 @@ class WritePrimaries:
         self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime]]
 
         for dtype in self.dtypes:
+            os.makedirs(self.baseFolder+'Positron',exist_ok=True)
             file = open(self.baseFolder + 'Positron/pos20002nkibd_' + dtype[0] + '.data', 'w')
             for data in dtype[1]:
                 file.write(str(data) + "\n")
@@ -38,6 +39,7 @@ class WritePrimaries:
         self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime]]
 
         for dtype in self.dtypes:
+            os.makedirs(self.baseFolder+'Neutron',exist_ok=True)
             file = open(self.baseFolder + 'Neutron/neu20002nkibd_' + dtype[0] + '.data', 'w')
             for data in dtype[1]:
                 file.write(str(data) + "\n")
@@ -52,6 +54,8 @@ class WritePrimaries:
         self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime]]
 
         for dtype in self.dtypes:
+            
+            os.makedirs(self.baseFolder+'Electron',exist_ok=True)
             file = open(self.baseFolder + 'Electron/e20002nkibd_' + dtype[0] + '.data', 'w')
             for data in dtype[1]:
                 file.write(str(data) + "\n")
@@ -63,7 +67,7 @@ class WritePrimaries:
 
         for event in self.events:
             if event.reaction_mode == reactionMode:
-                for track in event.tracks:
+                for track in event.tracks[:10]:
                     if(track['id'] == pdgID and track['state'] == 0):
                         self.energy.append(track['E'])
                         self.dirX.append(track['x'])
