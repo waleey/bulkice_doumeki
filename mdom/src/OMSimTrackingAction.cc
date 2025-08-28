@@ -7,6 +7,8 @@
 #include "G4SystemOfUnits.hh"
 #include "OMSimRadioactivityData.hh"
 
+extern G4int gRadioDecay;
+
 OMSimTrackingAction::OMSimTrackingAction()
 :G4UserTrackingAction(), counter(0)
 {
@@ -27,24 +29,29 @@ void OMSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
     *and the daughter is forced to decay immediately with initial time t_rnd
     *This is necessary to maintain the secular equilibrium
     *among the nucleus in the decay chain of each isotope.
+    *This method only invokes if gRadioDecay is set to 1
     **/
-    G4double timeWindow = OMSimRadioactivityData::ftimeWindow * s;
-    OMSimRadioactivityData* radData = new OMSimRadioactivityData();
-    if(aTrack -> GetCreatorProcess())
-    {
-           if(!(aTrack -> GetParticleDefinition() -> GetPDGStable()))
-            {
-                if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > OMSimRadioactivityData::ftimeWindow * s)
-                //if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > 60 * s)
+
+   if(gRadioDecay)
+   {
+        G4double timeWindow = OMSimRadioactivityData::ftimeWindow * s;
+        OMSimRadioactivityData* radData = new OMSimRadioactivityData();
+        if(aTrack -> GetCreatorProcess())
+        {
+                if(!(aTrack -> GetParticleDefinition() -> GetPDGStable()))
                 {
-                    aTrack -> GetDefinition() -> SetPDGLifeTime((radData -> GetInitialTime()) * s);
-                    /*std::cout << aTrack -> GetParticleDefinition() -> GetPDGLifeTime() << std::endl;
-                    std::cout << aTrack -> GetGlobalTime() << std::endl;
-                    std::cout << aTrack -> GetParticleDefinition() -> GetParticleName() << std::endl;*/
+                    if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > OMSimRadioactivityData::ftimeWindow * s)
+                    //if(aTrack -> GetParticleDefinition() -> GetPDGLifeTime() > 60 * s)
+                    {
+                        aTrack -> GetDefinition() -> SetPDGLifeTime((radData -> GetInitialTime()) * s);
+                        /*std::cout << aTrack -> GetParticleDefinition() -> GetPDGLifeTime() << std::endl;
+                        std::cout << aTrack -> GetGlobalTime() << std::endl;
+                        std::cout << aTrack -> GetParticleDefinition() -> GetParticleName() << std::endl;*/
+                    }
                 }
-            }
-    }
-    delete radData;
+        }
+        delete radData;
+   }
 }
 
 void OMSimTrackingAction::PostUserTrackingAction(const G4Track* aTrack)

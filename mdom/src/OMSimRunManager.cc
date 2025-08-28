@@ -17,6 +17,7 @@ extern G4double gAngleIncrement;
 extern G4bool gMultipleAngle;
 extern G4int gPhotonNotAbsorbed;
 extern G4bool gVis;
+extern G4int gRadioDecay;
 G4double gAngle = 0;
 
 //G4int gIdx = 0;
@@ -127,7 +128,8 @@ void OMSimRunManager::BeamOn()
         GenerateElectron();
     }
     else if(fInteraction == "radioactivity")
-    {
+    {   
+        gRadioDecay = 1;
         switch(fpmtModel)
         {
             case mdom:

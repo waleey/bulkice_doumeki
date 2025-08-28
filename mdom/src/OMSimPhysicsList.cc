@@ -99,7 +99,8 @@ void OMSimPhysicsList::ConstructProcess()
     theScintillationProcess -> SetTrackSecondariesFirst(false);
     theScintillationProcess -> SetScintillationByParticleType(true);*/
 
-    OMSimScintillation* theScintillationProcess = new OMSimScintillation("Scintillation");
+    //OMSimScintillation* theScintillationProcess = new OMSimScintillation("Scintillation");
+	G4Scintillation* theScintillationProcess = new G4Scintillation("Scintillation");
     theScintillationProcess -> SetTrackSecondariesFirst(false);
 
 //	The Livermore models

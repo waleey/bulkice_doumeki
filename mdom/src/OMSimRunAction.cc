@@ -30,7 +30,7 @@ void OMSimRunAction::BeginOfRunAction(const G4Run* Run)
 
 void OMSimRunAction::EndOfRunAction(const G4Run*)
 {
-
+	
 	if (gHittype == "individual") {
 		gAnalysisManager.Write(); // for K40 analysis
 	}
@@ -39,5 +39,6 @@ void OMSimRunAction::EndOfRunAction(const G4Run*)
 	}
 //  setting all arrays to zero
     gAnalysisManager.Reset();
+	
 }
 

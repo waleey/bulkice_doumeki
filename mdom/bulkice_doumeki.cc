@@ -48,6 +48,7 @@ G4int           gEvent = 0;
 G4int           gDepthIndex = 88; //default value
 G4int           gRunID = 0; //Run ID for each run
 G4double        gPaintThickness = 0; //no need to use it for WLS Surface process.
+G4double        gRadioDecay = 0;
 /**
 variables for optical photon waves
 **/
