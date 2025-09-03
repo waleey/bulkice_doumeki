@@ -14,6 +14,7 @@ class WritePrimaries:
         self.dirY = []
         self.dirZ = []
         self.inTime = []
+        self.dom_ids = []
         #self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime]]
 
 
@@ -28,8 +29,8 @@ class WritePrimaries:
         effective volume in C. Lozano's
         Thesis
         """
-        self.energy, self.x, self.y, self.z, self.dirX, self.dirY, self.dirZ, self.inTime = self.energy_reweighting(self.energy, self.inTime)
-        self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime]]
+        self.energy, self.x, self.y, self.z, self.dirX, self.dirY, self.dirZ, self.inTime, self.dom_ids = self.energy_reweighting(self.energy, self.inTime)
+        self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime], ['domid', self.dom_ids]]
 
         for dtype in self.dtypes:
             file = open(self.baseFolder + 'Positron/pos20002nkibd_' + dtype[0] + '.data', 'w')
@@ -58,14 +59,14 @@ class WritePrimaries:
         self.setupArrays(reactionMode, pdgID)
 
         """
-        re-weighting positron energy
+        re-weighting electron energy
         distribution according to
         effective volume in C. Lozano's
         Thesis
         """
 
-        self.energy, self.x, self.y, self.z, self.dirX, self.dirY, self.dirZ, self.inTime = self.energy_reweighting(self.energy, self.inTime)
-
+        self.energy, self.x, self.y, self.z, self.dirX, self.dirY, self.dirZ, self.inTime, self.dom_ids = self.energy_reweighting(self.energy, self.inTime)
+        self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime], ['domid', self.dom_ids]]
         self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime]]
 
         for dtype in self.dtypes:
@@ -113,12 +114,34 @@ class WritePrimaries:
         veff_lozano = 127.9 * centers 
         #weighting the dNdE by the effective volume
         dNdE_veff = dNdE * veff_lozano #m^-3 MeV^-1
+        nMDOM = 15000  # number of mDOMs in the detector
 
-        N_center = dNdE_veff * 1.5e4 * widths
+        N_center = dNdE_veff * nMDOM * widths
         radius_eff = (3 * veff_lozano / (4 * np.pi))**(1/3)  # m
 
         # Ensure N_center is integer
         N_center = np.rint(N_center).astype(int)
+
+        #Calculating unique DOM ids
+        rng = np.random.default_rng(seed=42)
+        dom_ids = []
+
+        for count in N_center:
+            if count == 0:
+                continue
+            
+            m, c = divmod(count, nMDOM)
+
+            # Step 1: give m particles to each DOM
+            for dom in range(nMDOM):
+                dom_ids.extend([dom] * m)
+
+            # Step 2: randomly assign remainder c
+            if c > 0:
+                chosen_doms = rng.choice(nMDOM, size=c, replace=False)
+                dom_ids.extend(chosen_doms)
+
+        dom_ids = np.array(dom_ids)
 
         # Side length of cubic volume (±20m around origin)
         L = gen_vol_side
@@ -182,6 +205,15 @@ class WritePrimaries:
         ay = np.sin(theta) * np.sin(phi)
         az = np.cos(theta)
 
-        return all_E, all_x, all_y, all_z, ax, ay, az, all_time
+        all_E = all_E[:len(dom_ids)]
+        all_x = all_x[:len(dom_ids)]
+        all_y = all_y[:len(dom_ids)]
+        all_z = all_z[:len(dom_ids)]
+        ax = ax[:len(dom_ids)]
+        ay = ay[:len(dom_ids)]
+        az = az[:len(dom_ids)]
+        all_time = all_time[:len(dom_ids)]
+
+        return all_E, all_x, all_y, all_z, ax, ay, az, all_time, dom_ids
 
 

@@ -3,6 +3,8 @@
 #include "G4ParticleDefinition.hh"
 #include "G4Neutron.hh"
 
+extern G4int gDOMId;
+
 OMSimNeutronAction::OMSimNeutronAction(G4ParticleGun* particleGun)
     :   fParticleGun(particleGun),
         fParticleExist(true),
@@ -35,6 +37,7 @@ void OMSimNeutronAction::GeneratePrimaries(G4Event* anEvent)
     fParticleGun -> SetParticleEnergy(fNeutronData.at(ENERGY).at(fIdx) * MeV);
     fParticleGun -> SetParticleTime(fNeutronData.at(TIME).at(fIdx) * ms);
     fParticleGun -> SetParticleDefinition(G4Neutron::NeutronDefinition());
+    gDOMId = static_cast<int>(fNeutronData.at(DOMID).at(fIdx));
     fParticleGun -> GeneratePrimaryVertex(anEvent);
 
    /* std::cout << "Neutron x: " << fNeutronData.at(X).at(fIdx) /m << std::endl

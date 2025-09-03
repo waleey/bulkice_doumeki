@@ -91,7 +91,7 @@ def merge():
             writer.writeElectron()
     
     #Calling Geant4 here
-    #bulkice.callG4()
+    bulkice.callG4()
 
 if __name__ == "__main__":
     merge()

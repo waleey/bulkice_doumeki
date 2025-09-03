@@ -39,6 +39,7 @@ class OMSimAnalysisManager
 		std::vector<G4int> stats_survived_qe;
 		//will be removed later
 		std::vector<std::string> stats_creator;
+		std::vector<G4int> stats_dom_id; //for multiple DOM simulatoin
 
 
 

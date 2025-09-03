@@ -33,9 +33,10 @@ private:
     std::vector<G4double> alpha_Y;
     std::vector<G4double> alpha_Z;
     std::vector<G4double> inTime;
-    std::vector<std::vector<G4double>> fNeutronData {energy, fX, fY, fZ, alpha_X, alpha_Y, alpha_Z, inTime};
-    std::vector<std::string>  dtypes {"energy", "x", "y", "z", "ax", "ay", "az", "time"};
-    enum {ENERGY, X, Y, Z, AX, AY, AZ, TIME};
+    std::vector<G4double> dOMId;
+    std::vector<std::vector<G4double>> fNeutronData {energy, fX, fY, fZ, alpha_X, alpha_Y, alpha_Z, inTime, dOMId};
+    std::vector<std::string>  dtypes {"energy", "x", "y", "z", "ax", "ay", "az", "time", "domid"};
+    enum {ENERGY, X, Y, Z, AX, AY, AZ, TIME, DOMID};
 };
 
 

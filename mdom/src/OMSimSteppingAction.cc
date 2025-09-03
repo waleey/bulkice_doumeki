@@ -17,6 +17,7 @@ extern G4int gPosCount;
 extern G4int gNumCherenkov;
 extern G4int gNumScint;
 extern G4bool gWOM;
+extern G4int gDOMId;
 
 G4int gVesselCount = 0;
 G4int gPMTBodyCount = 0;
@@ -164,6 +165,7 @@ void OMSimSteppingAction::UserSteppingAction(const G4Step* aStep)
                     gAnalysisManager.stats_vertex_position.push_back(vertex_pos);
                     gAnalysisManager.stats_positron_id.push_back(aTrack -> GetParentID());
                     gAnalysisManager.stats_survived_qe.push_back(survived);
+                    gAnalysisManager.stats_dom_id.push_back(gDOMId); //for multiple DOM simulation
                     //Will be removed soon
                    //gAnalysisManager.stats_creator.push_back(creator);
                 }

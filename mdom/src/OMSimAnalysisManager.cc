@@ -33,6 +33,7 @@ void OMSimAnalysisManager::Write()
             //datafile << stats_photon_track_length.at(i) << "\t";
             datafile << stats_photon_energy.at(i) << "\t";
             datafile << stats_PMT_hit.at(i) << "\t";
+			datafile << stats_dom_id.at(i) << "\t"; //for multiple DOM simulation	
             //datafile << stats_event_distance.at(i) << "\t";
             datafile << stats_photon_position.at(i).x()/m << "\t";
             datafile << stats_photon_position.at(i).y()/m << "\t";
