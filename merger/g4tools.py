@@ -8,7 +8,7 @@ class G4tools:
         self.baseFolder = baseFolder
         self.depthIndex = depthIndex
         self.outputFolder = outputFolder
-        self.runID = runID
+        self.runID = str(runID)
         self.executable = baseFolder + "./bulkice_doumeki"
 
     def callG4(self):

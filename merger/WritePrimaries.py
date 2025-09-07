@@ -3,7 +3,7 @@ import numpy as np
 
 class WritePrimaries:
 
-    def __init__(self, events, baseFolder):
+    def __init__(self, events, baseFolder, ndoms = 1):
         self.events = events
         self.baseFolder = baseFolder
         self.energy = []
@@ -15,6 +15,7 @@ class WritePrimaries:
         self.dirZ = []
         self.inTime = []
         self.dom_ids = []
+        self.ndoms = ndoms
         #self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime]]
 
 
@@ -114,7 +115,7 @@ class WritePrimaries:
         veff_lozano = 127.9 * centers 
         #weighting the dNdE by the effective volume
         dNdE_veff = dNdE * veff_lozano #m^-3 MeV^-1
-        nMDOM = 15000  # number of mDOMs in the detector
+        nMDOM = self.ndoms  # number of mDOMs in the detector
 
         N_center = dNdE_veff * nMDOM * widths
         radius_eff = (3 * veff_lozano / (4 * np.pi))**(1/3)  # m

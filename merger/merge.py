@@ -90,9 +90,4 @@ def merge():
             writer.writeNeutron()
             writer.writeElectron()
     
-    #Calling Geant4 here
-    bulkice.callG4()
-
-if __name__ == "__main__":
-    merge()
 
