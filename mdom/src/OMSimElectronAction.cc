@@ -36,7 +36,6 @@ void OMSimElectronAction::GeneratePrimaries(G4Event* anEvent)
     fParticleGun -> SetParticleEnergy(fElectronData.at(ENERGY).at(fIdx) * MeV);
     fParticleGun -> SetParticleTime(fElectronData.at(TIME).at(fIdx) * ms);
     fParticleGun -> SetParticleDefinition(G4Electron::ElectronDefinition());
-    gDOMId = static_cast<int>(fElectronData.at(DOMID).at(fIdx));
     fParticleGun -> GeneratePrimaryVertex(anEvent);
 
   /*  std::cout << "Electron x: " << fElectronData.at(X).at(fIdx) /m << std::endl

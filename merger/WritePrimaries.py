@@ -30,7 +30,7 @@ class WritePrimaries:
         effective volume in C. Lozano's
         Thesis
         """
-        self.energy, self.x, self.y, self.z, self.dirX, self.dirY, self.dirZ, self.inTime, self.dom_ids = self.energy_reweighting(self.energy, self.inTime)
+        #self.energy, self.x, self.y, self.z, self.dirX, self.dirY, self.dirZ, self.inTime, self.dom_ids = self.energy_reweighting(self.energy, self.inTime)
         self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime], ['domid', self.dom_ids]]
 
         for dtype in self.dtypes:
@@ -66,8 +66,8 @@ class WritePrimaries:
         Thesis
         """
 
-        self.energy, self.x, self.y, self.z, self.dirX, self.dirY, self.dirZ, self.inTime, self.dom_ids = self.energy_reweighting(self.energy, self.inTime)
-        self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime], ['domid', self.dom_ids]]
+        #self.energy, self.x, self.y, self.z, self.dirX, self.dirY, self.dirZ, self.inTime, self.dom_ids = self.energy_reweighting(self.energy, self.inTime)
+        #self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime], ['domid', self.dom_ids]]
         self.dtypes = [['energy', self.energy], ['x', self.x], ['y', self.y], ['z', self.z], ['ax', self.dirX], ['ay', self.dirY], ['az', self.dirZ], ['time', self.inTime]]
 
         for dtype in self.dtypes:
@@ -88,10 +88,15 @@ class WritePrimaries:
                         self.dirX.append(track['x'])
                         self.dirY.append(track['y'])
                         self.dirZ.append(track['z'])
-
+                """
                 self.x.append((event.vertex[0] - 2000)/100)
                 self.y.append((event.vertex[1] - 2000)/100)
                 self.z.append((event.vertex[2] - 2000)/100)
+                """
+                #New Cylindrical generation volume in sntools
+                self.x.append(event.vertex[0]/100)
+                self.y.append(event.vertex[1]/100)
+                self.z.append(event.vertex[2]/100)
                 self.inTime.append(event.vertex[3])
 
     def Reset(self):
@@ -144,36 +149,26 @@ class WritePrimaries:
 
         dom_ids = np.array(dom_ids)
 
-        # Side length of cubic volume (±20m around origin)
-        L = gen_vol_side
-        halfL = L / 2.0
+        # Side length of cylindrical volume
+        R = 20.0   # radius
+        H = 40.0   # height
+        halfH = H / 2.0
 
         # Storage for all particles (across bins)
         all_x, all_y, all_z = [], [], []
 
         for N, r_eff in zip(N_center, radius_eff):
-            x_vals, y_vals, z_vals = [], [], []
+            # Sample r with proper distribution (sqrt for uniform area)
+            r = R * np.sqrt(np.random.uniform(0, 1, size=N))
+            theta = np.random.uniform(0, 2*np.pi, size=N)
+            z = np.random.uniform(-halfH, halfH, size=N)
+            x = r * np.cos(theta)
+            y = r * np.sin(theta)
             
-            while len(x_vals) < N:
-                # Propose uniform random points in cube
-                x = np.random.uniform(-halfL, halfL, size=N)
-                y = np.random.uniform(-halfL, halfL, size=N)
-                z = np.random.uniform(-halfL, halfL, size=N)
-                
-                # Radial distance
-                r = np.sqrt(x**2 + y**2 + z**2)
-                
-                # Accept only those within radius_eff
-                mask = r <= r_eff
-                
-                x_vals.extend(x[mask].tolist())
-                y_vals.extend(y[mask].tolist())
-                z_vals.extend(z[mask].tolist())
             
-            # Trim to exactly N and extend the global lists
-            all_x.extend(x_vals[:N])
-            all_y.extend(y_vals[:N])
-            all_z.extend(z_vals[:N])
+            all_x.extend(x.tolist())
+            all_y.extend(y.tolist())
+            all_z.extend(z.tolist())
 
         # Convert to single 1D numpy arrays
         all_x = np.array(all_x)
