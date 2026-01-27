@@ -37,7 +37,7 @@ void OMSimPositronAction::GeneratePrimaries(G4Event* anEvent)
         fParticleGun -> SetParticleEnergy(fPositronData.at(ENERGY).at(fIdx) * MeV);
         fParticleGun -> SetParticleTime(fPositronData.at(TIME).at(fIdx) * ms);
         fParticleGun -> SetParticleDefinition(G4Positron::PositronDefinition());
-        gDOMId = static_cast<int>(fPositronData.at(DOMID).at(fIdx));
+        //gDOMId = static_cast<int>(fPositronData.at(DOMID).at(fIdx));
         fParticleGun -> GeneratePrimaryVertex(anEvent);
     }
     catch(...)
