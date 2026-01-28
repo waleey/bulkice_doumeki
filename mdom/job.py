@@ -71,6 +71,7 @@ if args.no_dag:
     print('Submitted to cluster {}.'.format(submit_result.cluster()))
 
 else:
+    """
     import htcondor2.dags # this has to be imported directly for the dags to work
     import shutil
 
@@ -98,3 +99,4 @@ else:
     print('Submitting {} jobs.'.format(len(job_args)))
     submit_result = schedd.submit(dag_submit)
     print("DAGMan job cluster is {}".format(submit_result.cluster()))
+    """

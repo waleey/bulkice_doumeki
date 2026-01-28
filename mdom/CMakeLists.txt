@@ -102,7 +102,7 @@ target_link_libraries(bulkice_doumeki ${Geant4_LIBRARIES} ${HBOOK_LIBRARIES})
 # relies on these scripts being in the current working directory.
 #
 set(bulkice_doumeki_SCRIPTS
-    100run_pos.mac vis.mac run_pos.mac ray_trace.mac 10run_pos.mac env.sh 
+    100run_pos.mac vis.mac run_pos.mac ray_trace.mac 10run_pos.mac env.sh job.py job.sh
   )
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg")
