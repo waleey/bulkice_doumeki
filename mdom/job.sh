@@ -39,7 +39,7 @@ eval $(/cvmfs/icecube.opensciencegrid.org/py3-v4.4.0/setup.sh)
 unset PYTHONPATH
 
 # you may need to change these paths depending on where your virtual environment is
-source $venv/bin/activate
+#source $venv/bin/activate
 echo "Script: ${script}"
 echo "Args: $wait_t $jobn"
 

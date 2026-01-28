@@ -38,7 +38,7 @@ condor_config = {
         "error": "$(scratchdir)/err/job.$(ClusterId).$(ProcId).err",
         "log": "$(scratchdir)/log/job.$(ClusterId).log",
         "request_cpus": "4",                            # CPU request for each job
-        "request_memory":"1GB"                          # memory request for each job. 1GB is the minimum
+        "request_memory":"4GB"                          # memory request for each job. 1GB is the minimum
         # 'accounting_group':'1_week'                   # default is 48 hours max runtime, add to 1 week queue if you need a long job
 }
 
