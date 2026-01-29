@@ -44,11 +44,12 @@ echo "Script: ${script}"
 echo "Args: $wait_t $jobn"
 
 #adding this to set up the environment for bulkice
+cd /scratch/wkarim/bulkice_doumeki/mdom/build/
 source env.sh
 
 # if using icetray for your job, your env-shell.sh should be passed on the same line. For example:
 # /cvmfs/icecube.opensciencegrid.org/users/jthwaites/icetray_updated/build/env-shell.sh python $script --wait $2 --jobn $3
-python $script --wait $wait_t --jobn $jobn
+#python $script --wait $wait_t --jobn $jobn
 ./bulkice_doumeki mdom ibd 88 output $jobn
 
 echo "Job complete!"
