@@ -11,6 +11,8 @@
  *  @version Geant4 10.7
  *
  */
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -255,7 +257,6 @@ void OMSimInputData::SearchFolders(G4String basefolder)
 */
 void OMSimInputData::ScannDataDirectory()
 {
-
     struct dirent* lFile = NULL;
     DIR* lDirectory = NULL;
 
@@ -270,49 +271,68 @@ void OMSimInputData::ScannDataDirectory()
     {
         const std::string fileName = lFile->d_name;
 
-        if (lFile->d_type == 8)
+        // Skip . and ..
+        if (fileName == "." || fileName == "..")
+            continue;
+
+        // --- FIX: do NOT rely on d_type (unreliable on CVMFS/Lustre/NFS) ---
+        struct stat st;
+        std::string fullPath = mDataDirectory + "/" + fileName;
+
+        if (stat(fullPath.c_str(), &st) != 0)
+            continue;
+
+        if (!S_ISREG(st.st_mode))
+            continue;
+        // ---------------------------------------------------------------
+
+        if (fileName.substr(0, 5) == "RiAbs")
         {
-            if (fileName.substr(0, 5) == "RiAbs")
-            {
-                /*bool isGlass = false;
-                if(fileName.substr(6 , 5) == "Glass")
-                {
-                    isGlass = true;
-                }*/
-                RefractionAndAbsorption* lDataFile = new RefractionAndAbsorption(mDataDirectory + "/" + fileName/*, isGlass*/);
-                lDataFile->ExtractInformation();
-                delete lDataFile;
-            }
-            else if (fileName.substr(0, 2) == "Ri")
-            {
-                RefractionOnly* lDataFile = new RefractionOnly(mDataDirectory + "/" + fileName);
-                lDataFile->ExtractInformation();
-                delete lDataFile;
-            }
-            else if (fileName.substr(0, 7) == "NoOptic")
-            {
-                NoOptics* lDataFile = new NoOptics(mDataDirectory + "/" + fileName);
-                lDataFile->ExtractInformation();
-                delete lDataFile;
-            }
-            else if (fileName.substr(0, 10) == "IceCubeICE")
-            {
-                IceCubeIce* lDataFile = new IceCubeIce(mDataDirectory + "/" + fileName);
-                lDataFile->ExtractInformation();
-                delete lDataFile;
-            }
-            else if ((fileName.substr(0, 4) == "Refl"))
-            {
-                ReflectiveSurface* lDataFile = new ReflectiveSurface(mDataDirectory + "/" + fileName);
-                lDataFile->ExtractInformation();
-                mOpticalSurfaceMap[lDataFile->mObjectName] = lDataFile->mOpticalSurface;
-                delete lDataFile;
-            }
-            else if ((fileName.substr(0, 4) == "pmt_"))
-                AppendParameterTable(mDataDirectory + "/" + fileName);
-            else if ((fileName.substr(0, 3) == "om_"))
-                AppendParameterTable(mDataDirectory + "/" + fileName);
+            RefractionAndAbsorption* lDataFile =
+                new RefractionAndAbsorption(mDataDirectory + "/" + fileName);
+            lDataFile->ExtractInformation();
+            delete lDataFile;
+        }
+        else if (fileName.substr(0, 2) == "Ri")
+        {
+            RefractionOnly* lDataFile =
+                new RefractionOnly(mDataDirectory + "/" + fileName);
+            lDataFile->ExtractInformation();
+            delete lDataFile;
+        }
+        else if (fileName.substr(0, 7) == "NoOptic")
+        {
+            NoOptics* lDataFile =
+                new NoOptics(mDataDirectory + "/" + fileName);
+            lDataFile->ExtractInformation();
+            delete lDataFile;
+        }
+        else if (fileName.substr(0, 10) == "IceCubeICE")
+        {
+            IceCubeIce* lDataFile =
+                new IceCubeIce(mDataDirectory + "/" + fileName);
+            lDataFile->ExtractInformation();
+            delete lDataFile;
+        }
+        else if (fileName.substr(0, 4) == "Refl")
+        {
+            ReflectiveSurface* lDataFile =
+                new ReflectiveSurface(mDataDirectory + "/" + fileName);
+            lDataFile->ExtractInformation();
+            mOpticalSurfaceMap[lDataFile->mObjectName] =
+                lDataFile->mOpticalSurface;
+            delete lDataFile;
+        }
+        else if (fileName.substr(0, 4) == "pmt_")
+        {
+            AppendParameterTable(mDataDirectory + "/" + fileName);
+        }
+        else if (fileName.substr(0, 3) == "om_")
+        {
+            AppendParameterTable(mDataDirectory + "/" + fileName);
         }
     }
+
     closedir(lDirectory);
 }
+
