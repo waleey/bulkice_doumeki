@@ -2,9 +2,9 @@
 
 #Only Add this line if u r using MacOS
 #----------------------------------------------------------------------------
-set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk")
-include_directories("/opt/homebrew/include")
-link_directories("/opt/homebrew/lib")
+#set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk")
+#include_directories("/opt/homebrew/include")
+#link_directories("/opt/homebrew/lib")
 
 #----------------------------------------------------------------------------
 # Setup the project
@@ -24,9 +24,9 @@ if(WITH_GEANT4_UIVIS)
 else()
   find_package(Geant4 REQUIRED)
 endif()
-#find_package(Boost REQUIRED)
+find_package(Boost REQUIRED)
 
-#include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
 
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
@@ -102,7 +102,7 @@ target_link_libraries(bulkice_doumeki ${Geant4_LIBRARIES} ${HBOOK_LIBRARIES})
 # relies on these scripts being in the current working directory.
 #
 set(bulkice_doumeki_SCRIPTS
-    100run_pos.mac vis.mac run_pos.mac ray_trace.mac 10run_pos.mac env.sh job.py job.sh
+    100run_pos.mac vis.mac run_pos.mac ray_trace.mac 10run_pos.mac env.sh sleep.sub sleep.sh
   )
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg")
