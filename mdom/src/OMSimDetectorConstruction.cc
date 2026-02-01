@@ -18,6 +18,9 @@
 #include "G4SystemOfUnits.hh"
 #include "G4Transform3D.hh"
 
+#include <cstdlib>
+#include <stdexcept>
+
 
 
 
@@ -92,8 +95,14 @@ G4VPhysicalVolume *OMSimDetectorConstruction::Construct()
 
     OMSimRadioactivityData::fomModel = fDOM;
     mData = new OMSimInputData();
-    //mData->SearchFolders("/home/waly/bulkice_doumeki/mdom/build/"); //Will change soon
-    mData->SearchFolders("../build/"); // you need to change this path if data is saved somewhere else.
+    //reading the dir path for data folder from the env.sh file
+    const char* data_dir = std::getenv("OMSIM_DATA_DIR");
+    if (!data_dir) {
+        throw std::runtime_error(
+            "OMSIM_DATA_DIR is not set. Please source env.sh."
+        );
+    }
+    mData->SearchFolders(data_dir); // you need to change this path if data is saved somewhere else.
 
     ConstructWorld();
 

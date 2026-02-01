@@ -12,13 +12,16 @@
 #fi #terminate the run if the installation directory isn't set up properly!
 eval `/cvmfs/icecube.opensciencegrid.org/py3-v4.4.0/setup.sh`
 source $ROOTSYS/bin/geant4.sh
-
 export G4BUILD=$(geant4-config --prefix)
 #export G4DATA=$G4BUILD/data/
 #export G4VIS_BUILD_RAYTRACER_DRIVER=1
 #export G4VIS_USE_RAYTRACER=1
 source $G4BUILD/share/Geant4/geant4make/geant4make.sh
 source $G4BUILD/bin/geant4.sh
+
+#set up the data files directory
+export OMSIM_DATA_DIR=/data/user/wkarim/
+
 
 #Only uncomment these lies if on mac:
 #OS=`uname -o`
