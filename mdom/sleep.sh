@@ -10,7 +10,7 @@ echo "PWD:"; pwd
 
 cd /home/wkarim/bulkice_doumeki/mdom/build/
 source env.sh
-$OUTPUT_DIR ="/data/user/wkarim/output/"
+OUTPUT_DIR="/data/user/wkarim/output/"
 # define job number explicitly if needed
 JOBN=${PROCESS:-0}
 python ../InputFile/shuffle_data.py
