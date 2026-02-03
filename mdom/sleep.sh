@@ -26,3 +26,4 @@ python /home/wkarim/bulkice_doumeki/mdom/InputFile/shuffle_data.py \
 ./bulkice_doumeki mdom ibd 88 "$OUTPUT_DIR" "$JOBN"
 
 echo "Job complete!"
+echo "end time:"; date
