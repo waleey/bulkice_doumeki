@@ -20,7 +20,7 @@ SHUFFLE_OUTPUT_DIR='/home/wkarim/bulkice_doumeki/mdom/InputFile/Positron'
 python /home/wkarim/bulkice_doumeki/mdom/InputFile/shuffle_data.py \
     --particle Positron \
     --input-dir "$SHUFFLE_INPUT_DIR" \
-    --output-dir "$SHUFFLE_OUTPUT_DIR" \
+    --output-dir "SHUFFLE_OUTPUT_DIR" \
     --seed "$JOBN"
 
 ./bulkice_doumeki mdom ibd 88 "$OUTPUT_DIR" "$JOBN"
