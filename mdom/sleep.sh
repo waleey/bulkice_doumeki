@@ -12,7 +12,7 @@ cd /home/wkarim/bulkice_doumeki/mdom/build/
 source env.sh
 OUTPUT_DIR="/data/user/wkarim/output/"
 # define job number explicitly if needed
-JOBN=${1:-0}
+JOBN=$1
 
 #defining dir for shuffled data
 SHUFFLE_INPUT_DIR='/home/wkarim/bulkice_doumeki/mdom/InputFile/'
@@ -20,7 +20,7 @@ SHUFFLE_OUTPUT_DIR='/home/wkarim/bulkice_doumeki/mdom/InputFile/Positron'
 python /home/wkarim/bulkice_doumeki/mdom/InputFile/shuffle_data.py \
     --particle Positron \
     --input-dir "$SHUFFLE_INPUT_DIR" \
-    --output-dir "SHUFFLE_OUTPUT_DIR" \
+    --output-dir "$SHUFFLE_OUTPUT_DIR" \
     --seed "$JOBN"
 
 ./bulkice_doumeki mdom ibd 88 "$OUTPUT_DIR" "$JOBN"
