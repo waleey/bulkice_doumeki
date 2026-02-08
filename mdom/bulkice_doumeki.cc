@@ -286,9 +286,12 @@ int main(int argc, char** argv)
     G4int PMT_model(0);
     G4String interaction_channel;
     ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel);
-    long seed = gRunID + 1;
-    G4Random::setTheEngine(new CLHEP::MixMaxRng(seed));
+    unsigned long seed = static_cast<unsigned long>(gRunID + 1);
+    auto rng = new CLHEP::MixMaxRng(seed);
+    G4Random::setTheEngine(rng);
     G4Random::setTheSeed(seed);
+
+    std::cout << "G4 seed for this job: " << G4Random::getTheSeed() << std::endl;
     OMSimRunManager* runManager = new OMSimRunManager(PMT_model, world_size, interaction_channel);
     runManager -> Initialize();
 
