@@ -18,7 +18,7 @@
 
 #include <ctime>
 #include <string>
-
+#include "Randomize.hh"
 
 //setting up the external variables
 G4int           gGlass = 0;
@@ -287,7 +287,8 @@ int main(int argc, char** argv)
     G4int PMT_model(0);
     G4String interaction_channel;
     ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel);
-    CLHEP::HepRandom::setTheSeed((unsigned)clock());
+    std::random_device rd;
+    G4Random::setTheSeed(rd());
     OMSimRunManager* runManager = new OMSimRunManager(PMT_model, world_size, interaction_channel);
     runManager -> Initialize();
 
