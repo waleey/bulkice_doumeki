@@ -287,7 +287,7 @@ int main(int argc, char** argv)
     G4int PMT_model(0);
     G4String interaction_channel;
     ParseCommandLine(argc, argv, PMT_model, world_size, interaction_channel);
-
+    CLHEP::HepRandom::setTheSeed((unsigned)clock());
     OMSimRunManager* runManager = new OMSimRunManager(PMT_model, world_size, interaction_channel);
     runManager -> Initialize();
 
